@@ -1,0 +1,32 @@
+<div class="panel panel-success">
+    <div class="panel-heading">
+        <div class="pull-right date_range_div">
+            <label class="checkbox-inline i-checks">
+                <input type="checkbox" checked class="chk_date_range" id="chk_date_range" />
+            </label>
+            <div id="reqDates" class="">
+                <i class="fa fa-calendar"></i>&nbsp;
+                <span></span> <b class="caret"></b>
+            </div>
+        </div>
+        Gestión de Asignación de Requerimientos a Compradores
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="table_container_aa" class="table-responsive"></div>
+                <div class="separator"></div>
+                <button class="btn btn-success btn-sm" type="button" ng-click="assignBuyer()">
+                    <span class="fa fa-check-circle-o"></span>
+                    Asignar Comprador
+                </button>
+                <button class="btn btn-success btn-sm" type="button" ng-click="rejectBuyer()">
+                    <span class="fa fa-times-circle-o"></span>
+                    Desasignar Comprador
+                </button>
+            </div>
+        </div>
+
+        <div ng-include src="'/templates/assignment_requirements/form.html'"></div>
+    </div>
+</div>

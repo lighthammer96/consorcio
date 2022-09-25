@@ -1,0 +1,57 @@
+{
+  "despatchAdvice": {	
+    "tip_doc": "09",
+    "serie": "T001",
+    "correl": "00000002",
+    "fec_emi": "2019-06-11",                    
+    "emisor": {
+      "tip_doc": "6",
+      "num_doc": "20500496046",
+      "raz_soc": "PRUEBA SAC"
+    },
+    "adquiriente": {
+      "tip_doc": "6",
+      "num_doc": "10102143685",
+      "raz_soc": "YARLAQUE VILCHEZ PAVEL"
+    },       
+	"envio": {
+      "cod_motiv_traslado": "01",
+	  "descrip_motiv": "VENTA",
+      "ind_transb": "false",
+	  "peso_bruto_total": "2.00",
+	  "cod_und_med": "KGM",
+	  "num_bultos": "1",
+	  "cod_modal_traslado": "02",
+	  "fec_ini_traslado": "2019-06-11",
+	  "fec_entrega": "2019-06-11"
+    },	
+	"transportista_priv": {
+	  "num_doc": "42794658",
+	  "tip_doc": "1",
+      "vehi_placa": "F8U674"
+    },
+	"llegada": {
+      "cod_ubi": "150113",
+	  "dir": "CALLE ROSA NOGUERA 678"
+    },
+	"partida": {
+      "cod_ubi": "150113",
+	  "dir": "CALLE ROSA NOGUERA 698"
+    },
+	"det": [
+    {
+      "nro_item": "1",
+      "cod_prod": "GLG199",
+      "cod_und_med": "NIU",
+      "descrip": "Grabadora LG Externo Modelo: GE20LU10",
+	  "cant": "2000.00"	  
+    }  
+	],		
+	"nota": [{
+	  "nota_descrip": "NOTA 1"
+	},
+	{	  
+	  "nota_descrip": "NOTA 2"
+	}]  
+}
+}

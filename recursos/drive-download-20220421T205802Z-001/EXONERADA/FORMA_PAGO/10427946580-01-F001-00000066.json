@@ -1,0 +1,74 @@
+{
+    "invoice": {
+        "tip_doc": "01",
+        "serie": "F001",
+        "correl": "00000066",
+        "fec_emi": "2021-01-27",
+        "cod_mon": "PEN",
+        "tip_oper": "0101",
+        "hora_emi": "14:31:03",
+        "ubl_version": "2.1",
+        "customizacion": "2.0",
+        "emisor": {
+            "tip_doc": "6",
+            "num_doc": "10427946580",
+            "raz_soc": "EMPRESA PRUEBA",
+            "dir": "JR. ALFONSO UGARTE # 1000",
+            "cod_ubi": "220901",
+            "dep": "SAN MARTIN",
+            "prov": "SAN MARTIN",
+            "dist": "TARAPOTO",
+            "cod_pais": "PE",
+            "cod_sucur": "0000"
+        },
+        "adquiriente": {
+            "tip_doc": "6",
+            "num_doc": "20603704020",
+            "raz_soc": "SEEN CORPORATION SAC",
+            "cod_pais": "PE"
+        },
+        "tot": {
+            "exo": "200.00",
+            "val_vent": "200.00",
+            "trib_exo": "0.00",
+            "prec_tot": "200.00",
+            "imp_tot": "200.00",
+            "impsto_tot": "0.00"
+        },
+        "forma_pago": {
+            "descrip": "Credito",
+            "monto_neto": "200.00",
+            "cod_mon": "PEN"
+        },        
+        "cuota": [{
+        	"descrip":"Cuota001",
+        	"monto_neto":"200.00",
+        	"cod_mon":"PEN",
+        	"fec_venc":"2021-02-15"
+        }],        
+        "det": [{
+                "nro_item": "1",
+                "cod_prod": "00000002",
+                "cod_und_med": "NIU",
+                "descrip": "PRODUCTO 01 DE PRUEBA X UND",
+                "cant": "1.00",
+                "val_unit_item": "200.00",
+                "val_vta_item": "200.00",
+                "igv_item": "0.00",
+                "prec_unit_item": "200.00",
+                "tip_afec_igv": "20",
+                "impsto_tot": "0.00",
+                "base_igv": "200.00",
+                "tasa_igv": "18.00"
+            }],
+        "leyen": [{
+                "leyen_cod": "1000",
+                "leyen_descrip": "DOSCIENTOS Y 00/100 SOLES"
+                 },
+                  {
+		"leyen_cod": "2001",
+		"leyen_descrip": "BIENES TRANSFERIDOS EN LA AMAZONIA REGION SELVA PARA SER CONSUMIDOS EN LA MISMA"
+		 }        
+	         ]
+    }
+}

@@ -1,2 +1,1 @@
-# consorcio
-Proyecto RECOPRO
+## Proyecto RECOPRO

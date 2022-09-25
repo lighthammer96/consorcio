@@ -1,0 +1,1076 @@
+<style>
+    .table-wrapper {
+
+        max-height: 200px !important;
+        width: auto !important;
+        overflow: auto !important;
+        display: inline-block !important;
+    }
+
+    .table-earnings {
+        background: #F3F5F6 !important;
+    }
+
+    .modal2 {
+        text-align: center;
+        padding: 0 !important;
+    }
+
+    .modal2:before {
+        content: '';
+        display: inline-block;
+        height: 100%;
+        vertical-align: middle;
+        margin-right: -4px;
+    }
+
+    .modal-dialog2 {
+        display: inline-block;
+        text-align: left;
+        vertical-align: middle;
+    }
+
+    .modal-open {
+        overflow: scroll !important;
+    }
+
+    h5 {
+        font: sans-serif;
+        margin-top: 30px;
+        text-align: center;
+    }
+
+    h5.linea {
+        position: relative;
+        z-index: 1;
+    }
+
+    h5.linea:before {
+        border-top: 2px solid #D6DBDF;
+        content: "";
+        margin: 0 auto;
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 95%;
+        z-index: -1;
+    }
+
+    h5.linea span {
+
+        background: #fff;
+        padding: 0 15px;
+    }
+</style>
+<div class="panel  panel-danger-admin">
+    <div class="panel-heading">
+        Gestión de Refinanciamientos
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="table_container_solicitud" class="table-responsive"></div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+
+<div class="modal" id="modalSolicitud" role="dialog" style="overflow-y: scroll;">
+    <div class="modal-dialog modal-lg" role="document" style="width:90%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="titlemodalSolicitud"></h4>
+
+            </div>
+            <form id="formulario-solicitud">
+                <input type="hidden" name="valor_igv" id="valor_igv">
+                <div class="modal-body">
+                    <div class="tab-content">
+                        <br>
+                        <div>
+                            <div style="float:left">
+
+                            </div>
+                            <div style="float:right">
+                                <button type="button" id="" class="btn btn-danger-admin btn-sm"
+                                    ng-click="refinanciamiento()">
+                                    <span class="fa fa-book"></span>
+                                    Refinanciamiento
+                                </button>
+                                <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">
+                                    <span class="fa fa-times"></span> Cerrar
+                                </button>
+                            </div>
+                        </div>
+                        <br>
+                        <h5 class="linea"><span>Datos Generales</span></h5>
+                        <div class="form-horizontal">
+
+                            <br>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="hidden" class="form-control input-sm " id="idOrden">
+                                        <label class="col-sm-1 control-label">Consecutivo</label>
+                                        <div class="col-sm-2">
+                                            <select id="cCodConsecutivo" name="cCodConsecutivo"
+                                                class="form-control input-sm"></select>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <input type="text" class="form-control input-sm" id="nConsecutivo"
+                                                name="nConsecutivo" readonly />
+                                        </div>
+                                        <label class="col-sm-1 control-label">Moneda</label>
+                                        <div class="col-sm-2">
+                                            <select id="IdMoneda" name="idmoneda"
+                                                class="form-control input-sm"></select>
+                                        </div>
+                                        <label class="col-sm-1 control-label" style="padding-right: 5px;">Tipo
+                                            Solicitud</label>
+                                        <div class="col-sm-2">
+                                            <select id="tipo_solicitud" name="tipo_solicitud"
+                                                class="form-control input-sm">
+                                                <option value="">Seleccionar</option>
+                                                <option value="1">CONTADO</option>
+                                                <option value="2">CRÉDITO DIRECTO</option>
+                                                <option value="3">CRÉDITO FINANCIERO</option>
+                                                <option value="4">CRÉDITO</option>
+                                            </select>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group">
+                                      
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label" style="padding-right: 5px;">Fecha
+                                            Vencimiento</label>
+                                        <div class="col-sm-2">
+                                            <input type="date" class="form-control input-sm" id="fecha_vencimiento"
+                                                name="fecha_vencimiento">
+                                        </div>
+
+
+
+                                        <label class="col-sm-1 control-label">Vendedor</label>
+                                        <div class="col-sm-3">
+                                            <select id="idvendedor" name="idvendedor" style="width: 100%;"
+                                                class="form-control input-sm js-example-responsive"></select>
+                                        </div>
+                                        <div class="convenio" style="display: none;">
+                                            <label class="col-sm-1 control-label">Convenio</label>
+                                            <div class="col-sm-2">
+                                                <select id="idconvenio" name="idconvenio"
+                                                    class="form-control input-sm"></select>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group"></div>
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label">Estado</label>
+                                        <div class="col-sm-2">
+                                            <select id="estado" name="estado" disabled="disabled" style="width: 100%;"
+                                                class="form-control input-sm js-example-responsive">
+                                                <option value="" selected> </option>
+                                                <option value="1">Registrado</option>
+                                                <option value="2">Vigente</option>
+                                                <option value="3">Por Aprobar</option>
+                                                <option value="4">Aprobado</option>
+                                                <option value="5">Rechazado</option>
+                                                <option value="6">Facturado</option>
+                                                <option value="7">Despachado</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <h5 class="linea"><span>Cliente</span></h5>
+                        <div class="form-horizontal">
+                            <br>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="hidden" class="form-control input-sm " id="cliente_id_or"
+                                            name="idcliente">
+                                        <input type="hidden" class="form-control input-sm " id="distrito_or">
+                                        <label class="col-sm-2 control-label">Tipo Documento</label>
+                                        <div class="col-sm-2">
+                                            <select id="idDocumentoCli" disabled class="form-control input-sm"></select>
+                                        </div>
+                                        <label class="col-sm-1 control-label col-md-offset-1"> Documento</label>
+                                        <div class="col-sm-2">
+                                            <input type="text" class="form-control input-sm" id="documento_or">
+                                        </div>
+                                        <label class="col-sm-1 control-label"> Tipo Cliente</label>
+                                        <div class="col-sm-3">
+
+                                            <select class="form-control input-sm" id="id_cliente_tipo_or" disabled>
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label"> Razon Social</label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control input-sm" id="razonsocial_cliente_or"
+                                                readonly>
+                                        </div>
+
+                                        <label class="col-sm-1 control-label">Contacto</label>
+                                        <div class="col-sm-2">
+                                            <input type="text" class="form-control input-sm" id="contacto_or" readonly>
+                                        </div>
+                                        <label class="col-sm-1 control-label">Dirección</label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control input-sm" id="direccion_or" readonly>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Correo</label>
+                                        <div class="col-sm-3">
+                                            <input type="email" class="form-control input-sm" id="correo_electronico_or"
+                                                readonly>
+                                        </div>
+                                        <label class="col-sm-1 control-label">Celular</label>
+                                        <div class="col-sm-2">
+                                            <input type="text" class="form-control input-sm" id="celular_or" readonly>
+                                        </div>
+                                        <label class="col-sm-1 control-label">Teléfono</label>
+                                        <div class="col-sm-2">
+                                            <input type="text" class="form-control input-sm " id="telefono_or" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Distrito</label>
+                                        <div class="col-sm-2">
+                                            <input type="text" class="form-control input-sm" readonly id="distrito_ver">
+                                        </div>
+                                        <label class="col-sm-2  control-label">Tipo Doc. de Venta</label>
+                                        <div class="col-sm-2">
+                                            <select id="id_tipoDoc_Venta_or" name="id_tipoDoc_Venta_or"
+                                                disabled="disabled" class="form-control input-sm"></select>
+                                        </div>
+                                        <!-- <label class="col-sm-1 control-label"></label>
+                                        <div class="col-sm-1">
+                                            <button type="button" id="btn_editar_cliente"
+                                                class="btn btn-danger-admin btn-sm">
+                                                <span class="fa fa-save"></span>
+                                                Editar Cliente
+                                            </button>
+                                        </div> -->
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-horizontal">
+                            <div class="row">
+
+                                <div class="col-md-12 ">
+
+                                    <!-- <br>
+                                    <div class="form-group">
+                                        <input type="hidden" id="ident_detalle">
+                                        <div class="col-sm-2">
+                                            <button type="button" class="btn btn-danger-admin btn-sm"
+                                                ng-click="addArticulo()">
+                                                <span class="fa fa-plus"></span>
+                                                Agregar Artículo
+                                            </button>
+                                        </div>
+                                    </div> -->
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered table-striped table-hover"
+                                                    id="tabla_grupo_revision">
+                                                    <thead>
+                                                        <tr>
+                                                            <th width="150px">Articulo</th>
+                                                            <th width="110px">Almacen</th>
+                                                            <th width="110px">Localización</th>
+                                                            <th width="110px">Lote</th>
+                                                            <th width="40px">Cantidad</th>
+                                                            <th width="40px">Precio</th>
+                                                            <th width="60px">Operación Gratuita</th>
+                                                            <th width="60px">Precio Total</th>
+                                                            <th width="60px">Descuento</th>
+                                                            <th width="60px">Porcentaje Descuento</th>
+                                                            <th width="60px">M. Descuento</th>
+                                                            <th width="60px">Desc.In Total</th>
+                                                            <th width="60px">M. Subtotal</th>
+
+                                                            <th width="60px">M. Exonerado</th>
+                                                            <th width="60px">M. Afecto</th>
+                                                            <th width="60px">M. Inafecto</th>
+                                                            <th width="60px">Impuestos</th>
+                                                            <th width="60px">Total</th>
+                                                            <!-- <th width="150px"></th> -->
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="articulo_mov_det"></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label">Comentarios</label>
+                                            <textarea name="comentarios" id="comentarios" cols="30" rows="3"
+                                                class="form-control input-sm"></textarea>
+                                        </div>
+
+                                        <div class="col-md-3" style="margin-top: 15px;">
+                                            <button style="display: none;" type="button" id=""
+                                                class="btn btn-danger-admin btn-sm credito" ng-click="datos_credito()">
+                                                <span class="fa fa-money"></span>
+                                                Datos Crédito
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <h5 class="linea"><span>Datos Totales</span></h5>
+                                    <div class="form-group">
+                                        <div class="col-md-6">
+
+                                            <div class="form-group">
+                                                <label class="col-sm-6 control-label">Monto Venta</label>
+                                                <div class="col-sm-6">
+                                                    <input type="number" readonly="readonly"
+                                                        class="form-control input-sm" id="monto_venta"
+                                                        name="monto_venta">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-6 control-label">Cuota Inicial</label>
+                                                <div class="col-sm-6">
+                                                    <input type="number"
+                                                        class="form-control input-sm  montos-credito inputs-credito"
+                                                        id="cuota_inicial" name="cuota_inicial">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-6 control-label">Monto Financiado</label>
+                                                <div class="col-sm-6">
+                                                    <input type="number" readonly="readonly"
+                                                        class="form-control input-sm  montos-credito"
+                                                        id="total_financiado" name="total_financiado">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-6 control-label">Cuotas</label>
+                                                <div class="col-sm-6">
+                                                    <input type="number"
+                                                        class="form-control input-sm  montos-credito inputs-credito"
+                                                        id="nro_cuotas" name="nro_cuotas">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-6 control-label">Valor Cuota</label>
+                                                <div class="col-sm-6">
+                                                    <input type="number" readonly="readonly"
+                                                        class="form-control input-sm  montos-credito" id="valor_cuota"
+                                                        name="valor_cuota">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-6 control-label">Intereses</label>
+                                                <div class="col-sm-6">
+                                                    <input type="number" readonly="readonly"
+                                                        class="form-control input-sm montos-credito" id="intereses"
+                                                        name="intereses">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-6 control-label">Valor Cuota Final</label>
+                                                <div class="col-sm-6">
+                                                    <input type="number" readonly="readonly"
+                                                        class="form-control input-sm montos-credito" id="valor_cuota_final" name="valor_cuota_final">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-6 control-label ">Día Vencimiento Cuota</label>
+                                                <div class="col-sm-6">
+                                                    <input type="number"
+                                                        class="form-control input-sm montos-credito inputs-credito" id="dia_vencimiento_cuota" name="dia_vencimiento_cuota" readonly="readonly">
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="col-sm-6 control-label">Monto Descuento Detalle</label>
+                                                <div class="col-sm-6">
+                                                    <input type="number" id="monto_descuento_detalle"
+                                                        name="monto_descuento_detalle" class="form-control input-sm"
+                                                        value="0" readonly />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-6  control-label">
+                                                    Descuento Total
+                                                </label>
+                                                <div class="col-sm-6 ">
+                                                    <select id="totalDescuento" name="descuento_id"
+                                                        class="totalDescuento form-control input-sm"
+                                                        style="width: 100%" /> </select>
+                                                </div>
+                                               
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-6  control-label">
+                                                    Descuento (Porcentaje/Monto) Total
+                                                </label>
+                                                <div class="col-sm-3">
+                                                    <input id="porcentajeTotal" name="t_porcentaje_descuento"
+                                                        class="form-control input-sm" value="0" readonly />
+                                                </div>
+                                                <!-- <label class="col-sm-1  control-label">
+                                                    Monto
+                                                </label> -->
+                                                <div class="col-sm-3">
+                                                    <input id="t_monto_descuento" name="t_monto_descuento"
+                                                        class="form-control input-sm" readonly />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                              
+                                                <label class="col-sm-6 control-label">Monto Sub Total</label>
+                                                <div class="col-sm-6">
+                                                    <input type="number" id="t_monto_subtotal" name="t_monto_subtotal"
+                                                        class="form-control input-sm" value="0" readonly />
+
+                                                        <input type="hidden" id="subtotal_detalle"
+                                                        name="subtotal_detalle" class="form-control input-sm" value="0"  />
+                                                </div>
+                                            </div>
+                                           
+                                            <div class="form-group">
+
+                                                <label class="col-sm-6 control-label">Operación Gratuita</label>
+                                                <div class="col-sm-6">
+                                                    <input type="number" name="t_nOperGratuita" id="t_nOperGratuita"
+                                                        class="form-control input-sm" value="0" readonly />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-6 control-label">Monto Exonerado</label>
+                                                <div class="col-sm-6">
+                                                    <input type="number" id="t_monto_exonerado" name="t_monto_exonerado"
+                                                        class="form-control input-sm" value="0" readonly />
+                                                    <input type="hidden" id="monto_exonerado_detalle"
+                                                        name="monto_exonerado_detalle" class="form-control input-sm" value="0"  />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-6 control-label">Monto Afecto</label>
+                                                <div class="col-sm-6">
+                                                    <input type="number" id="t_monto_afecto" name="t_monto_afecto"
+                                                        class="form-control input-sm" value="0" readonly />
+                                                    
+                                                    <input type="hidden" id="monto_afecto_detalle"
+                                                        name="monto_afecto_detalle" class="form-control input-sm" value="0"  />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-6 control-label">Monto Inafecto</label>
+                                                <div class="col-sm-6">
+                                                    <input id="t_monto_inafecto" name="t_monto_inafecto"
+                                                        class="form-control input-sm" value="0" readonly />
+                                                    <input type="hidden" id="monto_inafecto_detalle"
+                                                        name="monto_inafecto_detalle" class="form-control input-sm" value="0"  />
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-sm-6 control-label">Impuestos</label>
+                                                <div class="col-sm-6">
+                                                    <input id="t_impuestos" name="t_impuestos"
+                                                        class="form-control input-sm" readonly value="0" />
+                                                    <input type="hidden" id="impuestos_detalle"
+                                                        name="impuestos_detalle" class="form-control input-sm" value="0"  />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-6 control-label">Total</label>
+                                                <div class="col-sm-6">
+                                                    <input id="desTotal" name="t_monto_total" class="form-control input-sm" readonly value="0" />
+                                                    <input type="hidden" id="saldo" name="saldo" class="form-control" />
+                                                    <input type="hidden" id="pagado" name="pagado" class="form-control" />
+                                                    <input type="hidden" id="facturado" name="facturado" class="form-control" />
+                                                    <input type="hidden" id="monto_total_detalle"
+                                                        name="monto_total_detalle" class="form-control input-sm" value="0"  />
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                       
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="float:left">
+                        
+                        <!-- <button type="button" id="refinanciamiento" class="btn btn-danger btn-sm " style="display: none;">
+                            <span class="fa fa-book"></span>
+                            Refinanciamiento
+                        </button> -->
+                    </div>
+                    <div style="float:right">
+                        <!-- <button type="button" id="enviar_solicitud" ng-click="enviar_solicitud()" style="display: none;"
+                            class="btn btn-success btn-sm">
+                            <span class="fa fa-send"></span>
+                            Enviar
+                        </button>
+                        <button type="button" id="" class="btn btn-info btn-sm">
+                            <span class="fa fa-file-pdf-o"></span>
+                            Imprimir
+                        </button> -->
+                        <button type="button" id="refinanciamiento" class="btn btn-danger-admin btn-sm"
+                            ng-click="refinanciamiento()">
+                            <span class="fa fa-money"></span>
+                            Refinanciamiento
+                        </button>
+                      
+                        <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">
+                            <span class="fa fa-times"></span> Cerrar
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal" id="modal-creditos" role="dialog" style="overflow-y: scroll;">
+    <div class="modal-dialog modal-lg" role="document" style="">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="">Datos del Crédito</h4>
+
+            </div>
+            <form id="formulario-creditos">
+                <div class="modal-body">
+                    <!-- <h5 class="linea"><span>Crédito</span></h5> -->
+
+
+                    <h5 class="linea"><span>Comprador</span></h5>
+
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <label class="control-label">Tipo Vivienda</label>
+                            <input type="text" class="form-control input-sm " id="tipo_vivienda" name="tipo_vivienda">
+                        </div>
+                        <div class="col-sm-3">
+                            <label class="control-label">Propietario</label>
+                            <input type="text" class="form-control input-sm " id="propietario" name="propietario">
+                        </div>
+                        <div class="col-sm-2">
+                            <label class="control-label">Monto Alquiler</label>
+                         
+                            <div class="input-group">
+                                <span class="input-group-addon input-sm">
+                                    <strong class="simbolo-moneda"></strong>
+                                </span>
+                                <input type="number" class="form-control input-sm " id="monto_alquiler"
+                                name="monto_alquiler">
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <label class="control-label">Profesión</label>
+                            <input type="text" class="form-control input-sm " id="profesion" name="profesion">
+                        </div>
+                       
+                    </div>
+                    <h5 class="linea"><span>Dependiente</span></h5>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label class="control-label">Centro Trabajo</label>
+                            <input type="text" class="form-control input-sm " id="centro_trabajo" name="centro_trabajo">
+                        </div>
+                        <div class="col-sm-2">
+                            <label class="control-label">Cargo</label>
+                            <input type="text" class="form-control input-sm " id="cargo" name="cargo">
+                        </div>
+                        <div class="col-sm-2">
+                            <label class="control-label">Tiempo Laboral (años)</label>
+                            <input type="text" class="form-control input-sm " id="tiempo_laboral" name="tiempo_laboral">
+                        </div>
+                        <div class="col-sm-3">
+                            <label class="control-label">Dirección Trabajo</label>
+                            <input type="text" class="form-control input-sm " id="direccion_trabajo"
+                                name="direccion_trabajo">
+                        </div>
+                       
+                    </div>
+                    <h5 class="linea"><span>Independiente</span></h5>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <label class="control-label">Razon Social Negocio</label>
+                            <input type="text" class="form-control input-sm " id="razon_social_negocio"
+                                name="razon_social_negocio">
+                        </div>
+                        <div class="col-sm-3">
+                            <label class="control-label">Actividad Negocio</label>
+                            <input type="text" class="form-control input-sm " id="actividad_negocio"
+                                name="actividad_negocio">
+                        </div>
+                        <div class="col-sm-3">
+                            <label class="control-label">Dirección Negocio</label>
+                            <input type="text" class="form-control input-sm " id="direccion_negocio"
+                                name="direccion_negocio">
+                        </div>
+                        <div class="col-sm-2">
+                            <label class="control-label">Cargo</label>
+                            <input type="text" class="form-control input-sm " id="cargo_independiente" name="cargo_independiente">
+                        </div>
+                        <div class="col-sm-2">
+                            <label class="control-label">Tiempo Laboral (años)</label>
+                            <input type="text" class="form-control input-sm " id="tiempo_laboral_independiente" name="tiempo_laboral_independiente">
+                        </div>
+                     
+                    </div>
+                    <h5 class="linea"><span>-.-</span></h5>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <label class="control-label">Ingreso Neto Mensual</label>
+                            <div class="input-group">
+                                <span class="input-group-addon input-sm">
+                                    <strong class="simbolo-moneda"></strong>
+                                </span>
+                                <input type="number" class="form-control input-sm " id="ingreso_neto_mensual"
+                                name="ingreso_neto_mensual">
+                            </div>
+                            
+                        </div>
+                        <div class="col-sm-3">
+                            <label class="control-label">Ingreso Neto Conyugue</label>
+                            
+                            <div class="input-group">
+                                <span class="input-group-addon input-sm">
+                                    <strong class="simbolo-moneda"></strong>
+                                </span>
+                                <input type="number" class="form-control input-sm " id="ingreso_neto_conyugue"
+                                name="ingreso_neto_conyugue">
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <label class="control-label">Otros Ingresos</label>
+                           
+                            <div class="input-group">
+                                <span class="input-group-addon input-sm">
+                                    <strong class="simbolo-moneda"></strong>
+                                </span>
+                                <input type="number" class="form-control input-sm " id="otros_ingresos"
+                                name="otros_ingresos">
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <label class="control-label">Total Ingresos</label>
+                           
+                            <div class="input-group">
+                                <span class="input-group-addon input-sm">
+                                    <strong class="simbolo-moneda"></strong>
+                                </span>
+                                <input type="number" class="form-control input-sm " id="total_ingresos"
+                                name="total_ingresos" readonly="readonly">
+                            </div>
+                        </div>
+                    </div>
+                    <h5 class="linea"><span>Conyugue</span></h5>
+                    <div class="row">
+                        <input type="hidden" name="idconyugue" id="idconyugue" />
+                        <div class="col-sm-2">
+                            <label class="control-label">Tipo Documento</label>
+                           
+                            <select id="tipo_documento_conyugue" name="tipo_documento_conyugue" class="form-control input-sm select-persona" disabled="disabled"></select>
+                        </div>
+                        <div class="col-sm-2">
+                            <label class="control-label">Documento</label>
+                            <input type="text" class="form-control input-sm documento-persona"  data-tipo="conyugue" id="documento_conyugue"
+                                name="documento_conyugue">
+                        </div>
+                        <div class="col-sm-2">
+                            <label class="control-label">Nombres</label>
+                            <input type="text" class="form-control input-sm datos-persona" readonly="readonly" id="nombres_conyugue"
+                                name="nombres_conyugue">
+                        </div>
+                        <div class="col-sm-2">
+                            <label class="control-label">Apellido Paterno</label>
+                            <input type="text" class="form-control input-sm datos-persona" readonly="readonly" id="apellido_paterno_conyugue"
+                                name="apellido_paterno_conyugue">
+                        </div>
+                        <div class="col-sm-2">
+                            <label class="control-label">Apellido Materno</label>
+                            <input type="text" class="form-control input-sm datos-persona" readonly="readonly" id="apellido_materno_conyugue"
+                                name="apellido_materno_conyugue">
+                        </div>
+                       
+                        <!-- <div class="col-sm-1" style="margin-top: 5px;">
+                            <label class="control-label"></label>
+                            <button type="button" id="btn_editar_conyugue" data-tipo="conyugue"
+                                class="btn btn-danger-admin btn-sm btn-editar-persona">
+                                <span class="fa fa-save"></span>
+                                Editar Conyugue
+                            </button>
+                        </div> -->
+                    </div>
+
+                    <h5 class="linea"><span>Fiador</span></h5>
+                    <div class="row">
+                        <input type="hidden" name="idfiador" id="idfiador" />
+                        <div class="col-sm-2">
+                            <label class="control-label">Tipo Documento</label>
+                           
+                            <select id="tipo_documento_fiador" name="tipo_documento_fiador" class="form-control input-sm select-persona" disabled="disabled"></select>
+                        </div>
+                        <div class="col-sm-2">
+                            <label class="control-label">Documento</label>
+                            <input type="text" class="form-control input-sm documento-persona" data-tipo="fiador" id="documento_fiador"
+                                name="documento_fiador">
+                        </div>
+                        <div class="col-sm-2">
+                            <label class="control-label">Nombres</label>
+                            <input type="text" class="form-control input-sm datos-persona" readonly="readonly" id="nombres_fiador"
+                                name="nombres_fiador">
+                        </div>
+                        <div class="col-sm-2">
+                            <label class="control-label">Apellido Paterno</label>
+                            <input type="text" class="form-control input-sm datos-persona" readonly="readonly" id="apellido_paterno_fiador"
+                                name="apellido_paterno_fiador">
+                        </div>
+                        <div class="col-sm-2">
+                            <label class="control-label">Apellido Materno</label>
+                            <input type="text" class="form-control input-sm datos-persona" readonly="readonly" id="apellido_materno_fiador"
+                                name="apellido_materno_fiador">
+                        </div>
+                       
+                        <!-- <div class="col-sm-1" style="margin-top: 5px;">
+                            <label class="control-label"></label>
+                            <button type="button" id="btn_editar_fiador" data-tipo="fiador"
+                                class="btn btn-danger-admin btn-sm btn-editar-persona">
+                                <span class="fa fa-save"></span>
+                                Editar Fiador
+                            </button>
+                        </div> -->
+                    </div>
+                  
+                  
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <label class="control-label">Tipo Vivienda</label>
+                            <input type="text" class="form-control input-sm " id="tipo_vivienda_fiador"
+                                name="tipo_vivienda_fiador">
+                        </div>
+                        <div class="col-sm-3">
+                            <label class="control-label">Propietario</label>
+                            <input type="text" class="form-control input-sm " id="propietario_fiador"
+                                name="propietario_fiador">
+                        </div>
+                        <div class="col-sm-2">
+                            <label class="control-label">Monto Alquiler</label>
+                            
+                            <div class="input-group">
+                                <span class="input-group-addon input-sm">
+                                    <strong class="simbolo-moneda"></strong>
+                                </span>
+                                <input type="number" class="form-control input-sm " id="monto_alquiler_fiador"
+                                name="monto_alquiler_fiador">
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <label class="control-label">Profesión</label>
+                            <input type="text" class="form-control input-sm " id="profesion_fiador"
+                                name="profesion_fiador">
+                        </div>
+                       
+                    </div>
+                    <h5 class="linea"><span>Dependiente</span></h5>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label class="control-label">Centro Trabajo</label>
+                            <input type="text" class="form-control input-sm " id="centro_trabajo_fiador"
+                                name="centro_trabajo_fiador">
+                        </div>
+                        <div class="col-sm-2">
+                            <label class="control-label">Cargo</label>
+                            <input type="text" class="form-control input-sm " id="cargo_fiador" name="cargo_fiador">
+                        </div>
+                        <div class="col-sm-2">
+                            <label class="control-label">Tiempo Laboral (años)</label>
+                            <input type="text" class="form-control input-sm " id="tiempo_laboral_fiador"
+                                name="tiempo_laboral_fiador">
+                        </div>
+                        <div class="col-sm-3">
+                            <label class="control-label">Dirección Trabajo</label>
+                            <input type="text" class="form-control input-sm " id="direccion_trabajo_fiador"
+                                name="direccion_trabajo_fiador">
+                        </div>
+                        
+                    </div>
+                    <h5 class="linea"><span>Independiente</span></h5>
+                    <div class="row">
+                       
+                        <div class="col-sm-2">
+                            <label class="control-label">Razon Social Negocio</label>
+                            <input type="text" class="form-control input-sm " id="razon_social_negocio_fiador"
+                                name="razon_social_negocio_fiador">
+                        </div>
+                        <div class="col-sm-3">
+                            <label class="control-label">Actividad Negocio</label>
+                            <input type="text" class="form-control input-sm " id="actividad_negocio_fiador"
+                                name="actividad_negocio_fiador">
+                        </div>
+                        <div class="col-sm-3">
+                            <label class="control-label">Dirección Negocio</label>
+                            <input type="text" class="form-control input-sm " id="direccion_negocio_fiador"
+                                name="direccion_negocio_fiador">
+                        </div>
+                        <div class="col-sm-2">
+                            <label class="control-label">Cargo</label>
+                            <input type="text" class="form-control input-sm " id="cargo_independiente_fiador" name="cargo_independiente_fiador">
+                        </div>
+                        <div class="col-sm-2">
+                            <label class="control-label">Tiempo Laboral (años)</label>
+                            <input type="text" class="form-control input-sm " id="tiempo_laboral_independiente_fiador" name="tiempo_laboral_independiente_fiador">
+                        </div>
+                    </div>
+
+                    <h5 class="linea"><span>-.-</span></h5>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <label class="control-label">Ingreso Neto Mensual</label>
+                           
+                            <div class="input-group">
+                                <span class="input-group-addon input-sm">
+                                    <strong class="simbolo-moneda"></strong>
+                                </span>
+                                <input type="number" class="form-control input-sm " id="ingreso_neto_mensual_fiador"
+                                name="ingreso_neto_mensual_fiador">
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <label class="control-label">Ingreso Neto Conyugue</label>
+                         
+                            
+                            <div class="input-group">
+                                <span class="input-group-addon input-sm">
+                                    <strong class="simbolo-moneda"></strong>
+                                </span>
+                                <input type="number" class="form-control input-sm " id="ingreso_neto_conyugue_fiador"
+                                name="ingreso_neto_conyugue_fiador">
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <label class="control-label">Otros Ingresos</label>
+                          
+                            <div class="input-group">
+                                <span class="input-group-addon input-sm">
+                                    <strong class="simbolo-moneda"></strong>
+                                </span>
+                                <input type="number" class="form-control input-sm " id="otros_ingresos_fiador"
+                                name="otros_ingresos_fiador">
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <label class="control-label">Total Ingresos</label>
+                           
+                            <div class="input-group">
+                                <span class="input-group-addon input-sm">
+                                    <strong class="simbolo-moneda"></strong>
+                                </span>
+                                <input type="number" readonly="readonly" class="form-control input-sm " id="total_ingresos_fiador"
+                                name="total_ingresos_fiador">
+                            </div>
+                        </div>
+                    </div>
+                    <h5 class="linea"><span>Fiador/Conyugue</span></h5>
+                    <div class="row">
+                        <input type="hidden" name="idfiadorconyugue" id="idfiadorconyugue" />
+                        <div class="col-sm-2">
+                            <label class="control-label">Tipo Documento</label>
+                           
+                            <select id="tipo_documento_fiadorconyugue" name="tipo_documento_fiadorconyugue" class="form-control input-sm select-persona" disabled="disabled"></select>
+                        </div>
+                        <div class="col-sm-2">
+                            <label class="control-label">Documento</label>
+                            <input type="text" class="form-control input-sm documento-persona" data-tipo="fiadorconyugue" id="documento_fiadorconyugue"
+                                name="documento_fiadorconyugue">
+                        </div>
+                        <div class="col-sm-2">
+                            <label class="control-label">Nombres</label>
+                            <input type="text" class="form-control input-sm datos-persona" readonly="readonly" id="nombres_fiadorconyugue"
+                                name="nombres_fiadorconyugue">
+                        </div>
+                        <div class="col-sm-2">
+                            <label class="control-label">Apellido Paterno</label>
+                            <input type="text" class="form-control input-sm datos-persona" readonly="readonly" id="apellido_paterno_fiadorconyugue"
+                                name="apellido_paterno_fiadorconyugue">
+                        </div>
+                        <div class="col-sm-2">
+                            <label class="control-label">Apellido Materno</label>
+                            <input type="text" class="form-control input-sm datos-persona" readonly="readonly" id="apellido_materno_fiadorconyugue"
+                                name="apellido_materno_fiadorconyugue">
+                        </div>
+                       
+                        <!-- <div class="col-sm-1" style="margin-top: 5px;">
+                            <label class="control-label"></label>
+                            <button type="button" id="btn_editar_fiadorconyugue" data-tipo="fiadorconyugue"
+                                class="btn btn-danger-admin btn-sm btn-editar-persona">
+                                <span class="fa fa-save"></span>
+                                Editar <br>Fiador/Conyugue
+                            </button>
+                        </div> -->
+                    </div>
+
+
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <div style="float:right">
+                        <!-- <button type="button" id="" class="btn btn-info btn-sm btn_imprimir">
+                            <span class="fa fa-file-pdf-o"></span>
+                            Imprimir
+                        </button> -->
+                        <button type="button" id="refinanciamiento" class="btn btn-danger-admin btn-sm"
+                            ng-click="refinanciamiento()">
+                            <span class="fa fa-book"></span>
+                            Refinanciamiento
+                        </button>
+                        <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">
+                            <span class="fa fa-times"></span> Cerrar
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal" id="modal-refinanciamiento" role="dialog">
+    <div class="modal-dialog modal-sm" role="document">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title" id="">Generar Refinanciamiento</h4>
+            </div>
+            <form id="formulario-refinanciamiento">
+                <div class="modal-body">
+                    <div class="form-horizontal">
+
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                <label for="" class="control-label">Serie </label>
+                                <!-- <input type="text" id="serie_comprobante" name="serie_comprobante" class="form-control input-sm"> -->
+                                <select id="serie_comprobante" name="serie_comprobante"class="form-control input-sm"></select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="" class="">Número </label>
+                                <input type="text" id="numero_comprobante" name="numero_comprobante" class="form-control input-sm" readonly="readonly">
+                            </div>
+                            
+                            <label for="" class="control-label col-md-12">Fecha </label>
+                            <div class="col-md-12">
+                                <!-- <input type="text" id="serie_comprobante" name="serie_comprobante" class="form-control input-sm"> -->
+                                <input type="date" id="fecha_refinanciamiento" name="fecha_refinanciamiento" class="form-control input-sm">
+                            </div>
+                            <label for="" class="control-label col-md-12">Monto </label>
+                            <div class="col-md-12">
+                                <input type="text" id="monto_refinanciamiento" name="monto_refinanciamiento" class="form-control input-sm" readonly="readonly">
+                            </div>
+                            <div class="col-md-6">
+                                <center>
+                                    <label for="" class="control-label col-md-12" style="padding: 0;" >Calcular Intereses </label>
+                                    <div class="col-md-12" style="padding: 0;" >
+                                        <input type="checkbox" id="calcular_intereses" name="calcular_intereses" class="form-control input-sm i-checks">
+                                    </div>
+                                </center>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="" class="control-label col-md-12" style="padding: 0;" >N° Cuotas </label>
+                                <div class="col-md-12" style="padding: 0;" >
+                                    <input type="number" id="nrocuotas_refinanciamiento" name="nrocuotas_refinanciamiento" class="form-control input-sm" >
+                                </div>
+                            </div>
+                           
+                           
+
+                            
+                            <label class="col-sm-12 control-label">Valor Cuota</label>
+                            <div class="col-sm-12">
+                                <input type="number" readonly="readonly"
+                                    class="form-control input-sm " id="valor_cuota_refinanciamiento"
+                                    name="valor_cuota_refinanciamiento">
+                            </div>
+                    
+                            <label class="col-sm-12 control-label">Intereses</label>
+                            <div class="col-sm-12">
+                                <input type="number" readonly="readonly"
+                                    class="form-control input-sm" id="intereses_refinanciamiento"
+                                    name="intereses_refinanciamiento">
+                            </div>
+                        
+                        
+                            <label class="col-sm-12 control-label">Valor Cuota Final</label>
+                            <div class="col-sm-12">
+                                <input type="number" readonly="readonly"
+                                    class="form-control input-sm" id="valor_cuota_final_refinanciamiento" name="valor_cuota_final_refinanciamiento">
+                            </div>
+                           
+                            <label class="col-sm-12 control-label">Día Vencimiento Cuota</label>
+                            <div class="col-sm-12">
+                                <input type="number"
+                                    class="form-control input-sm montos-credito inputs-credito" id="dia_vencimiento_cuota_refinanciamiento" name="dia_vencimiento_cuota_refinanciamiento">
+                            </div>
+                         
+                        </div>
+                      
+                      
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger-admin btn-sm" ng-click="generar_refinanciamiento()" >Generar</button>
+                    <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">Cerrar</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+

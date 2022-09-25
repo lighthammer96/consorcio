@@ -1,0 +1,35 @@
+<div class="separator"></div>
+<div>
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active">
+            <a data-target="#expense0" aria-controls="expense0" role="tab"
+               data-toggle="tab">Proyectos</a>
+        </li>
+        <li role="presentation">
+            <a data-target="#expense1" aria-controls="expense1" role="tab"
+               data-toggle="tab">Consolidado MAT-MO</a>
+        </li>
+        <li role="presentation">
+            <a data-target="#expense2" aria-controls="expense2" role="tab"
+               data-toggle="tab">Gastos Generales</a>
+        </li>
+        <li role="presentation">
+            <a data-target="#expense3" aria-controls="expense3" role="tab"
+               data-toggle="tab">Transporte</a>
+        </li>
+    </ul>
+    <div class="tab-content expenses_">
+        <div role="tabpanel" class="tab-pane active" id="expense0">
+            <div ng-include src="'/templates/projects/expense0.html'"></div>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="expense1">
+            <div ng-include src="'/templates/projects/expense1.html'" class="table-responsive"></div>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="expense2">
+            <div ng-include src="'/templates/projects/expense2.html'" class="table-responsive"></div>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="expense3">
+            <div ng-include src="'/templates/projects/expense3.html'" class="table-responsive"></div>
+        </div>
+    </div>
+</div>

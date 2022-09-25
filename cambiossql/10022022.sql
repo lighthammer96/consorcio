@@ -1,0 +1,1 @@
+ALTER TABLE [dbo].[ERP_Venta] ADD [idventa_comprobante] int NULL;

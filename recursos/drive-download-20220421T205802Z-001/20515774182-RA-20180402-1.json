@@ -1,0 +1,21 @@
+{
+"baja":{
+    "fec_ref": "2018-03-02",
+	"identificador": "RA-20180402-1",	
+	"fec_gen": "2018-04-02",
+	"emisor": {
+      "tip_doc": 6,
+      "num_doc": "20515774182",
+      "raz_soc": "CORPORATION INTHERPHARMA SOCIEDAD ANONIMA CERRADA"      
+    },
+	"det": [
+    {
+      "nro_item": 1,
+      "tip_doc": "01",
+      "serie": "F001",
+      "correl": "00000001",
+	  "motivo": "CANCELACION"
+    }  
+	]
+}	
+}

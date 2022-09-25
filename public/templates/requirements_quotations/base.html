@@ -1,0 +1,40 @@
+<div class="panel panel-success">
+    <div class="panel-heading">
+        <div class="pull-right date_range_div">
+            <label class="checkbox-inline i-checks">
+                <input type="checkbox" checked class="chk_date_range" id="chk_date_range"/>
+            </label>
+            <div id="reqDates" class="">
+                <i class="fa fa-calendar"></i>&nbsp;
+                <span></span> <b class="caret"></b>
+            </div>
+        </div>
+        Gestión de Requerimientos vs Cotización
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="table_container_requirements_vs_contests" class="table-responsive"></div>
+                <br>
+                <div id="show_table_req_con" class="table-responsive hide">
+                    <table class="table table-bordered table-hover table-striped table-condensed"
+                    >
+                        <thead>
+                        <tr>
+                            <th>Concurso</th>
+                            <th>Cotización</th>
+                            <th>RUC</th>
+                            <th>Razón Social/Nombres</th>
+                            <th>Condición de pago</th>
+                            <th>Monto</th>
+                            <th>Estado</th>
+                        </tr>
+                        </thead>
+                        <tbody id="t_body_table_req_con"></tbody>
+                    </table>
+                </div>
+                <h3 id="show_no_req_con" class="hide">Este requerimiento no tiene concursos asociados</h3>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,56 @@
+{
+"resumen":{
+    "fec_ref": "2018-03-02",
+	"identificador": "RC-20180402-1",	
+	"fec_gen": "2018-04-02",
+	"emisor": {
+      "tip_doc": 6,
+      "num_doc": "20515774182",
+      "raz_soc": "CORPORATION INTHERPHARMA SOCIEDAD ANONIMA CERRADA"      
+    },
+	"det": [
+    {
+      "nro_item": 1,
+      "tip_doc": "07",
+      "serie": "BC01",
+      "correl": "1",	  
+	  "estado": "1",
+	  "cod_mon": "PEN",
+	  "adquiriente": {
+        "tip_doc": "6",
+        "num_doc": "10102143685"      
+	  },
+	  "docmodif": {
+		"tip_doc": "03",
+		"serie_correl": "B001-00000001"		
+	  },	  
+	  "tot": {
+        "grav": "348199.15",        
+        "exo": "12350.00",
+        "grat": "30.00",
+        "igv": "62675.85",        
+        "imp_tot": "423225.00" 
+	  }
+    },
+	{
+      "nro_item": 2,
+      "tip_doc": "03",
+      "serie": "B001",
+      "correl": "1",	  
+	  "estado": "1",
+	  "cod_mon": "PEN",
+	  "adquiriente": {
+        "tip_doc": "6",
+        "num_doc": "10102143685"      
+	  },
+	  "tot": {
+        "grav": "348199.15",        
+        "exo": "12350.00",
+        "grat": "30.00",                        
+        "igv": "62675.85",        
+        "imp_tot": "423225.00" 
+	  }
+    }
+	]
+}	
+}

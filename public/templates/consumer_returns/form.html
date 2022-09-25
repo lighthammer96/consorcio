@@ -1,0 +1,119 @@
+<!-- Modal -->
+<div class="modal" id="modalCR" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="title-cr"></h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <input type="hidden" id="cr_consumer_return_id">
+                        <label class="col-sm-2 control-label">Fecha Devolución</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control input-sm" id="cr_date">
+                        </div>
+                        <div class="col-md-1"></div>
+                        <label class="col-sm-2 control-label">Usuario</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control input-sm" id="cr_name" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Almacén</label>
+                        <div class="col-sm-3">
+                            <select id="cr_warehouse_id" class="form-control input-sm" style="width: 100%"></select>
+                        </div>
+                        <div class="col-md-1"></div>
+                        <label class="col-sm-2 control-label">Observación</label>
+                        <div class="col-sm-4">
+                            <textarea id="cr_observation" class="form-control input-sm" rows="2"
+                                      placeholder="Observación"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">Proyecto</label>
+                        <div class="col-sm-3">
+                            <div class="input-group">
+                                <input id="cr_project_id" type="hidden">
+                                <input id="cr_project_code" type="text" readonly class="form-control input-sm">
+                                <span class="input-group-btn">
+                                    <button id="cr_button_project" class="btn btn-success btn-sm" type="button"
+                                            ng-click="openProject()">
+                                        <span class="fa fa-search-plus"></span>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <input id="cr_project_description" type="text" readonly class="form-control input-sm">
+                        </div>
+                        <label class="col-sm-1 control-label">Frente</label>
+                        <div class="col-sm-4">
+                            <div class="input-group">
+                                <input id="cr_front_id" type="hidden">
+                                <input id="cr_front_description" type="text" class="form-control input-sm"
+                                       readonly="">
+                                <span class="input-group-btn">
+                                    <button id="cr_button_front" class="btn btn-success btn-sm" type="button"
+                                            ng-click="openFront()">
+                                        <span class="fa fa-search-plus"></span>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>Artículo</th>
+                                        <th>Unidad</th>
+                                        <th>Costo (S/.)</th>
+                                        <th>Cant. Devolución</th>
+                                        <th style="width: 14%">Cant.</th>
+                                        <th style="width: 3%"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="cr_detail_consumer_return"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <button id="cr_button_articles" class="btn btn-success btn-sm" type="button"
+                                    ng-click="openArticles()">
+                                <span class="fa fa-search-plus"></span>
+                                Buscar Artículos
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="cr_button_saveConsumerProcess" type="button" class="btn btn-warning"
+                        ng-click="saveConsumerProcess()">
+                    <span class="fa fa-save"></span>
+                    Procesar
+                </button>
+
+                <button id="cr_button_saveConsumer" type="button" class="btn btn-success"
+                        ng-click="saveConsumer()">
+                    <span class="fa fa-save"></span>
+                    Guardar
+                </button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">
+                    <span class="fa fa-times"></span> Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+

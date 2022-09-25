@@ -1,0 +1,1 @@
+ALTER TABLE [dbo].[ERP_Compania] ADD [ruta_logo] varchar(255) NULL;

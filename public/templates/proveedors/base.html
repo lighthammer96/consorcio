@@ -1,0 +1,219 @@
+<div class="panel panel-danger-admin">
+    <div class="panel-heading">
+        Gestión de Proveedores
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="table_container_Proveedor" class="table-responsive"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="modaClientes" role="dialog" style="overflow-y: scroll;">
+    <div class="modal-dialog" role="document">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title" id="titleModalClientes"></h4>
+        </div>
+        <div class="modal-body">
+              <div class="form-horizontal">
+                 <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <input type="hidden" class="form-control input-sm " id="cliente_id" >
+                            <input type="hidden" class="form-control input-sm " id="nombreD" >
+                            <input type="hidden" class="form-control input-sm " id="apellidoPaternoD" >
+                            <input type="hidden" class="form-control input-sm " id="apellidoMaternoD" >
+                            <input type="hidden" class="form-control input-sm " id="razonsocial_clienteD" >
+                            <label class="col-sm-2 control-label">Tipo Documento</label>
+                            <div class="col-sm-4">
+                                 <select id="tipodoc" class="form-control input-sm" ></select>
+                            </div>
+                            <label class="col-sm-2 control-label">Documento</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control input-sm " id="documento" maxlength="11">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Tipo Proveedor</label>
+                            <div class="col-sm-4">
+                                <select id="id_tipocli" class="form-control input-sm"></select>
+                            </div>
+                            <label class="col-sm-2 control-label">Tipo Doc. de Venta</label>
+                            <div class="col-sm-4">
+                                <select id="id_tipoDoc_Venta" class="form-control input-sm"></select>
+                            </div>
+                           
+                        </div>
+                        <div class="form-group">
+                             <input type="hidden" class="form-control input-sm " id="tienda_id" >
+                            <label class="col-sm-2 control-label">Razon Social</label>
+                            <div class="col-sm-10">
+                                 <input id="razonsocial" class="form-control input-sm" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" class="form-control input-sm " id="tienda_id" >
+                            <label class="col-sm-2 control-label">Dirección</label>
+                            <div class="col-sm-10">
+                                 <input id="direccion" class="form-control input-sm" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Contacto</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control input-sm " id="contacto">
+                            </div>
+                            <label class="col-sm-2 control-label">Correo</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control input-sm " id="correo_electronico">
+                            </div>
+                           
+                        </div>
+                        <div class="form-group">
+                             <input type="hidden" class="form-control input-sm " id="tienda_id" >
+                            <label class="col-sm-2 control-label">Celular</label>
+                            <div class="col-sm-4">
+                                 <input id="celular" class="form-control input-sm" />
+                            </div>
+                            <label class="col-sm-2 control-label">Teléfono</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control input-sm " id="telefono">
+                            </div>
+                          
+                        </div>
+                        <div class="form-group">
+                              <label class="col-sm-2 control-label">Departamento</label>
+                            <div class="col-sm-4">
+                                <select id="departamento" class="form-control input-sm" ></select>
+                            </div>
+                            <label class="col-sm-2 control-label">Provincia</label>
+                            <div class="col-sm-4">
+                                <select id="provincia" class="form-control input-sm"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Distrito</label>
+                            <div class="col-sm-4">
+                                <select id="distrito" class="form-control input-sm"></select>
+                            </div>
+                             <label class="col-sm-2 control-label">Estado Civil</label>
+                                        <div class="col-sm-4">
+                                            <select class="form-control input-sm" id="cEstadoCivil">
+                                                <option value="">Seleccionar</option>
+                                                <option value="S">Soltero</option>
+                                                <option value="C">Casado</option>
+                                                <option value="D">Divorciado</option>
+                                                <option value="V">Viudo</option>
+                                                <option value="X">Conviviente</option>
+                                            </select>
+                                        </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Impuesto</label>
+                            <div class="col-sm-1">
+                                <label class="checkbox-inline i-checks">
+                                    <input type="checkbox" id="impuesto" checked>
+                                </label>
+                            </div>
+                            <label class="col-sm-2 control-label">Congelado</label>
+                            <div class="col-sm-1">
+                                <label class="checkbox-inline i-checks">
+                                    <input type="checkbox" id="congelado" checked>
+                                </label>
+                            </div>
+                            <label class="col-sm-2 control-label">Activo</label>
+                            <div class="col-sm-1">
+                                <label class="checkbox-inline i-checks">
+                                    <input type="checkbox" id="activo" checked>
+                                </label>
+                            </div>
+                        </div> 
+                       
+                        <div class="form-group">
+                            <div class="col-sm-4">
+                                <button type="button" id="btn_agregarCuenta" class="btn btn-danger-admin btn-sm">
+                                 Agregar Cuenta <span class="fa fa-plus"></span>
+                                </button> 
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-hover" >
+                                    <thead>
+                                    <tr>
+                                        <th>Banco</th>
+                                        <th>Moneda</th>
+                                        <th>Descripción</th>
+                                        <th>Nro Cuenta</th>
+                                        <th width="50px"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="w_contable_detalle"></tbody>
+                                </table>
+                            </div> 
+                        </div>
+                    </div>
+                 </div>   
+              </div>  
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-danger-admin btn-sm" ng-click="saveCliente()" >Guardar</button>  
+        <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  <div class="modal" id="modalDetalle" role="dialog">
+    <div class="modal-dialog" role="document">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title" id="title">Cuentas de Banco</h4>
+        </div>
+        <div class="modal-body">
+              <div class="form-horizontal">
+                 <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Banco</label>
+                            <div class="col-sm-3">
+                                <select id="idBanco" name="idBanco" class="form-control input-sm"></select>
+                            </div>
+                            <label class="col-sm-2 control-label">Moneda</label>
+                            <div class="col-sm-4">
+                                <select id="idMoneda" name="idMoneda" class="form-control input-sm"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Nro Cuenta</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control input-sm" id="nro_cuenta">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Descripcion</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control input-sm" id="descripcion_banco">
+                            </div>
+                        </div>
+                       
+                    </div>
+                 </div>   
+              </div>  
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-danger-admin btn-sm" ng-click="AgregarTable()" >Agregar</button>  
+        <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+      
+    </div>
+</div>

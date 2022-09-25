@@ -1,0 +1,35 @@
+<div class="modal" id="modalLevel" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="p_title_modal_level"></h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <div class="form-group">
+                        <input type="hidden" id="p_sp_id_level">
+                        <input type="hidden" id="p_sp_prev_level">
+                        <input type="text" class="form-control input-sm" id="p_sp_code_level"
+                               placeholder="Código del Nivel">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control input-sm" id="p_sp_name_level"
+                               placeholder="Nombre del Nivel">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" ng-click="saveLevelSP()">
+                    <span class="fa fa-save"></span>
+                    Guardar
+                </button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">
+                    <span class="fa fa-times"></span> Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

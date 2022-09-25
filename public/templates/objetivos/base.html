@@ -1,0 +1,163 @@
+<div class="panel panel-danger-admin">
+    <div class="panel-heading">
+        Gestión de Objetivos
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="table_container_objetivo" class="table-responsive"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="modalObjetivos" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="titlemodalObjetivos"></h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <input type="hidden" id="id_objetivo">
+                        <label class="col-sm-2 control-label">Descripción</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control input-sm" id="descripcion">
+                        </div>
+                        <label class="col-sm-3 control-label">Tipo Objetivo</label>
+                        <div class="col-sm-3">
+                          <select class="form-control input-sm" id="id_tipoobj">
+                          </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Estado</label>
+                        <div class="col-sm-4">
+                            <select class="form-control input-sm" id="iEstado" disabled>
+                                <option value=""></option>
+                                <option value="0">Registrado</option>
+                                <option value="1">Aprobado</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-3 control-label">Moneda</label>
+                        <div class="col-sm-3">
+                            <select class="form-control input-sm" id="IdMoneda">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Año</label>
+                        <div class="col-sm-4">
+                            <input type="text" onkeypress="return soloNumeros(event)"   maxlength="4" class="form-control input-sm" id="nAno">
+                        </div>
+                    </div>
+                     <br>
+                        <div class="form-group">
+                            <div class="col-sm-4">
+                            <button type="button" class="btn btn-danger-admin btn-sm" ng-click="addDetalle_objetivo()" >Agregar Detalle</button> 
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-hover" id="tabla_contable-detalle">
+                                    <thead>
+                                    <tr>
+                                        <th>Período</th>
+                                        <th>Tipo Persona</th>
+                                        <th>Persona</th>
+                                        <th width="60px" height="25px">Cantidad</th>
+                                        <th width="60px" height="25px">Monto</th>
+                                        <th width="50px"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="w_objetivo_detalle"></tbody>
+                                </table>
+                        </div> 
+                </div>
+            </div>
+            <div class="modal-footer">
+                 <button type="button"  id="btn_aprobar" class="btn btn-info btn-sm" disabled ng-click="Aprobar_objetivo()">
+                    <span class="fa fa-save"></span>
+                    Aprobar
+            </button>
+                <button type="button" id="btn_guardar_objetivo" class="btn btn-sm btn-danger-admin" ng-click="saveObjetivo()">
+
+                    <span class="fa fa-save"></span>
+                    Guardar
+                </button>
+                <button type="button" class="btn btn-sm btn-success" data-dismiss="modal">
+                    <span class="fa fa-times"></span> Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="modalDetalle" role="dialog">
+    <div class="modal-dialog" role="document">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title" id="title">Detalle Objetivos</h4>
+        </div>
+        <div class="modal-body">
+              <div class="form-horizontal">
+                 <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Periodo</label>
+                            <div class="col-sm-3">
+                                <select id="nPeriodo" name="nPeriodo" class="form-control input-sm">
+                                    <option value="">Seleccionar</option>
+                                    <option value="1">Enero</option>
+                                    <option value="2">Febrero</option>
+                                    <option value="3">Marzo</option>
+                                    <option value="4">Abril</option>
+                                    <option value="5">Mayo</option>
+                                    <option value="6">Junio</option>
+                                    <option value="7">Julio</option>
+                                    <option value="8">Agosto</option>
+                                    <option value="9">Septiembre</option>
+                                    <option value="10">Obtubre</option>
+                                    <option value="11">Noviembre</option>
+                                    <option value="12">Diciembre</option>
+                                </select>
+                            </div>
+                            <label class="col-sm-2 control-label">Tipo Persona</label>
+                            <div class="col-sm-4">
+                                   <select id="id_TipoPers" name="id_TipoPers" class="form-control input-sm"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Persona</label>
+                            <div class="col-sm-3">
+                                 <select id="id_Persona" name="nOperacion" style="width: 100%;" class="form-control input-sm"></select>
+                            </div>
+                            <label class="col-sm-2 control-label">Cantidad</label>
+                            <div class="col-sm-4">
+                                <input type="text" onkeypress="return soloNumeros(event)"   class="form-control input-sm" id="nCant">
+                            </div>
+                        </div>
+                         <div class="form-group">
+                            <label class="col-sm-3 control-label">Monto</label>
+                            <div class="col-sm-3">
+                                <input type="number"  min="1" class="form-control input-sm" id="nMonto">
+                            </div>
+                        </div>
+
+                    </div>
+                 </div>   
+              </div>  
+        </div>
+        <div class="modal-footer">
+          
+        <button type="button" class="btn btn-danger-admin btn-sm" ng-click="AgregarTable()" >Agregar</button>  
+        <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+      
+    </div>
+</div

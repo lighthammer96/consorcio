@@ -1,0 +1,271 @@
+<!-- Modal -->
+<div class="modal" id="modalProviders" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Agregar Cotización Proveedor</h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active">
+                            <a data-target="#tab11" aria-controls="tab11" role="tab" data-toggle="tab">General</a>
+                        </li>
+                        <li role="presentation">
+                            <a data-target="#tab12" aria-controls="tab12" role="tab" data-toggle="tab">Proveedor</a>
+                        </li>
+                        <li role="presentation">
+                            <a data-target="#tab13" aria-controls="tab13" role="tab" data-toggle="tab">Detalle</a>
+                        </li>
+                        <li role="presentation">
+                            <a data-target="#tab14" aria-controls="tab14" role="tab" data-toggle="tab">Auditoría</a>
+                        </li>
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="tab11">
+                            <div class="separator"></div>
+                            <div class="form-horizontal">
+                                <div class="row">
+                                    <div class="col-md-7">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Número</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control input-sm" id="q_p_number">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Fecha Emisión</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control input-sm" readonly id="q_p_date_emission">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Días Entrega</label>
+                                            <div class="col-sm-2">
+                                                <input type="text" class="form-control input-sm" id="q_p_delivery_days"
+                                                       onkeypress="return soloNumeros(event)">
+                                            </div>
+                                            <label class="col-sm-2 control-label">Fecha Entrega</label>
+                                            <div class="col-sm-2">
+                                                <input type="text" class="form-control input-sm" id="q_p_delivery_date">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Adjuntar</label>
+                                            <div class="col-sm-10">
+                                                <input id="q_p_file_add" type="file" class="file" data-show-preview="false"
+                                                       accept=".xlsx,.xls,image/*,.doc,.docx,.ppt,.pptx,.txt,.pdf">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="tab12">
+                            <div class="separator"></div>
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">RUC</label>
+                                    <div class="col-sm-3">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control input-sm" readonly
+                                                   id="q_p_ruc">
+                                            <div class="input-group-btn">
+                                                <button class="btn btn-success btn-sm" type="button"
+                                                        ng-click="openListProvidersContest()">
+                                                    <span class="fa fa-search-plus"></span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <label class="col-md-offset-2 col-sm-2 control-label">Condición de Pago</label>
+                                    <div class="col-sm-3">
+                                        <select class="form-control input-sm" id="q_p_payment_condition"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Razón Social</label>
+                                    <div class="col-sm-5">
+                                        <input type="text" class="form-control input-sm" readonly
+                                               id="q_p_business_name">
+                                    </div>
+                                    <label class="col-sm-2 control-label">Adelanto Pago</label>
+                                    <div class="col-sm-2">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control input-sm"
+                                                   id="q_p_payment_advance" onkeypress="return soloNumeros(event)">
+                                            <span class="input-group-addon input-group_sm">%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Dirección Proveedor</label>
+                                    <div class="col-sm-5">
+                                        <input type="text" class="form-control input-sm" readonly
+                                               id="q_p_address_provider">
+                                    </div>
+                                    <label class="col-sm-2 control-label">Fecha Envío</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control input-sm"
+                                               id="q_p_date_send">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Contacto</label>
+                                    <div class="col-sm-5">
+                                        <input type="text" class="form-control input-sm" readonly
+                                               id="q_p_contact">
+                                    </div>
+                                    <label class="col-sm-2 control-label">Teléfono Contacto</label>
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control input-sm" readonly
+                                               id="q_p_contact_phone">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="tab13">
+                            <div class="separator"></div>
+                            <div class="table-responsive">
+                                <table class="table-condensed">
+                                    <tbody>
+                                    <tr>
+                                        <td></td>
+                                        <td>Moneda</td>
+                                        <td>
+                                            <select class="form-control input-sm" id="q_p_currency"></select>
+                                        </td>
+                                        <th>Moneda Local</th>
+                                        <th>Moneda Dólar</th>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>Subtotal</td>
+                                        <td>
+                                            <input type="text" class="form-control input-sm text-right"
+                                                   id="q_p_subtotal" readonly>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control input-sm text-right"
+                                                   id="q_p_subtotal_local" readonly>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control input-sm text-right"
+                                                   id="q_p_subtotal_dollar" readonly>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label class="checkbox-inline i-checks">
+                                                <input type="checkbox" checked id="q_p_igv_checked" />
+                                                Con IGV
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <input type="text" readonly class="form-control input-sm text-right"
+                                                   style="width: 50px; display: inline-block" id="q_p_igv_percentage">
+                                            <span>% IGV</span>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control input-sm text-right"
+                                                   id="q_p_igv" readonly>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control input-sm text-right"
+                                                   id="q_p_igv_local" readonly>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control input-sm text-right"
+                                                   id="q_p_igv_dollar" readonly>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>Total</td>
+                                        <td>
+                                            <input type="text" class="form-control input-sm text-right"
+                                                   id="q_p_total" readonly>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control input-sm text-right"
+                                                   id="q_p_total_local" readonly>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control input-sm text-right"
+                                                   id="q_p_total_dollar" readonly>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="form-horizontal">
+                                <button class="btn btn-success btn-sm" type="button" ng-click="addItemQuotationProvider()">
+                                    <span class="fa fa-plus-circle"></span>
+                                    Agregar Items
+                                </button>
+                                <div class="separator"></div>
+                                <div class="form-group">
+                                    <div class="col-sm-12 table-responsive">
+                                        <table class="table table-bordered table-striped table-hover">
+                                            <thead>
+                                            <tr>
+                                                <th width="10px"></th>
+                                                <th width="10px">Item</th>
+                                                <th>Descripción</th>
+                                                <th width="60px">U.M.</th>
+                                                <th width="60px">Marca</th>
+                                                <th width="60px">Precio Compra</th>
+                                                <th width="60px">Cant.</th>
+                                                <th width="60px">Precio</th>
+                                                <th width="60px">Subtotal</th>
+                                                <th width="60px">% Dscto.</th>
+                                                <th width="60px">Dscto</th>
+                                                <th width="60px">Total</th>
+                                                <th width="60px">Total local</th>
+                                                <th width="60px">Total dólar</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="q_p_table_items_provider"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="tab14">
+                            <div class="separator"></div>
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Solicitado por</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control input-sm" id="q_p_user_request" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Fecha de solicitación</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control input-sm" id="q_p_date_request" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" ng-click="saveQuotationProvider()">
+                    <span class="fa fa-save"></span>
+                    Guardar
+                </button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">
+                    <span class="fa fa-times"></span> Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

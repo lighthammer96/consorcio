@@ -1,0 +1,361 @@
+<!-- Modal -->
+<div class="modal" id="modalPO" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Ver Orden de Compra</h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"
+                                   style="text-align: right !important;">O/C Interna</label>
+                            <div class="col-sm-3">
+                                <div class="input-group input-group-sm">
+                                    <input type="text" class="form-control" readonly value="0001" style="width: 35%">
+                                    <input type="text" class="form-control" readonly value="20170504" style="width: 65%">
+                                </div>
+                            </div>
+                            <label class="col-sm-1 control-label"
+                                   style="text-align: right !important;">Estado</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control input-sm" readonly value="Aprobado">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active">
+                            <a data-target="#tab1" aria-controls="tab1" role="tab" data-toggle="tab">General</a>
+                        </li>
+                        <li role="presentation">
+                            <a data-target="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">Proveedor</a>
+                        </li>
+                        <li role="presentation">
+                            <a data-target="#tab3" aria-controls="tab3" role="tab" data-toggle="tab">Recepción</a>
+                        </li>
+                        <li role="presentation">
+                            <a data-target="#tab4" aria-controls="tab4" role="tab" data-toggle="tab">Detalles</a>
+                        </li>
+                        <li role="presentation">
+                            <a data-target="#tab5" aria-controls="tab5" role="tab" data-toggle="tab">Auditoría</a>
+                        </li>
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="tab1">
+                            <br>
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Nro.Cotización</label>
+                                    <div class="col-sm-4">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control input-sm" readonly>
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-danger btn-sm" type="button">
+                                                    <span class="fa fa-file-pdf-o"></span>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Nro.Cotización del Proveedor</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control input-sm" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Fecha Emisión</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control input-sm" readonly value="02/04/2017">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Fecha Envío</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control input-sm" readonly value="07/04/2017">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Proyecto</label>
+                                    <div class="col-sm-4">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control input-sm" value="00025" readonly
+                                                   style="width: 30%">
+                                            <textarea type="text" class="form-control input-sm" rows="2" readonly
+                                                      style="width: 70%">INVERSIONES-TALLER</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Observaciones</label>
+                                    <div class="col-sm-4">
+                                        <div class="input-group">
+                                            <textarea type="text" class="form-control input-sm" rows="2" readonly></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="tab2">
+                            <br>
+                            <div class="form-horizontal">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">Proveedor</label>
+                                            <div class="col-sm-9">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control input-sm" readonly value="20390932864"
+                                                           style="width: 30%">
+                                                    <input type="text" class="form-control input-sm" readonly
+                                                           value="IMPORTACIONES GELCO" style="width: 70%">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">Contacto</label>
+                                            <div class="col-sm-3">
+                                                <select class="form-control input-sm" readonly=""></select>
+                                            </div>
+                                            <label class="col-sm-3 control-label">Teléfono Contacto</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control input-sm" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">Dirección</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control input-sm" readonly
+                                                       value="AV. PANAMERICANA SUR KM 18.5 MZ. D LT. 11B VILLA EL">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">Condición Pago</label>
+                                            <div class="col-sm-4">
+                                                <select class="form-control input-sm" readonly="">
+                                                    <option value="">LETRA 30 DIAS</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">Adelanto Pago</label>
+                                            <div class="col-sm-4">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control input-sm" readonly>
+                                                    <span class="input-group-addon">%</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">Moneda</label>
+                                            <div class="col-sm-4">
+                                                <select class="form-control input-sm" readonly>
+                                                    <option value="">SOLES</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">Descuento</label>
+                                            <div class="col-sm-4">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control input-sm" readonly>
+                                                    <span class="input-group-addon">%</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="tab3">
+                            <br>
+                            <div class="form-horizontal">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">Lugar Entrega</label>
+                                            <div class="col-sm-9">
+                                                <select class="form-control input-sm" readonly="">
+                                                    <option value="">LOCAL PRINCIPAL</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">Días Entrega</label>
+                                            <div class="col-sm-2">
+                                                <input type="text" class="form-control input-sm" value="1" readonly>
+                                            </div>
+                                            <label class="col-sm-3 control-label">Fecha Entrega</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control input-sm" value="03/04/2017" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="tab4">
+                            <br>
+                            <div class="form-horizontal">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-md-offset-3 col-sm-4 control-label">Subtotal</label>
+                                            <div class="col-sm-5">
+                                                <input type="text" class="form-control input-sm text-right" value="2,277.00" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-offset-3 col-sm-4">
+                                                <input type="text" readonly value="18" class="form-control input-sm text-right"
+                                                       style="width: 50px; display: inline-block">
+                                                <b>% IGV</b>
+                                            </div>
+                                            <div class="col-sm-5">
+                                                <input type="text" class="form-control input-sm text-right" value="409.86" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-3">
+                                                <div class="checkbox" readonly="">
+                                                    <label>
+                                                        <input type="checkbox"> Importación
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <input type="text" readonly class="form-control input-sm">
+                                            </div>
+                                            <div class="col-sm-5">
+                                                <input type="text" class="form-control input-sm text-right" value=".00" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-3">
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <input type="checkbox" readonly checked> Con IGV
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <label class="col-sm-4 control-label">Total</label>
+                                            <div class="col-sm-5">
+                                                <input type="text" class="form-control input-sm text-right" value="2,686.86" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-striped table-hover">
+                                                <thead>
+                                                <tr>
+                                                    <th>Item</th>
+                                                    <th>Artículo</th>
+                                                    <th>Marca</th>
+                                                    <th>Cant.</th>
+                                                    <th>Precio</th>
+                                                    <th>% Dscto.</th>
+                                                    <th>Dscto</th>
+                                                    <th>Precio Compra</th>
+                                                    <th>Total</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td>01</td>
+                                                    <td>ESCALERA EMBONABLE DE 6 PASOS</td>
+                                                    <td></td>
+                                                    <td class="text-right">3</td>
+                                                    <td class="text-right">462.00</td>
+                                                    <td class="text-right">0.00</td>
+                                                    <td class="text-right">.00</td>
+                                                    <td class="text-right">462.00</td>
+                                                    <td class="text-right">1,386.00</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>02</td>
+                                                    <td>ESCALERA EMBONABLE DE 4 PASOS</td>
+                                                    <td></td>
+                                                    <td class="text-right">3</td>
+                                                    <td class="text-right">297.00</td>
+                                                    <td class="text-right">0.00</td>
+                                                    <td class="text-right">.00</td>
+                                                    <td class="text-right">29.00</td>
+                                                    <td class="text-right">891.00</td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td class="text-right">2,277.00</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="tab5">
+                            <br>
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Solicitado por</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control input-sm" readonly value="JARRISON MORI"">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Fecha de solicitación</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control input-sm" readonly value="01/04/2017"">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Aprobado por</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control input-sm" readonly value="JOSE MEDINA"">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Fecha de aprobación</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control input-sm" readonly value="02/04/2017"">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info">
+                    <span class="fa fa-check"></span>
+                    Aprobar
+                </button>
+                <button type="button" class="btn btn-primary">
+                    <span class="fa fa-times-circle-o"></span>
+                    Rechazar
+                </button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                    <span class="fa fa-times"></span>
+                    Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

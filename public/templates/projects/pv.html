@@ -1,0 +1,130 @@
+<div class="form-horizontal show_edit_level hide">
+    <div class="form-group">
+        <label class="col-sm-2 control-label show_1">Material</label>
+        <label class="col-sm-2 control-label show_2">Actividad</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control input-sm show_1" readonly
+                   value="POSTES Y ESTRUCTURAS">
+            <input type="text" class="form-control input-sm show_2" readonly
+                   value="EXCAVACION DE HOYOS">
+        </div>
+        <div class="col-sm-4 show_pv1">
+            <button class="btn btn-sm btn-success show_1">
+                Agregar Material
+            </button>
+            <button class="btn btn-sm btn-danger show_1">
+                Eliminar Material
+            </button>
+            <button class="btn btn-sm btn-success show_2">
+                Guardar Actividad
+            </button>
+        </div>
+    </div>
+</div>
+<div class="table-responsive hide info_income_1">
+    <table class="table table-bordered table-hovered table-striped">
+        <thead>
+        <tr>
+            <th class="text-center" rowspan="2">Item</th>
+            <th class="text-center" rowspan="2">Código</th>
+            <th class="text-center" rowspan="2">Descripcion</th>
+            <th class="text-center" rowspan="2">Und</th>
+            <th class="text-center" colspan="3">LB (Linea Base)</th>
+            <th class="text-center show_edit_level hide" colspan="3">PV (Replanteo)</th>
+        </tr>
+        <tr>
+            <th class="text-center" width="80px">Precio</th>
+            <th class="text-center" width="80px">Cantidad</th>
+            <th class="text-center" width="70px">Total</th>
+            <th class="text-center show_edit_level hide" width="80px">Precio</th>
+            <th class="text-center show_edit_level hide" width="80px">Cantidad</th>
+            <th class="text-center show_edit_level hide">Total</th>
+        </tr>
+        </thead>
+        <tbody id="p_income_list_materials"></tbody>
+        <tfoot>
+        <tr>
+            <th colspan="6" class="text-right">Total Material</th>
+            <th class="text-right" id="p_income_total_materials"></th>
+            <th colspan="2" class="text-right show_edit_level hide">Total Material</th>
+            <th class="text-right  show_edit_level hide"></th>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+<div class="hide info_income_2">
+    <div class="table-responsive">
+        <table class="table table-bordered p_inc_table_activity">
+            <thead>
+            <tr>
+                <th colspan="4">LB (Linea Base)</th>
+                <th class="show_edit_level hide" colspan="4">PV (Replanteo)</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th>Cantidad</th>
+                <th width="120px">Unidad</th>
+                <th>Precio</th>
+                <th>Total</th>
+                <th class="show_edit_level hide">Cantidad</th>
+                <th class="show_edit_level hide" width="120px">Unidad</th>
+                <th class="show_edit_level hide">Precio</th>
+                <th class="show_edit_level hide">Total</th>
+            </tr>
+            <tr>
+                <td><input type="text" class="form-control input-sm text-right inp_show_approval" id="p_inc_q_lb_activity"
+                           onblur="roundDecimals(this, 2)" onkeypress="return validDecimals(event, this, 3)"
+                           onclick="this.select()" /></td>
+                <td><select class="form-control input-sm inp_show_approval" id="p_inc_u_lb_activity"></select></td>
+                <td><input type="text" class="form-control input-sm text-right" readonly id="p_inc_p_lb_activity" /></td>
+                <td><input type="text" class="form-control input-sm text-right" readonly id="p_inc_t_lb_activity" /></td>
+
+                <td class="show_edit_level hide"><input type="text" class="form-control input-sm text-right"
+                           id="p_inc_q_pv_activity" /></td>
+                <td class="show_edit_level hide"><select class="form-control input-sm"
+                            id="p_inc_u_pv_activity"></select></td>
+                <td class="show_edit_level hide"><input type="text" class="form-control input-sm text-right" readonly
+                           id="p_inc_p_pv_activity" /></td>
+                <td class="show_edit_level hide"><input type="text" class="form-control input-sm text-right" readonly
+                           id="p_inc_t_pv_activity" /></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-right">
+        <button class="btn btn-sm btn-primary" type="button" ng-click="showAnalysisIncome()">
+            Análisis de precios unitarios
+        </button>
+    </div>
+    <div class="separator"></div>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hovered table-striped">
+            <thead>
+            <tr>
+                <th colspan="7">SUBTOTALES</th>
+            </tr>
+            <tr>
+                <th>REND.</th>
+                <th>HH.</th>
+                <th>HM.</th>
+                <th>MO.</th>
+                <th>MAT.</th>
+                <th>EQ.</th>
+                <th>SC.</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr id="p_inc_show_totals_apu">
+                <td class="text-right" id="p_inc_p_rend"></td>
+                <td class="text-right" id="p_inc_p_hh"></td>
+                <td class="text-right" id="p_inc_p_hm"></td>
+                <td class="text-right" id="p_inc_p_mo"></td>
+                <td class="text-right" id="p_inc_p_mat"></td>
+                <td class="text-right" id="p_inc_p_eq"></td>
+                <td class="text-right" id="p_inc_p_sc"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

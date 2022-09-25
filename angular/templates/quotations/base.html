@@ -1,0 +1,28 @@
+<div class="panel panel-success">
+    <div class="panel-heading">
+        <div class="pull-right date_range_div">
+            <label class="checkbox-inline i-checks">
+                <input type="checkbox" checked class="chk_date_range" id="chk_date_range" />
+            </label>
+            <div id="reqDates" class="">
+                <i class="fa fa-calendar"></i>&nbsp;
+                <span></span> <b class="caret"></b>
+            </div>
+        </div>
+        Gestión de Concursos
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="table_container_q" class="table-responsive"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div ng-include src="'/templates/quotations/form.html'"></div>
+<div ng-include src="'/templates/quotations/requirements.html'"></div>
+<div ng-include src="'/templates/quotations/providers.html'"></div>
+<div ng-include src="'/templates/quotations/providers_list.html'"></div>
+<div ng-include src="'/templates/quotations/providers_items.html'"></div>
+<div ng-include src="'/templates/quotations/comparation.html'"></div>
+<div ng-include src="'/templates/quotations/pdf.html'"></div>

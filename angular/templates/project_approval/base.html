@@ -1,0 +1,24 @@
+<div class="panel panel-success">
+    <div class="panel-heading">
+        <div class="pull-right date_range_div">
+            <label class="checkbox-inline i-checks">
+                <input type="checkbox" checked class="chk_date_range" />
+            </label>
+            <div id="reqDates" class="">
+                <i class="fa fa-calendar"></i>&nbsp;
+                <span></span> <b class="caret"></b>
+            </div>
+        </div>
+        Gestión de Aprobación de Proyectos
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="table_container_pa" class="table-responsive"></div>
+            </div>
+        </div>
+        <div ng-include src="'/templates/project_approval/form.html'"></div>
+        <div ng-include src="'/templates/projects/subprojects.html'"></div>
+        <div ng-include src="'/templates/projects/analysis.html'"></div>
+    </div>
+</div>

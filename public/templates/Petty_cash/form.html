@@ -1,0 +1,99 @@
+<!-- Modal -->
+<div class="modal" id="modalPC" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="title-pc"></h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active">
+                            <a data-target="#general" aria-controls="tab1" role="tab" data-toggle="tab">General</a>
+                        </li>
+                        <li role="presentation">
+                            <a data-target="#user" aria-controls="tab2" role="tab" data-toggle="tab">Usuario</a>
+                        </li>
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="general">
+                            <br>
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    <input type="hidden" id="warehouse_id">
+                                    <label class="col-sm-2 control-label">ID</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control input-sm" id="pc_id"  readonly>
+                                    </div>
+                                    <label class="col-sm-2 control-label">Código</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control input-sm" id="pc_code" value="">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Descripción</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control input-sm" id="pc_description" value="">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Responsable</label>
+                                    <div class="col-sm-10">
+                                        <input type="hidden" id="pc_liable_id">
+                                        <div class="input-group">
+                                            <input type="text" readonly id="pc_liable_username" style="width: 30%"
+                                                   class="form-control input-sm" placeholder="">
+                                            <input type="text" id="pc_liable_name" readonly style="width: 70%"
+                                                   class="form-control input-sm">
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-success btn-sm btn-group_sm" type="button"
+                                                        ng-click="openLiable()">
+                                                    <span class="fa fa-search-plus"></span>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="user">
+                            <br>
+                            <button class="btn btn-sm btn-success" type="button" ng-click="openUser()"
+                                    style="margin-bottom: 5px">
+                                <span class="fa fa-plus-circle"></span>
+                                Agregar
+                            </button>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Usuario</th>
+                                        <th width="50px"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="pc_user_body"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" ng-click="savePettyCash()">
+                    <span class="fa fa-save"></span>
+                    Guardar
+                </button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                    <span class="fa fa-times"></span> Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

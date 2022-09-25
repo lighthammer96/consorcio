@@ -1,0 +1,180 @@
+[33mcommit 87f936f986e86152c01f81a80138382abb22ab13[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Merge: 37b35d6 e36db7e
+Author: lighthammer96 <jhoan.fury@gmail.com>
+Date:   Fri Dec 17 07:08:59 2021 -0500
+
+    maestros del modulo de solicitud y ventas
+
+[33mcommit 37b35d694182ccfa3886cc458a9b6006930b99be[m
+Author: lighthammer96 <jhoan.fury@gmail.com>
+Date:   Fri Dec 17 06:47:18 2021 -0500
+
+    maestros de modulo de solicitud y ventas
+
+[33mcommit e36db7e07bd4449e6dc8f84296cc5264b18d7d7b[m
+Author: reysatu <reysangama7@gmail.com>
+Date:   Wed Dec 15 20:33:55 2021 +0100
+
+    DESCUENTOS_SOLO_ORDENSERVICIO
+
+[33mcommit 5cdcb4b51bd92875c0932c997408adc07fc1ae73[m
+Author: reysatu <reysangama7@gmail.com>
+Date:   Sat Dec 4 11:25:38 2021 +0100
+
+    04_12_2021_observaciones
+
+[33mcommit c46043f5d3093705e36111eca6a5845fec8fc5aa[m
+Author: reysatu <reysangama7@gmail.com>
+Date:   Sat Dec 4 01:43:59 2021 +0100
+
+    sunat_reniec
+
+[33mcommit d96e293e378f226fafb864953967a68ec8611810[m
+Author: reysatu <reysangama7@gmail.com>
+Date:   Thu Dec 2 02:00:48 2021 +0100
+
+    devolucion y entrega obser
+
+[33mcommit d90361971470a2e4629f59e4222128e4411c26c3[m
+Author: reysatu <reysangama7@gmail.com>
+Date:   Thu Dec 2 01:29:09 2021 +0100
+
+    observ_02_12_2021
+
+[33mcommit e483b41fc0b6557470d54af58d210a9d7bb506c4[m
+Author: reysatu <reysangama7@gmail.com>
+Date:   Wed Dec 1 15:46:44 2021 +0100
+
+    entrega corregido
+
+[33mcommit cd1a8512766ffa4e821ca096fcd1a6e5c349b86a[m
+Author: reysatu <reysangama7@gmail.com>
+Date:   Wed Dec 1 11:11:24 2021 +0100
+
+    devolucion y entrega
+
+[33mcommit c083bc0f6111e6f975b0f7dc7ebb7c880e792760[m
+Author: reysatu <reysangama7@gmail.com>
+Date:   Tue Nov 30 21:44:19 2021 +0100
+
+    devolucion
+
+[33mcommit bd8d0e73102376f459f673e0fcb6bc0e04759382[m
+Author: reysatu <reysangama7@gmail.com>
+Date:   Tue Nov 30 04:22:37 2021 +0100
+
+    ver_serviciotecnico2
+
+[33mcommit d21a7bd1579b701bfc5673df1272e3adae022afd[m
+Author: reysatu <reysangama7@gmail.com>
+Date:   Tue Nov 30 04:17:24 2021 +0100
+
+    ver_serviciotecnico
+
+[33mcommit 37d44b994b464483d95bb20877c2c72e08cb3a0e[m
+Author: reysatu <reysangama7@gmail.com>
+Date:   Mon Nov 22 17:58:00 2021 +0100
+
+    BOTONES
+
+[33mcommit 847101cb0d0cee283b3673772a06152fc86072f9[m
+Author: reysatu <reysangama7@gmail.com>
+Date:   Mon Nov 22 14:21:06 2021 +0100
+
+    proforma
+
+[33mcommit 566e3b51a61d3a7e40c1adc26e087c2fb5199a6e[m
+Author: reysatu <reysangama7@gmail.com>
+Date:   Thu Nov 18 08:42:10 2021 +0100
+
+    prof
+
+[33mcommit fa81c652b0882b141d2a053723e6c7fe1b12da50[m
+Author: reysatu <reysangama7@gmail.com>
+Date:   Wed Nov 17 00:54:11 2021 +0100
+
+    precios_view
+
+[33mcommit e22eef75c8fb9db9e703ec40fd65f74959c33bd3[m
+Author: reysatu <reysangama7@gmail.com>
+Date:   Tue Nov 16 12:03:20 2021 +0100
+
+    objetivos
+
+[33mcommit 6a180c7b19ff55244d148cee0800c5f7633491dd[m
+Author: reysatu <reysangama7@gmail.com>
+Date:   Mon Nov 15 02:25:21 2021 +0100
+
+    OB_orden_servicio
+
+[33mcommit 0be1fbf317bc2bb4d4c3a6b08864a8c6d1c8eb97[m
+Author: reysatu <reysangama7@gmail.com>
+Date:   Fri Nov 12 01:17:19 2021 +0100
+
+    correciones40
+
+[33mcommit 4c7d9ec656b75b0adeda00bf67952ddd2b6c95e4[m
+Author: reysatu <reysangama7@gmail.com>
+Date:   Wed Nov 10 23:11:51 2021 +0100
+
+    orden de servicio
+
+[33mcommit 7af62653daa6ecfcfa39aa923051b61772c318e8[m
+Author: reysatu <reysangama7@gmail.com>
+Date:   Tue Nov 2 02:04:35 2021 +0100
+
+    maestros_servicio_tecnico
+
+[33mcommit 9d085bd63b39a60bbf7ee9988f13cec63a06575c[m
+Author: reysatu <reysangama7@gmail.com>
+Date:   Mon Nov 1 00:16:02 2021 +0100
+
+    dlete_detalles
+
+[33mcommit dd8a76f8c3c59e1293fe97549dcc68cf2d1d2e2d[m
+Author: reysatu <reysangama7@gmail.com>
+Date:   Sat Oct 30 19:04:45 2021 +0200
+
+    impresion de movimientos y transferenicas
+
+[33mcommit 18905020ede69001724737191d5b51963901d9ff[m
+Author: reysatu <reysangama7@gmail.com>
+Date:   Fri Oct 29 01:40:45 2021 +0200
+
+    consultas
+
+[33mcommit e5e70fce45f688c39b41b0db1126b7a0457b7054[m
+Author: reysatu <reysangama7@gmail.com>
+Date:   Tue Oct 26 20:19:22 2021 +0200
+
+    observacioneslevantadas
+
+[33mcommit 0653e168becad6a68b3f13b60da51d3b876f48a8[m
+Author: reysatu <reysangama7@gmail.com>
+Date:   Tue Oct 26 13:40:54 2021 +0200
+
+    OB_40%
+
+[33mcommit 515062ed5bd45d4b16f0bc68a409f226398624dd[m
+Author: reysatu <reysangama7@gmail.com>
+Date:   Sat Oct 23 18:27:40 2021 +0200
+
+    OB_STOCK_ALMACEN
+
+[33mcommit 2c2409e2fa2ca064923fd254fcdfe1b75b154488[m
+Author: reysatu <reysangama7@gmail.com>
+Date:   Sat Oct 23 01:33:21 2021 +0200
+
+    movimientosTerminado
+
+[33mcommit 523435306c54632943764f7304f3a3862a931ac6[m
+Author: reysatu <reysangama7@gmail.com>
+Date:   Fri Oct 22 15:17:14 2021 +0200
+
+    avance
+
+[33mcommit c84e222176fd04b586ca505a8cb49e064b949bab[m
+Author: reysatu <reysangama7@gmail.com>
+Date:   Fri Oct 22 14:18:04 2021 +0200
+
+    first commit

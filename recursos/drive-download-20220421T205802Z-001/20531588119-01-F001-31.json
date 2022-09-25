@@ -1,0 +1,75 @@
+{
+    "invoice": {
+        "tip_doc": "01",
+        "serie": "F001",
+        "correl": "31",
+        "fec_emi": "2018-10-06",
+        "cod_mon": "PEN",
+        "tip_oper": "0101",
+        "hora_emi": "14:31:03",
+        "ubl_version": "2.1",
+        "customizacion": "2.0",
+        "emisor": {
+            "tip_doc": "6",
+            "num_doc": "20531588119",
+            "raz_soc": "DETALLES ZAPATERIA E.I.R.L.",
+            "dir": "JR. ALFONSO UGARTE # 1000",
+            "cod_ubi": "220901",
+            "dep": "SAN MARTIN",
+            "prov": "SAN MARTIN",
+            "dist": "TARAPOTO",
+            "cod_pais": "PE",
+            "cod_sucur": "0000"
+        },
+        "adquiriente": {
+            "tip_doc": "6",
+            "num_doc": "10451734909",
+            "raz_soc": "PINEDO BECERRA NILDA",
+            "dir": "-",
+            "cod_pais": "PE"
+        },
+        "tot": {
+            "grav": "237.29",
+            "val_vent": "237.29",
+            "igv": "42.71",
+            "imp_tot": "280.00",
+            "impsto_tot": "42.71"
+        },
+        "det": [{
+                "nro_item": "1",
+                "cod_prod": "00000002",
+                "cod_und_med": "NIU",
+                "descrip": "PRODUCTO 01 DE PRUEBA X UND",
+                "cant": "1.00",
+                "val_unit_item": "118.64",
+                "val_vta_item": "118.64",
+                "igv_item": "21.36",
+                "prec_unit_item": "140.00",
+                "tip_afec_igv": "10",
+                "impsto_tot": "21.36",
+                "base_igv": "118.64",
+                "tasa_igv": "18.00"
+            }, {
+                "nro_item": "2",
+                "cod_prod": "00000003",
+                "cod_und_med": "NIU",
+                "descrip": "PRODUCTO 02 DE PRUEBA X UND",
+                "cant": "2.00",
+                "val_unit_item": "59.32",
+                "val_vta_item": "118.65",
+                "igv_item": "21.36",
+                "prec_unit_item": "70.00",
+                "tip_afec_igv": "10",
+                "impsto_tot": "21.36",
+                "base_igv": "118.65",
+                "tasa_igv": "18.00"
+            }],
+        "leyen": [{
+                "leyen_cod": "1000",
+                "leyen_descrip": "DOSCIENTOS OCHENTA Y 00/100 SOLES"
+            }],
+        "nota": [{
+                "nota_descrip": "CONTADO"
+            }]
+    }
+}

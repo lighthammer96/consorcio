@@ -1,0 +1,50 @@
+<!-- Modal -->
+<div class="modal" id="modalControlSaldo" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="titleControlSaldo"> </h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-group">
+                       <label class="col-sm-6 control-label">Monto Total</label> 
+                       <div class="col-sm-6">
+                        <input  class="form-control input-sm text-right" value="5000.00" readonly="readonly">
+                       </div>
+                    </div>
+                    <div class="form-group">
+                       <label class="col-sm-6 control-label">Monto Pagado</label> 
+                       <div class="col-sm-6">
+                        <input  class="form-control input-sm text-right" value="1000.00" readonly="readonly">
+                       </div>
+                    </div>
+                    <div class="form-group">
+                       <label class="col-sm-6 control-label">Saldo</label> 
+                       <div class="col-sm-6">
+                        <input  class="form-control input-sm text-right" value="4000.00" readonly="">
+                       </div>
+                    </div>
+                    <div class="form-group">
+                       <label class="col-sm-6 control-label">Monto a Pagar</label> 
+                       <div class="col-sm-6">
+                        <input  class="form-control input-sm text-right" value="1000.00">
+                       </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" ng-click="saveBalanceControl()">
+                    <span class="fa fa-save"></span>
+                    Guardar
+                </button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                    <span class="fa fa-times"></span> Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,461 @@
+<table class="table table-bordered table-striped table-hover table-condensed">
+    <thead>
+    <tr>
+        <th rowspan="2" width="50px">ITEM</th>
+        <th rowspan="2">RESUMEN</th>
+        <th colspan="2">PV1 - META</th>
+        <th>AC - FACTURADO</th>
+    </tr>
+    <tr>
+        <th width="60px">%</th>
+        <th width="70px">MONTO</th>
+        <th width="90px">MONTO</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <th class="text-left fa-red">1</th>
+        <th class="text-left fa-red">GASTOS</th>
+        <td class="text-center"></td>
+        <th class="text-right fa-red">36,708.00</th>
+        <th class="text-right fa-red">35,000.00</th>
+    </tr>
+    <tr>
+        <th class="text-left text-padding-l-20">10</th>
+        <th class="text-left">
+            <button class="btn btn-xs btn-default" id="show_10" ng-click="show(10)">
+                <span class="fa fa-plus"></span>
+            </button>
+            <button class="btn btn-xs btn-default hide" id="hide_10" ng-click="hide(10)">
+                <span class="fa fa-minus"></span>
+            </button>
+            GG INDIRECTO
+        </th>
+        <th class="text-center">27.13%</th>
+        <th class="text-right">9,960.00</th>
+        <th class="text-right">9,000.00</th>
+    </tr>
+    <tr class="table_10 hide">
+        <td></td>
+        <td class="text-padding-l-20">
+            <button class="btn btn-xs btn-default" id="show_1000" ng-click="show(1000)">
+                <span class="fa fa-plus"></span>
+            </button>
+            <button class="btn btn-xs btn-default hide" id="hide_1000" ng-click="hide(1000)">
+                <span class="fa fa-minus"></span>
+            </button>
+            1000-SUELDOS, ALIMENTACIÓN, PASAJES , VIATICOS Y ALOJAMIENTO
+        </td>
+        <td></td>
+        <th class="text-right fa-blue">7,060.00</th>
+        <th class="text-right fa-blue">7,000.00</th>
+    </tr>
+    <tr class="table_1000 hide">
+        <td></td>
+        <td class="text-left text-padding-l-40">1000000-GERENTE GENERAL</td>
+        <td></td>
+        <td class="text-right">3,060.00</td>
+        <td class="text-right">3,000.00</td>
+    </tr>
+    <tr class="table_1000 hide">
+        <td></td>
+        <td class="text-left text-padding-l-40">1000001-GERENTE COMERCIAL</td>
+        <td></td>
+        <td class="text-right">2,000.00</td>
+        <td class="text-right">2,000.00</td>
+    </tr>
+    <tr class="table_1000 hide">
+        <td></td>
+        <td class="text-left text-padding-l-40">1000001-GERENTE COMERCIAL</td>
+        <td></td>
+        <td class="text-right">2,000.00</td>
+        <td class="text-right">2,000.00</td>
+    </tr>
+    <tr class="table_10 hide">
+        <td></td>
+        <td class="text-padding-l-20">
+            <button class="btn btn-xs btn-default" id="show_1001" ng-click="show(1001)">
+                <span class="fa fa-plus"></span>
+            </button>
+            <button class="btn btn-xs btn-default hide" id="hide_1001" ng-click="hide(1001)">
+                <span class="fa fa-minus"></span>
+            </button>
+            1001-CAPACITACIONES Y EXÁMENES MÉDICOS
+        </td>
+        <td></td>
+        <th class="text-right fa-blue">1,400.00</th>
+        <th class="text-right fa-blue">1,000.00</th>
+    </tr>
+    <tr class="table_1001 hide">
+        <td></td>
+        <td class="text-left text-padding-l-40">1001000-EVALUACIÓN MÉDICA PRE OCUPACIONAL (EMPO)</td>
+        <td></td>
+        <td class="text-right">700.00</td>
+        <td class="text-right">500.00</td>
+    </tr>
+    <tr class="table_1001 hide">
+        <td></td>
+        <td class="text-left text-padding-l-40">1001001-CAPACITACIÓN DE PERSONAL - PRIMEROS AUXILIOS</td>
+        <td></td>
+        <td class="text-right">700.00</td>
+        <td class="text-right">500.00</td>
+    </tr>
+    <tr class="table_10 hide">
+        <td></td>
+        <td class="text-padding-l-20">
+            <button class="btn btn-xs btn-default" id="show_1002" ng-click="show(1002)">
+                <span class="fa fa-plus"></span>
+            </button>
+            <button class="btn btn-xs btn-default hide" id="hide_1002" ng-click="hide(1002)">
+                <span class="fa fa-minus"></span>
+            </button>
+            1002-ALQUILERES Y SERVICIOS
+        </td>
+        <td></td>
+        <th class="text-right fa-blue">1,000.00</th>
+        <th class="text-right fa-blue">500.00</th>
+    </tr>
+    <tr class="table_1002 hide">
+        <td></td>
+        <td class="text-left text-padding-l-40">1002000-OFICINA CENTRAL</td>
+        <td></td>
+        <td class="text-right">500.00</td>
+        <td class="text-right">250.00</td>
+    </tr>
+    <tr class="table_1002 hide">
+        <td></td>
+        <td class="text-left text-padding-l-40">1002002-ALMACÉN CENTRAL</td>
+        <td></td>
+        <td class="text-right">500.00</td>
+        <td class="text-right">250.00</td>
+    </tr>
+    <tr class="table_10 hide">
+        <td></td>
+        <td class="text-padding-l-20">
+            <button class="btn btn-xs btn-default" id="show_1003" ng-click="show(1003)">
+                <span class="fa fa-plus"></span>
+            </button>
+            <button class="btn btn-xs btn-default hide" id="hide_1003" ng-click="hide(1003)">
+                <span class="fa fa-minus"></span>
+            </button>
+            1003-MOBILIARIO, EQUIPO, MATERIAL DE OFICINA Y OTROS
+        </td>
+        <td></td>
+        <th class="text-right fa-blue">500.00</th>
+        <th class="text-right fa-blue">500.00</th>
+    </tr>
+    <tr class="table_1003 hide">
+        <td></td>
+        <td class="text-left text-padding-l-40">1003002-LAPTOP (COMPRA)</td>
+        <td></td>
+        <td class="text-right">500.00</td>
+        <td class="text-right">500.00</td>
+    </tr>
+    <tr>
+        <th class="text-left text-padding-l-20">11</th>
+        <th class="text-left">
+            <button class="btn btn-xs btn-default" id="show_11" ng-click="show(11)">
+                <span class="fa fa-plus"></span>
+            </button>
+            <button class="btn btn-xs btn-default hide" id="hide_11" ng-click="hide(11)">
+                <span class="fa fa-minus"></span>
+            </button>
+            GG DIRECTO
+        </th>
+        <th class="text-center">0.23%</th>
+        <th class="text-right">86.00</th>
+        <th class="text-right">80.00</th>
+    </tr>
+    <tr class="table_11 hide">
+        <td></td>
+        <td class="text-padding-l-20">
+            <button class="btn btn-xs btn-default" id="show_1100" ng-click="show(1100)">
+                <span class="fa fa-plus"></span>
+            </button>
+            <button class="btn btn-xs btn-default hide" id="hide_1100" ng-click="hide(1100)">
+                <span class="fa fa-minus"></span>
+            </button>
+            1100-SUELDOS, PASAJES , VIATICOS
+        </td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr class="table_1100 hide">
+        <td></td>
+        <td class="text-left text-padding-l-40">1100000-JEFE DE GRUPO</td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr class="table_1100 hide">
+        <td></td>
+        <td class="text-left text-padding-l-40">1100002-MAESTRO DE OBRA</td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr class="table_11 hide">
+        <td></td>
+        <td class="text-padding-l-20">
+            <button class="btn btn-xs btn-default" id="show_1101" ng-click="show(1101)">
+                <span class="fa fa-plus"></span>
+            </button>
+            <button class="btn btn-xs btn-default hide" id="hide_1101" ng-click="hide(1101)">
+                <span class="fa fa-minus"></span>
+            </button>
+            1101-ALQUILERES Y SERVICIOS
+        </td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr class="table_1101 hide">
+        <td></td>
+        <td class="text-left text-padding-l-40">1101000-CASA DOMICILIO PEON - OFICIAL</td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr class="table_1101 hide">
+        <td></td>
+        <td class="text-left text-padding-l-40">1101001-CASA DOMICILIO OPERARIO - TECNICO</td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <th class="text-left text-padding-l-20">12</th>
+        <th class="text-left">
+            <button class="btn btn-xs btn-default" id="show_12" ng-click="show(12)">
+                <span class="fa fa-plus"></span>
+            </button>
+            <button class="btn btn-xs btn-default hide" id="hide_12" ng-click="hide(12)">
+                <span class="fa fa-minus"></span>
+            </button>
+            MATERIALES
+        </th>
+        <th class="text-center">6.31%</th>
+        <th class="text-right">2,318.00</th>
+        <th class="text-right">2,000.00</th>
+    </tr>
+    <tr class="table_12 hide">
+        <td></td>
+        <td class="text-padding-l-20">
+            <button class="btn btn-xs btn-default" id="show_1200" ng-click="show(1200)">
+                <span class="fa fa-plus"></span>
+            </button>
+            <button class="btn btn-xs btn-default hide" id="hide_1200" ng-click="hide(1200)">
+                <span class="fa fa-minus"></span>
+            </button>
+            1200-POSTES Y ACCESORIOS
+        </td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr class="table_1200 hide">
+        <td></td>
+        <td class="text-left text-padding-l-40">1200000-BLOQUE DE CONCRETO ARMADO 0.40 X 0.40 X 0.15M</td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr class="table_1200 hide">
+        <td></td>
+        <td class="text-left text-padding-l-40">1200001-BLOQUE DE CONCRETO ARMADO 0.50 X 0.50 X 0.20M</td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr class="table_12 hide">
+        <td></td>
+        <td class="text-padding-l-20">
+            <button class="btn btn-xs btn-default" id="show_1201" ng-click="show(1201)">
+                <span class="fa fa-plus"></span>
+            </button>
+            <button class="btn btn-xs btn-default hide" id="hide_1201" ng-click="hide(1201)">
+                <span class="fa fa-minus"></span>
+            </button>
+            1201-AISLADORES Y ACCESORIOS
+        </td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr class="table_1201 hide">
+        <td></td>
+        <td class="text-left text-padding-l-40">1201000-ADAPTADOR ANILLO BOLA</td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr class="table_1201 hide">
+        <td></td>
+        <td class="text-left text-padding-l-40">1201001-ADAPTADOR CASQUILLO HORQUILLA</td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <th class="text-left text-padding-l-20">13</th>
+        <th class="text-left">
+            <button class="btn btn-xs btn-default" id="show_13" ng-click="show(13)">
+                <span class="fa fa-plus"></span>
+            </button>
+            <button class="btn btn-xs btn-default hide" id="hide_13" ng-click="hide(13)">
+                <span class="fa fa-minus"></span>
+            </button>
+            TRANS DE MATERIALES
+        </th>
+        <th class="text-center">0.02%</th>
+        <th class="text-right">8.00</th>
+        <th class="text-right">8.00</th>
+    </tr>
+    <tr class="table_13 hide">
+        <td></td>
+        <td class="text-padding-l-20">
+            1301-SEMI TRAILER
+        </td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr class="table_13 hide">
+        <td></td>
+        <td class="text-padding-l-20">
+            1302-CAMION DOBLE
+        </td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr class="table_13 hide">
+        <td></td>
+        <td class="text-padding-l-20">
+            1303-CAMION SIMPLE
+        </td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <th class="text-left text-padding-l-20">14</th>
+        <th class="text-left">
+            <button class="btn btn-xs btn-default" id="show_14" ng-click="show(14)">
+                <span class="fa fa-plus"></span>
+            </button>
+            <button class="btn btn-xs btn-default hide" id="hide_14" ng-click="hide(14)">
+                <span class="fa fa-minus"></span>
+            </button>
+            MANO DE OBRA
+        </th>
+        <th class="text-center">31.49%</th>
+        <th class="text-right">11,560.00</th>
+        <th class="text-right">11,000.00</th>
+    </tr>
+    <tr class="table_14 hide">
+        <td></td>
+        <td class="text-padding-l-20">
+            <button class="btn btn-xs btn-default" id="show_1400" ng-click="show(1400)">
+                <span class="fa fa-plus"></span>
+            </button>
+            <button class="btn btn-xs btn-default hide" id="hide_1400" ng-click="hide(1400)">
+                <span class="fa fa-minus"></span>
+            </button>
+            1400-OBRERO
+        </td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr class="table_1400 hide">
+        <td></td>
+        <td class="text-left text-padding-l-40">1400000-AYUDANTE</td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr class="table_1400 hide">
+        <td></td>
+        <td class="text-left text-padding-l-40">1400001-CAPATAZ</td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <th class="text-left text-padding-l-20">15</th>
+        <th class="text-left">
+            <button class="btn btn-xs btn-default" id="show_15" ng-click="show(15)">
+                <span class="fa fa-plus"></span>
+            </button>
+            <button class="btn btn-xs btn-default hide" id="hide_15" ng-click="hide(15)">
+                <span class="fa fa-minus"></span>
+            </button>
+            MATERIALES MENUDO
+        </th>
+        <th class="text-center">33.39%</th>
+        <th class="text-right">12,256.00</th>
+        <th class="text-right">12,000.00</th>
+    </tr>
+    <tr>
+        <th class="text-left text-padding-l-20">16</th>
+        <th class="text-left">
+            <button class="btn btn-xs btn-default" id="show_16" ng-click="show(16)">
+                <span class="fa fa-plus"></span>
+            </button>
+            <button class="btn btn-xs btn-default hide" id="hide_16" ng-click="hide(16)">
+                <span class="fa fa-minus"></span>
+            </button>
+            EQUIPOS Y HERRAMIENTAS
+        </th>
+        <th class="text-center"></th>
+        <th class="text-right">-</th>
+        <th class="text-right">-</th>
+    </tr>
+    <tr>
+        <th class="text-left text-padding-l-20">17</th>
+        <th class="text-left">
+            <button class="btn btn-xs btn-default" id="show_17" ng-click="show(17)">
+                <span class="fa fa-plus"></span>
+            </button>
+            <button class="btn btn-xs btn-default hide" id="hide_17" ng-click="hide(17)">
+                <span class="fa fa-minus"></span>
+            </button>
+            ACTIVIDADES - SUBCONTRATOS
+        </th>
+        <th class="text-center">1.42%</th>
+        <th class="text-right">520.00</th>
+        <th class="text-right">500.00</th>
+    </tr>
+    <tr>
+        <th class="text-left text-padding-l-20">18</th>
+        <th class="text-left">
+            <button class="btn btn-xs btn-default" id="show_18" ng-click="show(18)">
+                <span class="fa fa-plus"></span>
+            </button>
+            <button class="btn btn-xs btn-default hide" id="hide_18" ng-click="hide(18)">
+                <span class="fa fa-minus"></span>
+            </button>
+            RIESGOS
+        </th>
+        <th class="text-center"></th>
+        <th class="text-right">-</th>
+        <th class="text-right">-</th>
+    </tr>
+    <tr>
+        <th class="text-left fa-red">2</th>
+        <th class="text-left fa-red">INGRESOS (PV-REPLANTEO)</th>
+        <td class="text-center"></td>
+        <th class="text-right fa-red">42,455.58</th>
+        <th class="text-right fa-red">42,000.00</th>
+    </tr>
+    <tr class="info">
+        <th class="text-left fa-red">3</th>
+        <th class="text-left fa-red">MARGEN (3/2)</th>
+        <th class="text-center">13.54%</th>
+        <th class="text-right fa-red">5,747.58</th>
+        <th class="text-right fa-red">5,000.00</th>
+    </tr>
+    </tbody>
+</table>

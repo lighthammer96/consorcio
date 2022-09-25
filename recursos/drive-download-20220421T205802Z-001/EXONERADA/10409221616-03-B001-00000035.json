@@ -1,0 +1,68 @@
+{
+  "invoice": {
+    "tip_doc": "03",
+    "serie": "B001",
+    "correl": "00000035",
+    "fec_emi": "2019-08-02",
+    "cod_mon": "PEN",
+    "tip_oper": "0101",
+    "ubl_version": "2.1",
+    "customizacion": "2.0",
+    "emisor": {
+      "tip_doc": "6",
+      "num_doc": "10409221616",
+      "raz_soc": "RUCOBA REATEGUI ANDY HIRVYN",
+      "nom_comer": "MEGAYUNTAS",
+      "dir": "JR. COMANDANTE CHIRINOS # 450 - TARAPOTO",
+      "cod_ubi": "220901",
+      "dep": "SAN MARTIN",
+      "prov": "SAN MARTIN",
+      "dist": "TARAPOTO",
+      "cod_pais": "PE",
+      "cod_sucur": "0000"
+    },
+    "adquiriente": {
+      "tip_doc": "0",
+      "num_doc": "00000000",
+      "raz_soc": "CLIENTES VARIOS",      
+      "cod_pais": "PE"
+    },
+    "tot": {
+      "exo": "112.00"
+      ,"val_vent": "112.00"
+      ,"imp_tot": "112.00"
+      ,"prec_tot": "112.00"
+      ,"impsto_tot": "0.00"
+      ,"trib_exo": "0.00"
+    },
+    "det": [
+    {
+      "nro_item": "1",
+      "cod_prod": "00000255",
+      "cod_und_med": "NIU",
+      "descrip": "MAIZ MOLIDO",
+      "cant": "2.000",
+      "val_unit_item": "56.00",
+      "sub_tot": "112",
+      "val_vta_item": "112.00",
+      "igv_item": "0.00",
+      "prec_unit_item": "56.00",
+      "tip_afec_igv": "20",
+      "impsto_tot": "0.00",
+      "base_igv": "112.00",
+      "tasa_igv": "18.00"
+    }
+    ],
+    "leyen": [
+    {
+      "leyen_cod": "1000",
+      "leyen_descrip": "CIENTO  DOCE Y 00/100 SOLES"
+    }
+    ,
+    {
+      "leyen_cod": "2001",
+      "leyen_descrip": "BIENES TRANSFERIDOS EN LA AMAZONIA REGION SELVA PARA SER CONSUMIDOS EN LA MISMA"
+    }
+    ]
+  }
+}

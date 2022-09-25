@@ -1,0 +1,105 @@
+<div class="panel panel-danger-admin">
+    <div class="panel-heading">
+        Gestión de Lotes
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="table_container_Lot" class="table-responsive"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="modalLote" role="dialog">
+    <div class="modal-dialog" role="document">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title" id="titleModalLote"></h4>
+        </div>
+        <div class="modal-body">
+              <div class="form-horizontal">
+                 <div class="row">
+                    <div class="col-md-12">
+                        <div class="alert alert-danger hide" role="alert" id="msg_cont">
+                            <span class="fa fa-warning"></span>
+                            Debe seleccionar un Artículo
+                        </div> 
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Artículo</label>
+                                <div class="col-sm-10">
+                                    <div class="input-group">
+                                        <input type="hidden" id="lote_id">
+                                        <input type="hidden" id="p_product_id" readonly class="form-control input-sm">
+                                        <input type="text" id="p_product_name" readonly class="form-control input-sm">
+                                        <div class="input-group-btn">
+                                            <button class="btn btn-danger-admin btn-sm btn-group_sm" type="button" ng-click="openCC(1)">
+                                            <span class="fa fa-search-plus"></span>
+                                            </button>
+                                            <button class="btn btn-warning btn-sm btn-group_sm" type="button" ng-click="clearCC(1)">
+                                            <span class="fa fa-eraser"></span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                 
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Lote</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control input-sm" id="lote">
+                            </div>
+                            <label class="col-sm-2 control-label">Cantidad</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control input-sm" id="cantidad">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Fecha de Ingreso</label>
+                            <div class="col-sm-4">
+                                <input type="date" class="form-control input-sm hasDatepicker" id="fech_ingreso">
+                            </div>
+                            <label class="col-sm-2 control-label">Fecha de Vencimiento</label>
+                            <div class="col-sm-4">
+                                <input type="date" class="form-control input-sm hasDatepicker" id="fecha_vencimiento">
+                            </div>
+                        </div>
+                    </div>
+                 </div>   
+              </div>  
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-danger-admin btn-sm" ng-click="saveLote()" >Guardar</button>  
+        <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+</div>
+
+ <div class="modal " id="modalArticulo" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title" id="titleModalLote">Articulos</h4>
+        </div>
+        <div class="modal-body">
+             <div class="row">
+                <div class="col-md-12">
+                    <div id="table_container_cc2" class="table-responsive"></div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+      
+    </div>
+  </div> 

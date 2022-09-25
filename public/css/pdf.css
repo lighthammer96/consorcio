@@ -1,0 +1,55 @@
+body {
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    font-size: 11px;
+    font-weight: normal;
+    line-height: 1.5;
+    color: #292b2c;
+    background-color: #fff;
+}
+table {
+    background-color: transparent;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+.table {
+    width:100%;
+    max-width:100%;
+    font-size: 9px;
+    border: 1px solid #eceeef;
+}
+.table th,
+.table td {
+    padding: 0.3rem;
+    vertical-align: top;
+    border: 1px solid #eceeef;
+    border-top: 1px solid #eceeef;
+}
+.table thead th {
+    vertical-align: middle;
+    border-color: rgba(0, 0, 0, 0.05);
+}
+.table tbody + tbody {
+    border-top: 2px solid #eceeef;
+}
+.table .table {
+    background-color: #fff;
+}
+.table-active,
+.table-active > th,
+.table-active > td {
+    background-color: rgba(0, 0, 0, 0.075);
+}
+.text-center {
+    text-align: center;
+}
+.text-left {
+    text-align: left;
+}
+.text-right {
+    text-align: right;
+}
+.title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}

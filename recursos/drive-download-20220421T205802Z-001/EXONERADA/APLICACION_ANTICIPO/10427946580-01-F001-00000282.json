@@ -1,0 +1,91 @@
+{
+  "invoice": {
+    "tip_doc": "01",
+    "serie": "F001",
+    "correl": "00000282",
+    "fec_emi": "2020-01-31",
+    "cod_mon": "PEN",
+    "tip_oper": "0101",
+    "fec_venc": "2020-02-15",
+    "hora_emi": "18:08:16",
+    "ubl_version": "2.1",
+    "customizacion": "2.0",
+    "emisor": {
+      "tip_doc": "6",
+      "num_doc": "10427946580",
+      "raz_soc": "RHAM S.A.C.",
+      "dir": "AV.CIRCUNVALACION. 2283",
+      "cod_ubi": "220901",
+      "dep": "SAN MARTIN",
+      "prov": "SAN MARTIN",
+      "dist": "TARAPOTO",
+      "cod_pais": "PE",
+      "cod_sucur": "0000"
+    },
+    "adquiriente": {
+      "tip_doc": "6",
+      "num_doc": "20605155635",
+      "raz_soc": "CONSORCIO NUEVA CAJAMARCA",
+      "dir": "AV. CIRCUNVALACION NRO. 2283 (A MEDIA CDRA DEL HOTEL PLAZA DEL BOSQUE) SAN MARTIN - SAN MARTIN - TARAPOTO",
+      "cod_pais": "PE"
+    },
+    "tot": {
+      "exo": "246825.00",
+      "val_vent": "271825.00",
+      "imp_tot": "246825.00",
+      "antic": "25000.00",
+      "impsto_tot": "0.00",
+      "trib_exo": "0.00",
+      "prec_tot": "271825.00"
+    },
+    "cargo": [
+      {
+        "cod_cd": "05",
+        "factor_cd": "0.09197",
+        "monto_cd": "25000.00",
+        "base_cd": "271825.00"
+      }
+    ],
+    "ant": [
+      {
+        "imp_prepagado": "25000.00",
+        "tip_doc_ant": "02",
+        "serie_correl": "F001-00000258",
+        "num_doc": "10427946580",
+        "tip_doc": "6",
+        "moneda": "PEN",
+        "fec_pago": "2019-12-26"
+      }
+    ],
+    "det": [
+      {
+        "nro_item": "1",
+        "cod_prod": "00000015",
+        "cod_und_med": "NIU",
+        "descrip": "VALORIZACION NRO 04 SC ALQUILER DE MAQUINARIA PESADA,SEG?N ORDEN DE SERVICIO NRO CNC-0004-2019-P057, CORRESPONDIENTE AL PERIODO DEL  01/01/2020 AL 31/01/2020. PARA LA OBRA : MEJORAMIENTO Y AMPLIACION  DEL SISTEMA DE AGUA POTABLE Y ALCANTARILLADO CON CONEXIONES  DOMICILIARIAS EN LA CIUDAD DE NUEVA CAJAMARCA , DISTRITO DE NUEVA  CAJAMARCA - RIOJA - SAN MARTIN",
+        "cant": "1.000",
+        "val_unit_item": "271825.0000",
+        "val_vta_item": "271825.00",
+        "igv_item": "0.00",
+        "prec_unit_item": "271825.00",
+        "tip_afec_igv": "20",
+        "impsto_tot": "0.00",
+        "base_igv": "271825.00",
+        "tasa_igv": "18.00"
+      }
+    ],
+    "leyen": [
+      {
+        "leyen_cod": "1000",
+        "leyen_descrip": "DOSCIENTOS CUARENTA Y SEIS MIL OCHOCIENTOS VEINTICINCO Y 00/100 SOLES"
+      },
+      {
+        "leyen_cod": "2002",
+        "leyen_descrip": "SERVICIOS PRESTADOS EN LA AMAZONÍA  REGIÓN SELVA PARA SER CONSUMIDOS EN LA MISMA"
+      },
+      {
+        "leyen_descrip": "No se aceptan cambios ni devoluciones"
+      }
+    ]
+  }
+}

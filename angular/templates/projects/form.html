@@ -1,0 +1,125 @@
+<div class="modal" id="modalP" role="dialog" data-keyboard="false">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="titleP"></h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active">
+                            <a data-target="#home" aria-controls="home" role="tab" data-toggle="tab">General</a>
+                        </li>
+                        <li role="presentation">
+                            <a data-target="#subprojects" aria-controls="subprojects" role="tab" data-toggle="tab">Subproyectos</a>
+                        </li>
+                        <li role="presentation">
+                            <a data-target="#income" aria-controls="income" role="tab" data-toggle="tab">Ingresos</a>
+                        </li>
+                        <li role="presentation" class="tab_4 hide">
+                            <a data-target="#expenses" aria-controls="expenses" role="tab" data-toggle="tab">Gastos</a>
+                        </li>
+                        <li role="presentation" class="tab_5 hide">
+                            <a data-target="#fronts_distribution" aria-controls="fronts_distribution" role="tab" data-toggle="tab">Distribución de Frentes</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="home">
+                            <div ng-include src="'/templates/projects/form_general.html'"></div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="subprojects">
+                            <div ng-include src="'/templates/projects/matrix.html'"></div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="income">
+                            <div ng-include src="'/templates/projects/income.html'"></div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="expenses">
+                            <div class="separator"></div>
+                            <div>
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation" class="active">
+                                        <a data-target="#expense0" aria-controls="expense0" role="tab"
+                                           data-toggle="tab">Proyectos</a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a data-target="#expense1" aria-controls="expense1" role="tab"
+                                           data-toggle="tab">Consolidado Materiales</a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a data-target="#expense2" aria-controls="expense2" role="tab"
+                                           data-toggle="tab">Gastos Generales</a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a data-target="#expense3" aria-controls="expense3" role="tab"
+                                           data-toggle="tab">Transporte</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div role="tabpanel" class="tab-pane active" id="expense0">
+                                        <div class="separator"></div>
+                                        <div ng-include src="'/templates/projects/expense0.html'"></div>
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane" id="expense1">
+                                        <div class="separator"></div>
+                                        <div ng-include src="'/templates/projects/expense1.html'" class="table-responsive"></div>
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane" id="expense2">
+                                        <div class="separator"></div>
+                                        <button class="btn btn-sm btn-success" ng-click="addGG()">
+                                            <span class="fa fa-plus"></span>
+                                            Agregar
+                                        </button>
+                                        <div class="separator"></div>
+                                        <div ng-include src="'/templates/projects/expense2.html'" class="table-responsive"></div>
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane" id="expense3">
+                                        <div class="separator"></div>
+                                        <button class="btn btn-sm btn-success" ng-click="addGG()">
+                                            <span class="fa fa-plus"></span>
+                                            Agregar
+                                        </button>
+                                        <div class="separator"></div>
+                                        <div ng-include src="'/templates/projects/expense3.html'" class="table-responsive"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn btn-sm btn-success">
+                                <span class="fa fa-sign-out"></span>
+                                Envíar a Aprobación
+                            </button>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="fronts_distribution">
+                            <div class="separator"></div>
+                            <div ng-include src="'/templates/projects/fronts.html'"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success send_approval hide show_tab_3"
+                        ng-click="sendToApproval()">
+                    <span class="fa fa-sign-out"></span>
+                    Envíar a Aprobación
+                </button>
+                <button type="button" class="btn btn-info hide">
+                    <span class="fa fa-angle-double-down"></span>
+                    Dar de Baja
+                </button>
+                <button type="button" class="btn btn-warning hide" id="btn_return">
+                    <span class="fa fa-sign-out"></span>
+                    Retornar a Licitación
+                </button>
+                <button type="button" class="btn btn-success show_not_approval" ng-click="saveProject()">
+                    <span class="fa fa-save"></span>
+                    Guardar
+                </button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">
+                    <span class="fa fa-times"></span> Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

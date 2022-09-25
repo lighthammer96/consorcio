@@ -1,0 +1,61 @@
+.ibox-content {
+    padding: 10px;
+}
+#imageCrop {
+    height: 470px;
+}
+#loadCrop {
+    color: #fff;
+    display: flex;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    width: 100%;
+    background: rgba(0,0,0,0.5);
+    height: 100%;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+.margin-0 {
+    margin-bottom: 0px;
+}
+.msgAddImgMin2 {
+    width: 100%;
+    display: inline-block;
+    padding-left: .2rem;
+    list-style-type: none;
+}
+.msgAddImgMin2 li {
+    float: left;
+}
+.imgMinPhoto {
+    /*width: 31%;*/
+    margin: 5px;
+    display: inline-block;
+    position: relative;
+}
+.imgMinPhoto .delItemCrop {
+    font-size: 24px !important;
+}
+.imgMinPhoto .handle {
+    font-size: 30px !important;
+    top: 40%;
+    left: 45%;
+}
+.handle, .delItemCrop {
+    text-shadow: 0 0 5px #000;
+    position: absolute;
+    z-index: 1;
+}
+.Crop_icoMove {
+    color: #57d26b;
+    cursor: move;
+}
+.delItemCrop {
+    top: 5%;
+    right: 7%;
+}
+.color-white {
+    color: #fff !important;
+}

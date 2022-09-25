@@ -1,0 +1,909 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Invoice xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:ccts="urn:un:unece:uncefact:documentation:2" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2" xmlns:qdt="urn:oasis:names:specification:ubl:schema:xsd:QualifiedDatatypes-2" xmlns:sac="urn:sunat:names:specification:ubl:peru:schema:xsd:SunatAggregateComponents-1" xmlns:tci="http://tempuri.org/" xmlns:udt="urn:un:unece:uncefact:data:specification:UnqualifiedDataTypesSchemaModule:2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <ext:UBLExtensions>
+      <ext:UBLExtension>
+         <ext:ExtensionContent>
+            <tci:AdditionalInformation>
+               <tci:AdditionalMonetaryTotal>
+                  <tci:ID>1001</tci:ID>
+                  <tci:PayableAmount currencyID="USD">1267.39</tci:PayableAmount>
+               </tci:AdditionalMonetaryTotal>
+            </tci:AdditionalInformation>
+         </ext:ExtensionContent>
+      </ext:UBLExtension>
+      <ext:UBLExtension>
+         <ext:ExtensionContent>
+            <tci:AdditionalInformationTCI>
+               <tci:TCICustomer>
+                  <tci:Network>TCI</tci:Network>
+                  <tci:VersionID>3.3.2.1</tci:VersionID>
+               </tci:TCICustomer>
+            </tci:AdditionalInformationTCI>
+         </ext:ExtensionContent>
+      </ext:UBLExtension>
+      <ext:UBLExtension>
+         <ext:ExtensionContent>
+            <tci:AdditionalInformationDocument>
+               <tci:PaymentMeans>
+                  <tci:PaymentMeansCode>20</tci:PaymentMeansCode>
+                  <tci:PaymentDueDay>0</tci:PaymentDueDay>
+                  <tci:PaymentDueDate>2022-01-29</tci:PaymentDueDate>
+                  <tci:Note>Factura a 30 días</tci:Note>
+                  <tci:InstitutionNote>Factura a 30 días</tci:InstitutionNote>
+               </tci:PaymentMeans>
+            </tci:AdditionalInformationDocument>
+         </ext:ExtensionContent>
+      </ext:UBLExtension>
+      <ext:UBLExtension>
+         <ext:ExtensionContent>
+            <tci:AdditionalInformationCustomer>
+               <tci:MailCopy>
+                  <tci:CopyRecipient><![CDATA[{"from":"factura-cliente@honda.com.pe","mails":[{"ToReceive":"consorciotptrepuestos@hotmail.com,consorciotptalmacen@hotmail.com","Subject":"Facturación Electrónica HDP 01-0F008-0269416/Repuesto Moto  FACTURA # F008-269416","Template":"EST"},{"ToReceive":"roquemedina8.1@hotmail.com","Subject":"CPE  FACTURA # F008-269416","Template":"EST"}]}]]></tci:CopyRecipient>
+               </tci:MailCopy>
+            </tci:AdditionalInformationCustomer>
+         </ext:ExtensionContent>
+      </ext:UBLExtension>
+      <ext:UBLExtension>
+         <ext:ExtensionContent>
+            <tci:AdditionalTemplate>
+               <tci:TipoPlantilla>EST</tci:TipoPlantilla>
+            </tci:AdditionalTemplate>
+         </ext:ExtensionContent>
+      </ext:UBLExtension>
+      <ext:UBLExtension>
+         <ext:ExtensionContent>
+            <tci:FreeText>
+               <tci:FreeText1><![CDATA[1880]]></tci:FreeText1>
+               <tci:FreeText2><![CDATA[30-12-2021]]></tci:FreeText2>
+               <tci:FreeText3><![CDATA[0000370867]]></tci:FreeText3>
+               <tci:FreeText4><![CDATA[AGENTE DE RETENCIÓN de acuerdo a R.S. 037-2002/SUNAT]]></tci:FreeText4>
+            </tci:FreeText>
+         </ext:ExtensionContent>
+      </ext:UBLExtension>
+      <ext:UBLExtension>
+         <ext:ExtensionContent>
+            <tci:DocumentAlias>
+               <tci:Alias>0090584215</tci:Alias>
+               <tci:IdentificadorInterno>90584215</tci:IdentificadorInterno>
+            </tci:DocumentAlias>
+         </ext:ExtensionContent>
+      </ext:UBLExtension>
+      <ext:UBLExtension>
+         <ext:ExtensionContent>
+            <tci:AdditionalPaymentMeans>
+               <tci:PaymentMeans>1</tci:PaymentMeans>
+            </tci:AdditionalPaymentMeans>
+         </ext:ExtensionContent>
+      </ext:UBLExtension>
+      <ext:UBLExtension>
+         <ext:ExtensionContent>
+            <Signature xmlns="http://www.w3.org/2000/09/xmldsig#" Id="signatureKG">
+               <SignedInfo>
+                  <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />
+                  <SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />
+                  <Reference URI="">
+                     <Transforms>
+                        <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />
+                     </Transforms>
+                     <DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+                     <DigestValue>5bvArNJbO0KJOPQ/xOlywSIPzMQ=</DigestValue>
+                  </Reference>
+               </SignedInfo>
+               <SignatureValue>Az3kPdpaPqJYXsYxuZ9URQCvIHgO1uvDmCsVJB9/uPxr8n/ULGUfI4x7JvPGKOIq8kG0ZrXKHQ1fdNeRNB9PbIO+KIKwwHy/YFngyBaQZytXqzWL+g7uCYT91j/DIAXBkyYMp5/FaUhcv63YpoM46+HuOTPv20VspmyzUBSYaq770/RwfcjQAuJQg4mkqeRuTGwk1JdwAzzmOexe2ipiJIe9G76PAV438SXvLTo2KDzN6FqbBoh47dWHRM5s25eMDI7Csc0ceQjVZ0N0PSfmCEQL5kHIpRJNOdx2fD2HNMvccLA3jv3XjAHGh+UA5DOIP4VvYUmdZU3ETqjARcOjww==</SignatureValue>
+               <KeyInfo>
+                  <X509Data>
+                     <X509SubjectName>C=PE, O=HONDA DEL PERU S.A, OID.2.5.4.97=20103733015, OU=Issued by PERUMEDIA  [PE1], OU=LOGISTICA, T=GERENTE, S=LIMA - LIMA, L=SAN ISIDRO, SERIALNUMBER=DNI:10792175, SN=CRIPPA ULLOA, G=PIERLUIGI CARLO, CN=PIERLUIGI CARLO CRIPPA ULLOA, E=pierluigi_crippa@honda.com.pe</X509SubjectName>
+                     <X509Certificate>MIIJLzCCBxegAwIBAgIJX9WFYcCa/7rnMA0GCSqGSIb3DQEBCwUAMIIBIjELMAkGA1UEBhMCUEUxDTALBgNVBAgMBExJTUExDTALBgNVBAcMBExJTUExPTA7BgNVBAsMNHNlZSBjdXJyZW50IGFkZHJlc3MgYXQgd3d3LmNhbWVyZmlybWEuY29tLnBlL2FkZHJlc3MxMDAuBgNVBAsMJ0FDIENBTUVSRklSTUEgUEVSw5ogQ0VSVElGSUNBRE9TIC0gMjAxNjEUMBIGA1UEBRMLMjA1NjYzMDI0NDcxGjAYBgNVBGEMEU5UUlBFLTIwNTY2MzAyNDQ3MSAwHgYDVQQKDBdDQU1FUkZJUk1BIFBFUsOaIFMuQS5DLjEwMC4GA1UEAwwnQUMgQ0FNRVJGSVJNQSBQRVLDmiBDRVJUSUZJQ0FET1MgLSAyMDE2MB4XDTIxMDQyMTE2MjcyMFoXDTIyMDQyMTE2MjcyMFowggFTMSwwKgYJKoZIhvcNAQkBFh1waWVybHVpZ2lfY3JpcHBhQGhvbmRhLmNvbS5wZTElMCMGA1UEAwwcUElFUkxVSUdJIENBUkxPIENSSVBQQSBVTExPQTEYMBYGA1UEKgwPUElFUkxVSUdJIENBUkxPMRUwEwYDVQQEDAxDUklQUEEgVUxMT0ExFTATBgNVBAUTDEROSToxMDc5MjE3NTETMBEGA1UEBwwKU0FOIElTSURSTzEUMBIGA1UECAwLTElNQSAtIExJTUExEDAOBgNVBAwMB0dFUkVOVEUxEjAQBgNVBAsMCUxPR0lTVElDQTEjMCEGA1UECwwaSXNzdWVkIGJ5IFBFUlVNRURJQSAgW1BFMV0xFDASBgNVBGEMCzIwMTAzNzMzMDE1MRswGQYDVQQKDBJIT05EQSBERUwgUEVSVSBTLkExCzAJBgNVBAYTAlBFMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAonjGV6JEZRZckqoD5xwo2vecNJtQ68tNehSC4youB4N27UnqN1da1HZgFpmX1g9q5B11MiD0A7r+3LxWmEHKem1hiYSpVYksV6qePr1NCJTKHOb6Oo2ws6Qi7dg1UxvUcPWTwtWhD7hZRG8Bthl849xq/rTvPXj/gpLXWUKCzFjq0E9yrSasxp8MRV7x+2NxdFTjFQ/uGHS4pfPx+O+gLg+GnaTF2I0ID5BeenEJ+PyBuR2TdBRHfKVGRAjlbrrKjX5HDI+tWbjL5FEmHvvMrQyzR7tKHfM1hxKFj12R3bh3PWt2Hk/OWXau01gmmwv13cbxSOND1qfloOTRSsfmtQIDAQABo4IDMTCCAy0wDAYDVR0TAQH/BAIwADAOBgNVHQ8BAf8EBAMCBsAwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMEMB0GA1UdDgQWBBR2CMqLLNmtd5G3Yqx/GQ7pNzz+LDCBjQYIKwYBBQUHAQEEgYAwfjBUBggrBgEFBQcwAoZIaHR0cDovL3d3dy5jYW1lcmZpcm1hLmNvbS9jZXJ0cy9hY19jYW1lcmZpcm1hX3BlcnVfY2VydGlmaWNhZG9zLTIwMTYuY3J0MCYGCCsGAQUFBzABhhpodHRwOi8vb2NzcC5jYW1lcmZpcm1hLmNvbTAfBgNVHSMEGDAWgBQ6bmUY51bS5PMt3aV8cm3/MOGGJzCBoAYDVR0fBIGYMIGVMEigRqBEhkJodHRwOi8vY3JsLmNhbWVyZmlybWEuY29tL2FjX2NhbWVyZmlybWFfcGVydV9jZXJ0aWZpY2Fkb3MtMjAxNi5jcmwwSaBHoEWGQ2h0dHA6Ly9jcmwxLmNhbWVyZmlybWEuY29tL2FjX2NhbWVyZmlybWFfcGVydV9jZXJ0aWZpY2Fkb3MtMjAxNi5jcmwwgckGA1UdEQSBwTCBvoEdcGllcmx1aWdpX2NyaXBwYUBob25kYS5jb20ucGWkgZwwgZkxHzAdBgorBgEEAYGHLh4HDA9QSUVSTFVJR0kgQ0FSTE8xFjAUBgorBgEEAYGHLh4IDAZDUklQUEExFTATBgorBgEEAYGHLh4JDAVVTExPQTFHMEUGCisGAQQBgYcuHgoMN0NFUlRJRklDQURPIERFIFBFUlNPTkEgRklTSUNBIENPTiBWSU5DVUxBQ0lPTiBBIEVNUFJFU0EwHAYDVR0SBBUwE4ERY2FAY2FtZXJmaXJtYS5jb20wgZAGA1UdIASBiDCBhTCBggYMKwYBBAGBhy4eEAABMHIwKQYIKwYBBQUHAgEWHWh0dHBzOi8vcG9saWN5LmNhbWVyZmlybWEuY29tMEUGCCsGAQUFBwICMDkMN0NFUlRJRklDQURPIERFIFBFUlNPTkEgRklTSUNBIENPTiBWSU5DVUxBQ0lPTiBBIEVNUFJFU0EwDQYJKoZIhvcNAQELBQADggIBAAVlcZE+BMTnV/pNOEcEjIVi3Xb+fO4Lq8VG61daHCnVJkFseM4N7kOZFolAUXmkDlAATaovvVLV6MMkX/IHojUoyi6Y5WEJhdjjm4WcuCxFi9VP3V5T9waO5cjG5gnhLZaD5MaDRYbXh/snk+ao3Y7N71zmg8qAdJCBd8ctBJ3mCyjvG3A/68UTtTPEgm0CfYpFyopmJyqe6VVo7oh1+cdO+ADEwkF8jx2nqlOiPI0+pYRdP9aoxICDHd3JqPOkca0MNeZU8P++Qp7mzZQCN0Kzgi7H0Uc/FfztxiBmIFK+MTDU0s0Rzk/DUHIgmX7b0vlawAtjeK3JExm9Z/DNhxptLU3NM5kLSf4QwUoIC8iwdMmn7fjDmEZB4aNWUAOASfj7EstrW24ZwkGa2+/R3L5LvfFqH6f5zNLlqLYsH3Q3qSd5RsoINznpHwdBoIDMxIwQtcIkBt5lvuSbc6GN4qyVeDbQ6OyvEV7U4395VNIcZdBl7fNfM73X3b/ohb9D3E1+Y2jly39mgnv9L3upP9f7tmtQHlsFZNHq2V3NBNDsTeOCS1fi542BNQ27U9IUW8KIAyuFcxgLsEt4rWIjX31r9pbupLgQswg3s51tG1h+W9jaViBtz7KG7wiEPcEU+oad8g0zgcPP4RjUqAHwtU11vio1aKE3BVz+aY6ba3Or</X509Certificate>
+                  </X509Data>
+               </KeyInfo>
+            </Signature>
+         </ext:ExtensionContent>
+      </ext:UBLExtension>
+   </ext:UBLExtensions>
+   <cbc:UBLVersionID>2.1</cbc:UBLVersionID>
+   <cbc:CustomizationID>2.0</cbc:CustomizationID>
+   <cbc:ID>F008-269416</cbc:ID>
+   <cbc:IssueDate>2021-12-30</cbc:IssueDate>
+   <cbc:IssueTime>12:15:43</cbc:IssueTime>
+   <cbc:DueDate>2022-01-29</cbc:DueDate>
+   <cbc:InvoiceTypeCode listID="0101" listAgencyName="PE:SUNAT" listName="Tipo de Documento" name="Tipo de Operacion" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo01" listSchemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo51">01</cbc:InvoiceTypeCode>
+   <cbc:DocumentCurrencyCode listID="ISO 4217 Alpha" listAgencyName="United Nations Economic Commission for Europe" listName="Currency">USD</cbc:DocumentCurrencyCode>
+   <cac:OrderReference>
+      <cbc:ID>PromoDic_Consorcio</cbc:ID>
+   </cac:OrderReference>
+   <cac:Signature>
+      <cbc:ID>IDSignKG</cbc:ID>
+      <cac:SignatoryParty>
+         <cac:PartyIdentification>
+            <cbc:ID>20103733015</cbc:ID>
+         </cac:PartyIdentification>
+         <cac:PartyName>
+            <cbc:Name><![CDATA[SUNAT]]></cbc:Name>
+         </cac:PartyName>
+      </cac:SignatoryParty>
+      <cac:DigitalSignatureAttachment>
+         <cac:ExternalReference>
+            <cbc:URI>signatureKG</cbc:URI>
+         </cac:ExternalReference>
+      </cac:DigitalSignatureAttachment>
+   </cac:Signature>
+   <cac:AccountingSupplierParty>
+      <cac:Party>
+         <cac:PartyIdentification>
+            <cbc:ID schemeID="6" schemeName="Documento de Identidad" schemeAgencyName="PE:SUNAT" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06">20103733015</cbc:ID>
+         </cac:PartyIdentification>
+         <cac:PartyName>
+            <cbc:Name><![CDATA[HONDA]]></cbc:Name>
+         </cac:PartyName>
+         <cac:PartyLegalEntity>
+            <cbc:RegistrationName><![CDATA[HONDA DEL PERU S. A.]]></cbc:RegistrationName>
+            <cac:RegistrationAddress>
+               <cbc:ID schemeName="Ubigeos" schemeAgencyName="PE:INEI">150131</cbc:ID>
+               <cbc:AddressTypeCode listAgencyName="PE:SUNAT" listName="Establecimientos anexos">0010</cbc:AddressTypeCode>
+               <cbc:CitySubdivisionName><![CDATA[SAN ISIDRO]]></cbc:CitySubdivisionName>
+               <cbc:CityName><![CDATA[LIMA]]></cbc:CityName>
+               <cbc:CountrySubentity><![CDATA[LIMA]]></cbc:CountrySubentity>
+               <cbc:District><![CDATA[SAN ISIDRO]]></cbc:District>
+               <cac:AddressLine>
+                  <cbc:Line><![CDATA[AV. REPUBLICA DE PANAMA NRO. 3545 INT. 501]]></cbc:Line>
+               </cac:AddressLine>
+               <cac:Country>
+                  <cbc:IdentificationCode listID="ISO 3166-1" listAgencyName="United Nations Economic Commission for Europe" listName="Country">PE</cbc:IdentificationCode>
+               </cac:Country>
+            </cac:RegistrationAddress>
+         </cac:PartyLegalEntity>
+         <cac:Contact>
+            <cbc:Telephone>(511)4180418</cbc:Telephone>
+         </cac:Contact>
+      </cac:Party>
+      <cac:SellerContact>
+         <cbc:ID>SP001588</cbc:ID>
+         <cbc:Name>SP001588</cbc:Name>
+      </cac:SellerContact>
+   </cac:AccountingSupplierParty>
+   <cac:AccountingCustomerParty>
+      <cac:Party>
+         <cac:PartyIdentification>
+            <cbc:ID schemeID="6" schemeName="Documento de Identidad" schemeAgencyName="PE:SUNAT" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06">20450106357</cbc:ID>
+         </cac:PartyIdentification>
+         <cac:PartyLegalEntity>
+            <cbc:RegistrationName><![CDATA[CONSORCIO & ASOCIADOS S.A.C.]]></cbc:RegistrationName>
+            <cbc:CompanyID>0036000143</cbc:CompanyID>
+            <cac:RegistrationAddress>
+               <cac:AddressLine>
+                  <cbc:Line><![CDATA[JR. PEDRO DE URZUA 333 URB. CERCADO    TARAPOTO SAN MARTIN SAN MARTIN PERÚ]]></cbc:Line>
+               </cac:AddressLine>
+            </cac:RegistrationAddress>
+         </cac:PartyLegalEntity>
+      </cac:Party>
+      <cac:AccountingContact>
+         <cbc:ElectronicMail><![CDATA[roquemedina8.1@hotmail.com]]></cbc:ElectronicMail>
+      </cac:AccountingContact>
+   </cac:AccountingCustomerParty>
+   <cac:PaymentTerms>
+      <cbc:ID>FormaPago</cbc:ID>
+      <cbc:PaymentMeansID>Credito</cbc:PaymentMeansID>
+      <cbc:Amount currencyID="USD">1495.52</cbc:Amount>
+   </cac:PaymentTerms>
+   <cac:PaymentTerms>
+      <cbc:ID>FormaPago</cbc:ID>
+      <cbc:PaymentMeansID>Cuota001</cbc:PaymentMeansID>
+      <cbc:Amount currencyID="USD">1495.52</cbc:Amount>
+      <cbc:PaymentDueDate>2022-01-29</cbc:PaymentDueDate>
+   </cac:PaymentTerms>
+   <cac:PaymentExchangeRate>
+      <cbc:SourceCurrencyCode>USD</cbc:SourceCurrencyCode>
+      <cbc:TargetCurrencyCode>PEN</cbc:TargetCurrencyCode>
+      <cbc:CalculationRate>4.058</cbc:CalculationRate>
+   </cac:PaymentExchangeRate>
+   <cac:TaxTotal>
+      <cbc:TaxAmount currencyID="USD">228.13</cbc:TaxAmount>
+      <cac:TaxSubtotal>
+         <cbc:TaxableAmount currencyID="USD">1267.39</cbc:TaxableAmount>
+         <cbc:TaxAmount currencyID="USD">228.13</cbc:TaxAmount>
+         <cac:TaxCategory>
+            <cbc:Percent>18.00</cbc:Percent>
+            <cac:TaxScheme>
+               <cbc:ID schemeName="Codigo de tributos" schemeAgencyName="PE:SUNAT" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo05">1000</cbc:ID>
+               <cbc:Name>IGV</cbc:Name>
+               <cbc:TaxTypeCode>VAT</cbc:TaxTypeCode>
+            </cac:TaxScheme>
+         </cac:TaxCategory>
+      </cac:TaxSubtotal>2.8783333333333
+   </cac:TaxTotal>
+   <cac:LegalMonetaryTotal>
+      <cbc:LineExtensionAmount currencyID="USD">1267.39</cbc:LineExtensionAmount>
+      <cbc:TaxInclusiveAmount currencyID="USD">1495.52</cbc:TaxInclusiveAmount>
+      <cbc:PayableAmount currencyID="USD">1495.52</cbc:PayableAmount>
+   </cac:LegalMonetaryTotal>
+   <cac:InvoiceLine>
+      <cbc:ID>1</cbc:ID>
+      <cbc:InvoicedQuantity unitCode="ZZ" unitCodeListID="UN/ECE rec 20" unitCodeListAgencyName="United Nations Economic Commission for Europe">30.00</cbc:InvoicedQuantity>
+      <cbc:LineExtensionAmount currencyID="USD">73.18</cbc:LineExtensionAmount>
+      <cac:PricingReference>
+         <cac:AlternativeConditionPrice>
+            <cbc:PriceAmount currencyID="USD">2.88</cbc:PriceAmount>
+            <cbc:PriceTypeCode listAgencyName="PE:SUNAT" listName="Tipo de Precio" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo16">01</cbc:PriceTypeCode>
+         </cac:AlternativeConditionPrice>
+      </cac:PricingReference>
+      <cac:AllowanceCharge>
+         <cbc:ChargeIndicator>false</cbc:ChargeIndicator>
+         <cbc:AllowanceChargeReasonCode listAgencyName="PE:SUNAT" listName="Cargo/descuento" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo53">00</cbc:AllowanceChargeReasonCode>
+         <cbc:MultiplierFactorNumeric>0.4122</cbc:MultiplierFactorNumeric>
+         <cbc:Amount currencyID="USD">51.32</cbc:Amount>
+         <cbc:BaseAmount currencyID="USD">124.50</cbc:BaseAmount>
+      </cac:AllowanceCharge>
+      <cac:TaxTotal>
+         <cbc:TaxAmount currencyID="USD">13.17</cbc:TaxAmount>
+         <cac:TaxSubtotal>
+            <cbc:TaxableAmount currencyID="USD">73.18</cbc:TaxableAmount>
+            <cbc:TaxAmount currencyID="USD">13.17</cbc:TaxAmount>
+            <cac:TaxCategory>
+               <cbc:Percent>18</cbc:Percent>
+               <cbc:TaxExemptionReasonCode listAgencyName="PE:SUNAT" listName="Afectacion del IGV" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo07">10</cbc:TaxExemptionReasonCode>
+               <cac:TaxScheme>
+                  <cbc:ID schemeName="Codigo de tributos" schemeAgencyName="PE:SUNAT" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo05">1000</cbc:ID>
+                  <cbc:Name>IGV</cbc:Name>
+                  <cbc:TaxTypeCode>VAT</cbc:TaxTypeCode>
+               </cac:TaxScheme>
+            </cac:TaxCategory>
+         </cac:TaxSubtotal>
+      </cac:TaxTotal>
+      <cac:Item>
+         <cbc:Description><![CDATA[JGO. DE ZAPATA DE FRENO TRAS ST]]></cbc:Description>
+         <cac:SellersItemIdentification>
+            <cbc:ID>06430K74N10</cbc:ID>
+         </cac:SellersItemIdentification>
+         <cac:CommodityClassification>
+            <cbc:ItemClassificationCode listID="UNSPSC" listAgencyName="GS1 US" listName="Item Classification">25171700</cbc:ItemClassificationCode>
+         </cac:CommodityClassification>
+      </cac:Item>
+      <cac:Price>
+         <cbc:PriceAmount currencyID="USD">4.15</cbc:PriceAmount>
+      </cac:Price>
+   </cac:InvoiceLine>
+   <cac:InvoiceLine>
+      <cbc:ID>2</cbc:ID>
+      <cbc:InvoicedQuantity unitCode="ZZ" unitCodeListID="UN/ECE rec 20" unitCodeListAgencyName="United Nations Economic Commission for Europe">1.00</cbc:InvoicedQuantity>
+      <cbc:LineExtensionAmount currencyID="USD">21.13</cbc:LineExtensionAmount>
+      <cac:PricingReference>
+         <cac:AlternativeConditionPrice>
+            <cbc:PriceAmount currencyID="USD">24.93</cbc:PriceAmount>
+            <cbc:PriceTypeCode listAgencyName="PE:SUNAT" listName="Tipo de Precio" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo16">01</cbc:PriceTypeCode>
+         </cac:AlternativeConditionPrice>
+      </cac:PricingReference>
+      <cac:AllowanceCharge>
+         <cbc:ChargeIndicator>false</cbc:ChargeIndicator>
+         <cbc:AllowanceChargeReasonCode listAgencyName="PE:SUNAT" listName="Cargo/descuento" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo53">00</cbc:AllowanceChargeReasonCode>
+         <cbc:MultiplierFactorNumeric>0.5845</cbc:MultiplierFactorNumeric>
+         <cbc:Amount currencyID="USD">29.72</cbc:Amount>
+         <cbc:BaseAmount currencyID="USD">50.85</cbc:BaseAmount>
+      </cac:AllowanceCharge>
+      <cac:TaxTotal>
+         <cbc:TaxAmount currencyID="USD">3.80</cbc:TaxAmount>
+         <cac:TaxSubtotal>
+            <cbc:TaxableAmount currencyID="USD">21.13</cbc:TaxableAmount>
+            <cbc:TaxAmount currencyID="USD">3.80</cbc:TaxAmount>
+            <cac:TaxCategory>
+               <cbc:Percent>18</cbc:Percent>
+               <cbc:TaxExemptionReasonCode listAgencyName="PE:SUNAT" listName="Afectacion del IGV" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo07">10</cbc:TaxExemptionReasonCode>
+               <cac:TaxScheme>
+                  <cbc:ID schemeName="Codigo de tributos" schemeAgencyName="PE:SUNAT" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo05">1000</cbc:ID>
+                  <cbc:Name>IGV</cbc:Name>
+                  <cbc:TaxTypeCode>VAT</cbc:TaxTypeCode>
+               </cac:TaxScheme>
+            </cac:TaxCategory>
+         </cac:TaxSubtotal>
+      </cac:TaxTotal>
+      <cac:Item>
+         <cbc:Description><![CDATA[CILINDRO COMP. ST]]></cbc:Description>
+         <cac:SellersItemIdentification>
+            <cbc:ID>12100KYY901</cbc:ID>
+         </cac:SellersItemIdentification>
+         <cac:CommodityClassification>
+            <cbc:ItemClassificationCode listID="UNSPSC" listAgencyName="GS1 US" listName="Item Classification">26101700</cbc:ItemClassificationCode>
+         </cac:CommodityClassification>
+      </cac:Item>
+      <cac:Price>
+         <cbc:PriceAmount currencyID="USD">50.85</cbc:PriceAmount>
+      </cac:Price>
+   </cac:InvoiceLine>
+   <cac:InvoiceLine>
+      <cbc:ID>3</cbc:ID>
+      <cbc:InvoicedQuantity unitCode="ZZ" unitCodeListID="UN/ECE rec 20" unitCodeListAgencyName="United Nations Economic Commission for Europe">1.00</cbc:InvoicedQuantity>
+      <cbc:LineExtensionAmount currencyID="USD">0.98</cbc:LineExtensionAmount>
+      <cac:PricingReference>
+         <cac:AlternativeConditionPrice>
+            <cbc:PriceAmount currencyID="USD">1.16</cbc:PriceAmount>
+            <cbc:PriceTypeCode listAgencyName="PE:SUNAT" listName="Tipo de Precio" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo16">01</cbc:PriceTypeCode>
+         </cac:AlternativeConditionPrice>
+      </cac:PricingReference>
+      <cac:AllowanceCharge>
+         <cbc:ChargeIndicator>false</cbc:ChargeIndicator>
+         <cbc:AllowanceChargeReasonCode listAgencyName="PE:SUNAT" listName="Cargo/descuento" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo53">00</cbc:AllowanceChargeReasonCode>
+         <cbc:MultiplierFactorNumeric>0.463</cbc:MultiplierFactorNumeric>
+         <cbc:Amount currencyID="USD">0.85</cbc:Amount>
+         <cbc:BaseAmount currencyID="USD">1.83</cbc:BaseAmount>
+      </cac:AllowanceCharge>
+      <cac:TaxTotal>
+         <cbc:TaxAmount currencyID="USD">0.18</cbc:TaxAmount>
+         <cac:TaxSubtotal>
+            <cbc:TaxableAmount currencyID="USD">0.98</cbc:TaxableAmount>
+            <cbc:TaxAmount currencyID="USD">0.18</cbc:TaxAmount>
+            <cac:TaxCategory>
+               <cbc:Percent>18</cbc:Percent>
+               <cbc:TaxExemptionReasonCode listAgencyName="PE:SUNAT" listName="Afectacion del IGV" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo07">10</cbc:TaxExemptionReasonCode>
+               <cac:TaxScheme>
+                  <cbc:ID schemeName="Codigo de tributos" schemeAgencyName="PE:SUNAT" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo05">1000</cbc:ID>
+                  <cbc:Name>IGV</cbc:Name>
+                  <cbc:TaxTypeCode>VAT</cbc:TaxTypeCode>
+               </cac:TaxScheme>
+            </cac:TaxCategory>
+         </cac:TaxSubtotal>
+      </cac:TaxTotal>
+      <cac:Item>
+         <cbc:Description><![CDATA[GUIA DE VALVULA ST]]></cbc:Description>
+         <cac:SellersItemIdentification>
+            <cbc:ID>12204KRM305</cbc:ID>
+         </cac:SellersItemIdentification>
+         <cac:CommodityClassification>
+            <cbc:ItemClassificationCode listID="UNSPSC" listAgencyName="GS1 US" listName="Item Classification">26101700</cbc:ItemClassificationCode>
+         </cac:CommodityClassification>
+      </cac:Item>
+      <cac:Price>
+         <cbc:PriceAmount currencyID="USD">1.83</cbc:PriceAmount>
+      </cac:Price>
+   </cac:InvoiceLine>
+   <cac:InvoiceLine>
+      <cbc:ID>4</cbc:ID>
+      <cbc:InvoicedQuantity unitCode="ZZ" unitCodeListID="UN/ECE rec 20" unitCodeListAgencyName="United Nations Economic Commission for Europe">1.00</cbc:InvoicedQuantity>
+      <cbc:LineExtensionAmount currencyID="USD">32.80</cbc:LineExtensionAmount>
+      <cac:PricingReference>
+         <cac:AlternativeConditionPrice>
+            <cbc:PriceAmount currencyID="USD">38.70</cbc:PriceAmount>
+            <cbc:PriceTypeCode listAgencyName="PE:SUNAT" listName="Tipo de Precio" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo16">01</cbc:PriceTypeCode>
+         </cac:AlternativeConditionPrice>
+      </cac:PricingReference>
+      <cac:AllowanceCharge>
+         <cbc:ChargeIndicator>false</cbc:ChargeIndicator>
+         <cbc:AllowanceChargeReasonCode listAgencyName="PE:SUNAT" listName="Cargo/descuento" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo53">00</cbc:AllowanceChargeReasonCode>
+         <cbc:MultiplierFactorNumeric>0.3555</cbc:MultiplierFactorNumeric>
+         <cbc:Amount currencyID="USD">18.09</cbc:Amount>
+         <cbc:BaseAmount currencyID="USD">50.89</cbc:BaseAmount>
+      </cac:AllowanceCharge>
+      <cac:TaxTotal>
+         <cbc:TaxAmount currencyID="USD">5.90</cbc:TaxAmount>
+         <cac:TaxSubtotal>
+            <cbc:TaxableAmount currencyID="USD">32.80</cbc:TaxableAmount>
+            <cbc:TaxAmount currencyID="USD">5.90</cbc:TaxAmount>
+            <cac:TaxCategory>
+               <cbc:Percent>18</cbc:Percent>
+               <cbc:TaxExemptionReasonCode listAgencyName="PE:SUNAT" listName="Afectacion del IGV" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo07">10</cbc:TaxExemptionReasonCode>
+               <cac:TaxScheme>
+                  <cbc:ID schemeName="Codigo de tributos" schemeAgencyName="PE:SUNAT" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo05">1000</cbc:ID>
+                  <cbc:Name>IGV</cbc:Name>
+                  <cbc:TaxTypeCode>VAT</cbc:TaxTypeCode>
+               </cac:TaxScheme>
+            </cac:TaxCategory>
+         </cac:TaxSubtotal>
+      </cac:TaxTotal>
+      <cac:Item>
+         <cbc:Description><![CDATA[CIGÜEÑAL COMP. K52L ST]]></cbc:Description>
+         <cac:SellersItemIdentification>
+            <cbc:ID>13000KYY900</cbc:ID>
+         </cac:SellersItemIdentification>
+         <cac:CommodityClassification>
+            <cbc:ItemClassificationCode listID="UNSPSC" listAgencyName="GS1 US" listName="Item Classification">26101700</cbc:ItemClassificationCode>
+         </cac:CommodityClassification>
+      </cac:Item>
+      <cac:Price>
+         <cbc:PriceAmount currencyID="USD">50.89</cbc:PriceAmount>
+      </cac:Price>
+   </cac:InvoiceLine>
+   <cac:InvoiceLine>
+      <cbc:ID>5</cbc:ID>
+      <cbc:InvoicedQuantity unitCode="ZZ" unitCodeListID="UN/ECE rec 20" unitCodeListAgencyName="United Nations Economic Commission for Europe">3.00</cbc:InvoicedQuantity>
+      <cbc:LineExtensionAmount currencyID="USD">20.10</cbc:LineExtensionAmount>
+      <cac:PricingReference>
+         <cac:AlternativeConditionPrice>
+            <cbc:PriceAmount currencyID="USD">7.91</cbc:PriceAmount>
+            <cbc:PriceTypeCode listAgencyName="PE:SUNAT" listName="Tipo de Precio" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo16">01</cbc:PriceTypeCode>
+         </cac:AlternativeConditionPrice>
+      </cac:PricingReference>
+      <cac:AllowanceCharge>
+         <cbc:ChargeIndicator>false</cbc:ChargeIndicator>
+         <cbc:AllowanceChargeReasonCode listAgencyName="PE:SUNAT" listName="Cargo/descuento" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo53">00</cbc:AllowanceChargeReasonCode>
+         <cbc:MultiplierFactorNumeric>0.3985</cbc:MultiplierFactorNumeric>
+         <cbc:Amount currencyID="USD">13.32</cbc:Amount>
+         <cbc:BaseAmount currencyID="USD">33.42</cbc:BaseAmount>
+      </cac:AllowanceCharge>
+      <cac:TaxTotal>
+         <cbc:TaxAmount currencyID="USD">3.62</cbc:TaxAmount>
+         <cac:TaxSubtotal>
+            <cbc:TaxableAmount currencyID="USD">20.10</cbc:TaxableAmount>
+            <cbc:TaxAmount currencyID="USD">3.62</cbc:TaxAmount>
+            <cac:TaxCategory>
+               <cbc:Percent>18</cbc:Percent>
+               <cbc:TaxExemptionReasonCode listAgencyName="PE:SUNAT" listName="Afectacion del IGV" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo07">10</cbc:TaxExemptionReasonCode>
+               <cac:TaxScheme>
+                  <cbc:ID schemeName="Codigo de tributos" schemeAgencyName="PE:SUNAT" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo05">1000</cbc:ID>
+                  <cbc:Name>IGV</cbc:Name>
+                  <cbc:TaxTypeCode>VAT</cbc:TaxTypeCode>
+               </cac:TaxScheme>
+            </cac:TaxCategory>
+         </cac:TaxSubtotal>
+      </cac:TaxTotal>
+      <cac:Item>
+         <cbc:Description><![CDATA[PISTON (0.50) ST]]></cbc:Description>
+         <cac:SellersItemIdentification>
+            <cbc:ID>13103KWW740</cbc:ID>
+         </cac:SellersItemIdentification>
+         <cac:CommodityClassification>
+            <cbc:ItemClassificationCode listID="UNSPSC" listAgencyName="GS1 US" listName="Item Classification">26101700</cbc:ItemClassificationCode>
+         </cac:CommodityClassification>
+      </cac:Item>
+      <cac:Price>
+         <cbc:PriceAmount currencyID="USD">11.14</cbc:PriceAmount>
+      </cac:Price>
+   </cac:InvoiceLine>
+   <cac:InvoiceLine>
+      <cbc:ID>6</cbc:ID>
+      <cbc:InvoicedQuantity unitCode="ZZ" unitCodeListID="UN/ECE rec 20" unitCodeListAgencyName="United Nations Economic Commission for Europe">5.00</cbc:InvoicedQuantity>
+      <cbc:LineExtensionAmount currencyID="USD">55.85</cbc:LineExtensionAmount>
+      <cac:PricingReference>
+         <cac:AlternativeConditionPrice>
+            <cbc:PriceAmount currencyID="USD">13.18</cbc:PriceAmount>
+            <cbc:PriceTypeCode listAgencyName="PE:SUNAT" listName="Tipo de Precio" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo16">01</cbc:PriceTypeCode>
+         </cac:AlternativeConditionPrice>
+      </cac:PricingReference>
+      <cac:AllowanceCharge>
+         <cbc:ChargeIndicator>false</cbc:ChargeIndicator>
+         <cbc:AllowanceChargeReasonCode listAgencyName="PE:SUNAT" listName="Cargo/descuento" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo53">00</cbc:AllowanceChargeReasonCode>
+         <cbc:MultiplierFactorNumeric>0.5144</cbc:MultiplierFactorNumeric>
+         <cbc:Amount currencyID="USD">59.15</cbc:Amount>
+         <cbc:BaseAmount currencyID="USD">115.00</cbc:BaseAmount>
+      </cac:AllowanceCharge>
+      <cac:TaxTotal>
+         <cbc:TaxAmount currencyID="USD">10.05</cbc:TaxAmount>
+         <cac:TaxSubtotal>
+            <cbc:TaxableAmount currencyID="USD">55.85</cbc:TaxableAmount>
+            <cbc:TaxAmount currencyID="USD">10.05</cbc:TaxAmount>
+            <cac:TaxCategory>
+               <cbc:Percent>18</cbc:Percent>
+               <cbc:TaxExemptionReasonCode listAgencyName="PE:SUNAT" listName="Afectacion del IGV" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo07">10</cbc:TaxExemptionReasonCode>
+               <cac:TaxScheme>
+                  <cbc:ID schemeName="Codigo de tributos" schemeAgencyName="PE:SUNAT" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo05">1000</cbc:ID>
+                  <cbc:Name>IGV</cbc:Name>
+                  <cbc:TaxTypeCode>VAT</cbc:TaxTypeCode>
+               </cac:TaxScheme>
+            </cac:TaxCategory>
+         </cac:TaxSubtotal>
+      </cac:TaxTotal>
+      <cac:Item>
+         <cbc:Description><![CDATA[ARBOL DE LEVAS COMP. ST]]></cbc:Description>
+         <cac:SellersItemIdentification>
+            <cbc:ID>14100KRH650</cbc:ID>
+         </cac:SellersItemIdentification>
+         <cac:CommodityClassification>
+            <cbc:ItemClassificationCode listID="UNSPSC" listAgencyName="GS1 US" listName="Item Classification">26101700</cbc:ItemClassificationCode>
+         </cac:CommodityClassification>
+      </cac:Item>
+      <cac:Price>
+         <cbc:PriceAmount currencyID="USD">23.00</cbc:PriceAmount>
+      </cac:Price>
+   </cac:InvoiceLine>
+   <cac:InvoiceLine>
+      <cbc:ID>7</cbc:ID>
+      <cbc:InvoicedQuantity unitCode="ZZ" unitCodeListID="UN/ECE rec 20" unitCodeListAgencyName="United Nations Economic Commission for Europe">20.00</cbc:InvoicedQuantity>
+      <cbc:LineExtensionAmount currencyID="USD">12.25</cbc:LineExtensionAmount>
+      <cac:PricingReference>
+         <cac:AlternativeConditionPrice>
+            <cbc:PriceAmount currencyID="USD">0.72</cbc:PriceAmount>
+            <cbc:PriceTypeCode listAgencyName="PE:SUNAT" listName="Tipo de Precio" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo16">01</cbc:PriceTypeCode>
+         </cac:AlternativeConditionPrice>
+      </cac:PricingReference>
+      <cac:AllowanceCharge>
+         <cbc:ChargeIndicator>false</cbc:ChargeIndicator>
+         <cbc:AllowanceChargeReasonCode listAgencyName="PE:SUNAT" listName="Cargo/descuento" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo53">00</cbc:AllowanceChargeReasonCode>
+         <cbc:MultiplierFactorNumeric>0.4331</cbc:MultiplierFactorNumeric>
+         <cbc:Amount currencyID="USD">9.35</cbc:Amount>
+         <cbc:BaseAmount currencyID="USD">21.60</cbc:BaseAmount>
+      </cac:AllowanceCharge>
+      <cac:TaxTotal>
+         <cbc:TaxAmount currencyID="USD">2.21</cbc:TaxAmount>
+         <cac:TaxSubtotal>
+            <cbc:TaxableAmount currencyID="USD">12.25</cbc:TaxableAmount>
+            <cbc:TaxAmount currencyID="USD">2.21</cbc:TaxAmount>
+            <cac:TaxCategory>
+               <cbc:Percent>18</cbc:Percent>
+               <cbc:TaxExemptionReasonCode listAgencyName="PE:SUNAT" listName="Afectacion del IGV" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo07">10</cbc:TaxExemptionReasonCode>
+               <cac:TaxScheme>
+                  <cbc:ID schemeName="Codigo de tributos" schemeAgencyName="PE:SUNAT" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo05">1000</cbc:ID>
+                  <cbc:Name>IGV</cbc:Name>
+                  <cbc:TaxTypeCode>VAT</cbc:TaxTypeCode>
+               </cac:TaxScheme>
+            </cac:TaxCategory>
+         </cac:TaxSubtotal>
+      </cac:TaxTotal>
+      <cac:Item>
+         <cbc:Description><![CDATA[GUIA DE CADENA DE LEVAS ST]]></cbc:Description>
+         <cac:SellersItemIdentification>
+            <cbc:ID>14610KSP910</cbc:ID>
+         </cac:SellersItemIdentification>
+         <cac:CommodityClassification>
+            <cbc:ItemClassificationCode listID="UNSPSC" listAgencyName="GS1 US" listName="Item Classification">26101700</cbc:ItemClassificationCode>
+         </cac:CommodityClassification>
+      </cac:Item>
+      <cac:Price>
+         <cbc:PriceAmount currencyID="USD">1.08</cbc:PriceAmount>
+      </cac:Price>
+   </cac:InvoiceLine>
+   <cac:InvoiceLine>
+      <cbc:ID>8</cbc:ID>
+      <cbc:InvoicedQuantity unitCode="ZZ" unitCodeListID="UN/ECE rec 20" unitCodeListAgencyName="United Nations Economic Commission for Europe">10.00</cbc:InvoicedQuantity>
+      <cbc:LineExtensionAmount currencyID="USD">46.62</cbc:LineExtensionAmount>
+      <cac:PricingReference>
+         <cac:AlternativeConditionPrice>
+            <cbc:PriceAmount currencyID="USD">5.50</cbc:PriceAmount>
+            <cbc:PriceTypeCode listAgencyName="PE:SUNAT" listName="Tipo de Precio" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo16">01</cbc:PriceTypeCode>
+         </cac:AlternativeConditionPrice>
+      </cac:PricingReference>
+      <cac:AllowanceCharge>
+         <cbc:ChargeIndicator>false</cbc:ChargeIndicator>
+         <cbc:AllowanceChargeReasonCode listAgencyName="PE:SUNAT" listName="Cargo/descuento" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo53">00</cbc:AllowanceChargeReasonCode>
+         <cbc:MultiplierFactorNumeric>0.4416</cbc:MultiplierFactorNumeric>
+         <cbc:Amount currencyID="USD">36.88</cbc:Amount>
+         <cbc:BaseAmount currencyID="USD">83.50</cbc:BaseAmount>
+      </cac:AllowanceCharge>
+      <cac:TaxTotal>
+         <cbc:TaxAmount currencyID="USD">8.39</cbc:TaxAmount>
+         <cac:TaxSubtotal>
+            <cbc:TaxableAmount currencyID="USD">46.62</cbc:TaxableAmount>
+            <cbc:TaxAmount currencyID="USD">8.39</cbc:TaxAmount>
+            <cac:TaxCategory>
+               <cbc:Percent>18</cbc:Percent>
+               <cbc:TaxExemptionReasonCode listAgencyName="PE:SUNAT" listName="Afectacion del IGV" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo07">10</cbc:TaxExemptionReasonCode>
+               <cac:TaxScheme>
+                  <cbc:ID schemeName="Codigo de tributos" schemeAgencyName="PE:SUNAT" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo05">1000</cbc:ID>
+                  <cbc:Name>IGV</cbc:Name>
+                  <cbc:TaxTypeCode>VAT</cbc:TaxTypeCode>
+               </cac:TaxScheme>
+            </cac:TaxCategory>
+         </cac:TaxSubtotal>
+      </cac:TaxTotal>
+      <cac:Item>
+         <cbc:Description><![CDATA[VALVULA DE ADMISION ST]]></cbc:Description>
+         <cac:SellersItemIdentification>
+            <cbc:ID>14711KGAB00</cbc:ID>
+         </cac:SellersItemIdentification>
+         <cac:CommodityClassification>
+            <cbc:ItemClassificationCode listID="UNSPSC" listAgencyName="GS1 US" listName="Item Classification">26101700</cbc:ItemClassificationCode>
+         </cac:CommodityClassification>
+      </cac:Item>
+      <cac:Price>
+         <cbc:PriceAmount currencyID="USD">8.35</cbc:PriceAmount>
+      </cac:Price>
+   </cac:InvoiceLine>
+   <cac:InvoiceLine>
+      <cbc:ID>9</cbc:ID>
+      <cbc:InvoicedQuantity unitCode="ZZ" unitCodeListID="UN/ECE rec 20" unitCodeListAgencyName="United Nations Economic Commission for Europe">20.00</cbc:InvoicedQuantity>
+      <cbc:LineExtensionAmount currencyID="USD">51.32</cbc:LineExtensionAmount>
+      <cac:PricingReference>
+         <cac:AlternativeConditionPrice>
+            <cbc:PriceAmount currencyID="USD">3.03</cbc:PriceAmount>
+            <cbc:PriceTypeCode listAgencyName="PE:SUNAT" listName="Tipo de Precio" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo16">01</cbc:PriceTypeCode>
+         </cac:AlternativeConditionPrice>
+      </cac:PricingReference>
+      <cac:AllowanceCharge>
+         <cbc:ChargeIndicator>false</cbc:ChargeIndicator>
+         <cbc:AllowanceChargeReasonCode listAgencyName="PE:SUNAT" listName="Cargo/descuento" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo53">00</cbc:AllowanceChargeReasonCode>
+         <cbc:MultiplierFactorNumeric>0.5665</cbc:MultiplierFactorNumeric>
+         <cbc:Amount currencyID="USD">67.08</cbc:Amount>
+         <cbc:BaseAmount currencyID="USD">118.40</cbc:BaseAmount>
+      </cac:AllowanceCharge>
+      <cac:TaxTotal>
+         <cbc:TaxAmount currencyID="USD">9.24</cbc:TaxAmount>
+         <cac:TaxSubtotal>
+            <cbc:TaxableAmount currencyID="USD">51.32</cbc:TaxableAmount>
+            <cbc:TaxAmount currencyID="USD">9.24</cbc:TaxAmount>
+            <cac:TaxCategory>
+               <cbc:Percent>18</cbc:Percent>
+               <cbc:TaxExemptionReasonCode listAgencyName="PE:SUNAT" listName="Afectacion del IGV" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo07">10</cbc:TaxExemptionReasonCode>
+               <cac:TaxScheme>
+                  <cbc:ID schemeName="Codigo de tributos" schemeAgencyName="PE:SUNAT" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo05">1000</cbc:ID>
+                  <cbc:Name>IGV</cbc:Name>
+                  <cbc:TaxTypeCode>VAT</cbc:TaxTypeCode>
+               </cac:TaxScheme>
+            </cac:TaxCategory>
+         </cac:TaxSubtotal>
+      </cac:TaxTotal>
+      <cac:Item>
+         <cbc:Description><![CDATA[VALVULA DE ADMISION ST]]></cbc:Description>
+         <cac:SellersItemIdentification>
+            <cbc:ID>14711KSP910</cbc:ID>
+         </cac:SellersItemIdentification>
+         <cac:CommodityClassification>
+            <cbc:ItemClassificationCode listID="UNSPSC" listAgencyName="GS1 US" listName="Item Classification">26101700</cbc:ItemClassificationCode>
+         </cac:CommodityClassification>
+      </cac:Item>
+      <cac:Price>
+         <cbc:PriceAmount currencyID="USD">5.92</cbc:PriceAmount>
+      </cac:Price>
+   </cac:InvoiceLine>
+   <cac:InvoiceLine>
+      <cbc:ID>10</cbc:ID>
+      <cbc:InvoicedQuantity unitCode="ZZ" unitCodeListID="UN/ECE rec 20" unitCodeListAgencyName="United Nations Economic Commission for Europe">10.00</cbc:InvoicedQuantity>
+      <cbc:LineExtensionAmount currencyID="USD">41.09</cbc:LineExtensionAmount>
+      <cac:PricingReference>
+         <cac:AlternativeConditionPrice>
+            <cbc:PriceAmount currencyID="USD">4.85</cbc:PriceAmount>
+            <cbc:PriceTypeCode listAgencyName="PE:SUNAT" listName="Tipo de Precio" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo16">01</cbc:PriceTypeCode>
+         </cac:AlternativeConditionPrice>
+      </cac:PricingReference>
+      <cac:AllowanceCharge>
+         <cbc:ChargeIndicator>false</cbc:ChargeIndicator>
+         <cbc:AllowanceChargeReasonCode listAgencyName="PE:SUNAT" listName="Cargo/descuento" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo53">00</cbc:AllowanceChargeReasonCode>
+         <cbc:MultiplierFactorNumeric>0.5189</cbc:MultiplierFactorNumeric>
+         <cbc:Amount currencyID="USD">44.31</cbc:Amount>
+         <cbc:BaseAmount currencyID="USD">85.40</cbc:BaseAmount>
+      </cac:AllowanceCharge>
+      <cac:TaxTotal>
+         <cbc:TaxAmount currencyID="USD">7.40</cbc:TaxAmount>
+         <cac:TaxSubtotal>
+            <cbc:TaxableAmount currencyID="USD">41.09</cbc:TaxableAmount>
+            <cbc:TaxAmount currencyID="USD">7.40</cbc:TaxAmount>
+            <cac:TaxCategory>
+               <cbc:Percent>18</cbc:Percent>
+               <cbc:TaxExemptionReasonCode listAgencyName="PE:SUNAT" listName="Afectacion del IGV" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo07">10</cbc:TaxExemptionReasonCode>
+               <cac:TaxScheme>
+                  <cbc:ID schemeName="Codigo de tributos" schemeAgencyName="PE:SUNAT" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo05">1000</cbc:ID>
+                  <cbc:Name>IGV</cbc:Name>
+                  <cbc:TaxTypeCode>VAT</cbc:TaxTypeCode>
+               </cac:TaxScheme>
+            </cac:TaxCategory>
+         </cac:TaxSubtotal>
+      </cac:TaxTotal>
+      <cac:Item>
+         <cbc:Description><![CDATA[VALVULA DE ESCAPE ST]]></cbc:Description>
+         <cac:SellersItemIdentification>
+            <cbc:ID>14721K70600</cbc:ID>
+         </cac:SellersItemIdentification>
+         <cac:CommodityClassification>
+            <cbc:ItemClassificationCode listID="UNSPSC" listAgencyName="GS1 US" listName="Item Classification">26101700</cbc:ItemClassificationCode>
+         </cac:CommodityClassification>
+      </cac:Item>
+      <cac:Price>
+         <cbc:PriceAmount currencyID="USD">8.54</cbc:PriceAmount>
+      </cac:Price>
+   </cac:InvoiceLine>
+   <cac:InvoiceLine>
+      <cbc:ID>11</cbc:ID>
+      <cbc:InvoicedQuantity unitCode="ZZ" unitCodeListID="UN/ECE rec 20" unitCodeListAgencyName="United Nations Economic Commission for Europe">1.00</cbc:InvoicedQuantity>
+      <cbc:LineExtensionAmount currencyID="USD">68.25</cbc:LineExtensionAmount>
+      <cac:PricingReference>
+         <cac:AlternativeConditionPrice>
+            <cbc:PriceAmount currencyID="USD">80.54</cbc:PriceAmount>
+            <cbc:PriceTypeCode listAgencyName="PE:SUNAT" listName="Tipo de Precio" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo16">01</cbc:PriceTypeCode>
+         </cac:AlternativeConditionPrice>
+      </cac:PricingReference>
+      <cac:AllowanceCharge>
+         <cbc:ChargeIndicator>false</cbc:ChargeIndicator>
+         <cbc:AllowanceChargeReasonCode listAgencyName="PE:SUNAT" listName="Cargo/descuento" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo53">00</cbc:AllowanceChargeReasonCode>
+         <cbc:MultiplierFactorNumeric>0.4016</cbc:MultiplierFactorNumeric>
+         <cbc:Amount currencyID="USD">45.81</cbc:Amount>
+         <cbc:BaseAmount currencyID="USD">114.06</cbc:BaseAmount>
+      </cac:AllowanceCharge>
+      <cac:TaxTotal>
+         <cbc:TaxAmount currencyID="USD">12.29</cbc:TaxAmount>
+         <cac:TaxSubtotal>
+            <cbc:TaxableAmount currencyID="USD">68.25</cbc:TaxableAmount>
+            <cbc:TaxAmount currencyID="USD">12.29</cbc:TaxAmount>
+            <cac:TaxCategory>
+               <cbc:Percent>18</cbc:Percent>
+               <cbc:TaxExemptionReasonCode listAgencyName="PE:SUNAT" listName="Afectacion del IGV" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo07">10</cbc:TaxExemptionReasonCode>
+               <cac:TaxScheme>
+                  <cbc:ID schemeName="Codigo de tributos" schemeAgencyName="PE:SUNAT" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo05">1000</cbc:ID>
+                  <cbc:Name>IGV</cbc:Name>
+                  <cbc:TaxTypeCode>VAT</cbc:TaxTypeCode>
+               </cac:TaxScheme>
+            </cac:TaxCategory>
+         </cac:TaxSubtotal>
+      </cac:TaxTotal>
+      <cac:Item>
+         <cbc:Description><![CDATA[ENS. CARBURADOR ST]]></cbc:Description>
+         <cac:SellersItemIdentification>
+            <cbc:ID>16100GFP901</cbc:ID>
+         </cac:SellersItemIdentification>
+         <cac:CommodityClassification>
+            <cbc:ItemClassificationCode listID="UNSPSC" listAgencyName="GS1 US" listName="Item Classification">26101700</cbc:ItemClassificationCode>
+         </cac:CommodityClassification>
+      </cac:Item>
+      <cac:Price>
+         <cbc:PriceAmount currencyID="USD">114.06</cbc:PriceAmount>
+      </cac:Price>
+   </cac:InvoiceLine>
+   <cac:InvoiceLine>
+      <cbc:ID>12</cbc:ID>
+      <cbc:InvoicedQuantity unitCode="ZZ" unitCodeListID="UN/ECE rec 20" unitCodeListAgencyName="United Nations Economic Commission for Europe">1.00</cbc:InvoicedQuantity>
+      <cbc:LineExtensionAmount currencyID="USD">143.08</cbc:LineExtensionAmount>
+      <cac:PricingReference>
+         <cac:AlternativeConditionPrice>
+            <cbc:PriceAmount currencyID="USD">168.83</cbc:PriceAmount>
+            <cbc:PriceTypeCode listAgencyName="PE:SUNAT" listName="Tipo de Precio" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo16">01</cbc:PriceTypeCode>
+         </cac:AlternativeConditionPrice>
+      </cac:PricingReference>
+      <cac:AllowanceCharge>
+         <cbc:ChargeIndicator>false</cbc:ChargeIndicator>
+         <cbc:AllowanceChargeReasonCode listAgencyName="PE:SUNAT" listName="Cargo/descuento" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo53">00</cbc:AllowanceChargeReasonCode>
+         <cbc:MultiplierFactorNumeric>0.4507</cbc:MultiplierFactorNumeric>
+         <cbc:Amount currencyID="USD">117.41</cbc:Amount>
+         <cbc:BaseAmount currencyID="USD">260.49</cbc:BaseAmount>
+      </cac:AllowanceCharge>
+      <cac:TaxTotal>
+         <cbc:TaxAmount currencyID="USD">25.75</cbc:TaxAmount>
+         <cac:TaxSubtotal>
+            <cbc:TaxableAmount currencyID="USD">143.08</cbc:TaxableAmount>
+            <cbc:TaxAmount currencyID="USD">25.75</cbc:TaxAmount>
+            <cac:TaxCategory>
+               <cbc:Percent>18</cbc:Percent>
+               <cbc:TaxExemptionReasonCode listAgencyName="PE:SUNAT" listName="Afectacion del IGV" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo07">10</cbc:TaxExemptionReasonCode>
+               <cac:TaxScheme>
+                  <cbc:ID schemeName="Codigo de tributos" schemeAgencyName="PE:SUNAT" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo05">1000</cbc:ID>
+                  <cbc:Name>IGV</cbc:Name>
+                  <cbc:TaxTypeCode>VAT</cbc:TaxTypeCode>
+               </cac:TaxScheme>
+            </cac:TaxCategory>
+         </cac:TaxSubtotal>
+      </cac:TaxTotal>
+      <cac:Item>
+         <cbc:Description><![CDATA[ENS. CARBURADOR (PD9AE B) ST]]></cbc:Description>
+         <cac:SellersItemIdentification>
+            <cbc:ID>16100KBB981</cbc:ID>
+         </cac:SellersItemIdentification>
+         <cac:CommodityClassification>
+            <cbc:ItemClassificationCode listID="UNSPSC" listAgencyName="GS1 US" listName="Item Classification">26101700</cbc:ItemClassificationCode>
+         </cac:CommodityClassification>
+      </cac:Item>
+      <cac:Price>
+         <cbc:PriceAmount currencyID="USD">260.49</cbc:PriceAmount>
+      </cac:Price>
+   </cac:InvoiceLine>
+   <cac:InvoiceLine>
+      <cbc:ID>13</cbc:ID>
+      <cbc:InvoicedQuantity unitCode="ZZ" unitCodeListID="UN/ECE rec 20" unitCodeListAgencyName="United Nations Economic Commission for Europe">1.00</cbc:InvoicedQuantity>
+      <cbc:LineExtensionAmount currencyID="USD">328.08</cbc:LineExtensionAmount>
+      <cac:PricingReference>
+         <cac:AlternativeConditionPrice>
+            <cbc:PriceAmount currencyID="USD">387.13</cbc:PriceAmount>
+            <cbc:PriceTypeCode listAgencyName="PE:SUNAT" listName="Tipo de Precio" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo16">01</cbc:PriceTypeCode>
+         </cac:AlternativeConditionPrice>
+      </cac:PricingReference>
+      <cac:AllowanceCharge>
+         <cbc:ChargeIndicator>false</cbc:ChargeIndicator>
+         <cbc:AllowanceChargeReasonCode listAgencyName="PE:SUNAT" listName="Cargo/descuento" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo53">00</cbc:AllowanceChargeReasonCode>
+         <cbc:MultiplierFactorNumeric>0.4418</cbc:MultiplierFactorNumeric>
+         <cbc:Amount currencyID="USD">259.67</cbc:Amount>
+         <cbc:BaseAmount currencyID="USD">587.75</cbc:BaseAmount>
+      </cac:AllowanceCharge>
+      <cac:TaxTotal>
+         <cbc:TaxAmount currencyID="USD">59.05</cbc:TaxAmount>
+         <cac:TaxSubtotal>
+            <cbc:TaxableAmount currencyID="USD">328.08</cbc:TaxableAmount>
+            <cbc:TaxAmount currencyID="USD">59.05</cbc:TaxAmount>
+            <cac:TaxCategory>
+               <cbc:Percent>18</cbc:Percent>
+               <cbc:TaxExemptionReasonCode listAgencyName="PE:SUNAT" listName="Afectacion del IGV" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo07">10</cbc:TaxExemptionReasonCode>
+               <cac:TaxScheme>
+                  <cbc:ID schemeName="Codigo de tributos" schemeAgencyName="PE:SUNAT" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo05">1000</cbc:ID>
+                  <cbc:Name>IGV</cbc:Name>
+                  <cbc:TaxTypeCode>VAT</cbc:TaxTypeCode>
+               </cac:TaxScheme>
+            </cac:TaxCategory>
+         </cac:TaxSubtotal>
+      </cac:TaxTotal>
+      <cac:Item>
+         <cbc:Description><![CDATA[ENS. CARBURADOR (VEA1J A) ST]]></cbc:Description>
+         <cac:SellersItemIdentification>
+            <cbc:ID>16100KPE752</cbc:ID>
+         </cac:SellersItemIdentification>
+         <cac:CommodityClassification>
+            <cbc:ItemClassificationCode listID="UNSPSC" listAgencyName="GS1 US" listName="Item Classification">26101700</cbc:ItemClassificationCode>
+         </cac:CommodityClassification>
+      </cac:Item>
+      <cac:Price>
+         <cbc:PriceAmount currencyID="USD">587.75</cbc:PriceAmount>
+      </cac:Price>
+   </cac:InvoiceLine>
+   <cac:InvoiceLine>
+      <cbc:ID>14</cbc:ID>
+      <cbc:InvoicedQuantity unitCode="ZZ" unitCodeListID="UN/ECE rec 20" unitCodeListAgencyName="United Nations Economic Commission for Europe">4.00</cbc:InvoicedQuantity>
+      <cbc:LineExtensionAmount currencyID="USD">170.91</cbc:LineExtensionAmount>
+      <cac:PricingReference>
+         <cac:AlternativeConditionPrice>
+            <cbc:PriceAmount currencyID="USD">50.42</cbc:PriceAmount>
+            <cbc:PriceTypeCode listAgencyName="PE:SUNAT" listName="Tipo de Precio" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo16">01</cbc:PriceTypeCode>
+         </cac:AlternativeConditionPrice>
+      </cac:PricingReference>
+      <cac:AllowanceCharge>
+         <cbc:ChargeIndicator>false</cbc:ChargeIndicator>
+         <cbc:AllowanceChargeReasonCode listAgencyName="PE:SUNAT" listName="Cargo/descuento" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo53">00</cbc:AllowanceChargeReasonCode>
+         <cbc:MultiplierFactorNumeric>0.3431</cbc:MultiplierFactorNumeric>
+         <cbc:Amount currencyID="USD">89.25</cbc:Amount>
+         <cbc:BaseAmount currencyID="USD">260.16</cbc:BaseAmount>
+      </cac:AllowanceCharge>
+      <cac:TaxTotal>
+         <cbc:TaxAmount currencyID="USD">30.76</cbc:TaxAmount>
+         <cac:TaxSubtotal>
+            <cbc:TaxableAmount currencyID="USD">170.91</cbc:TaxableAmount>
+            <cbc:TaxAmount currencyID="USD">30.76</cbc:TaxAmount>
+            <cac:TaxCategory>
+               <cbc:Percent>18</cbc:Percent>
+               <cbc:TaxExemptionReasonCode listAgencyName="PE:SUNAT" listName="Afectacion del IGV" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo07">10</cbc:TaxExemptionReasonCode>
+               <cac:TaxScheme>
+                  <cbc:ID schemeName="Codigo de tributos" schemeAgencyName="PE:SUNAT" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo05">1000</cbc:ID>
+                  <cbc:Name>IGV</cbc:Name>
+                  <cbc:TaxTypeCode>VAT</cbc:TaxTypeCode>
+               </cac:TaxScheme>
+            </cac:TaxCategory>
+         </cac:TaxSubtotal>
+      </cac:TaxTotal>
+      <cac:Item>
+         <cbc:Description><![CDATA[ENS. CARBURADOR (PDN2M A) ST]]></cbc:Description>
+         <cac:SellersItemIdentification>
+            <cbc:ID>16100KRH651</cbc:ID>
+         </cac:SellersItemIdentification>
+         <cac:CommodityClassification>
+            <cbc:ItemClassificationCode listID="UNSPSC" listAgencyName="GS1 US" listName="Item Classification">26101700</cbc:ItemClassificationCode>
+         </cac:CommodityClassification>
+      </cac:Item>
+      <cac:Price>
+         <cbc:PriceAmount currencyID="USD">65.04</cbc:PriceAmount>
+      </cac:Price>
+   </cac:InvoiceLine>
+   <cac:InvoiceLine>
+      <cbc:ID>15</cbc:ID>
+      <cbc:InvoicedQuantity unitCode="ZZ" unitCodeListID="UN/ECE rec 20" unitCodeListAgencyName="United Nations Economic Commission for Europe">50.00</cbc:InvoicedQuantity>
+      <cbc:LineExtensionAmount currencyID="USD">201.75</cbc:LineExtensionAmount>
+      <cac:PricingReference>
+         <cac:AlternativeConditionPrice>
+            <cbc:PriceAmount currencyID="USD">4.76</cbc:PriceAmount>
+            <cbc:PriceTypeCode listAgencyName="PE:SUNAT" listName="Tipo de Precio" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo16">01</cbc:PriceTypeCode>
+         </cac:AlternativeConditionPrice>
+      </cac:PricingReference>
+      <cac:AllowanceCharge>
+         <cbc:ChargeIndicator>false</cbc:ChargeIndicator>
+         <cbc:AllowanceChargeReasonCode listAgencyName="PE:SUNAT" listName="Cargo/descuento" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo53">00</cbc:AllowanceChargeReasonCode>
+         <cbc:MultiplierFactorNumeric>0.3695</cbc:MultiplierFactorNumeric>
+         <cbc:Amount currencyID="USD">118.25</cbc:Amount>
+         <cbc:BaseAmount currencyID="USD">320.00</cbc:BaseAmount>
+      </cac:AllowanceCharge>
+      <cac:TaxTotal>
+         <cbc:TaxAmount currencyID="USD">36.32</cbc:TaxAmount>
+         <cac:TaxSubtotal>
+            <cbc:TaxableAmount currencyID="USD">201.75</cbc:TaxableAmount>
+            <cbc:TaxAmount currencyID="USD">36.32</cbc:TaxAmount>
+            <cac:TaxCategory>
+               <cbc:Percent>18</cbc:Percent>
+               <cbc:TaxExemptionReasonCode listAgencyName="PE:SUNAT" listName="Afectacion del IGV" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo07">10</cbc:TaxExemptionReasonCode>
+               <cac:TaxScheme>
+                  <cbc:ID schemeName="Codigo de tributos" schemeAgencyName="PE:SUNAT" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo05">1000</cbc:ID>
+                  <cbc:Name>IGV</cbc:Name>
+                  <cbc:TaxTypeCode>VAT</cbc:TaxTypeCode>
+               </cac:TaxScheme>
+            </cac:TaxCategory>
+         </cac:TaxSubtotal>
+      </cac:TaxTotal>
+      <cac:Item>
+         <cbc:Description><![CDATA[ELEMENTO DE FILTRO DE AIRE COMP. ST]]></cbc:Description>
+         <cac:SellersItemIdentification>
+            <cbc:ID>17210K03C00</cbc:ID>
+         </cac:SellersItemIdentification>
+         <cac:CommodityClassification>
+            <cbc:ItemClassificationCode listID="UNSPSC" listAgencyName="GS1 US" listName="Item Classification">26101700</cbc:ItemClassificationCode>
+         </cac:CommodityClassification>
+      </cac:Item>
+      <cac:Price>
+         <cbc:PriceAmount currencyID="USD">6.40</cbc:PriceAmount>
+      </cac:Price>
+   </cac:InvoiceLine>
+</Invoice>

@@ -1,0 +1,350 @@
+<!-- Modal -->
+<div class="modal" id="modalRG" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="titleRW">Nueva Guía de Remisión</h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <div class="form-horizontal">
+                        <div class="form-group" style="display: none;">
+                            <!--<label class="col-sm-3 control-label">-->
+                            <!--Seleccionar Cotizaciones-->
+                            <!--<button class="btn btn-sm btn-primary">-->
+                            <!--<span class="fa fa-search-plus"></span>-->
+                            <!--</button>-->
+                            <!--</label>-->
+                            <label class="col-sm-2 control-label"
+                                   style="text-align: right !important;">O/C Interna</label>
+                            <div class="col-sm-3">
+                                <div class="input-group input-group-sm">
+                                    <input type="text" class="form-control" readonly value="0001" style="width: 35%">
+                                    <input type="text" class="form-control" readonly value="20170504"
+                                           style="width: 65%">
+                                </div>
+                            </div>
+                            <label class="col-sm-1 control-label"
+                                   style="text-align: right !important;">Estado</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control input-sm" readonly value="Atendido Total">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active">
+                            <a data-target="#tb_general" aria-controls="tb_general" role="tab"
+                               data-toggle="tab">General</a>
+                        </li>
+                        <li role="presentation">
+                            <a data-target="#tb_entity" aria-controls="tb_entity" role="tab"
+                               data-toggle="tab">Proveedor/Cliente</a>
+                        </li>
+                        <li role="presentation">
+                            <a data-target="#tb_company" aria-controls="tb_company" role="tab" data-toggle="tab">Empresa
+                                Transporte</a>
+                        </li>
+                        <li role="presentation">
+                            <a data-target="#tb_detail" aria-controls="tb_company" role="tab"
+                               data-toggle="tab">Detalle</a>
+                        </li>
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="tb_general">
+                            <br>
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Id</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control input-sm" id="rg_id"
+                                               readonly value="">
+                                    </div>
+                                    <label class="col-sm-2 control-label">Fecha</label>
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control input-sm" id="rg_date"
+                                               readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Tipo</label>
+                                    <div class="col-sm-4">
+                                        <select class="form-control input-sm" id="rg_document_type_id">
+                                        </select>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="tb_entity">
+                            <br>
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="col-sm-1 control-label">RUC</label>
+                                    <div class="col-sm-3">
+                                        <div class="input-group">
+                                            <input type="hidden" id="rg_entity_id">
+                                            <input type="text" class="form-control input-sm" id="rg_document"
+                                                   value="" readonly>
+                                            <span class="input-group-btn">
+                                                <button id="button_search_entity" class="btn btn-success btn-sm"
+                                                        type="button"
+                                                        ng-click="openEntity()">
+                                                    <span class="fa fa-search-plus"></span>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <label class="col-sm-2 control-label">Razón Social</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control input-sm" id="rg_social_reason" readonly
+                                               value="">
+                                    </div>
+                                    <label class="col-sm-1 control-label">proveedor</label>
+                                    <div class="col-sm-1">
+                                        <label class="checkbox-inline i-checks">
+                                            <input type="checkbox" id="rg_type_entity" checked>
+                                            <span id="state_local">Si</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-1 control-label">Dirección</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control input-sm" id="rg_address" readonly
+                                               value="">
+                                    </div>
+                                    <label class="col-sm-1 control-label">O/C</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control input-sm" id="rg_oc_entity" value=""
+                                               ng-keyup="updateForm()">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="tb_company">
+                            <br>
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Emp. transp.</label>
+                                    <div class="col-sm-4">
+                                        <div class="input-group">
+                                            <input type="hidden" id="rg_transport_company_id">
+                                            <input type="text" class="form-control input-sm"
+                                                   id="rg_transport_company_name" readonly>
+                                            <span class="input-group-btn">
+                                                <button id="button_search_company" class="btn btn-success btn-sm"
+                                                        type="button"
+                                                        ng-click="openTransportCompany()">
+                                                    <span class="fa fa-search-plus"></span>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <label class="col-sm-2 control-label">Unid. Transp</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control input-sm" id="rg_transport_unit"
+                                               ng-keyup="updateForm()">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Placa</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control input-sm" id="rg_license_plate"
+                                               ng-keyup="updateForm()">
+                                    </div>
+                                    <label class="col-sm-2 control-label">Licencia</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control input-sm" id="rg_license"
+                                               ng-keyup="updateForm()">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Conductor</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control input-sm" id="rg_driver"
+                                               ng-keyup="updateForm()">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="tb_detail">
+                            <br>
+                            <div class="form-horizontal">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Almacén Partida</label>
+                                            <div class="col-sm-4">
+                                                <select id="rg_warehouse_origin_id" class="form-control input-sm"
+                                                        style="width: 100%">
+                                                </select>
+                                            </div>
+                                            <label class="col-sm-2 control-label">Almacén LLegada</label>
+                                            <div class="col-sm-4">
+                                                <select id="rg_warehouse_destination_id" class="form-control input-sm"
+                                                        style="width: 100%">
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Dirección LLegada</label>
+                                            <div class="col-sm-4">
+                                                <input class="form-control input-sm" id="rg_address_arrival"
+                                                >
+                                            </div>
+                                            <label class="col-sm-2 control-label">Local</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control input-sm" id="rg_local"
+                                                       placeholder="Local" readonly>
+                                                <!--<select class="form-control input-sm" id="rg_local">-->
+                                                <!--</select>-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label"> Fecha Traslado</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" name="" class="form-control input-sm" readonly
+                                                       id="rg_date_transfer">
+                                            </div>
+                                            <label class="col-sm-2 control-label">Motivo</label>
+                                            <div class="col-sm-4">
+                                                <select class="form-control input-sm" id="rg_motive_id">
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Observaciones</label>
+                                            <div class="col-sm-4">
+                                                <textarea type="text" id="rg_observation" class="form-control input-sm"
+                                                          ng-keyup="updateForm()" rows="2"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Proyecto</label>
+                                            <div class="col-sm-6">
+                                                <input type="hidden" id="rg_project_id">
+                                                <div class="input-group">
+                                                    <input type="text" readonly id="rg_project_code" style="width: 30%"
+                                                           class="form-control input-sm">
+                                                    <input type="text" id="rg_project_description" readonly
+                                                           style="width: 70%"
+                                                           class="form-control input-sm">
+                                                    <span class="input-group-btn">
+                                                <button id="button_search_project"
+                                                        class="btn btn-success btn-sm btn-group_sm" type="button"
+                                                        ng-click="openProject()">
+                                                    <span class="fa fa-search-plus"></span>
+                                                </button>
+                                            </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="col-sm-1 control-label">Producto</label>
+                                            <div class="col-sm-2">
+                                                <input type="text" id="rg_code" class="form-control input-sm"
+                                                       placeholder="Código">
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <input type="text" id="rg_description" class="form-control input-sm"
+                                                       placeholder="Descripción">
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <input type="text" id="rg_unit_measure" class="form-control input-sm"
+                                                       placeholder="Unid.">
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <input type="text" id="rg_cost_transfer" class="form-control input-sm"
+                                                       placeholder="Cost.">
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <input type="text" id="rg_quantity" class="form-control input-sm"
+                                                       placeholder="Cant." onkeypress="return soloNumeros(event)">
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <button class="btn btn-primary btn-sm" readonly data-rel="tooltip"
+                                                        title="Agregar" id="add_detail_button"
+                                                        ng-click="addDetail()">
+                                                    Agregar&nbsp;
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-striped table-hover">
+                                                <thead>
+                                                <tr>
+                                                    <th>Código</th>
+                                                    <th style="width: 35%">Producto</th>
+                                                    <th>Und. Medida.</th>
+                                                    <th style="width: 13%">Costo Traslado (S/.)</th>
+                                                    <th style="width: 10%">Cantidad</th>
+                                                    <th>Importe</th>
+                                                    <th></th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="referral_guide_detail"></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-9"></div>
+                                    <label class="col-sm-1 control-label">TOTAL</label>
+                                    <div class="col-sm-2">
+                                        <input class="form-control input-sm green input-small" id="rg_total"
+                                               placeholder="0.00" readonly/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="button_print_referral_guide" disabled type="button" class="btn btn-info"
+                        ng-click="printReferralGuide(2)">
+                    <span class="fa fa-print"></span>
+                    Imprimir
+                </button>
+                <button id="button_save_referral_guide" type="button" class="btn btn-success"
+                        ng-click="saveReferralGuide()">
+                    <span class="fa fa-save"></span>
+                    Guardar
+                </button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                    <span class="fa fa-times"></span> Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

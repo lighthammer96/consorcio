@@ -1,0 +1,51 @@
+<div class="modal" id="modalP" role="dialog" data-keyboard="false">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="titleP"></h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active">
+                            <a data-target="#home" aria-controls="home" role="tab" data-toggle="tab">General</a>
+                        </li>
+                        <li role="presentation">
+                            <a data-target="#subprojects" aria-controls="subprojects" role="tab" data-toggle="tab">Subproyectos</a>
+                        </li>
+                        <li role="presentation">
+                            <a data-target="#income" aria-controls="income" role="tab" data-toggle="tab">Ingresos</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="home">
+                            <div ng-include src="'/templates/projects/form_general.html'"></div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="subprojects">
+                            <div ng-include src="'/templates/projects/matrix.html'"></div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="income">
+                            <div ng-include src="'/templates/projects/income.html'"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" ng-click="approveProject()">
+                    <span class="fa fa-sign-in"></span>
+                    Aprobar
+                </button>
+                <button type="button" class="btn btn-danger" ng-click="rejectProject()">
+                    <span class="fa fa-sign-out"></span>
+                    Rechazar
+                </button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">
+                    <span class="fa fa-times"></span> Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

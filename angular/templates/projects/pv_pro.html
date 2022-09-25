@@ -1,0 +1,78 @@
+<div class="form-horizontal">
+    <div class="form-group">
+        <label class="col-sm-2 control-label show_2_">Material</label>
+        <label class="col-sm-2 control-label show_1_">Actividad</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control input-sm show_2_" readonly
+                   value="POSTES Y ESTRUCTURAS">
+            <input type="text" class="form-control input-sm show_1_" readonly
+                   value="EXCAVACION DE HOYOS">
+        </div>
+    </div>
+</div>
+<div class="table-responsive show_1_">
+    <table class="table table-bordered">
+        <thead class="show_pv1">
+        <tr>
+            <th colspan="4">LB (Linea Base)</th>
+            <th colspan="4">PV (Replanteo)</th>
+            <th colspan="4">PV1 (Meta)</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th>Cantidad</th>
+            <th width="80px">Unidad</th>
+            <th>Precio</th>
+            <th>Total</th>
+            <th>Cantidad</th>
+            <th width="80px">Unidad</th>
+            <th>Precio</th>
+            <th>Total</th>
+            <th>Cantidad</th>
+            <th width="80px">Unidad</th>
+            <th>Precio</th>
+            <th>Total</th>
+        </tr>
+        <tr>
+            <td>
+                <input type="text" class="form-control input-sm text-right" readonly value="15" />
+            </td>
+            <td class="text-center">UNIDADES</td>
+            <td>
+                <input type="text" class="form-control input-sm text-right" readonly value="1,830.25" />
+            </td>
+            <td>
+                <input type="text" class="form-control input-sm text-right" readonly value="27,453.75">
+            </td>
+            <td>
+                <input type="text" class="form-control input-sm text-right" readonly value="20" />
+            </td>
+            <td class="text-center">UNIDADES</td>
+            <td>
+                <input type="text" class="form-control input-sm text-right" readonly value="1,830.25" />
+            </td>
+            <td>
+                <input type="text" class="form-control input-sm text-right" readonly value="36,605.00">
+            </td>
+            <td>
+                <input type="text" class="form-control input-sm text-right" readonly value="20" />
+            </td>
+            <td class="text-center">UNIDADES</td>
+            <td>
+                <input type="text" class="form-control input-sm text-right" readonly value="1,523.95" />
+            </td>
+            <td>
+                <input type="text" class="form-control input-sm text-right" readonly value="30,479.00">
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="text-right show_1_">
+    <button class="btn btn-sm btn-primary" type="button" ng-click="showAnalysisPro()">
+        Análisis de precios unitarios
+    </button>
+    <div class="separator"></div>
+</div>
+<div ng-include src="'/templates/projects/table_pro.html'"></div>

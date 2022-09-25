@@ -1,0 +1,135 @@
+{
+  "invoice": {
+    "tip_doc": "01",
+    "serie": "F003",
+    "correl": "00000042",
+    "fec_emi": "2022-08-06",
+    "cod_mon": "PEN",
+    "tip_oper": "0101",
+    "fec_venc": "2022-09-03",
+    "hora_emi": "22:55:50",
+    "cod_mon_ref": "PEN",
+    "cod_mon_obj": "PEN",
+    "fec_tipo_cambio": "2022-08-06",
+    "ubl_version": "2.1",
+    "customizacion": "2.0",
+    "emisor": {
+      "tip_doc": "6",
+      "num_doc": "10427946580",
+      "raz_soc": "TU EMPRESA DEMO",
+      "nom_comer": "DEMO",
+      "dir": "CALLE ROSA NOGUERA ",
+      "cod_ubi": "150134",
+      "dep": "LIMA",
+      "prov": "LIMA",
+      "dist": "SAN LUIS",
+      "urb": "-",
+      "cod_pais": "PE",
+      "email": "jmariscal@seencorp.pe",
+      "telef": "997596006 / 910455079",
+      "cod_sucur": "0000"
+    },
+    "adquiriente": {
+      "tip_doc": "6",
+      "num_doc": "20542330431",
+      "raz_soc": "CREDITOS CZL E.I.R.L.",
+      "dir": "JR. PEDRO DE URZUA NRO. 333 INT. A ",
+      "cod_ubi": "220901",
+      "prov": "SAN MARTIN",
+      "dep": "SAN MARTIN",
+      "dist": "TARAPOTO",
+      "cod_pais": "PE"
+    },
+    "tot": {
+      "grav": "0.00",
+      "exo": "6535.00",
+      "grat": "1.00",
+      "sub_tot": "7536.00",
+      "dsc_item": "0.00",
+      "val_vent": "7535.00",
+      "igv": "0.00",
+      "isc": "0.00",
+      "imp_tot": "6535.00",
+      "otr_carg": "0.00",
+      "otr_trib": "0.00",
+      "dsct_tot": "0.00",
+      "antic": "1000.00",
+      "impsto_tot": "0.00",
+      "trib_exo": "0.00",
+      "trib_grat": "0.00",
+      "prec_tot": "7535.00",
+      "redondeo": "0.00"
+    },
+    "cargo":[
+      {"cod_cd":"05","factor_cd":"0.13271","monto_cd":"1000.00","base_cd":"7535.00"}
+    ],
+    "ant":[
+      {"imp_prepagado":"1000.00","tip_doc_ant":"02","serie_correl":"F003-00000041","num_doc":"10427946580","tip_doc":"6","moneda":"PEN","fec_pago":"2022-08-06"}
+    ],
+    "forma_pago": {
+      "descrip": "Credito",
+      "monto_neto": "6535.00",
+      "cod_mon": "PEN"
+    },
+    "det": [
+      { 
+        "nro_item": "1",
+        "cod_prod": "S0102",
+        "cod_und_med": "ZZ",
+        "descrip": "MOTOCICLETA CB125F TWISTER / SERIE: LALJA2591N3283991 / MOTOR: JA25E-4908212 / COLOR:ROJO / AÑO:2022",
+        "cant": "1.00000",
+        "val_unit_item": "7535.00000",
+        "sub_tot": "7535.00",
+        "dsc_item": "0.00",
+        "val_vta_item": "7535.00",
+        "igv_item": "0.00",
+        "prec_unit_item": "7535.00000",
+        "tip_afec_igv": "20",
+        "impsto_tot": "0.00",
+        "base_igv": "7535.00",
+        "tasa_igv": "18.00000",
+        "ind_grat": "N"
+      },
+      {
+        "nro_item": "2",
+        "cod_prod": "S0102",
+        "cod_und_med": "ZZ",
+        "descrip": "CASCO CHAVITOS",
+        "cant": "1.00000",
+        "val_unit_item": "0.00000",
+        "sub_tot": "1.00",
+        "dsc_item": "0.00",
+        "val_vta_item": "1.00",
+        "igv_item": "0.00",
+        "prec_unit_item": "0.00000",
+        "tip_afec_igv": "21",
+        "val_ref_unit_item": "1.00000",
+        "impsto_tot": "0.00",
+        "base_igv": "1.00",
+        "tasa_igv": "18.00000",
+        "ind_grat": "N"
+      }
+    ],
+    "leyen": [
+      {
+        "leyen_cod": "2001",
+        "leyen_descrip": "BIENES TRANSFERIDOS EN LA AMAZONIA REGION SELVA PARA SER CONSUMIDOS EN LA MISMA"
+      },
+      {
+        "leyen_cod": "1000",
+        "leyen_descrip": "SON: SIETE MIL QUINIENTOS TREINTA Y CINCO CON 00/100 SOLES"
+      },
+      {
+        "leyen_descrip": "No se aceptan cambios ni devoluciones"
+      }
+    ],
+    "cuota": [
+      {
+        "descrip": "Cuota001",
+        "monto_neto": "6535.00",
+        "cod_mon": "PEN",
+        "fec_venc": "2022-09-03"
+      }
+    ]
+  }
+}

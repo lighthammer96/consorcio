@@ -1,0 +1,75 @@
+<div class="form-horizontal">
+    <div class="form-group">
+        <label class="col-sm-2 control-label show_2__">Material</label>
+        <label class="col-sm-2 control-label show_1__">Actividad</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control input-sm show_2__" readonly
+                   value="POSTES Y ESTRUCTURAS">
+            <input type="text" class="form-control input-sm show_1__" readonly
+                   value="EXCAVACION DE HOYOS">
+        </div>
+    </div>
+</div>
+<div class="table-responsive show_1__">
+    <table class="table table-bordered">
+        <thead class="show_pv1">
+        <tr>
+            <th colspan="4">PV1 (Meta)</th>
+            <th class="text-center" colspan="7">FRENTES</th>
+        </tr>
+        <tr>
+            <th rowspan="2">Cantidad</th>
+            <th rowspan="2">Unidad</th>
+            <th rowspan="2">Precio</th>
+            <th rowspan="2">Total</th>
+            <th width="20%" colspan="2">ELECTRONORTE S.A.</th>
+            <th width="20%" colspan="2">TECSUR S.A.</th>
+            <th width="20%" colspan="2">T&L INGENIEROS ASOCIADOS SAC</th>
+            <th class="text-center" rowspan="2">TOTAL</th>
+        </tr>
+        <tr>
+            <th class="text-center">Cantidad</th>
+            <th class="text-center">Total</th>
+            <th class="text-center">Cantidad</th>
+            <th class="text-center">Total</th>
+            <th class="text-center">Cantidad</th>
+            <th class="text-center">Total</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td class="text-right">15</td>
+            <td class="text-center">UNIDADES</td>
+            <td class="text-right">258.00</td>
+            <th class="text-right">3,870.00</th>
+            <td class="text-center"><input type="text" class="text-right" style="width: 50px" value="5"></td>
+            <td class="text-right">1,290.00</td>
+            <td class="text-center"><input type="text" class="text-right" style="width: 50px" value="5"></td>
+            <td class="text-right">1,290.00</td>
+            <td class="text-center"><input type="text" class="text-right" style="width: 50px" value="5"></td>
+            <td class="text-right">1,290.00</td>
+            <th class="text-right">3,870.00</th>
+        </tr>
+        <tr>
+            <td colspan="4"></td>
+            <td class="text-center" colspan="2">
+                <button class="btn btn-sm btn-primary" type="button" ng-click="showAnalysisFro()">
+                    Análisis de precios unitarios
+                </button>
+            </td>
+            <td class="text-center" colspan="2">
+                <button class="btn btn-sm btn-primary" type="button" ng-click="showAnalysisFro()">
+                    Análisis de precios unitarios
+                </button>
+            </td>
+            <td class="text-center" colspan="2">
+                <button class="btn btn-sm btn-primary" type="button" ng-click="showAnalysisFro()">
+                    Análisis de precios unitarios
+                </button>
+            </td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div ng-include src="'/templates/projects/table_fro.html'"></div>

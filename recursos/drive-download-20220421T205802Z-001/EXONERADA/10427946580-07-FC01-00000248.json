@@ -1,0 +1,75 @@
+{
+  "creditnote": {
+    "tip_doc": "07",
+    "serie": "FC01",
+    "correl": "00000248",
+    "fec_emi": "2021-07-31",
+    "cod_mon": "PEN",
+    "ubl_version": "2.1",
+    "customizacion": "2.0",
+    "docmodif": {
+      "tip_doc": "01",
+      "serie_correl": "F001-00000001",
+      "cod_ref": "01",
+      "descrip_motiv": "ANULACION DE LA OPERACION",
+      "fec_emi": "2021-07-20"
+    },
+    "emisor": {
+      "tip_doc": "6",
+      "num_doc": "10427946580",
+      "raz_soc": "PRUEBA S.R.L.",
+      "nom_comer": "PRUEBA SRL",
+      "dir": "JR. RICARDO PALMA",
+      "cod_ubi": "220901",
+      "dep": "SAN MARTIN",
+      "prov": "SAN MARTIN",
+      "dist": "TARAPOTO",
+      "cod_pais": "PE",
+      "cod_sucur": "0000"
+    },
+    "adquiriente": {
+      "tip_doc": "6",
+      "num_doc": "20603704020",
+      "raz_soc": "SEEN CORPORATION SAC"
+      ,"dir": "JR. LAS ROCAS"
+      ,"cod_pais": "PE"
+    },
+    "tot": {
+       "exo": "19195.80"
+      ,"val_vent": "19195.80"
+      ,"imp_tot": "19195.80"
+      ,"prec_tot": "19195.80"
+      ,"impsto_tot": "0.00"
+      ,"trib_exo": "0.00"
+    },
+    "det": [
+    {
+      "nro_item": "1",
+      "cod_prod": "00005281",
+      "cod_und_med": "BG",
+      "descrip": "ARTICULO 1",
+      "cant": "780.000",
+      "val_unit_item": "24.61",
+      "sub_tot": "19195.8",
+      "val_vta_item": "19195.80",
+      "igv_item": "0.00",
+      "prec_unit_item": "24.61",
+      "tip_afec_igv": "20",
+      "impsto_tot": "0.00",
+      "base_igv": "19195.80",
+      "tasa_igv": "18.00"
+    }
+    ],
+    "leyen": [
+    {
+      "leyen_cod": "1000",
+      "leyen_descrip": "DIECINUEVE MIL CIENTO  NOVENTA Y CINCO Y 80/100 SOLES"
+    }
+    ,
+    {
+      "leyen_cod": "2001",
+      "leyen_descrip": "BIENES TRANSFERIDOS EN LA AMAZONIA REGION SELVA PARA SER CONSUMIDOS EN LA MISMA"
+    }
+    ]
+  }
+}

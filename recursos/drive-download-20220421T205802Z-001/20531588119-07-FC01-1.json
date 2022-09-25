@@ -1,0 +1,60 @@
+{
+    "creditnote": {
+        "tip_doc": "07",
+        "serie": "FC01",
+        "correl": "1",
+        "fec_emi": "2018-10-06",
+        "cod_mon": "PEN",
+        "hora_emi": "14:31:03",
+        "ubl_version": "2.1",
+        "customizacion": "2.0",
+        "emisor": {
+            "tip_doc": "6",
+            "num_doc": "20531588119",
+            "raz_soc": "DETALLES ZAPATERIA E.I.R.L.",
+            "dir": "JR. ALFONSO UGARTE # 1000",
+            "cod_ubi": "220901",
+            "dep": "SAN MARTIN",
+            "prov": "SAN MARTIN",
+            "dist": "TARAPOTO",
+            "cod_pais": "PE",
+            "cod_sucur": "0000"
+        },
+        "adquiriente": {
+            "tip_doc": "6",
+            "num_doc": "10451734909",
+            "raz_soc": "PINEDO BECERRA NILDA",
+            "dir": "-",
+            "cod_pais": "PE"
+        },
+        "docmodif": {
+            "tip_doc": "01",
+            "serie_correl": "F001-00000001",
+            "cod_ref": "04",
+            "descrip_motiv": "Cliente no est� satisfecho con el funcionamiento de la cocina",
+            "fec_emi": "2018-10-01"
+        },
+        "tot": {
+            "grav": "635.59",
+            "val_vent": "635.59",
+            "igv": "114.41",
+            "imp_tot": "750.00",
+            "impsto_tot": "114.41"
+        },
+        "det": [{
+                "nro_item": "1",
+                "cod_prod": "00000002",
+                "cod_und_med": "NIU",
+                "descrip": "Ampliaci�n de garant�a  de 6 a 12 meses de Memoria DDR-3 B1333 Kingston",
+                "cant": "1.00",
+                "val_unit_item": "635.59",
+                "val_vta_item": "635.59",
+                "igv_item": "114.41",
+                "prec_unit_item": "750.00",
+                "tip_afec_igv": "10",
+                "impsto_tot": "114.41",
+                "base_igv": "635.59",
+                "tasa_igv": "18.00"
+            }]
+    }
+}

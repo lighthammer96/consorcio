@@ -1,0 +1,21 @@
+<div class="panel panel-success">
+    <div class="panel-heading">
+        <div class="pull-right date_range_div">
+            <input type="checkbox" checked class="chk_date_range" />
+            <div id="reqDates" class="">
+                <i class="fa fa-calendar"></i>&nbsp;
+                <span></span> <b class="caret"></b>
+            </div>
+        </div>
+        Gestión de Facturación Directa
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="table_container_db" class="table-responsive"></div>
+            </div>
+        </div>
+
+        <div ng-include src="'/templates/direct_billing/form.html'"></div>
+    </div>
+</div>

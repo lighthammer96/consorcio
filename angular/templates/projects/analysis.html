@@ -1,0 +1,186 @@
+<div class="modal" id="modalAnalysisIncome" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Análisis de Precios Unitarios</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal p_inc_frm_apu">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Partida</label>
+                        <label class="col-sm-1 control-label">
+                            <span id="p_inc_level_apu"></span>
+                            <br><span id="p_inc_code_apu"></span>
+                        </label>
+                        <label class="col-sm-9 control-label">
+                            <span id="p_inc_matrix_apu"></span>
+                            <br><span id="p_inc_description_apu"></span>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">HTrabajo/Día</label>
+                        <div class="col-sm-1 control-label">
+                            <input type="text" class="form-control text-right input-sm" onclick="this.select()"
+                                   id="p_inc_hours_apu" onkeypress="return soloNumeros(event)" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Rendimiento</label>
+                        <label class="col-sm-1 control-label">
+                            <span class="p_inc_und_apu"></span>/Día
+                        </label>
+                        <div class="col-md-2">
+                            <div class="input-group">
+                                <span class="input-group-addon input-group_sm">MO.</span>
+                                <input type="text" class="form-control text-right input-sm"
+                                       id="p_inc_mo_apu" onclick="this.select()"
+                                       onkeypress="return validDecimals(event, this, 3)"
+                                       onblur="return roundDecimals(this, 2)">
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="input-group">
+                                <span class="input-group-addon input-group_sm">EQ.</span>
+                                <input type="text" class="form-control text-right input-sm"
+                                       id="p_inc_eq_apu" onclick="this.select()"
+                                       onkeypress="return validDecimals(event, this, 3)"
+                                       onblur="return roundDecimals(this, 2)">
+                            </div>
+                        </div>
+                        <label class="col-sm-3 control-label" style="text-align:right!important;">
+                            Costo unitario directo por:
+                        </label>
+                        <div class="col-md-2">
+                            <div class="input-group">
+                                <span class="input-group-addon input-group_sm p_inc_und_apu"></span>
+                                <input type="text" class="form-control text-right input-sm" readonly value="0.00"
+                                       id="p_inc_total_apu">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-sm btn-success show_not_approval" ng-click="addStructureIncome()">
+                    <span class="fa fa-plus"></span>
+                    Agregar Recurso
+                </button>
+                <div class="separator show_not_approval"></div>
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered" id="p_inc_apu_table">
+                        <thead>
+                        <tr>
+                            <th width="20px"></th>
+                            <th>Código</th>
+                            <th>Mano de Obra</th>
+                            <th>Unidad</th>
+                            <th width="70px">Cuadrilla</th>
+                            <th width="70px">H-H/Und</th>
+                            <th width="70px">Precio S/.</th>
+                            <th width="70px">Parcial S/.</th>
+                        </tr>
+                        </thead>
+                        <tbody id="p_inc_apu_t_body_mo"></tbody>
+                        <tbody>
+                        <tr>
+                            <th colspan="5"></th>
+                            <th class="text-right p_inc_apu_tot" id="p_inc_apu_q_mo">0.00</th>
+                            <th></th>
+                            <th class="text-right p_inc_apu_tot" id="p_inc_apu_t_mo">0.00</th>
+                        </tr>
+                        </tbody>
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>Código</th>
+                            <th>Materiales</th>
+                            <th>Unidad</th>
+                            <th></th>
+                            <th>Cant/Und</th>
+                            <th>Precio S/.</th>
+                            <th>Parcial S/.</th>
+                        </tr>
+                        </thead>
+                        <tbody id="p_inc_apu_t_body_mat"></tbody>
+                        <tbody>
+                        <tr id="p_inc_apu_tr_1507071_2" data-code="1507071" data-type="2">
+                            <td></td>
+                            <td class="text-center fa-red">1507071</td>
+                            <td>Materiales Varios <span class="p_inc_percentage"></span>% mano de obra</td>
+                            <td class="text-center fa-red">%mo</td>
+                            <td></td>
+                            <td class="text-right p_inc_percentage"></td>
+                            <td class="text-right p_inc_apu_tot p_inc_apu_total_mo">0.00</td>
+                            <td class="text-right p_inc_apu_tot p_inc_apu_total_per p_inc_apu_inp_tot">0.00</td>
+                        </tr>
+                        <tr>
+                            <th colspan="7"></th>
+                            <th class="text-right p_inc_apu_tot" id="p_inc_apu_t_mat">0.00</th>
+                        </tr>
+                        </tbody>
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>Código</th>
+                            <th>Equipos</th>
+                            <th>Unidad</th>
+                            <th>Equipamiento</th>
+                            <th>H-M/Und</th>
+                            <th>Precio S/.</th>
+                            <th>Parcial S/.</th>
+                        </tr>
+                        </thead>
+                        <tbody id="p_inc_apu_t_body_eq"></tbody>
+                        <tbody>
+                        <tr id="p_inc_apu_tr_1602019_3" data-code="1602019" data-type="3">
+                            <td></td>
+                            <td class="text-center fa-red">1602019</td>
+                            <td>Herramientas <span class="p_inc_percentage"></span>% mano de obra</td>
+                            <td class="text-center fa-red">%mo</td>
+                            <td></td>
+                            <td class="text-right p_inc_percentage"></td>
+                            <td class="text-right p_inc_apu_tot p_inc_apu_total_mo">0.00</td>
+                            <td class="text-right p_inc_apu_tot p_inc_apu_total_per p_inc_apu_inp_tot">0.00</td>
+                        </tr>
+                        <tr>
+                            <th colspan="5"></th>
+                            <th class="text-right p_inc_apu_tot" id="p_inc_apu_q_eq">0.00</th>
+                            <th></th>
+                            <th class="text-right p_inc_apu_tot" id="p_inc_apu_t_eq">0.00</th>
+                        </tr>
+                        </tbody>
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>Código</th>
+                            <th>Subcontratos</th>
+                            <th>Unidad</th>
+                            <th></th>
+                            <th>Cant/Und</th>
+                            <th>Precio S/.</th>
+                            <th>Parcial S/.</th>
+                        </tr>
+                        </thead>
+                        <tbody id="p_inc_apu_t_body_sc"></tbody>
+                        <tbody>
+                        <tr>
+                            <th colspan="7"></th>
+                            <th class="text-right p_inc_apu_tot" id="p_inc_apu_t_sc">0.00</th>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success show_not_approval"
+                        ng-click="saveAnalysisPriceUnitary()">
+                    <span class="fa fa-save"></span> Guardar
+                </button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">
+                    <span class="fa fa-times"></span> Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

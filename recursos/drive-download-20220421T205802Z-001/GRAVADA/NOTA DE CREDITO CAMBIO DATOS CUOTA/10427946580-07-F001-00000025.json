@@ -1,0 +1,89 @@
+{
+  "creditnote": {
+    "tip_doc": "07",
+    "serie": "F001",
+    "correl": "00000025",
+    "fec_emi": "2021-11-19",
+    "cod_mon": "PEN",
+    "cod_mon_ref": "PEN",
+    "cod_mon_obj": "PEN",
+    "fec_tipo_cambio": "2021-11-19",
+    "ubl_version": "2.1",
+    "customizacion": "2.0",
+    "emisor": {
+      "tip_doc": "6",
+      "num_doc": "10427946580",
+      "raz_soc": "SUPER DRIVE AUTOMOTRIZ S.R.L.",
+      "nom_comer": "PRUEBA",
+      "dir": "AV. LOS QUECHUAS NRO. 1386 URB. PARQUES DE MONTERRICO ",
+      "cod_ubi": "150113",
+      "dep": "LIMA",
+      "prov": "LIMA",
+      "dist": "ATE",
+      "cod_pais": "PE",
+      "email": "superdriveautomotrizperu@gmail.com",
+      "telef": "013431360 - 998282946 - 983246911 - 934870097",
+      "cod_sucur": "0000"
+    },
+    "adquiriente": {
+      "tip_doc": "6",
+      "num_doc": "20603704020",
+      "raz_soc": "SEEN CORPORATION S.A.C.",
+      "dir": "PJ. ROSA NOGUERA NRO. 678 URB. TUPAC AMARU (PISO 4) LIMA - LIMA - SAN LUIS",
+      "cod_pais": "PE"
+    },
+    "tot": {
+      "grav": "0.00",
+      "igv": "0.00",
+      "isc": "0.00",
+      "imp_tot": "0.00",
+      "otr_carg": "0.00",
+      "otr_trib": "0.00",
+      "impsto_tot": "0.00",
+      "redondeo": "0.00"
+    },
+    "docmodif": {
+      "tip_doc": "01",
+      "serie_correl": "F001-00000190",
+      "cod_ref": "13",
+      "descrip_motiv": "CAMBIO DE FECHA DE LA CUOTA",
+      "fec_emi": "2021-11-19"
+    },
+    "forma_pago": {
+      "descrip": "Credito",
+      "monto_neto": "150.00",
+      "cod_mon": "PEN"
+    },
+    "det": [
+      {
+        "nro_item": "1",
+        "cod_prod": "S0004",
+        "cod_und_med": "ZZ",
+        "descrip": "servicio mantenimiento laptop",
+        "cant": "1.00000",
+        "val_unit_item": "0.00000",
+        "val_vta_item": "0.00",
+        "igv_item": "0.00",
+        "prec_unit_item": "0.00000",
+        "tip_afec_igv": "10",
+        "impsto_tot": "0.00",
+        "base_igv": "0.00",
+        "tasa_igv": "18.00000"
+      }
+    ],
+    "leyen": [
+      {
+        "leyen_cod": "1000",
+        "leyen_descrip": "SON:  CON 00/100 SOLES"
+      }
+    ],
+    "cuota": [
+      {
+        "descrip": "Cuota001",
+        "monto_neto": "150.00",
+        "cod_mon": "PEN",
+        "fec_venc": "2021-11-30"
+      }
+    ]
+  }
+}

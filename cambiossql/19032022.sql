@@ -1,0 +1,1 @@
+ALTER TABLE [dbo].[ERP_Venta] ADD [idmotivo] varchar(5) NULL;

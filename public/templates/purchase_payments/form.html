@@ -1,0 +1,190 @@
+<!-- Modal -->
+<div class="modal" id="modalPP" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="title-sc"></h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal">
+                  <div class="row">
+                      <div class="col-md-7">
+                           <div class="form-group">
+                                <label class="col-sm-3 control-label">Id Pago</label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control input-sm" readonly value="00043">
+                                </div>
+                               <label class="col-sm-3 control-label">Periodo Contable</label>
+                               <div class="col-sm-3">
+                                   <input type="text" id="charges" class="form-control input-sm" readonly value="201201">
+                               </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Proveedor</label>
+                                <div class="col-sm-9">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control input-sm" value="20129646099"
+                                               style="width: 30%">
+                                        <input type="text" class="form-control input-sm" readonly
+                                               value="ELECTROCENTRO SA" style="width: 70%">
+                                        <span class="input-group-btn show_expense">
+                                            <button class="btn btn-success btn-sm" type="button" ng-click="openProvider()">
+                                                <span class="fa fa-search-plus"></span>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                               <label class="col-sm-3 control-label">Local</label> 
+                               <div class="col-sm-9">
+                                 <select class="form-control input-sm">
+                                     <option>LOCAL PRINCIPAL</option>
+                                 </select>  
+                               </div>
+                            </div>
+                            <div class="form-group">
+                               <label class="col-sm-3 control-label">Forma Pago</label> 
+                               <div class="col-sm-9">
+                                 <select class="form-control input-sm">
+                                     <option>DEPOSITO EN CUENTA</option>
+                                 </select>  
+                               </div>
+                            </div>
+                            <div class="form-group">
+                               <label class="col-sm-3 control-label">N° Forma Pago</label> 
+                               <div class="col-sm-9">
+                                <input  class="form-control input-sm" value="2222545">
+                               </div>
+                            </div>
+                            <div class="form-group">
+                               <label class="col-sm-3 control-label">Monto</label> 
+                               <div class="col-sm-4">
+                               <b><input class="form-control input-sm text-right" value="4000.00"></b>
+                               </div>
+                               <div class="col-sm-5">
+                                    <button class="btn btn-sm btn-success" type="button" ng-click="openPurchaseBilling()">
+                                    <span class="fa fa-plus-circle"></span>
+                                    Asociación de Documento
+                                    </button>
+                               </div>
+                            </div>
+                      </div>
+                      <div class="col-md-5">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Fecha Pago</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control input-sm" value="00/00/0000" readonly="readonly">
+                            </div>
+                         </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Moneda</label>
+                            <div class="col-sm-8">
+                                <select class="form-control input-sm">
+                                    <option>MN</option>
+                                </select>
+                            </div>
+                         </div>
+                         <div class="form-group">
+                            <label class="col-sm-4 control-label">Banco</label> 
+                               <div class="col-sm-8">
+                                 <select class="form-control input-sm">
+                                     <option>DE CRÉDITO DEL PERÚ</option>
+                                 </select>  
+                               </div>
+                         </div>
+                        <div class="form-group">
+                           <label class="col-sm-4 control-label">Nro. Cta. Cte</label> 
+                           <div class="col-sm-8">
+                             <select class="form-control input-sm">
+                                 <option>75868364758693</option>
+                             </select>  
+                           </div>
+                        </div>
+                          <div class="form-group">
+                              <label class="col-sm-4 control-label">Detracción</label>
+                              <div class="col-sm-8">
+                                  <div class="input-group">
+                                      <span class="input-group-btn">
+                                            <input type="checkbox" id="w_physical_location" checked>
+
+                                        </span>
+                                      <input type="text" class="form-control input-sm text-center" value="20/02/2017"
+                                             style="width: 60%">
+                                      <input type="text" class="form-control input-sm" placeholder="Operación"
+                                             style="width: 40%" value="0012364">
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="row">
+                   <div class="col-md-12">
+                    <div class="table-responsive">
+                        <br>
+                          <table class="table table-bordered table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <th>Tipo Comprobante</th>
+                                <th>Número Comprobante</th>
+                                <th>Fecha Emisión</th>
+                                <th style="width: 12%">Monto Total</th>
+                                <th style="width: 12%">Saldo</th>
+                                <th style="width: 12%">Monto a Pagar</th>
+                                <th style="width: 12%">Saldo Nuevo</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody id="">
+                               <tr>
+                                    <td>Factura</td>
+                                    <td>001-00002</td>
+                                    <td class="text-center">20/02/2017</td>
+                                    <td class="text-right">5000.00</td>
+                                    <td class="text-right">4000.00</td>
+                                    <td class="text-right">1000.00</td>
+                                    <td class="text-right">3000.00</td>
+                                    <td><button class="btn btn-danger btn-xs" ><span class="fa fa-trash"></span></button></td>
+                               </tr>
+                               <tr>
+                                    <td>Factura</td>
+                                    <td>001-00003</td>
+                                    <td class="text-center">20/03/2017</td>
+                                    <td class="text-right">4000.00</td>
+                                    <td class="text-right">2000.00</td>
+                                    <td class="text-right">1000.00</td>
+                                    <td class="text-right">1000.00</td>
+                                    <td><button class="btn btn-danger btn-xs" ><span class="fa fa-trash"></span></button></td>      
+                               </tr>
+                               <tr>
+                                    <td>Factura</td>
+                                    <td>001-00004</td>
+                                    <td class="text-center">20/04/2017</td>
+                                    <td class="text-right">3000.00</td>
+                                    <td class="text-right">2000.00</td>
+                                    <td class="text-right">2000.00</td>
+                                    <td class="text-right">0.00</td>
+                                    <td><button class="btn btn-danger btn-xs" ><span class="fa fa-trash"></span></button></td>    
+                               </tr>
+                            </tbody>
+                        </table>
+                    </div>   
+                   </div> 
+                  </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" ng-click="saveCashexpensegirl()">
+                    <span class="fa fa-save"></span>
+                    Guardar
+                </button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                    <span class="fa fa-times"></span> Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,49 @@
+{
+  "despatchAdvice": {
+    "tip_doc": "09",
+    "serie": "T001",
+    "correl": "00000006",
+    "fec_emi": "2020-05-15",
+    "emisor": {
+      "tip_doc": "6",
+      "num_doc": "10427946580",
+      "raz_soc": "JAVIER MARISCAL QQUELLON"
+    },
+    "adquiriente": {
+      "tip_doc": "6",
+      "num_doc": "10427946580",
+      "raz_soc": "JAVIER MARISCAL QQUELLON"
+    },
+    "envio": {
+      "cod_motiv_traslado": "04",
+      "descrip_motiv": "",
+      "peso_bruto_total": "2.50",
+      "cod_und_med": "KGM",
+      "num_bultos": "1",
+      "cod_modal_traslado": "01",
+      "fec_ini_traslado": "2020-05-15"
+    },
+    "transportista_pub": {
+      "num_doc": "20601919436",
+      "tip_doc": "6",
+      "raz_soc": "SERVICIOS LOGISTICOS VIMA S.A.C."
+    },
+    "llegada": {
+      "cod_ubi": "150134",
+      "dir": "ROSA NOGUERA 678 LIMA-LIMA-SAN LUIS"
+    },
+    "partida": {
+      "cod_ubi": "150134",
+      "dir": "ROSA NOGUERA 678 LIMA-LIMA-SAN LUIS"
+    },
+    "det": [
+      {
+        "nro_item": "1",
+        "cod_prod": "P0056",
+        "cod_und_med": "NIU",
+        "descrip": "LAPTOP TOSHIBA NEGRO 14\" COREI 7",
+        "cant": "1.00"
+      }
+    ]
+  }
+}

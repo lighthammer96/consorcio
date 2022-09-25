@@ -1,0 +1,171 @@
+<!-- Modal -->
+<div class="modal" id="modalCEG" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="title-ceg"></h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active">
+                            <a data-target="#general" aria-controls="tab1" role="tab" data-toggle="tab">General</a>
+                        </li>
+                        <li role="presentation">
+                            <a data-target="#documentos" aria-controls="tab2" role="tab" data-toggle="tab">Documentos</a>
+                        </li>
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="general">
+                            <br>
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Periodo Contable</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="periodo" class="form-control input-sm" readonly value="201702">
+                                    </div>
+                                    <label class="col-sm-2 control-label">Fecha Emisión</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="emission_date" class="form-control input-sm" value="03/03/2017" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Caja Chica</label>
+                                    <div class="col-sm-4">
+                                        <div class="input-group">
+                                            <input type="hidden" id="cash_id">
+                                            <input type="text" class="form-control input-sm"
+                                                   id="username" readonly="readonly" value="CAJA CHICA TARAPOTO">
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-success btn-sm" type="button"
+                                                        ng-click="openCash()">
+                                                    <span class="fa fa-search-plus"></span>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <label class="col-sm-2 control-label">Responsable</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="responsable" class="form-control input-sm" readonly value="GARCIA PEREZ">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Código Proyecto</label>
+                                    <div class="col-sm-4">
+                                        <div class="input-group">
+                                            <input type="hidden" id="proyect_id">
+                                            <input type="text" class="form-control input-sm"
+                                                   id="code" readonly="readonly" value="000881">
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-success btn-sm" type="button"
+                                                        ng-click="openProyect()">
+                                                    <span class="fa fa-search-plus"></span>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <label class="col-sm-2 control-label">Descripción Proyecto</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="responsable" class="form-control input-sm" readonly value="ENSA_CONSORCIO SAN JUDAS TADEO-SELVA">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Saldo</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="balance" class="form-control input-sm" value="1,368.00">
+                                    </div>
+                                    <label class="col-sm-2 control-label">N° Rendición</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="surrender_number" class="form-control input-sm" value="0000013">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Observación</label>
+                                    <div class="col-sm-4">
+                                        <textarea class="form-control input-sm" rows="2" placeholder="Observación" id="observation"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="documentos">
+                            <br>
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="col-sm-1 control-label">Documento</label>
+                                    <div class="col-sm-6">
+                                        <button class="btn btn-success btn-sm" type="button"
+                                                ng-click="openDocument()">
+                                            <span class="fa fa-plus"></span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <table class="table table-bordered table-striped table-hover">
+                                            <thead>
+                                            <tr>
+                                                <th style="width: 12%">N° Documento</th>
+                                                <th style="width: 8%">Código</th>
+                                                <th style="width: 26%">Proveedor</th>
+                                                <th>Glosa</th>
+                                                <th style="width: 8%">SubTotal</th>
+                                                <th style="width: 8%">IGV</th>
+                                                <th style="width: 2%"></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="document_body">
+                                               <tr>
+                                                    <td>001-00002</td>
+                                                   <td>378440</td>
+                                                    <td>JUAN  GARCIA</td>
+                                                    <td>ALAMBRADO ELECTRICO</td>
+                                                    <td class="text-right">456.00</td>
+                                                    <td class="text-right">0.00</td>
+                                                    <td><button class="btn btn-danger btn-xs" ><span class="fa fa-trash"></span></button></td>
+                                               </tr>
+                                               <tr>
+                                                    <td>001-00003</td>
+                                                   <td>378550</td>
+                                                    <td>PEDRO  SANCHEZ</td>
+                                                   <td>CONSTRUCCION DE DUCTOS</td>
+                                                    <td class="text-right">456.00</td>
+                                                    <td class="text-right">0.00</td>
+                                                    <td><button class="btn btn-danger btn-xs" ><span class="fa fa-trash"></span></button></td>
+                                               </tr>
+                                               <tr>
+                                                    <td>001-00004</td>
+                                                   <td>378441</td>
+                                                    <td>MIGUEL  PEREZ</td>
+                                                   <td>TRANSPORTE DE MATERIALES</td>
+                                                    <td class="text-right">456.00</td>
+                                                    <td class="text-right">0.00</td>
+                                                    <td><button class="btn btn-danger btn-xs" ><span class="fa fa-trash"></span></button></td>
+                                               </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" ng-click="saveCashexpensegirl()">
+                    <span class="fa fa-save"></span>
+                    Guardar
+                </button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                    <span class="fa fa-times"></span> Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

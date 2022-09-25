@@ -1,0 +1,79 @@
+<div class="panel panel-success">
+    <div class="panel-heading">
+        Gestión de Configuraciones
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div>
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active">
+                            <a data-target="#users" aria-controls="general" role="tab" data-toggle="tab">Usuarios</a>
+                        </li>
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="users">
+                            <br>
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Tiempo de expiración de las claves (días)</label>
+                                    <div class="col-sm-2">
+                                        <input type="hidden" id="config_1" class="config_option">
+                                        <label class="checkbox-inline i-checks">
+                                            <input type="checkbox" id="check_option_1">
+                                        </label>
+                                        <input type="text" class="form-control input-sm input-check" id="input_option_1"
+                                               onkeypress="return soloNumeros(event)">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Cantidad de usos de una misma contraseña</label>
+                                    <div class="col-sm-1">
+                                        <input type="hidden" id="config_2" class="config_option">
+                                        <input type="checkbox" id="check_option_2" class="hide" checked>
+                                        <input type="text" class="form-control input-sm" id="input_option_2"
+                                               onkeypress="return soloNumeros(event)">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Estructura de la contraseña</label>
+                                    <div class="col-sm-9">
+                                        <input type="hidden" id="config_3" class="config_option">
+                                        <input type="checkbox" id="check_option_3" class="hide" checked>
+                                        <label class="checkbox-inline i-checks">
+                                            <input type="checkbox" id="check_option_30" class="chk_option3 chk_main3">
+                                            Personalizado
+                                        </label>
+                                        <label class="checkbox-inline i-checks">
+                                            <input type="checkbox" id="check_option_31" class="chk_option3 chk_main30">
+                                            Mayúsculas
+                                        </label>
+                                        <label class="checkbox-inline i-checks">
+                                            <input type="checkbox" id="check_option_32" class="chk_option3 chk_main30">
+                                            Minúsculas
+                                        </label>
+                                        <label class="checkbox-inline i-checks">
+                                            <input type="checkbox" id="check_option_33" class="chk_option3 chk_main30">
+                                            Carácteres Especiales
+                                        </label>
+                                        <label class="checkbox-inline i-checks">
+                                            <input type="checkbox" id="check_option_34" class="chk_option3 chk_main30">
+                                            Números
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <button type="button" class="btn btn-success" ng-click="saveConfig()">
+                    <span class="fa fa-save"></span>
+                    Guardar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

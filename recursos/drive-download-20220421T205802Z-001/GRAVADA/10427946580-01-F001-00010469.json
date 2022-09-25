@@ -1,0 +1,89 @@
+{
+  "invoice": {
+    "tip_doc": "01",
+    "serie": "F001",
+    "correl": "00010469",
+    "fec_emi": "2022-03-28",
+    "cod_mon": "PEN",
+    "tip_oper": "0101",
+    "fec_venc": "2022-03-28",
+    "cod_mon_ref": "PEN",
+    "cod_mon_obj": "PEN",
+    "fec_tipo_cambio": "2022-03-28",
+    "ubl_version": "2.1",
+    "customizacion": "2.0",
+    "emisor": {
+      "tip_doc": "6",
+      "num_doc": "10427946580",
+      "raz_soc": "TU EMPRESA DEMO",
+      "nom_comer": "DEMO",
+      "dir": "CALLE ROSA NOGUERA ",
+      "cod_ubi": "150134",
+      "dep": "LIMA",
+      "prov": "LIMA",
+      "dist": "SAN LUIS",
+      "urb": "-",
+      "cod_pais": "PE",
+      "email": "info@tuscomprobantes.pe",
+      "telef": "997596006 - 910455079",
+      "website": "www.seencorp.pe",
+      "cod_sucur": "0000"
+    },
+    "adquiriente": {
+      "tip_doc": "6",
+      "num_doc": "20603704020",
+      "raz_soc": "SEEN CORPORATION SAC",
+      "dir": "ROSA NOGUERA 678 SAN LUIS",
+      "cod_pais": "PE"
+    },
+    "tot": {
+      "grav": "847.46",
+      "sub_tot": "847.46",
+      "dsc_item": "0.00",
+      "val_vent": "847.46",
+      "igv": "152.54",
+      "isc": "0.00",
+      "imp_tot": "1000.00",
+      "otr_carg": "0.00",
+      "otr_trib": "0.00",
+      "dsct_tot": "0.00",
+      "antic": "0.00",
+      "impsto_tot": "152.54",
+      "prec_tot": "1000.00",
+      "redondeo": "0.00"
+    },
+    "forma_pago": {
+      "descrip": "Contado"
+    },
+    "det": [
+      {
+        "nro_item": "1",
+        "cod_prod": "S0102",
+        "cod_und_med": "ZZ",
+        "descrip": "CONSULTORIA TEC",
+        "cant": "1.00000",
+        "val_unit_item": "847.45760",
+        "sub_tot": "847.46",
+        "dsc_item": "0.00",
+        "val_vta_item": "847.46",
+        "igv_item": "152.54",
+        "prec_unit_item": "1000.00000",
+        "tip_afec_igv": "10",
+        "impsto_tot": "152.54",
+        "base_igv": "847.46",
+        "tasa_igv": "18.00000",
+        "ind_grat": "N"
+      }
+    ],
+    "leyen": [
+      {
+        "leyen_cod": "2001",
+        "leyen_descrip": "BIENES TRANSFERIDOS EN LA AMAZONIA REGION SELVA PARA SER CONSUMIDOS EN LA MISMA"
+      },
+      {
+        "leyen_cod": "1000",
+        "leyen_descrip": "SON: MIL  CON 00/100 SOLES"
+      }
+    ]
+  }
+}

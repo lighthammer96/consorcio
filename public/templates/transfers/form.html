@@ -1,0 +1,128 @@
+<!-- Modal -->
+<div class="modal" id="modalTR" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="title-tr"></h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <input type="hidden" id="t_transfer_id">
+                        <label class="col-sm-2 control-label">Fecha</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control input-sm" id="t_transfer_date">
+                        </div>
+                        <div class="col-md-1"></div>
+                        <label class="col-sm-2 control-label">Usuario</label>
+                        <div class="col-sm-4">
+                            <input type="hidden" id="t_user_id">
+                            <input type="text" class="form-control input-sm" id="t_name" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Almacén Origen</label>
+                        <div class="col-sm-3">
+                            <select id="t_warehouse_origin_id" class="form-control input-sm" style="width: 100%">
+                            </select>
+                        </div>
+                        <div class="col-md-1"></div>
+                        <label class="col-sm-2 control-label">Almacén Destino</label>
+                        <div class="col-sm-4">
+                            <select id="t_warehouse_destination_id" class="form-control input-sm"
+                                    style="width: 100%">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Tipo</label>
+                        <div class="col-sm-3">
+                            <select id="t_type_id" class="form-control input-sm">
+                                <option value="1">SIMPL
+                                    E
+                                </option>
+                                <option value="2">CON RECEPCIÓN</option>
+                            </select>
+                        </div>
+                        <div class="col-md-1"></div>
+                        <label class="col-sm-2 control-label">Adjuntar</label>
+                        <div class="col-sm-4">
+                            <input id="t_file_add" type="file" class="file" data-show-preview="false">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Proyecto</label>
+                        <div class="col-sm-6">
+                            <input type="hidden" id="t_project_id">
+                            <div class="input-group">
+                                <input type="text" readonly id="t_project_code" style="width: 30%"
+                                       class="form-control input-sm">
+                                <input type="text" id="t_project_description" readonly style="width: 70%"
+                                       class="form-control input-sm">
+                                <span class="input-group-btn">
+                                    <button id="t_button_project_id" class="btn btn-success btn-sm btn-group_sm"
+                                            type="button"
+                                            ng-click="openProject()">
+                                        <span class="fa fa-search-plus"></span>
+                                    </button>
+                                    <button id="t_button_clear_id" class="btn btn-warning btn-sm btn-group_sm"
+                                            type="button"
+                                            ng-click="clearProject()">
+                                      <span class="fa fa-eraser"></span>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>Producto</th>
+                                        <th>Unid.</th>
+                                        <th>Costo (S/.)</th>
+                                        <th>Disponible</th>
+                                        <th>Transferido</th>
+                                        <th class="cantidad_input">Transferir</th>
+                                        <th width="50px"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="transfer_detail"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <button id="t_search_article_id" class="btn btn-success btn-sm" type="button"
+                                    ng-click="openProducts()">
+                                <span class="fa fa-search-plus"></span>
+                                Buscar Artículos
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="t_save_button_transferProcess" type="button" class="btn btn-warning"
+                        ng-click="saveTransferProcess()">
+                    <span class="fa fa-save"></span>
+                    Procesar
+                </button>
+                <button id="t_save_button_transfer" type="button" class="btn btn-success" ng-click="saveTransfer()">
+                    <span class="fa fa-save"></span>
+                    Guardar
+                </button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">
+                    <span class="fa fa-times"></span> Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

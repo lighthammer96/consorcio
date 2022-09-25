@@ -1,0 +1,76 @@
+<!-- Modal -->
+<div class="modal" id="modalC" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Cuadro Comparativo de la Cotización</h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active">
+                            <a data-target="#chart" aria-controls="chart" role="tab" data-toggle="tab">Cuadro
+                                Comparativo</a>
+                        </li>
+                        <li role="presentation">
+                            <a data-target="#requirements" aria-controls="requirements" role="tab" data-toggle="tab">Requerimientos</a>
+                        </li>
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="chart">
+                            <div class="separator">
+                                <input type="hidden" id="c_c_contest_id">
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover table-striped">
+                                    <thead id="c_c_quotations_head"></thead>
+                                    <tbody id="c_c_quotations_detail"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="requirements">
+                            <div class="separator"></div>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-stripped table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>Requerimiento</th>
+                                        <th>Emisión</th>
+                                        <th style="width: 40%">Descripción Proyecto</th>
+                                        <th>Solicitado por</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="c_c_requirement_detail"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success">
+                    <span class="fa fa-sign-out"></span>
+                    Envíar a Aprobación
+                </button>
+                <button type="button" class="btn btn-warning">
+                    <span class="fa fa-warning"></span>
+                    Ver Observaciones
+                </button>
+                <button type="button" class="btn btn-info">
+                    <span class="fa fa-save"></span>
+                    Guardar
+                </button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">
+                    <span class="fa fa-times"></span> Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

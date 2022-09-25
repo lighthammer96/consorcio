@@ -1,0 +1,139 @@
+<!-- Modal -->
+<div class="modal" id="modalROC" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="title-req"></h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                       <label class="col-sm-2 control-label">Código</label>
+                       <div class="col-sm-3">
+                           <input type="text" id="receptions_id" class="form-control input-sm" value="0766538" readonly="readonly">
+                       </div> 
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Fecha Recepción</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control input-sm" value="06/04/2017">
+                        </div>
+                        <div class="col-md-1"></div>
+                        <label class="col-sm-2 control-label">Usuario</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control input-sm" value="ADMIN ECR">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">O/C</label>
+                        <div class="col-sm-3">
+                            <div class="input-group">
+                                <input type="text" readonly class="form-control input-sm" value="3474376">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-success btn-sm" type="button"
+                                            ng-click="openProject()">
+                                        <span class="fa fa-search-plus"></span>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-1"></div>
+                       <label class="col-sm-2">Proveedor</label>
+                        <div class="col-sm-3">
+                            <input type="text" id="provider_id" class="form-control input-sm">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                       <label class="col-sm-2">Guía de Remisión</label>
+                       <div class="col-sm-3">
+                           <input type="text" id="referral_guide" class="form-control input-sm" value="478458734468">
+                       </div>
+                       <div class="col-md-1"></div>
+                       <label class="col-sm-2 control-label">Almacén</label>
+                        <div class="col-sm-3">
+                            <select id="almacen_origen_id" class="form-control input-sm" >
+                                <option value="TARAPOTO">TARAPOTO</option>
+                                <option value="CHICLAYO">CHICLAYO</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Observación</label>
+                        <div class="col-sm-9">
+                            <textarea class="form-control input-sm" rows="2" placeholder="Observación"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>Producto</th>
+                                        <th>Precio (S/.)</th>
+                                        <th>Cant OC</th>
+                                        <th>Recibido</th>
+                                        <th>Saldo</th>
+                                        <th class="cantidad_input">Recepción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>08651</td>
+                                        <td>CEMENETO</td>
+                                        <td class="text-right">44.00</td>
+                                        <td class="text-right">34.00</td>
+                                        <td class="text-right">20.00</td>
+                                        <td class="text-right">14.00</td>
+                                        <td class="text-right"><input type="" name="cantidad_recepcion[]" class="form-control input-xs text-right"  value="0"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>06542</td>
+                                        <td>BOTAS DE SEGURIDAD</td>
+                                        <td class="text-right">43.00</td>
+                                        <td class="text-right">24.00</td>
+                                        <td class="text-right">0.00</td>
+                                        <td class="text-right">0.00</td>
+                                        <td class="text-right"><input type="" name="cantidad_recepcion[]" class="form-control input-xs text-right" value="0"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>05453</td>
+                                        <td>CHALECO REFLECTIVO TIPO REPORTERO</td>
+                                        <td class="text-right">44.00</td>
+                                        <td class="text-right">20.00</td>
+                                        <td class="text-right">0.00</td>
+                                        <td class="text-right">0.00</td>
+                                        <td class="text-right"><input type="" name="cantidad_recepcion[]" class="form-control input-xs text-right" value="0"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>04456</td>
+                                        <td>GUANTES DE CUERO TGI</td>
+                                        <td class="text-right">43.00</td>
+                                        <td class="text-right">20.00</td>
+                                        <td class="text-right">0.00</td>
+                                        <td class="text-right">0.00</td>
+                                        <td class="text-right"><input type="" name="cantidad_recepcion[]" class="form-control input-xs text-right" value="0"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                          </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success">
+                    <span class="fa fa-save"></span>
+                    Recibir
+                </button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">
+                    <span class="fa fa-times"></span> Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,21 @@
+<div class="form-inline">
+    <div class="form-group">
+        <label>SubProyecto</label>
+        <select class="form-control input-sm">
+            <option value="">--Seleccione--</option>
+            <option value="" selected>1. LINEA PRIMARIA</option>
+            <option value="">2. RED PRIMARIA</option>
+        </select>
+    </div>
+</div>
+<div class="separator"></div>
+<div class="row">
+    <div class="col-md-3">
+        <div ng-include src="'/templates/projects/matrix_income_pro.html'"></div>
+        <div class="separator"></div>
+        <div ng-include src="'/templates/projects/list_activity_pro.html'"></div>
+    </div>
+    <div class="col-md-9">
+        <div ng-include src="'/templates/projects/pv_pro.html'"></div>
+    </div>
+</div>

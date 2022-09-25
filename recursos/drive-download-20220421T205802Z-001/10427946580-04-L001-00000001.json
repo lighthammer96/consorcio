@@ -1,0 +1,91 @@
+{
+  "selfbilledinvoice": {
+    "tip_doc": "04",
+    "serie": "L001",
+    "correl": "00000001",
+    "fec_emi": "2020-05-22",
+    "cod_mon": "PEN",
+    "tip_oper": "0501",
+    "hora_emi": "14:31:03",
+    "ubl_version": "2.1",
+    "customizacion": "2.0",
+    "emisor": {
+      "tip_doc": "1",
+      "num_doc": "42794658",
+      "raz_soc": "JAVIER MARISCAL QQUELLON",
+      "dir": "JR. ALFONSO UGARTE #0000",
+      "cod_ubi": "220901",
+      "dep": "SAN MARTIN",
+      "prov": "SAN MARTIN",
+      "dist": "TARAPOTO",
+      "cod_pais": "PE",
+      "cond": "01"
+    },
+    "vtaitine": {
+      "dest_cod_ubi": "220901",
+      "dest_dir": "JR. ALFONSO UGARTE #0000",
+      "dest_prov": "SAN MARTIN",
+      "dest_dep": "SAN MARTIN",
+      "dest_dist": "TARAPOTO",
+      "dest_cod_pais": "PE",
+      "cond": "01"
+    },
+    "adquiriente": {
+      "tip_doc": "6",
+      "num_doc": "10427946580",
+      "raz_soc": "SEEN CORPORATION SAC",
+      "dir": "psj ROSA NOGUERA 678s",
+      "cod_ubi": "150134",
+      "urb": "TUPAC AMARU",
+      "prov": "LIMA",
+      "dep": "LIMA",
+      "dist": "SAN LUIS",
+      "cod_pais": "PE",
+      "nom_comer": "SEEN CORPPORATION"
+    },
+    "tot": {
+      "grav": "0.00",
+      "exo": "288.00",
+      "val_vent": "288.00",
+      "igv": "0.00",
+      "imp_tot": "292.32",
+      "impsto_tot": "0.00",
+      "trib_exo": "0.00",
+      "prec_tot": "288.00",
+      "base_ir": "288.00",
+      "trib_ir": "4.32"
+    },
+    "det": [
+      {
+        "nro_item": "1",
+        "cod_prod": "10161530",
+        "cod_und_med": "NIU",
+        "descrip": "10161531 - COCO",
+        "cant": "600.00",
+        "val_unit_item": "0.48",
+        "val_vta_item": "288.00",
+        "igv_item": "0.00",
+        "prec_unit_item": "0.48",
+        "tip_afec_igv": "20",
+        "cod_prod_sunat": "10161530",
+        "impsto_tot": "0.00",
+        "base_igv": "288.00",
+        "tasa_igv": "18.00",
+        "base_ir": "288.00",
+        "ir_item": "4.32",
+        "tasa_ir": "1.5"
+      }
+    ],
+    "leyen": [
+      {
+        "leyen_cod": "1000",
+        "leyen_descrip": "DOSCIENTOS OCHENTA Y OCHO Y 00/100 SOLES"
+      }
+    ],
+    "nota": [
+      {
+        "nota_descrip": "CONTADO"
+      }
+    ]
+  }
+}

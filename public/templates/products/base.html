@@ -1,0 +1,286 @@
+<div class="panel  panel-danger-admin">
+    <div class="panel-heading">
+        Gestión de Artículos
+    </div>
+    <div class="panel-body">
+        <div class="row"> 
+            <div class="col-md-12">
+                <div id="table_container_product" class="table-responsive"></div>
+            </div>
+        </div>
+        <div class="modal" id="modalProduct" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="titleModalProduct"></h4>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active">
+                                    <a data-target="#general" aria-controls="general" role="tab" data-toggle="tab">General</a>
+                                </li>
+                                <li role="presentation">
+                                    <a data-target="#sales" aria-controls="sales" role="tab"
+                                       data-toggle="tab">Ventas</a>
+                                </li>
+                                <li role="presentation">
+                                    <a data-target="#image" aria-controls="image" role="tab"
+                                       data-toggle="tab">Imagen</a>
+                                </li>
+                                 <li role="presentation">
+                                    <a data-target="#kit" aria-controls="kit" role="tab"
+                                       data-toggle="tab">Kit</a>
+                                </li>
+                            </ul>
+
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="general">
+                                    <div class="form-horizontal">
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">Código Artículo</label>
+                                                    <div class="col-sm-4">
+                                                        <input type="text" class="form-control input-sm" 
+                                                               id="code_article">
+                                                    </div>
+                                                    <label class="col-sm-2 control-label">Código Matriz</label>
+                                                    <div class="col-sm-3">
+                                                        <input type="text" class="form-control input-sm" 
+                                                               id="code_matrix">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">Color</label>
+                                                    <div class="col-sm-4">
+                                                        <input type="text" class="form-control input-sm" 
+                                                               id="color">
+                                                    </div>
+                                                    <label class="col-sm-2 control-label">Estado</label>
+                                                    <div class="col-sm-3">
+                                                        <label class="checkbox-inline i-checks">
+                                                            <input type="checkbox" id="p_state" checked>
+                                                            <span id="state_text">Activo</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">Descripción</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="hidden" id="p_id">
+                                                        <input type="hidden" id="p_image">
+                                                        <input type="text" class="form-control input-sm"
+                                                               id="p_description">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">Descripción Detallada</label>
+                                                    <div class="col-sm-9">
+                                                        <textarea id="p_description_detail" rows="2"
+                                                                  class="form-control input-sm"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-md-offset-3 col-md-9">
+                                                        <label class="checkbox-inline i-checks">
+                                                            <input type="checkbox" name="identi" id="p_serie"  >
+                                                            Serie
+                                                        </label>
+                                                        
+                                                        <label class="checkbox-inline i-checks">
+                                                            <input type="checkbox" name="identi" id="p_lote" >
+                                                            Lote
+                                                        </label>
+                                                        <label class="checkbox-inline i-checks">
+                                                            <input type="checkbox" id="p_impuesto">
+                                                            Impuesto
+                                                        </label>
+                                                        <label class="checkbox-inline i-checks">
+                                                            <input type="checkbox" id="p_disponible_venta">
+                                                            Disponible para venta
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                <div class="form-group">
+                                                     <label class="col-sm-3 control-label">Unidad de Medida</label>
+                                                     <div class="col-sm-3">
+                                                        <select id="p_id_unidad_medidad" class="form-control input-sm"></select>
+                                                    </div>
+                                                      <label class="col-sm-1 control-label">Costo</label>
+                                                      <div class="col-sm-2">
+                                                        <input type="text" id="p_costo" readonly="" class="form-control input-sm" >
+                                                      </div>
+                                                    
+                                                </div>
+                                               <div class="form-group">
+                                                  <label class="col-sm-3 control-label">Categoría Vehícular</label>
+                                                     <div class="col-sm-6">
+                                                        <select id="idCatVeh"  style="width: 100%;" class="form-control input-sm"></select>
+                                                    </div>
+                                               </div>   
+                                               <div class="form-group">
+                                                <label class="col-sm-3 control-label">Carroseria</label>
+                                                   <div class="col-sm-6">
+                                                      <select id="idcarroceria"  style="width: 100%;" class="form-control input-sm"></select>
+                                                  </div>
+                                             </div>  
+                                               
+ 
+                                                <br>
+                                            </div>
+                                            <div class="col-md-4">
+                                                 <div class="form-group">
+                                                    <label class="col-sm-4 control-label">Tipo</label>
+                                                    <div class="col-sm-8">
+                                                        <select   style="width: 100%;" id="p_id_tipo" class="form-control input-sm"></select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-4 control-label">Marca </label>
+                                                    <div class="col-sm-8">
+                                                        <select id="p_id_marca"  style="width: 100%;" class="form-control input-sm"></select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-4 control-label">Modelo</label>
+                                                    <div class="col-sm-8">
+                                                        <select id="p_id_modelo"  style="width: 100%;" class="form-control input-sm"></select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-4 control-label">Categoría </label>
+                                                    <div class="col-sm-8">
+                                                        <select id="p_id_categoria" class="form-control input-sm"  style="width: 100%;"></select>
+                                                    </div>
+                                                </div>
+                                                 
+                                                <div class="form-group">
+                                                    <label class="col-sm-4 control-label">Familia </label>
+                                                    <div class="col-sm-8">
+                                                       <select id="p_id_familia" class="form-control input-sm"  style="width: 100%;"></select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-4 control-label">Sub Familia </label>
+                                                    <div class="col-sm-8">
+                                                       <select id="p_id_subfamilia" class="form-control input-sm"  style="width: 100%;"></select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-4 control-label">Grupo Contable </label>
+                                                    <div class="col-sm-8">
+                                                        <select id="p_id_grupocontable" class="form-control input-sm"  style="width: 100%;"></select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                           
+                                        </div>
+                                    </div>
+                                </div>
+                                <div role="tabpanel" class="tab-pane " id="sales">
+                                    <div class="form-horizontal">
+                                        <div class="row"> 
+                                            <div class="col-md-12">
+                                                <br>
+                                                <table class="table table-bordered table-striped table-hover" id="table_precios_producto">
+                                                   
+                                                  
+                                                 </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div role="tabpanel" class="tab-pane" id="image">
+                                    <div class="form-horizontal">
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <div class="col-md-offset-3 col-md-6">
+                                                        <div ng-include
+                                                             src="'/templates/partials/add-image.html'"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                 <div role="tabpanel" class="tab-pane" id="kit">
+                                    <div class="form-horizontal">
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <div class="form-group">
+                                                    <div class="col-sm-4">
+                                                        <button id="btn-kit" type="button" class="btn btn-danger-admin btn-sm" ng-click="addAritculoKit()" disabled>Agregar Artículo</button> 
+                                                    </div>
+                                                </div>
+                                                <div class="table-responsive">
+                                                    <input type="hidden"  id='idKit'>
+                                                            <table class="table table-bordered table-striped table-hover" id="tabla_articulo_kit">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Código</th>
+                                                                        <th>Artículo</th>
+                                                                        <th width="60px">Cantidad</th>
+                                                                        <th width="50px"></th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody id="articulo_kit_det"></tbody>
+                                                            </table>
+                                                </div> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger-admin btn-sm" ng-click="saveProduct()">
+                            <span class="fa fa-save"></span>
+                            Guardar
+                        </button>
+                        <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">
+                            <span class="fa fa-times"></span> Cerrar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-include src="'/templates/partials/crop.html'"></div>
+    </div>
+</div>
+
+<div class="modal " id="modalArticulo" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title" id="title">Articulos</h4>
+        </div>
+        <div class="modal-body">
+             <div class="row">
+                <div class="col-md-12">
+                    <div id="table_container_cc2" class="table-responsive"></div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+      
+    </div>
+  </div> 

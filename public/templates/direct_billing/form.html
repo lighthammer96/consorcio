@@ -1,0 +1,194 @@
+<!-- Modal -->
+<div class="modal" id="modalDB" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="titleDB"></h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <div class="row">
+                        <div class="col-sm-7">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Proyecto</label>
+                                <div class="col-sm-10">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control input-sm" value="CONEXIONES MASIVAS">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-success btn-sm" type="button">
+                                                <span class="fa fa-search-plus"></span>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Periodo</label>
+                                <div class="col-sm-3">
+                                    <select class="form-control input-sm">
+                                        <option value="">201702</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Comprobante</label>
+                                <div class="col-sm-10">
+                                    <div class="input-group">
+                                        <select class="form-control input-sm" style="width: 30%">
+                                            <option value="">FT</option>
+                                        </select>
+                                        <input type="text" class="form-control input-sm" readonly value="0001" style="width: 25%">
+                                        <input type="text" class="form-control input-sm" readonly value="0000000467" style="width: 45%">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Cliente</label>
+                                <div class="col-sm-10">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control input-sm" value="20206018411" style="width: 35%">
+                                        <input type="text" class="form-control input-sm" value="TECSUR S.A." style="width: 65%">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-success btn-sm" type="button">
+                                                <span class="fa fa-search-plus"></span>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Dirección</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control input-sm">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Contacto</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control input-sm">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Fecha Emisión</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control input-sm" readonly value="17/02/2017">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Fecha Vmto</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control input-sm" value="04/03/2017">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Tipo Conversión</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control input-sm">
+                                        <option value="">02 - Venta</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Moneda</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control input-sm">
+                                        <option value="">01 - Soles</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Tipo Cambio</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control input-sm" value="3.249">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Vendedor</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control input-sm">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Condición Pago</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control input-sm">
+                                        <option value="">FACT. A 15 DIAS</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hovered table-striped">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th class="text-center">Item</th>
+                            <th class="text-center">Matriz</th>
+                            <th class="text-center">Artículo</th>
+                            <th class="text-center">Kit</th>
+                            <th class="text-center">Und</th>
+                            <th class="text-center">Precio</th>
+                            <th class="text-center">Cant.</th>
+                            <th class="text-center">Total</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>
+                                <button class="btn btn-xs btn-danger">
+                                    <span class="fa fa-trash"></span>
+                                </button>
+                            </td>
+                            <td>01</td>
+                            <td>2102</td>
+                            <td>DEPOSITO ADEL DIRECTO</td>
+                            <td><input type="checkbox"></td>
+                            <td>GLB</td>
+                            <td class="text-right">169,491.53</td>
+                            <td class="text-right">1.00</td>
+                            <td class="text-right">169,491.53</td>
+                        </tr>
+                        <tr>
+                            <td colspan="8"></td>
+                            <td class="text-right">169,491.53</td>
+                        </tr>
+                        <tr>
+                            <td colspan="8"></td>
+                            <td class="text-right">30,508.48</td>
+                        </tr>
+                        <tr>
+                            <td colspan="8"></td>
+                            <td class="text-right">200,000.01</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <button class="btn btn-success btn-sm">
+                        <span class="fa fa-plus-circle"></span>
+                        Agregar Artículo
+                    </button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning">
+                    <span class="fa fa-sign-out"></span>
+                    Anular Comprobante
+                </button>
+                <button type="button" class="btn btn-success">
+                    <span class="fa fa-save"></span>
+                    Guardar
+                </button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">
+                    <span class="fa fa-times"></span> Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

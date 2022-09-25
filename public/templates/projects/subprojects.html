@@ -1,0 +1,84 @@
+<!-- Modal -->
+<div class="modal" id="modalSP" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="p_title_modal_sp"></h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" class="form-control input-sm inp_show_approval" placeholder="Nombre del SubProyecto"
+                       id="p_sp_description">
+                <div class="separator"></div>
+                <div>
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active">
+                            <a data-target="#levels" aria-controls="levels" role="tab" data-toggle="tab">Niveles</a>
+                        </li>
+                        <li role="presentation">
+                            <a data-target="#fronts" aria-controls="fronts" role="tab" data-toggle="tab">Frentes</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="levels">
+                            <div class="separator show_not_approval"></div>
+                            <button class="btn btn-sm btn-success show_not_approval" ng-click="addLevel()">
+                                <span class="fa fa-plus"></span>
+                                Agregar Nivel
+                            </button>
+                            <div class="separator"></div>
+                            <div class="table-responsive" style="min-height: 200px">
+                                <table class="table table-hover table-condensed table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th colspan="2">NIVELES</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="t_body_list_levels"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="fronts">
+                            <div class="separator show_not_approval"></div>
+                            <div class="input-group show_not_approval">
+                                <select id="p_search_front" style="width: 100%"></select>
+                                <span class="input-group-btn">
+                                    <button class="btn btn-sm btn-success" type="button" ng-click="addFrontSP()">
+                                        <span class="fa fa-plus"></span>
+                                        Agregar
+                                    </button>
+                                </span>
+                            </div>
+                            <div class="table-responsive" style="height: 250px">
+                                <div class="separator"></div>
+                                <table class="table table-bordered table-hover table-striped table-condensed">
+                                    <thead>
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>Descripción</th>
+                                        <th>Razón Social</th>
+                                        <th class="show_not_approval"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="t_body_list_fronts"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success show_not_approval" ng-click="saveSubProject()">
+                    <span class="fa fa-save"></span>
+                    Guardar
+                </button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">
+                    <span class="fa fa-times"></span> Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,50 @@
+<div class="panel panel-success">
+    <div class="panel-heading">
+        Consolidado de Proyectos
+    </div>
+    <div class="panel-body">
+        <div class="form-inline">
+            <div class="form-group">
+                <select id="search_project" class="form-control input-sm">
+                    <option value=""></option>
+                    <option value="00047">00047 - CONEXIONES MASIVAS</option>
+                    <option value="00048">00048 - ENOSA_CONSORCIO SANTA CRUZ</option>
+                    <option value="00020">00020 - OI - EECOL-CERCADO</option>
+                    <option value="00023">00023 - ENSA_CONSORCIO SAN JUDAS TADEO-SELVA CENTRAL</option>
+                </select>
+                <!--<input type="text" id="search_project" class="form-control input-sm" placeholder="Buscar proyecto...">-->
+            </div>
+            <div class="form-group">
+                <select class="form-control input-sm" id="option_consolidated">
+                    <option value="1">Presupuesto Cliente</option>
+                    <option value="2">Presupuesto Meta</option>
+                </select>
+            </div>
+            <button type="button" class="btn btn-success btn-sm" ng-click="generateConsolidated()">
+                <span class="fa fa-sign-out"></span>
+                Generar
+            </button>
+        </div>
+        <br>
+        <div class="row report_project report_1 hide">
+            <div class="col-sm-offset-2 col-sm-8">
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        Presupuesto Cliente - <span class="show_txt_project"></span>
+                    </div>
+                    <div ng-include src="'/templates/consolidated_projects/table_1.html'"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row report_project report_2 hide">
+            <div class="col-sm-offset-2 col-sm-8">
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        Presupuesto Meta - <span class="show_txt_project"></span>
+                    </div>
+                    <div ng-include src="'/templates/consolidated_projects/table_2.html'"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

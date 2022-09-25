@@ -1,0 +1,143 @@
+<div class="panel panel-success">
+    <div class="panel-heading">
+        Gestión de Recursos
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-5">
+                <div id="tree_view" class="treeview"></div>
+            </div>
+            <div class="col-md-7">
+                <div class="border-black hide" id="show_product">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Código de Matriz</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control input-sm" id="pr_code_matriz" readonly>
+                            </div>
+                            <label class="col-sm-3 control-label">Código de Artículo</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control input-sm" id="pr_code_article" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Descripción</label>
+                            <div class="col-sm-9">
+                                <textarea id="pr_description_detail" rows="3" class="form-control input-sm" readonly></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Tipo Unidad</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control input-sm" id="pr_unity" readonly>
+                            </div>
+                            <label class="col-md-offset-1 col-sm-2 control-label">Tipo</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control input-sm" id="pr_type" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Retención</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control input-sm" id="pr_retention" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-7">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">Niveles</div>
+                                    <div class="panel-body">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">Nivel 1</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control input-sm" id="pr_level1" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">Nivel 2</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control input-sm" id="pr_level2" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">Nivel 3</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control input-sm" id="pr_level3" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">Nivel 4</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control input-sm" id="pr_level4" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-5">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Debe</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control input-sm" id="pr_debe" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Haber</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control input-sm" id="pr_haber" readonly>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Creación</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control input-sm margin-b-5" id="pr_d_created" readonly>
+                                        <input type="text" class="form-control input-sm" id="pr_u_created" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Modificación</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control input-sm margin-b-5" id="pr_d_updated" readonly>
+                                        <input type="text" class="form-control input-sm" id="pr_u_updated" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <button class="btn btn-sm btn-danger" type="button" ng-click="disassociate()">
+                                    <span class="fa fa-sign-out"></span>
+                                    Desasociar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalP" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="modal-title-product"></h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div id="table_container_p" class="table-responsive"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

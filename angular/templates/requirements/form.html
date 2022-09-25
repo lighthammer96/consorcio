@@ -1,0 +1,131 @@
+<!-- Modal -->
+<div class="modal" id="modalR" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="title-req"></h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Cód. Requerimiento</label>
+                        <div class="col-sm-2">
+                            <input type="hidden" id="r_id">
+                            <input type="text" class="form-control input-sm" readonly id="r_code">
+                        </div>
+                        <label class="col-sm-offset-4 col-sm-1 control-label">Estado</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control input-sm" readonly id="r_state">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Fecha de Registro</label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control input-sm" id="r_date_register" readonly>
+                        </div>
+                        <label class="col-sm-offset-2 col-sm-2 control-label">Solicitado por</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control input-sm formReq" id="r_requested_by">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Fecha Requerida</label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control input-sm formReq" id="r_date_required">
+                        </div>
+                        <label class="col-sm-offset-2 col-sm-2 control-label">Autorizado por</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control input-sm" readonly id="r_approved_by">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <label class="col-sm-4 control-label">Código Proyecto</label>
+                                <div class="col-sm-4">
+                                    <div class="input-group">
+                                        <input type="hidden" id="r_project_id">
+                                        <input type="text" readonly class="form-control input-sm" id="r_project_code">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-success btn-sm showReq" type="button"
+                                                    ng-click="openProject()">
+                                                <span class="fa fa-search-plus"></span>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12" style="margin-top:5px">
+                                    <textarea class="form-control input-sm" rows="2" readonly
+                                              id="r_project_description"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <textarea class="form-control input-sm formReq" rows="3" id="r_observation" placeholder="Observación"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group hide" id="show_table">
+                        <div class="col-sm-12">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th width="20px">Item</th>
+                                        <th width="50px">Matriz</th>
+                                        <th>Artículo</th>
+                                        <th width="20px">U.M.</th>
+                                        <th width="80px">Cantidad Pedida</th>
+                                        <th width="80px">Cantidad Requerida</th>
+                                        <th width="90px">Precio</th>
+                                        <th width="90px">Saldo Proyecto</th>
+                                        <th width="20px" class="showReq"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="t_body_requirement"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <button class="btn btn-success btn-sm showReq" type="button" id="load_matrix"
+                                    ng-click="loadMatrix()" disabled>
+                                <span class="fa fa-check-circle-o"></span>
+                                Carga Matriz
+                            </button>
+                            <button class="btn btn-success btn-sm showReq" type="button" id="load_articles"
+                                    ng-click="openProducts()" disabled>
+                                <span class="fa fa-search-plus"></span>
+                                Buscar Artículos
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info hide" id="btn_cancel_req" ng-click="cancelRequirement()">
+                    <span class="fa fa-sign-in"></span>
+                    Cancelar Requerimiento
+                </button>
+                <button type="button" class="btn btn-info hide" id="btn_approval_req" ng-click="sendApproval()">
+                    <span class="fa fa-sign-out"></span>
+                    Enviar a Aprobación
+                </button>
+                <button type="button" class="btn btn-success showReq" ng-click="saveRequirement()">
+                    <span class="fa fa-save"></span>
+                    Guardar
+                </button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">
+                    <span class="fa fa-times"></span> Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,1019 @@
+28/12/2021
+cuando la solicitud es contado si debe validar en el momento el stock
+cuando es credito no
+
+
+tipo de cambio de la moneda:
+de la tabla  ERP_TipoCambio en el campo cambioComcercalVenta.
+usar el PA:[CO_Obtiene_TC]
+
+
+03/01/2022
+crear parametro "calcular interes a partir de tal numero de cuota" para validar que cuotas del factor credito
+calcularan intereses.
+
+
+04/01/2022
+* solo cuando es credito financiero debe seleccionar conveios *
+* agregar editar directo en cliente en la solicitud *
+* que el boton diga agregar series *
+* en la parte izquierda de datos totales debe mostrar los totales del credito *
+* los datos son del comprador no del conyugue *
+* que en creditos pueda crear nuevas personas y tambien editarlas tanto para fiador, conyugue y fiador conyugue *
+* comentarios debe guardar en solicitud no en solicitud credito *
+* crear campo monto_gratuito en cabecera y detalle y check operacion gratuita como en orden servicio *
+* validar el campo impuesto para calcular igv en el detalle productos colocar los montos en monto afecto e impuestos. *
+* validar que los decuenstos puedan validar el descuento por monto y porcentaje. *
+* validar el combo lote en el detalle desactivarse si no maneja, ver en la tabla productos si maneja lote. *
+* validar en el guardar si es al contado que valide almacen y localizacion. *
+* colocar el boton de datos de credito debajo de los totales del credito. *
+* crear campo tipo doc venta en la cabecera de solicitud. *
+* validadr si selecciona factura los datos de documento del cliente  sean RUC. *
+* agregar el simbolo de la moneda soles segun la tabla, en los datos del credito *
+* agregar estado en el formulario solicitud. *
+* agregar boton aprobadores en el formulario solicitud. *
+* crear boton aprobaciones al lado inferior izquierdo. *
+* crear boton en la parte inferior derecha => enviar, imprimir, guardar, cerrar, mas al costado aprobar, rechazar, que esten tanto arriba como abajo.*
+
+
+11/01/2020
+agregar un modal al momento de darle cobrar forma de pago, moneda, si es deposito ingresar el numero de cuenta
+* ahi se van listar las solicitudes vigentes y aprobados
+* GENERAR cronograma cuando paga la segunda boleta con la diferencia.
+
+Nuevas observaciones de las solicitudes
+Permitir editar el precio de acuerdo a la configuración (parámetro código 2) *
+Cuando se hace click en credito financiero que el campo convenio se muestre debajo *
+Cuando es credito fianciero no debe permitir registrar cuotas, el resto valor 0 *
+Cuando es operacion gratuita no se visualizan los montos *
+Al seleccionar la serie la cantidad debe mostrarse por defecto *
+Los decuentos no se muestran correctamente en el detalle y en la cabecera al elegir descuento por monto no se visualiza
+Si es contado sólo mostrar monto de venta, el resto 0 *
+Si es contabdo validar también ingresar el lote (dependiendo del producto) *
+El origen tiene que ser V *
+Donde se guarda el comentario *
+El botón enviar se emite un error *
+Mostrar los aprobadores (tabla ERP_SolicitudConformidad)
+
+En Detalle de Crédito:
+En monto de alquiler del comprador falta la etiqueta de soles *
+El botón editar fiador conyugue se salió de la pantalla *
+
+
+14/01/2021
+ Nuevas observaciones
+En que tabla se guarda el comentario *
+Al seleccionar la serie la cantidad debe mostrarse por defecto *
+Al elegir el descuento por monto no se visualiza y no realiza ningún cambio *
+Si la solicitud es al contado validar que se registre la serie y al hacer clic en agregar serie la cantidad debe mostrarse por defecto *
+Al agregar artículos, la primera vez en cantidad se muestra 1 las siguientes veces la cantidad se muestra vacía *
+
+En Detalle de Crédito:
+En monto de alquiler del comprador falta la etiqueta de soles *
+El botón editar fiador conyugue se salió de la pantalla *
+El botón enviar, aprobaciones y editar todavía no está programado cierto?
+
+* 17/01/2021
+
+Solicitud:
+No está validando correctamente la serie, este ya se ingresó pero el sistema indica que se debe ingresar la serie *
+En lo totales si se elige un descuento y luego se le quita, no actualiza correctamente el monto total *
+Validar al guardar que cuando es credito directo ingrese el valor de la cuota inicial y el número de cuotas *
+El redondeo de la cuota siempre es superior, basta que haya un decimal se redondea a la unidad *
+Cuando la solicitus es crédito directo, el monto total es el valor de la venta + los intereses *
+La solicitud después de guardarse debe quedar en estado registrado y luego con el botón enviar se cambia de estado a "vigente" o "por aprobar" (revisar el flujograma), al parecer el botón Enviar no esta realizando esta acción. *
+El botón enviar debería emitir un mensaje en la cual se indique el estado al cual se cambió la solicitud. *
+No se puede editar una solicitud, no se muestra la pantalla *
+No olvidarnos del botón "Aprobaciones" que es lee la tabla ERP_SolicitudConformidad *
+
+Movimiento de Caja:
+Al emitir comprobante hay que tener en cuenta si va a cancelar todo la solicitud o va a cancelar sólo la inicial, hay que llevar un control de eso.
+El correo electrónico debe jalar del cliente *
+Creo que faltan 2 campos: la moneda del pago y calcular si existe vuelto que entregar, si paga en dólares y la venta es soles tiene que coger el tipo de cambio venta comercial para realizar la conversión
+
+
+
+* 24/01/2021
+* En Solictudes, se debría mostrar tambien los campos de tipo documento, número de documento, nombres, moneda, monto, pagado, saldo, facturado de la solicitud *
+* Al pagar, cuando es efectivo no debe solicitar nro de operación ni tarjeta. En depósito, transferencia y electrónico debe pedir nro de operación en operaciones con tarjeta debe pedir nro de operación y tarjeta. *
+* que mueste la moneda de solicitud por defecto tambien en emitir comprobante *
+* al costado de los montos mostrar el simbolo de la moneda *
+* mostrar por defecto efectivo *
+* en la segunda boleta del credito debe m mostrar como total lo que falta
+
+
+
+* 27/01/2021
+* calcular el igv pero del total *
+* poder modificar tambien cuando esta estado aprobado, solo los cmapos alamcen, localizacion y serie *
+* crear boton ver *
+* no acutaliza lso totales del detalle cuando editas el precio. *
+* crea otro registro de ventas pero con ticket *
+
+
+Solicitudes:
+* Las solicitudes se debería poder visualizar con el botón editar, si es Registrado o Aprobado que permita modifciar de lo contrario solo visualizar. *
+Después de cerrar la pantalla de solicitud no se actualiza la lista. *
+No funciona correctamente el ajuste del precio *
+Después de imprimir el tikect no imprime la boleta de venta *
+
+No permite facturar la cuota incial, se emite un error (undefined index: cCodConsecutivo_solicitud) *
+
+
+* crear ventana comprobantes para anular comprobantes y reimprimir documentos pdf. *
+* pdf de la solicitud. *
+
+
+04/02/2021
+* no se muestra los datos del conyugue al editar solicitud *
+
+Solicitudes:
+En la impresión de solicitud no se muestra la unidad de medida del artículo (este se encuentra en el maestro de artículos) *
+En la impresión de solicitud, en la forma de pago concatenar el Tipo de Solicitud - Convenio *
+Al emitir comprobante en la solicitud no se emiten los documentos de impresión. *
+En la impresión del Ticket, en venta ref debe ir el código y número de solicitud, en recibo debe ir la serie y el correlativo del ticket y en correlativo debe ir el correlativo del ticket. *
+
+Las solicitudes se debería poder visualizar con el botón editar, si es Registrado o Aprobado que permita modifciar de lo contrario solo visualizar. *
+Al cerrar la pantalla de la solicitud la lista de solicitudes no se actualiza.  *
+No permite facturar la cuota inicial. *
+Al hacer click en Datos de Crédito no se muestran todos los datos registrados. *
+Revisar la boleta de venta por el anticipo, no se muestran los datos correctos. *
+
+
+Comrpobantes
+En la grilla de comprobante no se muestra el núnero del comprobante *
+En la impresión de la boleta no se muestra la unidad de medida del artículo (este se encuentra en el maestro de artículos) *
+
+
+
+Solicitudes
+Agregar el botón para imprimir su cronograma. *
+En datos de crédito, en el campo dirección de trabajo del fiador es numérico, debe ser texto *
+Revisar la boleta de venta por el saldo de la venta, no se muestran los datos correctos ni el anticipo. *
+
+Impresión de crédito directo:
+El código del artículo que se debe mostrar es el code_article de la tabal ERP_Productos. *
+No muestra la fecha de nacimiento del comprador. *
+La fecha de nacimiento del fiador que tenga formato yyyy-mm-dd, lo mismo para el comprador. *
+No está mostrando las referencias de dirección del comprador. *
+Del lado del comprador/ dependiente no se muestra el dato centro de trabajo. *
+Del lado del fiador/ dependiente no se muestra centro de trabajo, cargo, tiempo laborado y dirección *
+Del lado del comprador/ independiente no se muestra centro de trabajo (campo razón social), cargo, tiempo laborado y dirección *
+Del lado del fiador/ independiente no se muestra centro de trabajo (campo razón social), cargo, tiempo laborado y dirección correctamente. *
+Cuadrar en una hoja la impresión *
+
+Impresión del cronograma:
+No figura el número de motor del vehículo, tomarlo de la tabla serie. *
+El color del vehículo tomarlo de la tabla serie. *
+En N° DOC va la serie y correlativo del comprobante de pago con el cual se emitió el cronograma *
+
+
+Movimiento de Caja:
+Al registrar los movimientos de caja, indicar la naturaleza (E o S) *
+Al emitir el comprobante final, no se debe realizar ningún cobro de dinero, sólo se emite el comprobante, se genera el cronograma y se imprime.
+(crear forma de pago -> credito) *
+
+
+
+09/02/2022
+Solicitudes
+Al cerrar la pantalla de la solicitud en la grilla de solicitudes se muestra la solicitud sin embargo el estado no se actualiza (permanece en registrado), se tiene que hacer click en el botón de la lupa para que se actualice. *
+Al editar una solicitud de tipo crédito directo no se muestra el dato en valor cuota final. *
+Al editar una solicitud de tipo credito directo en estado aprobado y guardarlo se emite el mensaje undefined index: descuento_id, no debería habilitarse la columna lote si es artículo no maneja lotes. *
+El botón aprobaciones debe mostrar los datos del la tabla ERP_SolicitudConformidad, los campos son usuario, nombre de usuario, estado (1: aprobado, 2:rechazado), observación, fecha de registro y fecha de modificación. *
+
+Impresión de solicitud de crédito directo
+El Total Financiado = Lista de precio + intereses *
+
+Impresión de tickets
+El n° correlativo que figura es de la solicitud y debería ser el del ticket. *
+En la columna Documento está figurando la serie y correlativo del ticket y debería ser la serie y correlativo del documento de venta (boleta o factura). *
+Al realizar un cobro en dólares de un venta en soles en Moneda está figurando soles y debería ser dólares. *
+No se está mostrando el tipo de cambio *
+Revisar en reunión los cobros en múltiples monedas para la impresión del ticket *
+
+Impresión de documentos de venta
+Los datos de la cabecera del documento obtenerlo de la tabla ERP_compania, campos direcciones_oficinas, lema1 y lema2 *
+En la impresión del anticipo la condición de pago debe ser contado. *
+
+Impresión de documentos de venta por el saldo
+El precio de venta y valor de venta debería ser por el subtotal de la solicitud *
+En los subtotales debería haber un campo que muestre el anticipo y este reste al subtotal *
+Se debe imprimir los datos de la moto que son: marca, modelo, año de fabricación, color, serie y motor. *
+Se debe imprimir la serie y correlativo del documento con el que se emitió el anticipo y el monto, el monto a financiar y el valor de la cuota. *
+El igv se está mostrando en blanco *
+
+Documentos de venta
+En la tabla forma de pago en el campo monto_aplicado_moneda_documento está guardando null. *
+Para uniformizar la data siempre se debería guardar datos en los campos: monto_moneda_documento, monto_aplicado_moneda_documento, monto_tipo_cambio_soles. *
+
+Movimientos de Caja
+El vuelto no está restando en totalefecitvo de la tabla ERP_cajadiaria *
+
+Formas de Pago
+Cuando se realizan distintas formas de pago, el monto a pagar (de la pantalla del botón agregar) no se actualiza con el saldo *
+
+
+
+11/02/2020
+
+Solicitudes
+El botón guardar sólo debe estar habilitado cuando el estado de la solitud es Registrado y Aprobado. *
+No funciona el botón eliminar. *
+El botón aprobaciones debe mostrar los datos del la tabla ERP_SolicitudConformidad, los campos son usuario, nombre de usuario, estado (1: aprobado, 2:rechazado), observación, fecha de registro y fecha de modificación. *
+Al editar una solicitud en estado aprobada y grabar la modificación, el monto del saldo se vuelve al monto total (no toma en cuenta el anticipo cancelado). *
+
+
+Datos de Crédito
+El Total Ingresos que sea la suma de Ingreso Neto Mensual + Ingreso Neto Conyugue + Otros Ingresos, esto tanto para el comprador como para el fiador. *
+
+
+Impresión de solicitud de crédito
+El monto total financiado ponerle formato con decimales *
+En el campo provincia del comprado se esta mostrando el código y no la descripción de la provincia *
+No se muestra el borde derecho del cuadro. *
+
+
+Impresión de Tickets
+Total Abonado debería ser la suma del campo monto *
+El Total abonado ponerle formato con decimales. *
+
+
+Impresión de documentos de venta a contado
+En la cabecera debe figurar el nombre de la compañía y el logo.*
+El Total de la venta ponerle formato con decimales. *
+Preguntar por el centrado de la cabecera *
+
+
+Impresión del cronograma
+En datos del solicitante el código es el id del cliente. *
+Los datos del aval no son los correctos, figuran los datos del conyugue del comprador. *
+A la columna de interés, total e importes poner el formato con decimales. *
+Los totales del cuadro poner el formato con decimales. *
+Los datos del bien no son los correctos de la serie elegida en la solicitud. *
+
+
+Impresión de documentos de venta por anticipo
+El igv se muestra en blanco. *
+El Total de la venta ponerle formato con decimales.*
+Sólo debe figurar la línea del anticipo *
+No se debe mostrar los datos de la moto (en la prueba que realicé me mostro datos de una moto pero sin embargo no he registrado en la solicitud todavía la serie). *
+No se debe mostrar la serie y correlativo del documento con el que se emitió el anticipo y el monto, el monto a financiar y el valor de la cuota. *
+
+Impresión de documentos de venta por el saldo
+El valor de venta debería ser por el subtotal de la solicitud *
+Los datos de la moto que son: marca, modelo, año de fabricación, color, serie y motor no son los correctos de la serie elegida en la solicitud. *
+El igv se está mostrando en blanco *
+El Total de la venta ponerle formato con decimales. *
+En la tabla ERP_VentaDetalle en el campo um_id se está guardando el dato undefined *
+
+Movimientos de Caja
+En una operación de ingreso de dólares y vuelto en soles, el vuelto lo esta restando del efectivo en dólares y no del efectivo en soles. *
+
+
+14/02/2022
+Solicitudes
+El botón Aprobaciones cuando existe datos en la tabla ERP_SolicitudConformidad no realiza ninguna acción, sin embargo; si no existe data indica el mensaje no hay datos. Puedes revisar el botón que hizo David para la aprobación de solicitudes (url: aprobacionSolicituds) *
+
+Logo
+Al editar la compañía no carga la dirección del logo * 
+
+Impresión de documentos de venta a contado
+El logo se muestra distorsionado * 
+Preguntar por el centrado de la cabecera *
+
+Impresión de documentos de venta por el saldo
+El valor de venta debería ser por el subtotal de la solicitud *
+
+Impresión de documentos de venta por el saldo
+En la tabla ERP_VentaDetalle en el campo um_id se está guardando el dato undefined *
+
+Impresión del cronograma-
+El conyugue del aval no se está mostrando. *
+
+Movimientos de Caja
+Al ingresar a Agregar, limpiar los campos nro de operación y tarjeta *
+
+18/02/2022 nuevos req
+* anular solo el ultimo pago de la ultima cuota pagada. solo ese pago se puede anular
+* soliictudes en estado facturadas. y que tenga cuaotas pendientes de pago
+
+02/03/2022
+
+Pago de Cuotas
+- No debe permitir elegir cuotas que no sean en orden cronologico *
+- Falta actualizar el monto pagado y el saldo en la tabla ERP_Venta (boleta de venta generada por el saldo de la venta) *
+- Al parcer guarda temporales lo que hace que distorciona el pago (ver pdf)
+- En la impresión del tickect que indique el número de cuota que está pagando *
+- El ticket puede ser impresión corrida?
+
+
+Solicitudes:
+- No se muestran el detalle ni los totales de las solicitudes de origen O (revisarlo en un meet) *
+- Al registrar el detalle poner cantidad entregada = 0, cantidad pendiente de entrega = cantidad, cantidad devuelta = 0, cantidad pendiente de devolver = 0 *
+
+SolicitudArticulo:
+- En la unidad de medidad está guardando undefined. *
+
+SolicituDetalle
+- El id es el id de la tabla SolicitudArticulo *
+
+03/03/2022
+Nuevos:
+Pago de Cuotas
+- El ticket puede ser impresión corrida (conversar en meet) * 
+
+Cobro de solicitudes
+- Generación de boleta con saldo que valide que se ingresó la serie de del artículo que maneja serie*
+
+Cobro de cuotas
+- En la pantalla de agregar forma de pago que la moneda ya vaya por defecto. *
+
+
+04/03/2022
+* crear movitos de nota credito, un maestro de motivos. *
+- ingresar monto
+- seleccionar el motivo
+- ingresar descripcion
+
+
+
+* cuando el monto nota credito es igual total, solo ese caso va haber devolucion de dinero si es que es anticipo,
+si es que segunda venta si habra devolucion de producto almacen. *
+
+* mejorar en devolucion de servicio tecnico, en el modulo alamacen. agrgear radio button para que seleccione.
+- por servicio tecnico, por venta. de acuerdo a ello llenara el detalle *
+
+
+req refinanciamientos
+ crear Campo tipo en tabla ERP_Solicitud
+ N normal
+ R refinanciamdo
+ crear Estado 8 -> Despachado parcial
+ 9 -> refinanciamdo
+ Solo los despachados estado 7 se refinanciamdo
+ En la grilla mostrar solo con estado 7
+ Al guardar refinanciamoebto imprimir pdf de cronograma
+
+
+ 18/03/2022
+Nota de Crédito
+- La nota de crédito por el total debe quedar como pendiente para aplicar si el documento de venta de donde nació el saldo era "0" y no es de tipo anticipo (para usarlo como forma de pago) de lo contrario queda como aplicado, al grabar debería emitir un mensaje indicando que se debe ingresar a almacén los artículos devueltos. *
+
+- La nota de crédito por el total por un documento de venta por anticipo, debe realizar la devolución del dinero en caja, al grabar debería emitir un mensaje indicando que se registró un movimiento de devolución en movimientos de caja y debe entregar el dinero al cliente. La solicitud debe registrase como anulado. Validar que sólo haya tenido la boleta de anticipo la solicitud para poder realizar la nota de crédito *
+
+Impresión de Nota de Crédito
+- Agregar los campos de la cabecera en la impresión de: tipo de documento (el cual origina la nota de crédtio), serie y consecutivo del comprobante (el cual origina la nota de crédtio), fecha de documento (el cual origina la nota de crédtio) y el motivo elegido para emitir la nota de crédito *
+- Quitar campo vendedor y condición de pago *
+
+Devolución Nota de Crédito
+- Al cargar la pantalla de Nueva Devolución si está chequeado Proforma en Tipo Operación debe cargar Desremite y no Devolución *
+- Debe cargarse todos los almacenes y localizaciones sin restricción (para devolución de proforma hace una validación, para devolución por venta no debería hacer esa validación) *
+
+Reporte de Cronograna
+- Revisar los campos de importe y fecha ultimo pag (estos deberían tomar del último pago realizado a esa cuota) *
+
+Solicitud de Venta
+- En la búsqueda que se realiza para un cliente nuevo, primero buscar en la ERP_personas y luego en reniec o sunat *
+- Cuando se modifica una solicitud, el saldo no se actualiza *
+- Al elegir un segundo artículo, este no se está guardando *
+- Impresión de solicitud de cronograma, agregar lo que se envía en la imagen. *
+- Después de imprimir los documentos de venta llamar al procedimiento VTA_Registra_Movimiento_Vta_OS (como dato se envía el id de la venta) *
+
+
+Refinanciamiento
+- Sólo deben mostrarse solicitudes de tipo crédito y con saldo (los mismos que aparecen para renegociación de mora) *
+
+Renegociación Mora
+- Modificar el mensaje del guardar (no muesta ninguna información de que se realizó correctamente la operación)*
+- La descripción de la columna intereses cambiarlo por Mora *
+- Al guardar un cambio de mora no está mostrando mensaje de quese realizó correctamente. *
+- No está generando el id y muestra error de llave ducplicada *
+
+Sepraciones
+- No se imprimió el documento de venta y al reeimprimir se emite un error *
+- No permite asociar la separación en la forma de pago (si se tiene una separación de un cliente y si este realizando un cobro, este debería permitir elegirse como forma de pago para ser aplicado) *
+
+Visita a clientes
+- El botón de editar debe funcionar para cualquier estado (no funciaona cuando el estado es registrado), si está terminado debe abrirse en forma de lectura. *
+- En los campos de observación no debería mostrarse null. *
+- En la grilla mostrar el número de visita, la fecha no está mostrando la fecha de registro sino la fecha de hoy. *
+
+Reporte de Lista de cobranza de cuotas
+- El filtro de cobrador también incluir el todos *
+- En la columna Monto Cta y Mora debe mostrar lo que se ha cobrado *
+- En la columna #Cta debe mostrar la cuota que se a cobrado y el total de número de cuotas: por ejemplo si un crédito tiene 12 cuotas y ha pagado la cuota 3 debe figurar 3-12 *
+- Borrar la columna Pto Pago *
+- La columna Total Cta (Soles o Dólares) es igual al Monto Cta + Mora *
+
+
+24/03/2022
+->Reporte de Lista de cobranza de cuotas
+- Sólo se debe mostrar lo cobrado. *
+- En la columna #Cta debe mostrar la cuota que se a cobrado y el total de número de cuotas: por ejemplo si un crédito tiene 12 cuotas y ha pagado la cuota 3 debe figurar 3-12 *
+
+->Visita a clientes
+- Al editar, sólo debería mostrarse las cuotas por las cuales se realizaron la visita, actualmente está mostrando todo el cronograma. *
+- En la grilla de la pantalla principal mostrar el número de visita *
+- Las cartas de cobranza se deben emitir de acuerdo a la configuración, actualmente se emite para todos (con mora de -33 días) *
+
+->Refinanciamiento
+- Al refinanciar mostrar el valor de la nueva cuota *
+- Al refinanciar se calculan las cuotas en base a la tabla de factor de créditos *
+- La nueva solicitud ya no tiene cuota inicial *
+
+->Movimiento de Cajas / Pestaña Créditos
+- Mostrar sólo las solicitudes en estado 7 y 8 *
+
+->Impresión de Documento de Venta por la Cuota inicial
+- Cuando la solicitud tiene 2 artículos de detalle, en la impresión del documento de venta se está mostrando 2 veces la línea de anticipo (se esta duplicando en detalle en la tabla erp_ventadetalle) *
+
+->Impresión Documento de Venta por el Saldo
+- No está mostrando los datos del anticipo *
+
+->Nota de Crédito por el total
+- No está permitiendo generar notas de créditos de documentos de venta por el saldo (sobre este documento si debe permitir generar nota de crédito) *
+- Si el documento de venta de donde nació la nota de crédito el saldo era "0" y no es de tipo anticipo, la nota de crédito debe quedar como pendiente para aplicar  (para usarlo como forma de pago) y al grabar debería emitir un mensaje indicando que se debe ingresar a almacén los artículos devueltos. *
+- Si el documento de venta de donde nació la nota de crédito el saldo es igual al monto de la nota de crédito y no es de tipo anticipo, la nota de crédito debe quedar como aplicada y al grabar debería emitir un mensaje indicando que se debe ingresar a almacén los artículos devueltos. *
+
+->Separaciones
+- El movimiento en ERP_CajaDiariaDetalle por la separación es de naturaleza E entrada y no salida *
+
+->Documento de Venta Emitido con forma de pago por separación
+- El Documento debería ser como el documento de venta por el saldo que se muestra el anticipo y con el saldo descontado *
+
+
+->Devolución Nota de Crédito
+- Al cargar el detalle, sólo debe cargar artículos de tipo inventariables (tabla ERP_productos type_id = 1) *
+- El botón imprimir no muestra ninguna impresión *
+- No muestra en la grilla el registro de devolución creado *
+- En el campo ccodconsecutivo y nconsecutivo, no esta guardando la serie_comprobante y numero_comprobante que da origen a la devolución (nota de crédito) *
+
+
+28/03/2022
+*Visita a clientes
+- En el detalle de la cuota, cambiar el nombre de la columna Intereses por Mora *
+
+*Sepraciones
+- La separación al ser de naturaleza E y en Efectivo debe sumar en la tabla ERP_CajaDiaria en el campo TotalEfectivo y no restarlo, en el campo TotalEgresos no debe realizar ninguna actualización. *
+
+*Solicitud de Venta a Crédito Directo
+- Al editar una solicitud y se tiene un artículo de venta gratuita, esta mostrando montos (en vez de cero) en los campos de precio total, exonerado, subtotal y total, generando que al grabar se actualice los montos totales de la solicitud lo cual no debería suceder. *
+
+*Impresión Documento de Venta por el Saldo
+- Para el artículo de venta gratuita se esta mostrando el monto de valor de venta, este debería ser cero 0 (al parecer es por la observación anterior). *
+
+*Devolución Nota de Crédito
+- No permite editar la devolución procesada, debería mostrarse en modo lectura. *
+- No está cargando la moneda. *
+
+
+*Refinanciamiento
+- Al renfinanciar el sistema muestra un valor de cuota, sin embargo en la impresión del cronograma se muestra otro diferente, al parecer no está tomando en cuenta en interés *
+
+*Solicitud de Venta a Credito Directo Refinanciado
+- La solicitud que nació de un refinanciamiento. al editarse el Total que figura en la solicitud no es igual al Monto que se muestra en la grilla. *
+
+*Refinanciamiento
+- Al renfinanciar el sistema muestra un valor de cuota, sin embargo en la impresión del cronograma se muestra otro diferente, al parecer no está tomando en cuenta en interés *
+
+*Solicitud de Venta a Credito Directo Refinanciado
+- La solicitud que nació de un refinanciamiento. al editarse el Total que figura en la solicitud no es igual al Monto que se muestra en la grilla.*
+
+
+29/03/2022
+*Documento de Venta Emitido con forma de pago por separación
+- El Documento debería ser como el documento de venta por el saldo que se muestra el anticipo y con el saldo descontado *
+
+*Impresión de documento de venta
+- La fecha que se muestra en la impresión es la fecha del sistema y no del registro del documento. *
+
+Para conversar en meet:
+
+*Refinanciamiento *
+- Agregar al proceso de refinanciamiento lo siguiente:
+1. generar una nota de crédito que aplique a la boleta de venta por el saldo asociado a la solicitud origen *
+2. generar un documento de venta por el monto total que se obtiene del refinanciamiento. *
+
+*Aprobación de Solicitudes
+- Al aprobar la solicitud, se debe generar el cronograma, este no debe imprimirse ya en Caja *
+
+*Notas de Crédito
+- Validar que si ya se realizó una nota de crédito que cubre el total del documento no permita realizar otra nota de crédito *
+
+
+Otros nuevos:
+
+*Solicitud de Venta a Crédito Directo
+- Al editar una solicitud en estado Aprobado (se edita la solicitud para ingresar la serie del vehículo) y se tiene un artículo de venta gratuita, esta mostrando montos (en vez de cero) en los campos de precio total, exonerado, subtotal y total generando que se actualice los montos totales de la solicitud lo cual no debería suceder (y al actualizarse los montos no tiene en cuenta el anticipo). *
+
+*Impresión Documento de Venta por el Saldo
+- Para el artículo de venta gratuita se esta mostrando el monto de valor de venta, este debería ser cero 0. *
+
+*Refinanciamiento
+- Al refinanciar el saldo de la solicitud no es igual al total. *
+
+*Solicitud de Venta a Crédito Directo Refinanciado
+- Al editarse no muestra el botón de cronograma (Para que se muestre primero se entra a otra solicitud que no es refinanciada y luego se vuelve a ingresar a la solicitud y ya se ve el botón). *
+
+NUEVAS FUNCIONALIDADES 01/04/2022
+- crear modulos de ventas directa y notas de debito *
+- crear solicitudes credito, tiene que seleccionar condicion pago *
+- la fecha vencimiento cuando es credito y contado debe calcular automatico. *
+- crear forma de pago descuento por planilla *
+- cuando la solicitud es contado no debe permitir seleccionar forma de pago "a credito", cuando es solicitud credito directo y financiero, y solicitud credito  solo debe forma de pago "a credito" y "descuento de planilla". *
+- imprimir ticket cuando genere un nuevo movimiento en caja *
+- crear dia fijo de pago para la fecha vencimiento de cronograma. *
+- crear otra pestaña en movimiento caja "documentos pendientes" *
+
+
+07/04/2022
+
+Movimiento de Caja / Solicitudes , Comprobantes, Crédito, Documentos Pendientes
+-Agregar campo con el nombre del cliente *
+
+Impresión de ticket
+- La fecha que se muestra en la impresión es la fecha del sistema y no del registro del ticket *
+
+Aprobación de solicitud de crédito
+- Cerrar las pantallas después de la emisión del mensaje de aprobación *
+- El crédito financiero no tiene cronograma por lo tanto al aprobar no debe imprimir un cronograma. *
+
+Solicitudes
+- Agregar botón cancelar en la solicitud (sólo estará habilitado cuando la solicitud esté en estado registrado y vigente), este botón cambiará la solicitud a estado Anulado. *
+- En la pantalla del batón Agregar Series, agregar la columna TipoCompraVenta de la tabla serie el cual indica (Corporativo o Retail) *
+
+Solicitudes de Venta Crédito Directo
+- En el estado aprobado habilitar el botón de cronograma (porque ya tiene un cronograma) *
+- Cuando es fecha fija el cronograma, la fecha de vencimiento de la primera cuota debe ser para el siguiente mes en el que se encuentra actualmente (si es 04/04/ 2022 y la fecha fija es 2 la primera fecha de vencimiento debe ser 02/05/2022 y no 02/04/2022) *
+
+Editar Solicitud de Venta a Crédito Directo
+- Al grabarse la solicitud, el saldo no tiene en cuenta el anticipo pagado graba con el total de la solicitud. *
+
+Impresión Documento de Venta por el Saldo
+- Para el artículo de venta gratuita se esta mostrando el monto de valor de venta, este debería ser cero 0 (el precio unitario si debe tener su valor tal cual se muestra en la solicitud). *
+
+Impresión Documento de Venta al Contado
+- El documento de venta al contado no está mostrando los datos de la moto. *
+
+Refinanciamiento
+- Generar una nota de crédito que aplique a la boleta de venta por el saldo asociado a la solicitud origen *
+- Generar un documento de venta por el monto total que se obtiene del refinanciamiento. *
+
+- Campo Fecha Fija no se ve en la pantalla de Solicitud de las opciones Movimiento de Caja / Solicitudes, Refinanciamiento, Aprobaciones de Solicitud de Venta *
+
+
+Solicitud a Crédito
+- Bloquear los campos: Cuota Inicial, Cuotas y Dia de vencimiento cuota *
+
+Aprobación de solicitud a crédito
+- La solicitud tipo crédito no tiene cronograma por lo tanto al aprobar no debe imprimir un cronograma. *
+
+Movimiento de Cajas / Solicitudes
+- En la grilla, en la columna Tipo de Solicitud no se esta mostrando el dato Crédito del Tipo de Solicitud = 4 *
+
+Movimiento de Cajas / Documentos Pendientes
+- No mostrar los tickets *
+- Al realizarse el pago, en la solicitud debe sumarse el monto del pago en el campo Pagado *
+
+Movimiento de Cajas
+- El Concepto pago de Documentos Pendientes debe ser Cancelación de Deuda *
+
+Movimiento de Cajas / Solicitudes
+- Al abrir la solicitud, en el campo Tipo de Solicitud no se esta mostrando el dato Crédito del Tipo de Solicitud = 4 *
+
+
+11/04/2022
+Solicitud a Crédito Financiero
+- Bloquear los campos: Dia de vencimiento cuota *
+
+Aprobación de solicitud de crédito
+- Cerrar las pantallas después de la emisión del mensaje de aprobación (la primera vez no cierra) *
+
+Solicitudes de Venta Crédito Directo
+- Cuando es fecha fija el cronograma, la fecha de vencimiento de la primera cuota debe ser para el siguiente mes en el que se encuentra actualmente (si es 04/04/2022 y la fecha fija es 2 la primera fecha de vencimiento debe ser 02/05/2022 y no 02/04/2022) *
+
+Impresión Documento de Venta por el Saldo
+- Para el artículo de venta gratuita no esta mostrando el precio correcto, al parecer lo que está haciendo es distribuir todo el monto de la solicitud entre los artículos, cuando realiza esto no debería tomar en cuenta los artículos de venta gratuita y su precio debe ser el que se muestra en la solicitud *
+
+Renegociación de Mora
+- En la grilla incluir el campo con el nombre del cliente. *
+-El buscador en la grilla no funciona *
+
+Refinanciamiento
+- En la grilla incluir el campo con el nombre del cliente. *
+- En el proceso de refinanciamiento incluir un ckeck el cual indique si se calcula o no intereses, si se calcula intereses es en base a la tabla de factores se encuentra el valor de la cuota, de lo contrario sólo se divide el monto entre el numero de cuotas. *
+-El buscador en la grilla no funciona *
+
+Reportes de Cobranza de Cuotas
+- Opción de exportar a excel *
+- Incluir filtro de tipo solicitud y convenio *
+- Incluir filtro de Departamento, Provincia, Distrito y Sector (David debe terminar el maestro de Sector) *
+
+Movimiento de Caja / Solicitudes , Comprobantes, Crédito, Documentos Pendientes
+-El buscador en la grilla no funciona *
+
+Movimiento de Caja / Documentos Pendientes
+-Agregar el campo con el nombre del cliente *
+-El buscador en la grilla no funciona *
+
+
+13/04/2022
+Movimiento de Cajas / Movimiento de Cajas
+- El Concepto de pago de Documentos Pendientes debe ser Ingreso por Cancelación de Deuda *
+
+Impresión Documento de Venta por el Saldo (con artículo de venta gratuita) (Crédito Directo y Financiero)
+- No está mostrando correctamente el precio y el valor de venta del artículo que no es operación gratuita. *
+
+Solicitud de Venta
+- Al eliminar la solicitud se emite un error de sql (las solicitudes en estado Registrado se pueden eliminar). *
+
+Solicitud de Crédito Financiero
+- Al editar la solicitud no debería estar habilitado el botón de cronograma *
+
+Reportes de Cobranza de Cuotas
+- El filtro de convenio se debe visualizar cuando se elige el tipo de solicitud crédito financiero *
+- Incluir filtro de Sector (David debe terminar el maestro de Sector)
+- El total general del reporte no esta sumando todo lo que muestra el reporte *
+- En el reporte de excel los montos que tenga formato numérico a dos decimales y que este ordenado por cobrador *
+
+Refinanciamiento
+- Generar una nota de crédito que aplique a la boleta de venta por el saldo asociado a la solicitud origen *
+- Generar un documento de venta por el monto total que se obtiene del refinanciamiento. *
+
+14/04/2022
+Reportes de Cobranza de Cuotas
+- Incluir filtro de Sector (David ya terminó el maestro de Sector que está ligado al ubigeo) *
+- El total por grupos del reporte no esta sumando los registros que muestran *
+- En el reporte de excel los montos que tenga formato numérico a dos decimales *
+
+Solicitud de Venta
+- Agregar el campo comentarios de aprobación, este campo será no editable (solo mostrará los datos, ponerlo debajo del campo comentarios) *
+
+ALTER TABLE ERP_Solicitud
+ADD comentario_aprobacion  varchar(100)
+
+Impresión Documento de Venta por el Saldo (con artículo de venta gratuita) (Crédito Directo y Financiero)
+- No está mostrando correctamente el precio y el valor de venta del artículo que no es operación gratuita. (Documento: B001-102, Solicitud: SOL-116) *
+
+Refinanciamiento (Documento: B001-102, Solicitud: SOL-116)
+- Generar una nota de crédito que aplique a la boleta de venta por el saldo asociado a la solicitud origen *
+- Generar un documento de venta por el monto total que se obtiene del refinanciamiento. *
+
+Sigo teniendo problemas con la impresión de documentos por el saldo y el refinanciamiento (no salió ningún mensaje ni error), te paso mi base de datos para que lo revises
+
+
+18/04/2022
+Refinanciamiento (Documento: B001-104, Solicitud: SOL-118)
+- Genera la nota de crédito pero el monto pagado figura como el doble del monto de la nota de crédito y el saldo está en negativo (al parecer porque el monto pagado fue mayor) *
+- Está duplicando el documento de venta original (debería generar un nuevo correlativo) y no debería tener monto pagado (esta poniendo el monto pagado de la boleta original) *
+- Al realizar el proceso de refinanciamiento debería imprimir también la nota de crédito y la nueva boleta *
+
+04/05/2022
+- cuando se agregar productos servicios que no valide almacen ni localizacion, type_id=2 es servicio de la tabla ERP_Producto *
+- servicios en la solicitud, cuya categoria sea servicios de terceros que le permita poner libremente el precio, crear parametro para el codigo de categoria la cual le va permitir editar el precio. *
+- en movimiento de caja: debe salir los mismos datos que sale en separacion para lo que son ingresos y egresos, pero que los campos no sean obligatorios. *
+- en impresion de boletas y facturas concatenar el code_Article en la descripcion del detalle *
+- agregar rango de fechas y cliente en el tab comprobantes en movimiento caja *
+
+- validar cuando es solicitud credito   que haya ingresado el ingreso neto mensual si quiera del independiente *
+- validar que la serie seleccionada no este ya en una solicitud (solicitud detalle), aquellas solicitudes no anuladas y rechazados  estado 5 y 10 *
+- validar en movimiento caja cuando cobra una solicitud, el estado anulado y que no le deje pasar *
+
+
+
+
+- cuando es credito directo o financiero y se esta cobrando la inicial anticipo, debe parecer todo menos decuento por planilla y a credito *
+- cuando es por la boleta por saldo debe parecer a credito y desceutno por planilla. *
+- en tab de creditos y documetnos pendientes: no debe parecerce a credito y desceutno por planilla. *
+
+10/05/2022
+
+- Movimiento de Caja / Comprobantes
+El botón limpiar no limpia lo seleccionado en cliente. *
+
+- Solictudes
+No está mostrando la serie correcta checkeada para la solicitud *
+La botonera de la parte final también replcarla en la parte incial de la pantalla *
+
+- Reporte de cuentas por cobrar
+Imprimir cronograma *
+
+- Reporte de Índice de morosidad *
+
+* que borre el filtro de cliente en comprobantes.
+* en modificar que aparesca seleccionado la serie en la grilla de series en solicitud.
+* los mismo botones de solicitud debe aparecer en el pie y en la cabecera.
+* reporte de cuentas por cobrar poner un boton parecido al del modulo asignacion de cobradores, para imprimir cronograma.
+* crear reporte nuevo, agregar filtros de tienda y tipo de solicitud y por cobrador.
+
+27/05/2022
+* agregar campo comentario de facturacion en soclitud y eso mostra en el pdf de la boleta al final del detalle *
+* solo cuando estado vigente se podria modificar ese campo "comentario de facturacion" *
+* cuando modificas una solicitud en estado registrar agregas y quitas productos no se actualiza el saldo *
+* agregar campo descuento en la boleta al final. *
+* validar que pueda visualizar el usuario los alamacenes  y los descuentos, al modificar sin restriccion de usuario logeuado
+* que pueda emmitir un comprobante en cero *
+
+02/06/2022
+
+* validar en movimiento de caja que seleccione boleta si es dni o factura si es ruc *
+* en el tab de movimiento de caja que bus por documento en solicitud *
+* agregar columna descripcion en el detalle de la solicitud *
+* corregir el agrupador en movimiento de caja boletas/ facturas *
+* en solciitud y orden de servicio y el maestro de clientes en el formulario del cliente que no sea obligatorio estado civil y sector. *
+
+07/06/2022
+* en orden de servicio agregar campo comentario de facturacion, ese campo te permita modificar hasta en el estado en ejecucion es decir
+(0,1,2), y tambien el campo requerimiento del cliente que ya existe *
+Estados Orden:
+value="0">Registrada
+value="1">con proforma
+value="2">En Ejecucion
+value="3">Terminada
+value="4"> Cancelada
+* grilla de la proforma aumentar nombre del cliente. *
+* en la grilla de solicitud de venta agregar cliente. *
+* en la lista de descuentos, cuanto le das todos quiere decir que va ser utilizado por todos los usuarios *
+y cuando es check tipo aplicacion todos, quiere decir que ese descuento se va ver en la cabecera, sino va aparecer en la linea del detalle de la solicitud *
+
+* tipo aplicacion todos cambiar la descripcion a total, cuando se hace check es para la cabecera  si no es para el detalle *
+* crear otro check que diga todo los articulo y eso para influir solo el descuento del detalle. *
+repercute en solicitud, proforma, orden de servicio. *
+
+* crear un formato de pdf de imprimir clausula en la solicitud. *
+
+* crear mantenimineto de carroseria. *
+* luego asociarlo en el articulo *
+* editar vehiculo en orden de servicio, validar si es serie o vehiculo de terceros *
+* en proformas en repuestos validar la recarga de 2 de los combos. *
+* revisar reportes pdf de control de calidad, orden servicio, proforma
+* revisar imrpimir en orden de servicio el imprimir orden tipo express sale en blanco
+* moviemiento caja del tipo separacion debe imprimir tambien un ticket *
+* en forma de pago elegir entre varias separaciones *
+* en forma de pago elegir entre notas de credito *
+* en entrega de servicios tecnicos que actualice el selecct de proformas cuando le da en nuevo *
+* en devolucion de servicios tecnicos que actualice el selecct de proformas cuando le da en nuevo *
+
+
+20/06/2022
+* poner en negrita labels de formulario de apertura/cierre caja *
+* en el formulario de movimiento caja en el select de tipos agregar 2 mas : "tramites de placas" que es un ingreso, "alquileres" que es un ingreso
+funiona igual que separacion, crear un check para ver si desear emitir comprobante, pero igual siempre va salir un ticket. *
+
+Solicitud de Venta
+- El botón Cancelar a demás de Anular la solicitud si esta es de Origen "O" debe obtener el consecutivo y correlativo origen de la Orden de Servicio y realizar el siguiente update en estas tablas:
+update ERP_OrdenServicio set cFacturado = 'N' where cCodConsecutivo = cCodConsecutivoO_origen and nConsecutivo = cCodConsecutivoO_origen
+update ERP_Proforma set cFacturado = 'N' where cCodConsecutivoOs = cCodConsecutivoO_origen and nConsecutivoOS = cCodConsecutivoO_origen *
+
+
+
+05/07/2022
+* no se muestra fecha de entrega y hroa de entrega en formato de orden de servicio, al lado derecho mostrar la hora de entrega porque ahora esta mostrando fecha de entrega *
+* verificar en aprobacion de solicitud no imprime el cronograma de solicitudes a credito, solo duplica la pantalla. *
+
+------Nuevos:
+
+Orden de Servicio:
+- En la impresión no está mostrando la Hora de Entrega Ofrecida (los datos del pie al lado derecho, esta mostrando fecha) * 
+
+Aprobación de Solicitudes
+- No se esta imprimiendo el cronograma * 
+
+Entrega a Servicio Técnico o Clientes
+- Al abrir el documento de tipo Remite no esta mostrando el check en Proforma y no está mostrando la proforma.
+- En la grilla aumentar los campos de fecha y cliente (si es que lo tuviese)
+- En un documento procesado que tiene un artículo que maneja serie, al hacer clic en el botón ver series no se visualiza la serie entregada.
+
+Solicitud de Venta
+- En la lista para elegir las series se están mostrando series que no poseen stock. * 
+- Revisar el ajuste de decimales, el el campo precio no está tomando en cuenta el redondeo configurado. *
+- Ampliar el campo precio (el campo que es modificable). *
+- El registro de la serie debe habilitarse cuando: es al contado (en cualquier estado), es a crédito directo o financiero en el estado Aprobado hacia adelante. *
+- En la pantalla de Datos de crédito no está jalando los datos del fiador al registrar el documento (Nombres y Apellidos). *
+- La impresión de las solicitud de venta a crédito financiero procurar que haya espacio para firmar y que se visualice la linea del recuadro izquierdo. *
+- En el formato de impresión de cláusula adicional: en condición de pago debe decir a contado o crédito (si es crédito directo o financiero), la fecha debe ser el de la boleta de venta que se visualiza en el documento, falta el campo para agregar una descripción adicional después de la condición de pago y quitar firma de concesionario. *
+
+Movimientos de Caja / Movimientos de Caja (Alquileres y Tramite documentario)
+- Debe validar que se registre la serie del comprobante de venta. *
+- Configurar parámetro del artículo que debe salir en el comprobante de venta y en el ticket. *
+- El concepto que se registra debe mostrarse en el campo comentario del comprobante de venta. *
+
+
+Movimientos de Caja / Solicitudes
+- Al cobrar la inicial de una solicitud de crédito financiero, en el ticket se está imprimiendo el saldo pendiente y no la inicial. *
+- En la impresión del comprobante de venta por el saldo de una solicitud a crédito financiero, no se está mostrando en el detalle el anticipo de la cuota inicial. *
+- En la impresión del comprobante de venta por el saldo de una solicitud a crédito financiero o crédito directo en el campo Precio de Venta S/ Solic. está mostrando el saldo y no el valor total de la venta. *
+
+Nuevo Formato de Documento de Venta
+- Agregar campo de datos de factura electrónica en el maestro de compañía * 
+
+
+Solicitudes de venta
+- En fecha fija, para la primera cuota no está respetando que sea mayor a 30 días (si emito el 5 de julio la solicitud y pongo fecha fija 8 la primera cuota sale 8 de julio debiendo ser 8 de agosto). *
+
+Movimientos de Caja / Solicitudes
+- En la impresión del comprobante de venta por el saldo de una solicitud a crédito financiero, no debe mostrar el detalle como de un crédito directo, debe mostrar sólo condición de pago (mostrara el convenio elegido) y vendedor *
+
+
+
+
+
+--- 25/07/2022
+
+------ Crédito y Cobranza 
+Reporte de Cuentas por Cobrar
+//- El botón Lupa no funciona *
+
+Asignación de cobradores
+- El botón Tarjeta debe imprimir la tarjeta en formato A5
+
+Refinanciamiento
+- La condición de pago de la nueva BV debe ser de acuerdo al nuevo cronograma
+
+Visita a Cliente
+- En el detalle cambiar la etiqueta de Fecha de Pago por Fecha Compromiso Pago *
+
+Reporte de Ventas
+- Agruparlas por Tipo de Solicitud y Convenio, debe haber un total en cada grupo
+
+Opción nueva
+//- Cierre de cuentas por cobrar
+- Castigar solicitudes de crédito, cambiar a estado Castigado y sólo se vea para cancelar las cuotas, en Reporte de Cuentas por Cobrar debe haber un check para ver sólo estos tipos de crédito
+
+
+27/07/2022
+------- Nuevas observaciones
+
+Orden de Servicio
+- Campo Requerimiento del Cliente, permitir modificarlo en cualquier estado que se encuentre la orden a excepción del estado Terminado (emite mensaje de validación) *
+//- Campo Comentario de facturación, este se debe guardar o modificar en cualquier estado que se encuentre la orden a excepción del estado Terminado (emite mensaje de validación) *
+- Acceso directo para modificar datos de vehículo debe habilitarse cuando se modifica algún campo, debería llamarse Editar Vehículo.
+- Cuando se intente registrar artículos duplicados, recargar los combos (como en la Proforma).
+//- La impresión del formato express no se visualizan datos *
+
+Formatos de impresión (Brayam)
+//- Revisar Orden de Servicio, Proforma y Control de Calidad *
+
+Solicitud de Venta
+- El botón Cancelar a demás de Anular la solicitud si esta es de Origen "O" debe obtener el consecutivo y correlativo origen de la Orden de Servicio y realizar el siguiente update en estas tablas:
+update ERP_OrdenServicio set cFacturado = 'N', iEstado = 2 where cCodConsecutivo = cCodConsecutivoO_origen and nConsecutivo = cCodConsecutivoO_origen and iEstado not in (0,1,4)
+update ERP_Proforma set cFacturado = 'N', iEstado = 2 where cCodConsecutivoOs = cCodConsecutivoO_origen and nConsecutivoOS = cCodConsecutivoO_origen and iEstado not in (0,1,6) *
+- El mensaje del botón cancelar dice aulo debe decir anuló *
+//- En el formato de impresión de cláusula adicional: falta el campo para agregar una descripción_adicional_clausula después de la condición de pago *
+
+Movimiento de Caja / Solicitudes
+//- Al elegir la forma de pago Separación combinado con una forma de pago efectivo se emite el mensaje de error "SQLSTATE[42000]: [Microsoft][ODBC Driver 11 for SQL Server][SQL Server]Incorrect syntax near '='. (SQL: UPDATE ERP_Venta SET aplicado_separacion = 'S'
+WHERE idventa=)"  *
+- En la impresión del documento de venta por el saldo de una solicitud a crédito financiero incluir el dato de convenio *
+
+Entrega a Servicio Técnico o Clientes
+- Al abrir el documento de tipo Remite no esta mostrando el dato del cliente, pero cuando se abre una venta y luego una remisión se figura el check en Proforma.
+
+Pendientes 08/08/2022:
+1. En la pantalla de agregar series de solicitud de venta, corregir el buscar para que lo realice, por serie, chasis, motor. *
+2. En Movimientos de Caja no debe permitir cobrar sin forma de pago si el monto es diferente a cero "0" * 
+3. En el reporte de excel y pdf de Consulta de stock, agregar los campos de chasis, motor y color .. En el exportable a pdf aumentar los totales a la columna Disponible, S. Total y un contar de Item*
+
+11/08/2022
+1. Habilitar las formas de pago porque no sólo es efectivo dicen y
+2. Los documentos de venta que se imprimen (en alquileres, trámites y separaciones) deben relacionarse con su ticket
+
+Créditos y Cobranzas / Documentos Emitidos
+- Incluir botón para reimpresión de documentos * 
+
+Movimientos de Caja / Comprobantes
+- La reimpresión de tickets por cuotas no esta imprimiendo el desglose de la cuota pagada (cuota y mora). *
+
+
+19/08/2022
+
+Solicitud de Venta
+- El botón Cancelar no está tomando en cuenta el origen de la solicitud (campo origen de la tabla), las sentencias de actualización de órdenes de servicio y proforma debe realizarse cuando el origen es "O" de lo contrario no. *
+- Validar que no permita guardar cuotas en negativo. *
+- Al editar una solicitud no figura la serie marcada por más que la serie exista en el stock.
+- En la solicitud de Tipo Contado no está validando que al guardar este registrado la serie, aprovechando el incidente cambiar la validación para que se realice al momento de Enviar. *
+- En la pantalla de agregar serie, mostrar el campo color del vehículo. *
+- El sistema debe validar al guardar que se registre la fecha de vencimiento. *
+- Agregar opción de copiar solicitud, se debe indicar el número de copiar que desea realizar, llamar al proceimiento VTA_CopiarSolicitudVenta (coordinar con Brayam).
+- Cuando es una solicitud con un cliente que posee documento RUC al editar la solicitud siempre sale el mensaje "Que el cliente tiene documento Tipo RUC". *
+
+Impresión de Solicitud de Venta
+- En la impresión de solicitudes de venta de tipo Crédito Directo, en la columna del Comprador en los campos de Edad, Estado Civil, Fecha de Nacimiento y Teléfono son datos del Comprador.
+- En la impresión de solicitudes de venta de tipo Crédito Directo que calce en una hoja y no se pierda el lado derecho, ver solicitud SOL-1000048. *
+
+Impresión de Comprobantes (Prioridad Alta)
+- Corregir la impresión de la factura FC11-56, es una lista de 50 items y se muestra descuadrado.
+- En la impresión de documentos por el saldo de solicitudes de tipo crédito financiero se tiene que desglosar el interes en un item, se creó el parámetro 26 donde se indica el código del item que debe ir en el detalle (similar al anticipo), el id de este artículo es 2350.
+- En la dirección del cliente concatenar el Distrito.
+- Mostrar las cuentas de banco (coordinar con Brayam)
+
+Documentos Emitidos
+- Agregar el filtro por el campo Anulado (Si/No)
+
+Movimiento de Caja / Solicitudes
+- Después de generar el documento de venta de una solicitud de tipo Crédito, el campo saldo de la solicitud queda en cero 0.00, debería tener el saldo del monto de la solicitud.
+
+Movimiento de Caja / Créditos
+- No está validando que la forma de pago sume el total a pagar, revisar también en la pestaña Documentos Pendientes.
+
+Movimiento de Caja / Caja
+- Corregir el reporte de Comprobantes que la información se extraiga de la vista VTA_ReporteComprobantes (coordinar con Brayam), esto también para la opcion de Caja Diaria.
+- En la grilla de dólares se muestra un error al hacer click en el botón +.
+
+Maestro de Clientes
+- Agregar campo Fecha de Nacimiento (tener en cuenta Solicitud, Orden de Servicio y Maestro)
+- Agregar el campo para asociar al Conyugue.
+
+Registro de Movimientos
+- Que permita filtrar por los campos Tipo Operación, Usuario, Estado
+- Agregar el campo Observaciones y que permita filtrar por este campo
+- Si se produce un error al grabar debería realizar un rollback de la transacción. (coordinar con Brayam)
+
+Entrega a Servicio Técnico o Cliente
+- Corregir el formato de impresión, el logo está demasiado grande.
+- Esta mostrando los documentos de venta que son de servicio, no debería mostrar.
+
+Orden de Servicio
+- Al registrar una placa se emite error, esto es porque no se ha dado acceso al maestro de artículos.
+- Permitir buscar el vehículo también por el número de chasis, actualmente sólo lo hace por placa (si se puede, realizar la busqueda ingresando un par de caracteres y el primero que encuentre que cargue la información (primero busca en tabla series y luego en tabla vehículo de terceros)).
+
+Reporte de Ventas
+- Agregar el buscar por las columnas que muestra la grilla.
+- Agregar filtro por tipo de documento.
+- El exportable a excel no está mostrando el tipo de cambio con los 4 decimales.
+
+Consulta de Movimientos
+- Agregar la columna OBS (coordinar con Brayam)
+
+Renegociación de Mora
+- Validar que la mora no quede en negativo.
+
+Nuevo:
+Agregar reporte de Separaciones, Trámites y Alquileres (coordinar con Brayam).
+Solicitud de Venta
+- El las solicitudes de venta de repuestos el combo de localización no está mostrando los que tienen stock.
+
+Consulta de Movimiento
+- El filtrar por el artículo que se realice por el código y no la descripcion
+
+Consulta de Stock
+- El filtrar por el artículo que se realice por el código y no la descripcion
+
+Solicitud de Venta
+- El botón Cancelar si es de origen "O" que el estado de la Orden de Servicio asociada sea "0" de Registrado.
+
+Registro Transferencias
+- El combo tipo operación está mostrando varias veces remite
+
+
+04/09/2022
+
+----------------------------------Críticos
+Impresión de Comprobantes
+- En la impresión de documentos por el saldeo de solicitudes de tipo crédito directo se tiene que desglosar el interes en un item, se creó el parámetro 26 donde se indica el código del item que debe ir en el detalle (similar al anticipo), el id de este artículo es 2350. *
+- En las notas de crédito mostrar la fecha de emisión del documento al cual se esta aplicando la nota de crédito *
+- En las notas de crédito no se está mostrando el QR. *
+
+Aplicaciones de anticipos
+- Anticipo con separaciones, no se envía el saldo correcto a Sunat bb11-545. * 
+- Revisar porque no se fue como aplicado el anticipo bb10-161 y bb11-47.
+
+Movimiento de Caja / Caja
+- Corregir el reporte de Comprobantes que la información se extraiga de la vista VTA_ReporteComprobantesCaja (coordinar con Brayam), esto también para la opcion de Caja Diaria. *
+
+Reporte de Metas y Objetivos / Reporte de Objetivos
+- En el reporte, sumar el campo nPrecioUnitario y que no filtre las gratuitas (coordinar con Brayam) * 
+
+
+----------------------------------Urgentes
+Solicitud de Venta
+- Agregar opción de copiar solicitud, se debe indicar el número de copiar que desea realizar, llamar al proceimiento VTA_CopiarSolicitudVenta (enviar código y número de solicitud) (coordinar con Brayam). *
+- La fecha fija de vencimiento no está respetando que sea mínimo 30 días para calcular el próximo vencimiento, por ejemplo si hoy es 25/08 y se indica fecha vencimineto los 5, la próxima fecha a pagar sale 05/09 debiendo ser 05/10. (Verificar) *
+
+Reporte de Cuentas por Cobrar
+- El reporte a lo que es dólares le está registrando en soles (hay que convertir el dólares en soles) y luego el total en soles pasarlo tambien a dólares
+- No se emite en excel (Verificar si es memoria)
+- No se muestra la solicitud 56964, se canceló el 02/09 pero no se visualizaba antes de cancelar 
+
+Reporte de Cobranza de cuotas
+- No muestra la misma información que el pdf, al parecer no filtra los documentos anulados.
+
+Opción nueva:
+- Reprogramación de fechas de créditos *
+
+
+----------------------------------Fácil
+Impresión de documentos de venta
+- Corregir la impresión de la factura FC11-56, es una lista de 50 items y se muestra descuadrado. * 
+- Mostrar las cuentas de banco (coordinar con Brayam)(dejar al último)
+
+Orden de Servicio
+- Cuando es una orden de servicio con un cliente que posee documento RUC al editar la solicitud siempre sale el mensaje "Que el cliente tiene documento Tipo RUC". * 
+- Al registrar una placa se emite error, esto es porque no se ha dado acceso al maestro de artículos. *
+
+Reporte de Cobranza
+- Porque si se emite antes del 04/08 se muestra el mensaje no hay datos *
+
+Asignación de Cobrador
+- Poder filtrar los que no tienen cobrador *

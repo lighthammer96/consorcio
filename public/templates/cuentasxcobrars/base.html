@@ -1,0 +1,46 @@
+<div class="panel panel-danger-admin">
+    <div class="panel-heading">
+        Gestión de Reporte de cuentas por cobrar
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="table_container_Cuentasxcobrar" class="table-responsive"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="modalCobradores" role="dialog">
+    <div class="modal-dialog" role="document">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title" id="">Cobradores</h4>
+        </div>
+        <div class="modal-body">
+              <div class="form-horizontal">
+                 <div class="row">
+                    <div class="col-md-12">
+                        <form id="formulario-asignacionCobrador">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Cobrador</label>
+                                <div class="col-sm-8">
+                                      <select id="idCobrador"  style="width: 100%;" class="form-control input-sm"></select>
+                                    </label>
+                                </div>
+                            </div>
+                        </form>    
+                        <br>
+                    </div>
+                 </div>   
+              </div>  
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-danger-admin btn-sm" ng-click="savecobrador()" >Guardar</button>  
+        <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+</div>

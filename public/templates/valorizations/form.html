@@ -1,0 +1,160 @@
+<!-- Modal -->
+<div class="modal" id="modalV" role="dialog" data-keyboard="false">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="titleV"></h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active">
+                            <a data-target="#home" aria-controls="home" role="tab" data-toggle="tab">General</a>
+                        </li>
+                        <li role="presentation">
+                            <a data-target="#subprojects" aria-controls="subprojects" role="tab" data-toggle="tab">Subproyectos
+                            </a>
+                        </li>
+                        <li role="presentation">
+                            <a data-target="#consolidated" aria-controls="consolidated" role="tab" data-toggle="tab">Consolidado</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="home">
+                            <div class="separator"></div>
+                            <div class="form-horizontal">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Fecha Registro</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control input-sm" readonly
+                                                       value="01/02/2017">
+                                            </div>
+                                            <label class="col-sm-2 control-label">Fecha Aprobación</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control input-sm" readonly
+                                                       value="02/03/2017">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Proyecto</label>
+                                            <div class="col-sm-7">
+                                                <input type="hidden" id="w_project_id">
+                                                <div class="input-group">
+                                                    <input type="text" readonly id="w_project_code" style="width: 30%"
+                                                           class="form-control input-sm">
+                                                    <input type="text" id="w_project_description" readonly
+                                                           style="width: 70%"
+                                                           class="form-control input-sm">
+                                                    <span class="input-group-btn">
+                                                <button class="btn btn-success btn-sm btn-group_sm" type="button"
+                                                        ng-click="openProject()">
+                                                    <span class="fa fa-search-plus"></span>
+                                                </button>
+                                            </span>
+                                                </div>
+                                            </div>
+                                            <label class="col-sm-1 control-label">Estado</label>
+                                            <div class="col-sm-2">
+                                                <input type="text" class="form-control input-sm" readonly
+                                                       value="Registrado">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Descripción</label>
+                                            <div class="col-sm-10">
+                                                <textarea class="form-control input-sm" rows="2">VALORIZACIÓN N° 016 - FEBRERO DEL 2017</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="col-sm-6 control-label">Subtotal</label>
+                                            <div class="col-sm-6">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">+</div>
+                                                    <input type="text" class="form-control text-right"
+                                                           value="1 618,315.94" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-6 control-label">Amortización en efectivo</label>
+                                            <div class="col-sm-6">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">-&nbsp;</div>
+                                                    <input type="text" class="form-control text-right" value="300.00">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-6 control-label">Amortización en materiales</label>
+                                            <div class="col-sm-6">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">-&nbsp;</div>
+                                                    <input type="text" class="form-control text-right" value="200.00">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group show_expense">
+                                            <label class="col-sm-6 control-label">Total</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control text-right" value="1 617,815.94"
+                                                       readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="subprojects">
+                            <div class="separator"></div>
+                            <div class="form-inline">
+                                <div class="form-group">
+                                    <label>SubProyecto</label>
+                                    <select class="form-control input-sm">
+                                        <option value="">--Seleccione--</option>
+                                        <option value="" selected>1. LINEA PRIMARIA</option>
+                                        <option value="">2. RED PRIMARIA</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="separator"></div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div ng-include src="'/templates/valorizations/matrix_valorizations.html'"></div>
+                                    <div class="separator"></div>
+                                    <div ng-include src="'/templates/valorizations/list_activity.html'"></div>
+                                </div>
+                                <div class="col-md-9">
+                                    <div ng-include src="'/templates/valorizations/pv.html'"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="consolidated">
+                            <div class="separator"></div>
+                            <div ng-include src="'/templates/valorizations/consolidated.html'"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success">
+                    <span class="fa fa-sign-out"></span>
+                    Enviar Aprobación
+                </button>
+                <button type="button" class="btn btn-success">
+                    <span class="fa fa-save"></span>
+                    Guardar
+                </button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">
+                    <span class="fa fa-times"></span> Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

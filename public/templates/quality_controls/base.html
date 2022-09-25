@@ -1,0 +1,149 @@
+<style> 
+   .table-wrapper {
+
+  max-height: 200px !important;
+  width: auto !important;
+  overflow: auto !important;
+  display:inline-block !important;
+}
+.table-earnings {
+  background: #F3F5F6 !important;
+}
+.modal2 {
+  text-align: center;
+  padding: 0!important;
+}
+
+.modal2:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -4px;
+}
+
+.modal-dialog2 {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+.modal-open {
+    overflow: scroll !important;
+}
+h5 {
+  font: sans-serif;
+  margin-top: 30px;
+  text-align: center;
+}
+h5.linea {
+  position: relative;
+  z-index: 1;
+}
+h5.linea:before {
+  border-top: 2px solid #D6DBDF;
+  content: "";
+  margin: 0 auto;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 95%;
+  z-index: -1;
+}
+h5.linea span {
+
+  background: #fff;
+  padding: 0 15px;
+}
+</style>
+<div class="panel panel-danger-admin">
+    <div class="panel-heading">
+        Gestión de Control de Calidad
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="table_container_Quality_control" class="table-responsive"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="modalControl" role="dialog">
+    <div class="modal-dialog" role="document">
+     
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title" id="titleModalControl"></h4>
+        </div>
+        <div class="modal-body">
+              <div class="form-horizontal">
+                 <div class="row">
+                    <div class="col-md-12">
+                        <div class="alert alert-danger hide" role="alert" id="msg_cont">
+                            <span class="fa fa-warning"></span>
+                            Debe seleccionar un Artículo
+                        </div> 
+                        <div class="form-group">
+                            <input type="hidden" class="form-control input-sm " id="idcontrol_calidad" />
+                            <label class="col-sm-1 control-label">Orden</label>
+                            <div class="col-sm-8">
+                                <select  style="width: 100%;" class="form-control input-sm" id="cCodConsecutivoOS"></select>
+                            </div>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control input-sm"  id="nConsecutivoOS" readonly/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-1 control-label">Fecha Registro</label>
+                            <div class="col-sm-4">
+                                <input type="date" class="form-control input-sm" id="dFechaRegistro"/>
+                            </div>
+                             
+                            <label class="col-sm-1 control-label">Estado</label>
+                            <div class="col-sm-3">
+                                <select class="form-control input-sm" id="iEstado" disabled>
+                                    <option value=""></option>
+                                    <option value="0">Registrado</option>
+                                    <option value="1">Terminado</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-3">
+                              <button type="button" class="btn btn-success btn-sm" id="btn_imprimirQc">
+                                                  <span class="fa fa-file-pdf-o"></span>
+                                                  Imprimir
+                              </button>
+                           </div> 
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-1 control-label">Otros</label>
+                            <div class="col-sm-11">
+                                <input class="form-control input-sm" id="cOtros"/>
+                            </div>
+                        </div>
+                        <div id="datos_calidad">
+                            <!-- <h5 class="linea"><span>Cliente</span></h5>
+                            <div class="form-group">
+                                <label class="col-sm-10 control-label">Estado</label>
+                                <div class="col-sm-1">
+                                    <label class="checkbox-inline i-checks">
+                                        <input type="checkbox" checked>
+                                    </label>
+                                </div>
+                            </div> -->
+                        </div>
+                        
+                    </div>
+                 </div>   
+              </div>  
+        </div>
+        <div class="modal-footer">
+        <button type="button" id="btn_guardarCalida" class="btn btn-danger-admin btn-sm" ng-click="saveControlCalidad()" >Guardar</button>  
+        <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+      
+    </div>
+</div>
