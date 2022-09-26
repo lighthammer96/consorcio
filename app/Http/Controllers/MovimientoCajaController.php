@@ -1099,7 +1099,7 @@ class MovimientoCajaController extends Controller
                 throw new Exception("La solicitud no tiene un detalle de articulos!");
             }
 
-            $separaciones = $solicitud_repositorio->obtener_totales_separaciones($data["cCodConsecutivo"], $data["nConsecutivo"]);
+            $separaciones = $ventas_repo->obtener_totales_separaciones($data["cCodConsecutivo"], $data["nConsecutivo"]);
             $total_separaciones = (float)$separaciones[0]->t_monto_total;
 
 
