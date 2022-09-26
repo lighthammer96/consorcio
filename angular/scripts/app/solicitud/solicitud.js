@@ -3491,7 +3491,7 @@
                     if(data.length > 0) {
                         var html = "";
                         for (var index = 0; index < data.length; index++) {
-                            html = +'<tr>';
+                            html += '<tr>';
                             html += '<td>'+data[index].serie_comprobante+'</td>';
                             html += '<td>'+data[index].numero_comprobante+'</td>';
                             html += '<td>'+data[index].t_monto_total+'</td>';
