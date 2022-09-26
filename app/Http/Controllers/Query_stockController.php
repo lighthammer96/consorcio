@@ -29,7 +29,7 @@ class Query_stockController extends Controller
         $filtro_idAlm = $request->input('filtro_idAlm');
         $filtro_idLoc = $request->input('filtro_idLoc');
         $filtro_cate = $request->input('filtro_cate');
-        $params = ['tipoCompraVenta','code_article','id','Articulo','Categoria','Unidad','Almacen','Localizacion','Lote','Serie','Disponible','Remitido','Total','Transito','Costo_Promedio_Unitario','Costo_Total', 'Chasis', 'Motor', 'Color', 'Ano'];
+        $params = ['tipoCompraVenta','code_article','id','Articulo','Categoria','Unidad','Almacen','Localizacion','Lote','Serie','Disponible','Remitido','Total','Transito','Costo_Promedio_Unitario','Costo_Total', 'Chasis', 'Motor', 'Color', 'Ano', 'Ingreso'];
         // print_R($filtro_art);
         return parseList($repo->search($s,$filtro_art,$filtro_idAlm,$filtro_idLoc,$filtro_cate), $request, 'id', $params);
     }

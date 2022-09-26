@@ -7762,12 +7762,14 @@ function create_pdf_Querystock(response) {
             fontSize: 8,
 
         },
+        /* Omitido para que alcance la columna Ingreso
         {
             text: 'Tip.CompraVenta',
             fillColor: '#eeeeee',
             fontSize: 8,
 
         },
+        */
         {
             text: 'Disponible',
             fillColor: '#eeeeee',
@@ -7836,7 +7838,12 @@ function create_pdf_Querystock(response) {
             alignment: 'center'
 
         },
-       
+        {
+            text: 'Ingreso',
+            fillColor: '#eeeeee',
+            fontSize: 8,
+            alignment: 'center'
+        }
     ];
 
 
@@ -7906,11 +7913,13 @@ function create_pdf_Querystock(response) {
                 fontSize: 7,
 
             },
+            /* Omitido para que alcance la columna Ingreso
             {
                 text: index.tipoCompraVenta,
                 fontSize: 7,
 
             },
+            */
             {
                 text: Number(index.Disponible),
                 fontSize: 7,
@@ -7964,6 +7973,11 @@ function create_pdf_Querystock(response) {
                 fontSize: 7,
 
             },
+            {
+                text: index.Ingreso,
+                fontSize: 7,
+
+            }
         ];
         dataDolMovimienQuery.push(tituloDolFormQueryData);
     });
@@ -8092,7 +8106,7 @@ function create_pdf_Querystock(response) {
                     text: todolt,
                     fontSize: 7,
 
-                },
+                }
             ];
         } else {
 
@@ -8199,7 +8213,7 @@ function create_pdf_Querystock(response) {
                     text: '',
                     fontSize: 7,
                     border: [false, false, false, false],
-                },
+                }
                 // {
                 //     text: '',
                 //     fontSize: 7,
@@ -8249,7 +8263,7 @@ function create_pdf_Querystock(response) {
             },
             {
                 style: 'tableExample',
-                widths: [60, 60, 60, 60, 60, 60, 40, 60, 60, 40, 60, 60, 60, 60, 60, 60, 60, 40, 40],
+                widths: [60, 60, 60, 60, 60, 60, 40, 60, 60, 40, 60, 60, 60, 60, 60, 60, 40, 40, 40],
                 table: {
                     body: dataDolMovimienQuery,
                 },

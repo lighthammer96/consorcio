@@ -140,6 +140,11 @@
                     title: 'Año',
                     listClass: 'text-right',
                     width: '3%'
+                },
+                Ingreso: {
+                    title: 'Ingreso',
+                    listClass: 'text-right',
+                    width: '3%'
                 }
             },
 
