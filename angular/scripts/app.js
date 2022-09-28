@@ -132,6 +132,7 @@
         'sys.app.visita_cliente',
         'sys.app.lista_cobranza_cuotas',
         'sys.app.avance_morosidad',
+        'sys.app.reporteDocumentosEmitidos',
         
         // Almacen
         'sys.app.receptions',
