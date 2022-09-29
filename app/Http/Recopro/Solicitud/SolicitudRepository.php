@@ -373,7 +373,7 @@ class SolicitudRepository implements SolicitudInterface
     public function get_formas_pago()
     {
 
-        $mostrar3 = DB::select("select * from ERP_FormasPago");
+        $mostrar3 = DB::select("select * from ERP_FormasPago WHERE codigo_formapago<>'SEP'");
         return $mostrar3;
     }
 
@@ -497,8 +497,12 @@ class SolicitudRepository implements SolicitudInterface
     }
 
     public function obtener_separaciones($cCodConsecutivo, $nConsecutivo) {
-        $sql = "SELECT * FROM dbo.ERP_SolicitudSeparacion AS ss 
+        $sql = "SELECT ss.*, v.*, FORMAT(v.fecha_emision, 'yyyy-MM-dd') AS fecha_emision_server, cl.* , m.*
+        FROM dbo.ERP_SolicitudSeparacion AS ss 
         INNER JOIN dbo.ERP_Venta AS v ON(ss.idventa=v.idventa)
+        INNER JOIN ERP_Moneda AS m ON(v.idmoneda=m.IdMoneda)
+        LEFT JOIN ERP_Clientes AS cl ON(cl.id=v.idcliente)
+        
         WHERE ss.cCodConsecutivo='{$cCodConsecutivo}' AND ss.nConsecutivo={$nConsecutivo}";
         $result = DB::select($sql);
         return $result;

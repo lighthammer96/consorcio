@@ -363,11 +363,11 @@ select pr.kit as kit,lot.Lote  as cod_lote,sa.idLote as idLote, pr.serie,pr.lote
         return DB::select($sql);
     }
 
-    public function get_ventas_separacion() {
+    public function get_ventas_separacion($idcliente) {
         $sql = "SELECT v.*, ISNULL(v.devolucion_producto, '') AS devolucion_producto FROM ERP_Venta AS v
         INNER JOIN ERP_VentaDetalle AS vd ON(v.idventa=vd.idventa)
-        WHERE vd.idarticulo=1862 AND ISNULL(v.aplicado_separacion, 'N')<>'S' AND v.IdTipoDocumento IN('01', '03')";
-
+        WHERE vd.idarticulo=1862 AND ISNULL(v.aplicado_separacion, 'N')<>'S' AND v.IdTipoDocumento IN('01', '03') AND v.idcliente={$idcliente} AND ISNULL(v.anulado, 'N')='N'";
+    // die($sql);
         return DB::select($sql);
     }
 
@@ -394,7 +394,7 @@ select pr.kit as kit,lot.Lote  as cod_lote,sa.idLote as idLote, pr.serie,pr.lote
     }
     
     public function obtener_comprobantes_pendientes_envio() {
-        $sql = "SELECT * FROM ERP_Venta WHERE IdTipoDocumento IN('03', '01', '07', '08') AND enviado_cpe=0 /*AND FORMAT(fecha_emision, 'yyyy-MM-dd')='2022-07-26'*/";
+        $sql = "SELECT * FROM ERP_Venta WHERE IdTipoDocumento IN('03', '01', '07', '08') AND enviado_cpe=0/*AND FORMAT(fecha_emision, 'yyyy-MM-dd')='2022-07-26'*/";
 
 
         return DB::select($sql);

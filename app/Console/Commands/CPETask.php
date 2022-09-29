@@ -524,7 +524,7 @@ class CPETask extends Command
         $producto = array();
 
         
-
+        $separaciones = array();
      
         if (!empty($venta[0]->cCodConsecutivo_solicitud) && !empty($venta[0]->nConsecutivo_solicitud)) {
             $venta_anticipo = $caja_diaria_detalle_repo->get_venta_anticipo($venta[0]->cCodConsecutivo_solicitud, $venta[0]->nConsecutivo_solicitud);
@@ -534,6 +534,8 @@ class CPETask extends Command
             $solicitud = $solicitud_repositorio->get_solicitud($venta[0]->cCodConsecutivo_solicitud, $venta[0]->nConsecutivo_solicitud);
 
             $producto = $solicitud_repositorio->get_solicitud_articulo_vehiculo($venta[0]->cCodConsecutivo_solicitud, $venta[0]->nConsecutivo_solicitud);
+            
+            $separaciones = $solicitud_repositorio->obtener_separaciones($venta[0]->cCodConsecutivo_solicitud, $venta[0]->nConsecutivo_solicitud); 
         }
 
         if(count($venta_anticipo) <= 0 && !empty($venta[0]->idventa_separacion)) {
@@ -632,12 +634,12 @@ class CPETask extends Command
             $json_array["tot"]["antic"] = sprintf('%.2f', round($venta[0]->anticipo, 2));
 
            
-            $factor_cd = ($venta_anticipo[0]->t_monto_total / $t_monto_total);
+            $factor_cd = ($venta[0]->anticipo / $t_monto_total);
              
             $json_array["cargo"][0]["cod_cd"] = "05"; // Descuentos globales por anticipos exonerados
            
             $json_array["cargo"][0]["factor_cd"] = sprintf('%.5f', round($factor_cd, 5));
-            $json_array["cargo"][0]["monto_cd"] = sprintf('%.2f', round($venta_anticipo[0]->t_monto_total, 2));
+            $json_array["cargo"][0]["monto_cd"] = sprintf('%.2f', round($venta[0]->anticipo, 2));
             $json_array["cargo"][0]["base_cd"] = sprintf('%.2f', round($t_monto_total, 2));
 
             $json_array["ant"][0]["imp_prepagado"] = sprintf('%.2f', round($venta_anticipo[0]->t_monto_total, 2));
@@ -659,7 +661,52 @@ class CPETask extends Command
             $json_array["tot"]["prec_tot"] = sprintf('%.2f', round($venta[0]->t_monto_total, 2));
         }
        
-       
+        if(count($separaciones) > 0) {
+           
+            if(!isset($json_array["ant"])) {
+                $t_monto_total =  $solicitud[0]->t_monto_total;
+                if(!empty($venta[0]->idventa_separacion)) {
+                    $t_monto_total = $venta[0]->t_monto_subtotal + $venta[0]->anticipo;
+                }
+                $json_array["tot"]["val_vent"] = sprintf('%.2f', round($t_monto_total, 2));
+                $json_array["tot"]["prec_tot"] = sprintf('%.2f', round($t_monto_total, 2));
+                $json_array["tot"]["antic"] = sprintf('%.2f', round($venta[0]->anticipo, 2));
+
+            
+                $factor_cd = ($venta[0]->anticipo / $t_monto_total);
+                
+                $json_array["cargo"][0]["cod_cd"] = "05"; // Descuentos globales por anticipos exonerados
+            
+                $json_array["cargo"][0]["factor_cd"] = sprintf('%.5f', round($factor_cd, 5));
+                $json_array["cargo"][0]["monto_cd"] = sprintf('%.2f', round($venta[0]->anticipo, 2));
+                $json_array["cargo"][0]["base_cd"] = sprintf('%.2f', round($t_monto_total, 2));
+                $json_array["ant"] = array();
+            }
+            
+            foreach ($separaciones as $ks => $vs) {
+                $data_ant = array();
+                $data_ant["imp_prepagado"] = sprintf('%.2f', round($vs->t_monto_total, 2));
+                $tip_doc_ant = "";
+            
+                if($vs->IdTipoDocumento == "01") {
+                    $tip_doc_ant = "02";
+                } elseif($vs->IdTipoDocumento == "03") {
+                    $tip_doc_ant = "03";
+                }
+
+
+                $data_ant["tip_doc_ant"] = $tip_doc_ant;
+                $data_ant["serie_correl"] = $vs->serie_comprobante."-".str_pad($vs->numero_comprobante, 8, "0", STR_PAD_LEFT);;
+                $data_ant["num_doc"] = $vs->documento;
+                $data_ant["tip_doc"] = (string)(int)$vs->tipodoc;
+                $data_ant["moneda"] = $vs->EquivalenciaSunat;
+                $data_ant["fec_pago"] = $vs->fecha_emision_server;
+                array_push($json_array["ant"], $data_ant);
+                
+            }
+
+          
+        }
       
         if ($venta[0]->codcondicionpago == 1 && !in_array($venta[0]->IdTipoDocumento, $cod_notas)) { // contado
             $json_array["forma_pago"]["descrip"] = "Contado";
@@ -771,6 +818,7 @@ class CPETask extends Command
             array_push($json_array["det"], $detalle_venta);
            
         }
+       
         
         if($total_gratuito > 0) {
             $json_array["tot"]["grav"] = "0.00";

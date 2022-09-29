@@ -1142,12 +1142,13 @@ class MovimientoCajaController extends Controller
             $data_venta["idtienda"] = $repo->get_caja_diaria()[0]->idtienda;
             $data_venta["idcaja"] = $repo->get_caja_diaria()[0]->idcaja;
 
-            if(isset($data["idventa_separacion"]) && !empty($data["idventa_separacion"])) {
-                $venta_separacion = $repo->get_venta($data["idventa_separacion"]);
-                $data_venta["anticipo"] = $venta_separacion[0]->t_monto_total;
-                $data_venta["t_monto_total"] = $solicitud[0]->t_monto_subtotal - $venta_separacion[0]->t_monto_total;
-                $data_venta["t_monto_subtotal"] = $solicitud[0]->t_monto_subtotal - $venta_separacion[0]->t_monto_total;
-                $data_venta["t_monto_exonerado"] = $solicitud[0]->t_monto_subtotal - $venta_separacion[0]->t_monto_total;
+            // if(isset($data["idventa_separacion"]) && !empty($data["idventa_separacion"])) {
+            if($total_separaciones > 0) {
+                // $venta_separacion = $repo->get_venta($data["idventa_separacion"]);
+                $data_venta["anticipo"] = $total_separaciones;
+                $data_venta["t_monto_total"] = $solicitud[0]->t_monto_subtotal - $total_separaciones;
+                $data_venta["t_monto_subtotal"] = $solicitud[0]->t_monto_subtotal - $total_separaciones;
+                $data_venta["t_monto_exonerado"] = $solicitud[0]->t_monto_subtotal - $total_separaciones;
             } 
 
             $data_venta["idventa_separacion"] = $data["idventa_separacion"];
@@ -1224,9 +1225,9 @@ class MovimientoCajaController extends Controller
                     $update_solicitud["cCodConsecutivo"] = $data["cCodConsecutivo"];
                     $update_solicitud["nConsecutivo"] = $data["nConsecutivo"];
                     $update_solicitud["estado"] = "3"; // ESTADO POR APROBAR DE LA SOLICITUD
-                    $update_solicitud["saldo"] = $solicitud[0]->t_monto_total - $data_venta["t_monto_total"];
-                    $update_solicitud["pagado"] = $saldo;
-                    $update_solicitud["facturado"] = $saldo;
+                    $update_solicitud["saldo"] = $solicitud[0]->t_monto_total - $solicitud_credito[0]->cuota_inicial;
+                    $update_solicitud["pagado"] = $solicitud_credito[0]->cuota_inicial;
+                    $update_solicitud["facturado"] = $solicitud_credito[0]->cuota_inicial;
                     // print_r($this->preparar_datos("dbo.ERP_Solicitud", $update_solicitud));
 
                     // enviamos aprobar la solicitud cuando se hace la venta de la cuota inicial
@@ -1368,6 +1369,7 @@ class MovimientoCajaController extends Controller
                 if(count($solicitud_credito) > 0) {
 
                     if($solicitud_credito[0]->cuota_inicial > 0 && $solicitud[0]->pagado == 0) {
+                        $saldo = (float)$solicitud_credito[0]->cuota_inicial - $total_separaciones;
                         if($i > 0) {
                             continue;
                         }
@@ -1375,22 +1377,22 @@ class MovimientoCajaController extends Controller
                         $data_venta_detalle["idarticulo"] = $parametro_anticipo[0]->value;
                         $data_venta_detalle["um_id"] = "07"; //codigo unidad
                         $data_venta_detalle["cantidad"] = 1;
-                        $data_venta_detalle["precio_unitario"] = $solicitud_credito[0]->cuota_inicial;
+                        $data_venta_detalle["precio_unitario"] = $saldo;
                         $data_venta_detalle["iddescuento"] = "";
                         $data_venta_detalle["porcentaje_descuento"] = "";
-                        $data_venta_detalle["precio_total"] = $solicitud_credito[0]->cuota_inicial;
+                        $data_venta_detalle["precio_total"] = $saldo;
                         $data_venta_detalle["monto_descuento"] = "";
                         $data_venta_detalle["monto_subtotal"] = "";
                         $data_venta_detalle["monto_exonerado"] = "";
                         if($solicitud[0]->t_impuestos > 0) {
-                            $data_venta_detalle["monto_afecto"] = $solicitud_credito[0]->cuota_inicial;
+                            $data_venta_detalle["monto_afecto"] = $saldo;
                         } else {
-                            $data_venta_detalle["monto_exonerado"] = $solicitud_credito[0]->cuota_inicial;
+                            $data_venta_detalle["monto_exonerado"] = $saldo;
                         }
                        
                         $data_venta_detalle["monto_inafecto"] = "";
                         $data_venta_detalle["impuestos"] = "";
-                        $data_venta_detalle["monto_total"] = $solicitud_credito[0]->cuota_inicial;
+                        $data_venta_detalle["monto_total"] = $saldo;
                         $data_venta_detalle["cOperGrat"] = "";
                         $data_venta_detalle["nOperGratuita"] = "";
 
