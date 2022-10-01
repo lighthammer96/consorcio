@@ -61,7 +61,7 @@ Route::group(['middleware' => ['auth', 'permission']], function () {
     require app_path() . '\Http\Routes\TipoProveedors.php';
 
      require app_path() . '\Http\Routes\ConfigJerarquiaCompras.php';
-    // Routes Masters
+     // Routes Masters
 
     require app_path() . '\Http\Routes\ReporteOrdenDiarios.php';
 
@@ -93,7 +93,7 @@ Route::group(['middleware' => ['auth', 'permission']], function () {
 
     require app_path() . '\Http\Routes\ReceptionTransfers.php';
 
-    require app_path() . '\Http\Routes\ReporteMetas.php'; 
+    require app_path() . '\Http\Routes\ReporteMetas.php';
 
     require app_path() . '\Http\Routes\Buyers.php';
 
@@ -241,7 +241,9 @@ Route::group(['middleware' => ['auth', 'permission']], function () {
     require app_path() . '\Http\Routes\ListaCobranzaCuotas.php';
     require app_path() . '\Http\Routes\AvanceMorosidad.php';
 
-    //Route Purchases
+    require app_path() . '\Http\Routes\ReporteDocumentosEmitidos.php';
+
+    // Route Purchases
 
     require app_path() . '\Http\Routes\Requirements.php';
 
@@ -288,11 +290,11 @@ Route::group(['middleware' => ['auth', 'permission']], function () {
 
     require app_path() . '\Http\Routes\Transfers.php';
 
-    require app_path() . '\Http\Routes\ReferralGuides.php';
+    // require app_path() . '\Http\Routes\ReferralGuides.php';
 
     require app_path() . '\Http\Routes\consumptions.php';
 
-    require app_path() . '\Http\Routes\ReferralGuides.php';
+    //require app_path() . '\Http\Routes\ReferralGuides.php';
 
     require app_path() . '\Http\Routes\ReceptionTransfers.php';
 
@@ -308,7 +310,7 @@ Route::group(['middleware' => ['auth', 'permission']], function () {
     require app_path() . '\Http\Routes\ConsolidatedProject.php';
 
     require app_path() . '\Http\Routes\ProjectApproval.php';
-    
+
 });
 
 Route::get('migrate_excel', 'MigrationController@index');

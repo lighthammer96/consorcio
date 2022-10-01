@@ -1,9 +1,7 @@
-<?php namespace App\Http\Recopro\ReporteDocumentosEmitidos;
+<?php
 
-use App\Http\Recopro\User\User;
-// use App\Http\Recopro\Shop\Shop;
+namespace App\Http\Recopro\ReporteDocumentosEmitidos;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Created by PhpStorm.
@@ -15,10 +13,11 @@ class ReporteDocumentosEmitidos extends Model
 {
    
 
-    protected $table = 'ERP_view_venta';
+    // protected $table = 'ERP_view_venta';
+    protected $table = 'VTA_ReporteComprobantesEmitidos';
 
-    protected $fillable = ['idventa', 'serie_comprobante', 'numero_comprobante', 'fecha_emision', 'tipo_documento', 'numero_documento', 'cliente', 'moneda', 't_monto_total', 'pagado', 'saldo', 'cCodConsecutivo_solicitud', 'nConsecutivo_solicitud', 'tipo_solicitud', "estado", "IdTipoDocumento", "anticipo", 'idventa_referencia', 'tipo_comprobante','anulado', 'idcliente', 'estado_cpe', 'fecha_emision_server', 'dias_vencidos', 'comprobante'];
-    protected $primaryKey = 'idventa';
+    protected $fillable = ['TipoDoc', 'TipoDocumento',  'Documento', 'FechaEmision', 'NumeroDoc', 'Cliente', 'Moneda', 'Total', 'Solarizado', 'Glosa', 'Anulado', 'EstadoSunat', 'TipoDocRef', 'DocumentoRef', "FechaEmisionRef"];
+    protected $primaryKey = 'Documento';
     // protected $keyType = 'string';
     public $incrementing = false;
 
@@ -26,19 +25,4 @@ class ReporteDocumentosEmitidos extends Model
 
     
     protected $hidden = ['deleted_at'];
-
-    public function user_c()
-    {
-        return $this->belongsTo(User::class, 'user_created');
-    }
-
-    public function user_u()
-    {
-        return $this->belongsTo(User::class, 'user_updated');
-    }
-
-    // public function tienda_d()
-    // {
-    //     return $this->belongsTo(Shop::class,'idtienda');
-    // }
 }
