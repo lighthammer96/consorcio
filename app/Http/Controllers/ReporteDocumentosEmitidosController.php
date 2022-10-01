@@ -27,14 +27,6 @@ class ReporteDocumentosEmitidosController extends Controller
 
     public function all(Request $request, ReporteDocumentosEmitidosInterface $repo)
     {
-        /*
-        $model = new ReporteDocumentosEmitidos;
-        return response()->json([
-            'Result' => 'OK',
-            'TotalRecordCount' => count($model->all()),
-            'Records' => $model->all()]);
-        */
-
         $s      = $request->input('search', '');
         $params = ['TipoDoc', 'TipoDocumento',  'Documento', 'FechaEmision', 'NumeroDoc', 'Cliente', 'Moneda', 'Total', 'Solarizado', 'Glosa', 'Anulado', 'EstadoSunat', 'TipoDocRef', 'DocumentoRef', 'FechaEmisionRef'];
 

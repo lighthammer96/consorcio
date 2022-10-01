@@ -9,8 +9,6 @@
 
 namespace App\Http\Recopro\ReporteDocumentosEmitidos;
 
-use Illuminate\Support\Facades\DB;
-
 class ReporteDocumentosEmitidosRepository implements ReporteDocumentosEmitidosInterface
 {
     protected $model;
@@ -26,8 +24,9 @@ class ReporteDocumentosEmitidosRepository implements ReporteDocumentosEmitidosIn
         $model = $this->model;
 
         if(!empty($_REQUEST["FechaInicioFiltro"]) && !empty($_REQUEST["FechaFinFiltro"])) {
-           $model = $model->whereBetween('FechaEmision', [$_REQUEST["FechaInicioFiltro"] , $_REQUEST["FechaFinFiltro"]]);
-
+            $inicio = str_replace("-", "/", $_REQUEST["FechaInicioFiltro"]);
+            $fin = str_replace("-", "/", $_REQUEST["FechaFinFiltro"]);
+           $model = $model->whereBetween('FechaEmision', [$inicio, $fin]);
         }
 
         if(!empty($_REQUEST["idClienteFiltro"])) {
@@ -42,13 +41,22 @@ class ReporteDocumentosEmitidosRepository implements ReporteDocumentosEmitidosIn
             "12" => "TICKET"
         ];
 
-        if(!empty($filter["id_tipo_doc"])) {
-            $model = $model->where("TipoDocumento", $tipo[$filter["id_tipo_doc"]]);
+        if(!empty($_REQUEST["id_tipo_doc"])) {
+            $model = $model->where("TipoDocumento", $tipo[$_REQUEST["id_tipo_doc"]]);
         }
 
         if(!empty($_REQUEST["estado_cpe"])) {
             $model = $model->where("EstadoSunat", $_REQUEST["estado_cpe"]);
         } 
+
+        $anulado = [
+            "S" => "Si",
+            "N" => "No"
+        ];
+
+        if(!empty($_REQUEST["anulado"])) {
+            $model = $model->where("Anulado", $anulado[$_REQUEST["anulado"]]);
+        }
 
         return $model->where(function ($q) use ($s) {
             $q->orWhere('Documento', 'LIKE', '%' . $s . '%');
@@ -58,36 +66,45 @@ class ReporteDocumentosEmitidosRepository implements ReporteDocumentosEmitidosIn
         })->orderBy('FechaEmision', 'DESC');
     }
 
-
     public function search_documentos_excel($filter)
     {
         // print_r($_REQUEST);
         $model = $this->model;
         $s = (isset($filter['search'])) ? $filter['search'] : '';
-        if(!empty($filter["FechaInicioFiltro"]) && !empty($filter["FechaFinFiltro"])) {
-           $model = $model->whereBetween('FechaEmision', [$filter["FechaInicioFiltro"] , $filter["FechaFinFiltro"]]);
-
+        if(!empty($_REQUEST["FechaInicioFiltro"]) && !empty($_REQUEST["FechaFinFiltro"])) {
+            $inicio = str_replace("-", "/", $_REQUEST["FechaInicioFiltro"]);
+            $fin = str_replace("-", "/", $_REQUEST["FechaFinFiltro"]);
+           $model = $model->whereBetween('FechaEmision', [$inicio, $fin]);
         }
 
-        if(!empty($filter["idClienteFiltro"])) {
-            $model = $model->where("Cliente", $filter["idClienteFiltro"]);
+        if(!empty($_REQUEST["idClienteFiltro"])) {
+            $model = $model->where("Cliente", $_REQUEST["idClienteFiltro"]);
         }
 
         $tipo = [
-            "03" => "BOLETA",
-            "01" => "FACTURA",
+            "03" => "BOLETA ELECTRÓNICA",
+            "01" => "FACTURA ELECTRÓNICA",
             "07" => "NOTAS DE CRÉDITO",
             "08" => "NOTAS DE DÉBITO",
             "12" => "TICKET"
         ];
 
-        if(!empty($filter["id_tipo_doc"])) {
-            $model = $model->where("TipoDocumento", 'LIKE', '%' . $tipo[$filter["id_tipo_doc"]] . '%');
+        if(!empty($_REQUEST["id_tipo_doc"])) {
+            $model = $model->where("TipoDocumento", $tipo[$_REQUEST["id_tipo_doc"]]);
         }
 
-        if(!empty($filter["estado_cpe"])) {
-            $model = $model->where("EstadoSunat", $filter["estado_cpe"]);
-        } 
+        if(!empty($_REQUEST["estado_cpe"])) {
+            $model = $model->where("EstadoSunat", $_REQUEST["estado_cpe"]);
+        }
+
+        $anulado = [
+            "S" => "Si",
+            "N" => "No"
+        ];
+
+        if(!empty($_REQUEST["anulado"])) {
+            $model = $model->where("Anulado", $anulado[$_REQUEST["anulado"]]);
+        }
 
         return $model->where(function ($q) use ($s) {
             $q->orWhere('Documento', 'LIKE', '%' . $s . '%');
@@ -95,7 +112,6 @@ class ReporteDocumentosEmitidosRepository implements ReporteDocumentosEmitidosIn
             $q->orWhere('FechaEmision', 'LIKE', '%' . $s . '%');
             $q->orWhere('Glosa', 'LIKE', '%' . $s . '%');
         })->orderBy('FechaEmision', 'DESC');
-
     }
 
     public function all()
