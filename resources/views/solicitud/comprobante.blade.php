@@ -314,7 +314,8 @@
             <div class="col" style="width: 15%; border-left: 1px solid white; border-bottom: 1px solid black; border-right: 1px solid black; background: #adadad;">VALOR DE VENTA</div>
         </div>      
         <?php 
-            
+            $total_separaciones = 0;
+            $text_separaciones = "";
             $total = 0;
             $cont = 0;
             foreach ($venta_detalle as $key => $value) {
@@ -371,6 +372,20 @@
             //     echo '</div>';
             //     $cont ++;
             // }
+
+            if(count($separaciones) > 0 && $venta[0]->tipo_comprobante == 0 && $venta[0]->comprobante_x_saldo == "N") { // en anticipos de cuota incial no debe salir
+                foreach ($separaciones as $ks => $vs) {
+                    $total_separaciones += (float) $vs->t_monto_total;
+                    echo '<div class="row">';
+                        echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 8%;">1.00</div>';
+                        echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 8%;">NIU</div>';
+                        echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 52.5%;">(-) ANTICIPO SEPARACIÓN '.$vs->serie_comprobante.'-'.$vs->numero_comprobante.'</div>';
+                        echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 15%;">-'.number_format($vs->t_monto_total, 2).'</div>';
+                        echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 15%;">-'.number_format($vs->t_monto_total, 2).'</div>';
+                    echo '</div>';
+                    $cont ++;
+                }
+            }
             
             if($venta[0]->tipo_comprobante == 0 && ($venta[0]->IdTipoDocumento == "01" || $venta[0]->IdTipoDocumento == "03") && $venta[0]->comprobante_x_saldo == "S" || (count($solicitud) > 0 && $solicitud[0]->tipo_solicitud == "3" && count($producto) > 0 && $venta[0]->tipo_comprobante == 0) ) {
                 $marca = (isset($producto[0]->marca)) ? $producto[0]->marca : "";
@@ -383,18 +398,19 @@
                 if(count($venta_anticipo) > 0) {
                     echo '<div class="row">';
                     echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 8%;">1.00</div>';
-                    echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 8%;">UND</div>';
+                    echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 8%;">NIU</div>';
                     echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 52.5%;">(-) ANTICIPO '.$venta_anticipo[0]->serie_comprobante.'-'.$venta_anticipo[0]->numero_comprobante.'</div>';
                     echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 15%;">-'.number_format($venta_anticipo[0]->t_monto_total, 2).'</div>';
                     echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 15%;">-'.number_format($venta_anticipo[0]->t_monto_total, 2).'</div>';
                     echo '</div>';
                 }
-
+              
                 if(count($separaciones) > 0) {
                     foreach ($separaciones as $ks => $vs) {
+                        $total_separaciones += (float) $vs->t_monto_total;
                         echo '<div class="row">';
                             echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 8%;">1.00</div>';
-                            echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 8%;">UND</div>';
+                            echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 8%;">NIU</div>';
                             echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 52.5%;">(-) ANTICIPO SEPARACIÓN '.$vs->serie_comprobante.'-'.$vs->numero_comprobante.'</div>';
                             echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 15%;">-'.number_format($vs->t_monto_total, 2).'</div>';
                             echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 15%;">-'.number_format($vs->t_monto_total, 2).'</div>';
@@ -513,7 +529,7 @@
 
                     echo '</tr>';
                     if(count($venta_anticipo) > 0 && ($venta[0]->IdTipoDocumento == "01" || $venta[0]->IdTipoDocumento == "03") && count($solicitud) > 0 && $solicitud[0]->tipo_solicitud == 2) {
-                        $importe_financiar = ($solicitud[0]->t_monto_total - $venta_anticipo[0]->t_monto_total);
+                        $importe_financiar = ($solicitud[0]->t_monto_total - $venta_anticipo[0]->t_monto_total) - $total_separaciones;
                         echo '<tr>';
                         echo '  <td colspan="3">Precio de Venta '.$solicitud[0]->simbolo_moneda.' Solic.</td>';
                         // echo '  <td>'.number_format($venta[0]->t_monto_total, 2).'</td>';
@@ -525,6 +541,13 @@
                         echo '  <td>'.$venta_anticipo[0]->serie_comprobante.'-'.$venta_anticipo[0]->numero_comprobante.'</td>';
                         echo '  <td>-'.number_format($venta_anticipo[0]->t_monto_total, 2).'</td>';
                         echo '</tr>';
+                        foreach ($separaciones as $ks => $vs) {
+                            echo '<tr>';
+                            echo '  <td colspan="2">Separación</td>';
+                            echo '  <td>'.$vs->serie_comprobante.'-'.$vs->numero_comprobante.'</td>';
+                            echo '  <td>-'.number_format($vs->t_monto_total, 2).'</td>';
+                            echo '</tr>';
+                        }
 
                         echo '<tr>';
                         echo '  <td colspan="3">Importe a Financiar</td>';
@@ -547,6 +570,15 @@
                     
                     echo '  </td>';
                     echo '</tr>';
+
+                    // foreach ($separaciones as $ks => $vs) {
+                    //     echo '<tr>';
+                    //     echo '  <td colspan="2">Separación</td>';
+                    //     echo '  <td>'.$vs->serie_comprobante.'-'.$vs->numero_comprobante.'</td>';
+                    //     echo '  <td>-'.number_format($vs->t_monto_total, 2).'</td>';
+                    //     echo '</tr>';
+                    // }
+
                     
                 }
 

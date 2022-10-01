@@ -17,6 +17,7 @@ use App\Http\Recopro\Solicitud\SolicitudInterface;
 use App\Http\Recopro\Solicitud\SolicitudRepository;
 use App\Http\Recopro\Solicitud\SolicitudTrait;
 use App\Http\Recopro\SolicitudCredito\SolicitudCreditoInterface;
+use App\Http\Recopro\Ventas\VentasInterface;
 use App\Http\Recopro\Ventas\VentasRepository;
 use App\Http\Recopro\Warehouse\WarehouseInterface;
 use App\Http\Requests\SolicitudRequest;
@@ -86,7 +87,7 @@ class SolicitudController extends Controller
         
     }
 
-    public function guardar_solicitud(SolicitudInterface $repo, SolicitudRequest $request)
+    public function guardar_solicitud(SolicitudInterface $repo, SolicitudRequest $request, VentasInterface $ventas_repo)
     {
         $data = $request->all();
 
@@ -216,7 +217,8 @@ class SolicitudController extends Controller
             }
           
             
-            
+            $result["separaciones"] = $ventas_repo->get_ventas_separacion($data["idcliente"]);
+
           
             DB::commit();
             return response()->json($result);
@@ -284,7 +286,7 @@ class SolicitudController extends Controller
         $parametro_igv =  $Repo->get_parametro_igv();
         $dataredondeo = $repo_orden->get_redondeo();
         $decimales_redondeo = $repo_orden->get_decimales_redondeo();
-        $separaciones = $ventas_repositorio->get_ventas_separacion();
+        
       
         // $cambio_tipo = $repo_orden->cambio_tipo(2, date("Y-m-d"));
 
@@ -312,7 +314,7 @@ class SolicitudController extends Controller
             'vendedores'=>$vendedores,
             'personas'=>$personas,
             'parametro_igv'=>$parametro_igv,
-            'separaciones'=>$separaciones,
+            // 'separaciones'=>$separaciones,
           
             'dataredondeo'=>(isset($dataredondeo[0]->value)) ? $dataredondeo[0]->value : 0,
             'decimales_redondeo'=>(isset($decimales_redondeo[0]->value)) ? $decimales_redondeo[0]->value : 0,
@@ -403,7 +405,7 @@ class SolicitudController extends Controller
        
     }
 
-    public function find(SolicitudInterface $Repo, Request $request, Orden_servicioInterface $repo_orden) {
+    public function find(SolicitudInterface $Repo, Request $request, Orden_servicioInterface $repo_orden, VentasInterface $ventas_repo) {
         $data = $request->all();
         $arr = explode("_", $data["id"]);
         $cCodConsecutivo = $arr[0];
@@ -416,6 +418,7 @@ class SolicitudController extends Controller
         $response["solicitud_credito"] = $Repo->get_solicitud_credito($cCodConsecutivo, $nConsecutivo);
         $response["solicitud_cronograma"] = $Repo->get_solicitud_cronograma($cCodConsecutivo, $nConsecutivo);
         $response["descuentos"] =$repo_orden->get_descuentos_all();
+        $response["separaciones"] = $ventas_repo->get_ventas_separacion($response["solicitud"][0]->idcliente);
 
         // $newString = mb_convert_encoding($response, "UTF-8", "auto");
         // return json_encode($response);
@@ -680,13 +683,21 @@ class SolicitudController extends Controller
     public function guardar_separaciones(Request $request) {
         $data = $request->all();
         // print_r($data); exit;
-
+        if(count($data["idseparacion"]) > 0) {
+            $sql_delete = "DELETE FROM dbo.ERP_SolicitudSeparacion WHERE cCodConsecutivo='{$data["cCodConsecutivo"]}' AND nConsecutivo='{$data["nConsecutivo"]}'";
+            DB::statement($sql_delete);
+        }
+       
         for ($i=0; $i < count($data["idseparacion"]); $i++) { 
             $datos = array();
             $datos["idventa"] = $data["idseparacion"][$i];
             $datos["cCodConsecutivo"] = $data["cCodConsecutivo"];
             $datos["nConsecutivo"] = $data["nConsecutivo"];
             $result = $this->base_model->insertar($this->preparar_datos("dbo.ERP_SolicitudSeparacion", $datos));
+            $sql_update = "UPDATE ERP_Venta SET aplicado_separacion = 'S'       
+            WHERE idventa={$datos["idventa"]}";
+    
+            DB::statement($sql_update);
         }
 
         // $this->base_model->insertar();
@@ -700,5 +711,7 @@ class SolicitudController extends Controller
         return response()->json($result);
     
     }
+
+   
 
 }

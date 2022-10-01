@@ -16,3 +16,5 @@ composer.lock
 /public/CDR
 /public/QR
 /public/PDF
+COMPILARCONSORCIOLOCAL.BAT
+SERVIDORCONSORCIOLOCAL.bat

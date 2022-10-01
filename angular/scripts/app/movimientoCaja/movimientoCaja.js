@@ -2014,6 +2014,8 @@ $scope.emitir_comprobante = function () {
                 } else {
                     total = cuota_inicial;
                 }
+
+               
                 
             } else {
                 total = t_monto_subtotal - cuota_inicial;
@@ -2023,25 +2025,31 @@ $scope.emitir_comprobante = function () {
                 
             }
         }
+        // alert( cuota_inicial);
+        if((cuota_inicial > 0 && pagado == 0)|| $("#tipo_solicitud").val() == "1") {
+            $.post("movimientoCajas/obtener_totales_separaciones", { cCodConsecutivo: cCodConsecutivo.val(), nConsecutivo: nConsecutivo.val() },
+                function (data, textStatus, jqXHR) {
+                    var t_monto_total = parseFloat(data[0].t_monto_total);
+                    if(isNaN(t_monto_total)) {
+                        t_monto_total = 0;
+                    }
+                    
+                    var nuevo_total = total - t_monto_total;
 
-        $.post("movimientoCajas/obtener_totales_separaciones", { cCodConsecutivo: cCodConsecutivo.val(), nConsecutivo: nConsecutivo.val() },
-            function (data, textStatus, jqXHR) {
-                var t_monto_total = parseFloat(data[0].t_monto_total);
-                if(isNaN(t_monto_total)) {
-                    t_monto_total = 0;
-                }
-                
-                var nuevo_total = total - t_monto_total;
+                    $("#total_pagar").val(nuevo_total.toFixed(2));
+                    $("#monto").val(nuevo_total.toFixed(2));
+                },
+                "json"
+            );
+        } else {
+            $("#total_pagar").val(total.toFixed(2));
+            $("#monto").val(total.toFixed(2));
+         
+        }
 
-                $("#total_pagar").val(nuevo_total.toFixed(2));
-                $("#monto").val(nuevo_total.toFixed(2));
-                $("#id_tipoDoc_Venta_or").trigger("change");
-                
-                $("#modal-emitir-comprobante").modal("show");
-            },
-            "json"
-        );
 
+        $("#id_tipoDoc_Venta_or").trigger("change");
+        $("#modal-emitir-comprobante").modal("show");
         
     }
     
@@ -2841,6 +2849,7 @@ function obtener_data_for_solicitud() {
             data_formas_pago = response.formas_pago;
             $("#forma_pago").append('<option value="">Seleccionar</option>');
             _.each(response.formas_pago, function (item) {
+                
                 $("#forma_pago").append('<option value="' + item.codigo_formapago + '">' + item.descripcion_subtipo + '</option>');
             });
             
