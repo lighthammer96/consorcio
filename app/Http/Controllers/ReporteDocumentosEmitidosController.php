@@ -51,14 +51,15 @@ class ReporteDocumentosEmitidosController extends Controller
 
     public function getAll(ReporteDocumentosEmitidosInterface $repo)
     {
-        return parseSelect($repo->all(), 'idbanco', 'descripcion');
+
     }
 
     public function excel(ReporteDocumentosEmitidosInterface $repo, Request $request)
     {
         $filter = $request->all();
         $data = $repo->search_documentos_excel($filter)->get();
-        return generateExcel($this->generateDataExcel($data), 'REPORTE DE DOCUMENTOS EMITIDOS', 'Documentos Emitidos');
+        //return $this->generateDataExcel($data);
+        return generateExcelRDE($this->generateDataExcel($data), 'REPORTE DE DOCUMENTOS EMITIDOS', 'Documentos Emitidos');
     }
 
     public function find_documento(ReporteDocumentosEmitidosInterface $Repo, Request $request)

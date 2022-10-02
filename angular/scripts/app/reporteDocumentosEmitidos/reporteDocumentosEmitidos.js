@@ -75,8 +75,6 @@
                 },
                 NumeroDoc: {
                     title: 'Numero Doc.',
-                    list: false,
-
                 },
                 Cliente: {
                     title: 'Cliente',
