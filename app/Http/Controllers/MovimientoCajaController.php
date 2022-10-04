@@ -2503,6 +2503,7 @@ class MovimientoCajaController extends Controller
         $datos = array();
         $datos["venta_anticipo"] = array();
         $datos["solicitud"] = array();
+        $datos["producto"] = array();
         $datos["separaciones"] = array();
         // $bool = $cCodConsecutivo != "null" && $cCodConsecutivo != "0";
         // var_dump($bool);

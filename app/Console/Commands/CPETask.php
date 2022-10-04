@@ -422,6 +422,7 @@ class CPETask extends Command
         $datos["venta_anticipo"] = array();
         $datos["solicitud"] = array();
         $datos["producto"] = array();
+        $datos["separaciones"] = array();
         // $bool = $cCodConsecutivo != "null" && $cCodConsecutivo != "0";
         // var_dump($bool);
         if($cCodConsecutivo != "null" && $cCodConsecutivo != "0" && $nConsecutivo != "null" && $nConsecutivo != "0" && !empty($cCodConsecutivo) && !empty($nConsecutivo)) {
@@ -442,7 +443,9 @@ class CPETask extends Command
             $datos["fiador"] = $persona_repositorio->find($idfiador);
            
             $datos["producto"] = $solicitud_repositorio->get_solicitud_articulo_vehiculo($cCodConsecutivo, $nConsecutivo);
-            $datos["producto"] = $solicitud_repositorio->get_solicitud_articulo_vehiculo($cCodConsecutivo, $nConsecutivo);
+         
+
+            $datos["separaciones"] = $solicitud_repositorio->obtener_separaciones($cCodConsecutivo, $nConsecutivo); 
             
         }
 
@@ -1068,28 +1071,28 @@ class CPETask extends Command
     {
         // referencia: https://www.youtube.com/watch?v=0uG0B5HqiuA&ab_channel=JesusMatiz
         
-        // $comprobantes_pendientes_envio = $ventas_repo->obtener_comprobantes_pendientes_envio();
+        $comprobantes_pendientes_envio = $ventas_repo->obtener_comprobantes_pendientes_envio();
        
-        // foreach ($comprobantes_pendientes_envio as $key => $value) {
+        foreach ($comprobantes_pendientes_envio as $key => $value) {
            
-        //     $this->generar_json_cpe($value->idventa, $repo, $compania_repo, $solicitud_repositorio);
+            $this->generar_json_cpe($value->idventa, $repo, $compania_repo, $solicitud_repositorio);
 
-        // }
+        }
         
        
-        // $comprobantes_pendientes_envio_pdf = $ventas_repo->obtener_comprobantes_pendientes_envio_pdf();
-
-        // foreach ($comprobantes_pendientes_envio_pdf as $kp=> $vp) {
-        //     $id = $vp->cCodConsecutivo_solicitud."|".$vp->nConsecutivo_solicitud."|".$vp->idventa."|".$vp->documento_cpe;
-        //     $this->generar_pdf($id, $repo, $solicitud_repositorio, $cliente_repositorio, $persona_repositorio);
+        $comprobantes_pendientes_envio_pdf = $ventas_repo->obtener_comprobantes_pendientes_envio_pdf();
+      
+        foreach ($comprobantes_pendientes_envio_pdf as $kp=> $vp) {
+            $id = $vp->cCodConsecutivo_solicitud."|".$vp->nConsecutivo_solicitud."|".$vp->idventa."|".$vp->documento_cpe;
+            $this->generar_pdf($id, $repo, $solicitud_repositorio, $cliente_repositorio, $persona_repositorio);
             
            
 
-        // }
+        }
      
       
         $comprobantes = $ventas_repo->obtener_comprobantes();
-    
+     
         foreach ($comprobantes as $key => $value) {
             $res = $this->consultar_cdr($value->documento_cpe);
             if(isset($res["statusCdr"]["statusMessage"]) && isset($res["statusCdr"]["statusCode"])) {
@@ -1101,28 +1104,28 @@ class CPETask extends Command
 
        
 
-        // $comprobantes_anulados = $ventas_repo->obtener_comprobantes_anulados_pendientes();
+        $comprobantes_anulados = $ventas_repo->obtener_comprobantes_anulados_pendientes();
     
-        // foreach ($comprobantes_anulados as $kan => $van) {
-        //     $this->generar_json_cpe_anulados($van->idventa, $repo, $compania_repo, $solicitud_repositorio);
+        foreach ($comprobantes_anulados as $kan => $van) {
+            $this->generar_json_cpe_anulados($van->idventa, $repo, $compania_repo, $solicitud_repositorio);
 
-        // }
+        }
       
-        // $comprobantes_baja = $ventas_repo->obtener_comprobantes_anulados();
+        $comprobantes_baja = $ventas_repo->obtener_comprobantes_anulados();
     
-        // foreach ($comprobantes_baja as $kb => $vb) {
-        //     $res = $this->consultar_cdr($vb->documento_cpe, "S");
-        //     if(isset($res["statusBaja"]["statusMessage"]) && isset($res["statusBaja"]["statusCode"])) {
-        //         $statusMessage = utf8_decode(str_replace("'", "", $res["statusBaja"]["statusMessage"]));
-        //         $sql_update = "UPDATE ERP_Venta SET statusCodeBaja='{$res["statusBaja"]["statusCode"]}', statusMessageBaja='{$statusMessage}' WHERE idventa={$vb->idventa}";
-        //         DB::statement($sql_update);
-        //     }
+        foreach ($comprobantes_baja as $kb => $vb) {
+            $res = $this->consultar_cdr($vb->documento_cpe, "S");
+            if(isset($res["statusBaja"]["statusMessage"]) && isset($res["statusBaja"]["statusCode"])) {
+                $statusMessage = utf8_decode(str_replace("'", "", $res["statusBaja"]["statusMessage"]));
+                $sql_update = "UPDATE ERP_Venta SET statusCodeBaja='{$res["statusBaja"]["statusCode"]}', statusMessageBaja='{$statusMessage}' WHERE idventa={$vb->idventa}";
+                DB::statement($sql_update);
+            }
            
            
-        // }
+        }
       
         $texto = date("Y-m-d H:i:s");
-        Storage::append("log.txt", $texto);
+        Storage::append("log.txt", "FIN => ".$texto);
         // exit;
 
         
