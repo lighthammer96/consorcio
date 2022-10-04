@@ -96,6 +96,9 @@ use App\Http\Recopro\ReporteVentaCliente\ReporteVentaCliente;
 use App\Http\Recopro\ReporteVentaCliente\ReporteVentaClienteInterface;
 use App\Http\Recopro\ReporteVentaCliente\ReporteVentaClienteRepository;
 
+use App\Http\Recopro\ReporteComisiones\ReporteComisiones; 
+use App\Http\Recopro\ReporteComisiones\ReporteComisionesInterface;
+use App\Http\Recopro\ReporteComisiones\ReporteComisionesRepository;
 
 use App\Http\Recopro\ReporteOrdenDiario\ReporteOrdenDiario; 
 use App\Http\Recopro\ReporteOrdenDiario\ReporteOrdenDiarioInterface;
@@ -778,6 +781,11 @@ use App\Http\Recopro\Config\Config;
 use App\Http\Recopro\Config\ConfigRepository;
 use App\Http\Recopro\Unity\Unity;
 use App\Http\Recopro\Unity\UnityRepository;
+
+use App\Http\Recopro\ReporteDocumentosEmitidos\ReporteDocumentosEmitidos;
+use App\Http\Recopro\ReporteDocumentosEmitidos\ReporteDocumentosEmitidosInterface;
+use App\Http\Recopro\ReporteDocumentosEmitidos\ReporteDocumentosEmitidosRepository;
+
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -824,6 +832,7 @@ class AppServiceProvider extends ServiceProvider
         $this->registerReporteMeta();
         $this->registerReporteRepuesto();
         $this->registerReporteVentaCliente();
+        $this->registerReporteComisiones();
         $this->registerTipoProveedor();
         $this->registerSolicitudCompra_Detalle();
         $this->registerSolicitudCompraArticulo();
@@ -1015,6 +1024,9 @@ class AppServiceProvider extends ServiceProvider
         $this->registerConsumptionProduct();
         $this->registerConsumerReturn();
         $this->registerConsumerReturnProduct();
+
+        $this->registerReporteDocumentosEmitidos();
+
     }
 
     public function registerProfile()
@@ -1312,6 +1324,15 @@ class AppServiceProvider extends ServiceProvider
 
         $app->bind(ReporteVentaClienteInterface::class, function ($app) {
             return new ReporteVentaClienteRepository(new ReporteVentaCliente());
+        });
+    }
+
+    public function registerReporteComisiones()
+    {
+        $app = $this->app;
+
+        $app->bind(ReporteComisionesInterface::class, function ($app) {
+            return new ReporteComisionesRepository(new ReporteComisiones());
         });
     }
     public function registerView_comprobante_movimiento()
@@ -2759,6 +2780,16 @@ class AppServiceProvider extends ServiceProvider
             return new PurchaseOrderDetailRepository(new PurchaseOrderDetail());
         });
     }
+
+    public function registerReporteDocumentosEmitidos()
+    {
+        $app = $this->app;
+
+        $app->bind(ReporteDocumentosEmitidosInterface::class, function ($app) {
+            return new ReporteDocumentosEmitidosRepository(new ReporteDocumentosEmitidos());
+        });
+    }
+
 }
 
 

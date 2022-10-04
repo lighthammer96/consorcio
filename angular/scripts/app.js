@@ -102,6 +102,7 @@
         'sys.app.categoriaVehiculars',
         'sys.app.resetearContrasenias',
         'sys.app.reporteVentaClientes',
+        'sys.app.reporteComisiones',
         'sys.app.resumenMensualActividads',
         'sys.app.carroceria',
         // Compras
@@ -132,6 +133,7 @@
         'sys.app.visita_cliente',
         'sys.app.lista_cobranza_cuotas',
         'sys.app.avance_morosidad',
+        'sys.app.reporteDocumentosEmitidos',
         
         // Almacen
         'sys.app.receptions',

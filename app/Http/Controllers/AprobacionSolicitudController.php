@@ -17,7 +17,8 @@ use App\Http\Recopro\AprobacionTotal\AprobacionTotalInterface;
 use App\Http\Recopro\Solicitud\SolicitudInterface;
 use App\Http\Recopro\View_PendienteCobro\View_PendienteCobroInterface;
 use App\Http\Requests\AprobacionSolicitudRequest;
-use App\Models\BaseModel; 
+use App\Models\BaseModel;
+use DateTime;
 use DB;
 class AprobacionSolicitudController extends Controller
 {
@@ -117,7 +118,14 @@ class AprobacionSolicitudController extends Controller
                             $anio = $anio + 1;
                         }
 
+                        $fecha_actual = date("Y-m-d");
                         $fecha = $anio."-".$mes."-".$dia;
+                        $date1 = new DateTime($fecha);
+                        $date2 = new DateTime($fecha_actual);
+                        $diff = $date1->diff($date2);
+                        if($diff < 30) {
+
+                        }
                         $dias_del_mes = date( 't', strtotime( $anio."-".$mes."-1" ) );
                         if($dias_del_mes < $dia) {
                             $fecha = $anio."-".$mes."-".$dias_del_mes;

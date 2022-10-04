@@ -32,7 +32,7 @@
             @foreach($d as $i)
                 <?php 
                     $valor = $i[1];
-                    if(is_numeric($i[1])) {
+                    if(is_numeric($i[1]) && $valor[0] != '0') {
                         $valor = sprintf('%.2f', $i[1]); 
                     } 
                 ?>

@@ -141,6 +141,7 @@ class VentasController extends Controller
 
         // $cobradores = DB::select($sql_cobradores);
         $vacios = 0;
+       
         // foreach ($cobradores as $key => $value) {
             $sql = "SELECT c.descripcion AS cobrador, c.id AS idcobrador, FORMAT(v.fecha_emision, 'dd/MM/yyyy') AS fecha_emision, cl.razonsocial_cliente, v.serie_comprobante, v.numero_comprobante, FORMAT(sc.fecha_vencimiento, 'dd/MM/yyyy') AS fecha_vencimiento, m.Descripcion AS moneda, v.t_monto_total,DATEDIFF(DAY, sc.fecha_vencimiento, GETDATE())  AS dias_mora, CASE WHEN sc.saldo_cuota=0 THEN 'Cobrado' ELSE 'Pendiente' END AS estado, vd.int_moratorio_pagado, ISNULL(vd.nrocuota, 0) AS nrocuota, vd.valor_cuota_pagada, s.cCodConsecutivo, s.nConsecutivo
             FROM ERP_Venta AS v
@@ -150,7 +151,7 @@ class VentasController extends Controller
             INNER JOIN ERP_Clientes AS cl ON(cl.id=v.idcliente)
             INNER JOIN ERP_SolicitudCronograma AS sc ON(sc.cCodConsecutivo=s.cCodConsecutivo AND sc.nConsecutivo=s.nConsecutivo AND vd.nrocuota=sc.nrocuota)
             INNER JOIN ERP_Moneda AS m ON(m.IdMoneda=v.idmoneda)
-            WHERE v.fecha_emision BETWEEN '{$data["fecha_inicio"]}' AND '{$data["fecha_fin"]}' AND ISNULL(v.anulado, 'N')<>'S' {$where}
+            WHERE  FORMAT(v.fecha_emision, 'yyyy-MM-dd') BETWEEN '{$data["fecha_inicio"]}' AND '{$data["fecha_fin"]}' AND ISNULL(v.anulado, 'N')<>'S' {$where}
             ORDER BY c.descripcion ASC";
            
             $pagos = DB::select($sql);
