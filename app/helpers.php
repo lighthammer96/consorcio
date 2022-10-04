@@ -247,6 +247,33 @@ function generateExcel($data, $file_name, $sheet_name)
 
     return response()->json($response);
 }
+
+function generateExcelComisiones($data, $file_name, $sheet_name)
+{
+    // echo "<pre>";
+    // print_r($data); exit;
+    $file = Excel::create($file_name, function ($excel) use ($data, $sheet_name) {
+        $excel->sheet($sheet_name, function ($sheet) use ($data) {
+            $sheet->setColumnFormat(array(
+                'J' =>  \PHPExcel_Style_NumberFormat::FORMAT_NUMBER_00,
+                'K' =>  \PHPExcel_Style_NumberFormat::FORMAT_NUMBER_00
+               
+            ));
+            $sheet->loadView('excel.comisiones')->with('data', $data);
+           
+        });
+    });
+
+    $file = $file->string('xlsx');
+
+    $response = [
+        'name' => $file_name,
+        'file' => "data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64," . base64_encode($file)
+    ];
+
+    return response()->json($response);
+}
+
 function generateExcelOrdenSer($data, $file_name,$Marca,$tipoveh,$FechaInicioFiltro,$FechaFinFiltro,$idMarca,$idtipoveh,$fechacAc, $sheet_name)
 {
     $file = Excel::create($file_name, function ($excel) use ($data,$idMarca,$idtipoveh,$FechaInicioFiltro,$FechaFinFiltro,$Marca,$tipoveh,$fechacAc,$sheet_name) {

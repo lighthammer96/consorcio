@@ -1148,9 +1148,7 @@ function getFormSearchReporteVenta(form_id, input_id, btn_id) {
         '<div class="col-md-3">' +
         '<select id="idcategoria"  style="margin-right:5px;width: 100%" name="idcategoria" class="form-control input-sm "></select>' +
         '</div>' +
-        '</div>' +
-        '<div class="form-group">' +
-        '<div class="col-md-1 col-md-offset-7">' +
+        '<div class="col-md-1">' +
         '<button  type="submit" id="' + btn_id + '" class="btn-danger-admin btn-sm">' +
         '<i class="fa fa-search"></i>' +
         '</button>' +
@@ -1160,11 +1158,60 @@ function getFormSearchReporteVenta(form_id, input_id, btn_id) {
         '<i class="fa fa-file-excel-o">Exportar Excel</i>' +
         '</button>' +
         '</div>' +
-        '<div class="col-md-2">' +
+        '</div>' +
+        '<div class="form-group">' +
+        
+        
+        '<div class="col-md-2 col-md-offset-10">' +
         '<button  type="button"  id="btn_expPDF" class="btn-success  btn-sm">' +
         '<i class="fa fa-file-pdf-o">Exportar Pdf</i>' +
         '</button>' +
         '</div>' +
+        '</div>' +
+        '</form>';
+}
+
+function getFormSearchReporteComisiones(form_id, input_id, btn_id) {
+    return '<form class="form-horizontal" id="' + form_id + '" style="margin-bottom:-3px">' +
+       
+        '<div class="form-group">' +
+  
+        '<label class="col-sm-2 control-label">Fecha Inicio</label>' +
+        '<div class="col-md-3">' +
+        '<input type="date" class="form-control input-sm"  id="FechaInicioFiltro">' +
+        '</div>' +
+        '<label class="col-sm-2 control-label">Fecha Fin</label>' +
+        '<div class="col-md-3">' +
+        '<input type="date" class="form-control input-sm"  id="FechaFinFiltro">' +
+        '</div>' +
+
+        '</div>' +
+        '<div class="form-group">' +
+        '<div class="col-md-6 ">' +
+        '<select id="idClienteFiltro"  style="margin-right:5px;width: 100%" name="idClienteFiltro" class="form-control input-sm "></select>' +
+        '</div>' +
+        '<div class="col-md-5" style="padding-right: 0;">' +
+        '<select id="idVendedorFiltro"  style="margin-right:5px;width: 100%" name="idVendedorFiltro" class="form-control input-sm "></select>' +
+        '</div>' +
+        '<div class="col-md-1" style="padding-left: 0;">' +
+        '<button  type="submit" id="' + btn_id + '" class="btn-danger-admin btn-sm">' +
+        '<i class="fa fa-search"></i>' +
+        '</button>' +
+        '</div>' +
+        '</div>' +
+   
+        '<div class="form-group">' +
+        
+        '<div class="col-md-2 col-md-offset-10">' +
+        '<button  type="button"  id="btn_expExcel" class="btn-primary btn-sm">' +
+        '<i class="fa fa-file-excel-o">Exportar Excel</i>' +
+        '</button>' +
+        '</div>' +
+        // '<div class="col-md-2">' +
+        // '<button  type="button"  id="btn_expPDF" class="btn-success  btn-sm">' +
+        // '<i class="fa fa-file-pdf-o">Exportar Pdf</i>' +
+        // '</button>' +
+        // '</div>' +
         '</div>' +
         '</form>';
 }

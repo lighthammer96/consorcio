@@ -96,6 +96,9 @@ use App\Http\Recopro\ReporteVentaCliente\ReporteVentaCliente;
 use App\Http\Recopro\ReporteVentaCliente\ReporteVentaClienteInterface;
 use App\Http\Recopro\ReporteVentaCliente\ReporteVentaClienteRepository;
 
+use App\Http\Recopro\ReporteComisiones\ReporteComisiones; 
+use App\Http\Recopro\ReporteComisiones\ReporteComisionesInterface;
+use App\Http\Recopro\ReporteComisiones\ReporteComisionesRepository;
 
 use App\Http\Recopro\ReporteOrdenDiario\ReporteOrdenDiario; 
 use App\Http\Recopro\ReporteOrdenDiario\ReporteOrdenDiarioInterface;
@@ -824,6 +827,7 @@ class AppServiceProvider extends ServiceProvider
         $this->registerReporteMeta();
         $this->registerReporteRepuesto();
         $this->registerReporteVentaCliente();
+        $this->registerReporteComisiones();
         $this->registerTipoProveedor();
         $this->registerSolicitudCompra_Detalle();
         $this->registerSolicitudCompraArticulo();
@@ -1312,6 +1316,15 @@ class AppServiceProvider extends ServiceProvider
 
         $app->bind(ReporteVentaClienteInterface::class, function ($app) {
             return new ReporteVentaClienteRepository(new ReporteVentaCliente());
+        });
+    }
+
+    public function registerReporteComisiones()
+    {
+        $app = $this->app;
+
+        $app->bind(ReporteComisionesInterface::class, function ($app) {
+            return new ReporteComisionesRepository(new ReporteComisiones());
         });
     }
     public function registerView_comprobante_movimiento()

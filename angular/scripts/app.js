@@ -102,6 +102,7 @@
         'sys.app.categoriaVehiculars',
         'sys.app.resetearContrasenias',
         'sys.app.reporteVentaClientes',
+        'sys.app.reporteComisiones',
         'sys.app.resumenMensualActividads',
         'sys.app.carroceria',
         // Compras

@@ -161,6 +161,8 @@ Route::group(['middleware' => ['auth', 'permission']], function () {
 
     require app_path() . '\Http\Routes\ReporteVentaClientes.php';
 
+    require app_path() . '\Http\Routes\ReporteComisiones.php';
+
     require app_path() . '\Http\Routes\Technicians.php';
 
     require app_path() . '\Http\Routes\CancelarCerrarOcs.php';
