@@ -250,7 +250,7 @@ function generateExcel($data, $file_name, $sheet_name)
     return response()->json($response);
 }
 
-<<<<<<< HEAD
+
 function generateExcelComisiones($data, $file_name, $sheet_name)
 {
     // echo "<pre>";
@@ -263,8 +263,19 @@ function generateExcelComisiones($data, $file_name, $sheet_name)
                
             ));
             $sheet->loadView('excel.comisiones')->with('data', $data);
-           
-=======
+        });
+    });
+
+    $file = $file->string('xlsx');
+
+    $response = [
+        'name' => $file_name,
+        'file' => "data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64," . base64_encode($file)
+    ];
+
+    return response()->json($response);
+}      
+
 // Generar el excel del modulo Reporte de Documentos Emitidos
 function generateExcelRDE($data, $file_name, $sheet_name)
 {
@@ -278,7 +289,7 @@ function generateExcelRDE($data, $file_name, $sheet_name)
             ));
             $sheet->loadView('excel.view')->with('data', $data);
 
->>>>>>> 9af8d048a269cd39a63302e2da7283dd41b2cedb
+
         });
     });
 
@@ -292,10 +303,6 @@ function generateExcelRDE($data, $file_name, $sheet_name)
     return response()->json($response);
 }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 9af8d048a269cd39a63302e2da7283dd41b2cedb
 function generateExcelOrdenSer($data, $file_name,$Marca,$tipoveh,$FechaInicioFiltro,$FechaFinFiltro,$idMarca,$idtipoveh,$fechacAc, $sheet_name)
 {
     $file = Excel::create($file_name, function ($excel) use ($data,$idMarca,$idtipoveh,$FechaInicioFiltro,$FechaFinFiltro,$Marca,$tipoveh,$fechacAc,$sheet_name) {
