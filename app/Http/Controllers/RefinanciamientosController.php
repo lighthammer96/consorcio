@@ -21,6 +21,7 @@ use DB;
 use Illuminate\Http\Request;
 use Exception;
 use App\Http\Recopro\Persona\PersonaInterface;
+use DateTime;
 
 class RefinanciamientosController extends Controller
 {
@@ -308,14 +309,24 @@ class RefinanciamientosController extends Controller
                         $anio = $anio + 1;
                     }
                     
-                    $fecha = $anio."-".$mes."-".$dia;
-                    $dias_del_mes = date( 't', strtotime( $anio."-".$mes."-1" ) );
+                    // $fecha = $anio."-".$mes."-".$dia;
+                    // $dias_del_mes = date( 't', strtotime( $anio."-".$mes."-1" ) );
                  
-                    if($dias_del_mes < $dia) {
-                        $fecha = $anio."-".$mes."-".$dias_del_mes;
-                    }
+                    // if($dias_del_mes < $dia) {
+                    //     $fecha = $anio."-".$mes."-".$dias_del_mes;
+                    // }
                     
-                    $mes = $mes + 1;
+                    // $mes = $mes + 1;
+
+                    $fecha_actual = date("Y-m-d");
+                    $fecha = $anio."-".$mes."-".$dia;
+                    $date1 = new DateTime($fecha);
+                    $date2 = new DateTime($fecha_actual);
+                    $diff = $date1->diff($date2);
+                    if($diff < 30) {
+                        $mes = $mes + 1;
+                    }
+                    $fecha = $anio."-".$mes."-".$dia;
                     
                 } else {
 
