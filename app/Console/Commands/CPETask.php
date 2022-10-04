@@ -298,7 +298,7 @@ class CPETask extends Command
 
         // print_r($respuesta); exit;
         $texto = date("Y-m-d H:i:s");
-        Storage::append("log.txt", $texto." ".$filename." ".json_encode($respuesta));
+        Storage::append("log.txt", $texto." idventa: ".$idventa." filename: ".$filename." ".json_encode($respuesta));
        
     }
 
