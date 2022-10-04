@@ -222,10 +222,12 @@ function generateExcelCuentasxCobrar($data_cabe,$simboloMoneda,$cambio,$file_nam
 
     return response()->json($response);
 }
+
 function generateExcel($data, $file_name, $sheet_name)
 {
     // echo "<pre>";
     // print_r($data); exit;
+
     $file = Excel::create($file_name, function ($excel) use ($data, $sheet_name) {
         $excel->sheet($sheet_name, function ($sheet) use ($data) {
             $sheet->setColumnFormat(array(
@@ -248,6 +250,7 @@ function generateExcel($data, $file_name, $sheet_name)
     return response()->json($response);
 }
 
+<<<<<<< HEAD
 function generateExcelComisiones($data, $file_name, $sheet_name)
 {
     // echo "<pre>";
@@ -261,6 +264,21 @@ function generateExcelComisiones($data, $file_name, $sheet_name)
             ));
             $sheet->loadView('excel.comisiones')->with('data', $data);
            
+=======
+// Generar el excel del modulo Reporte de Documentos Emitidos
+function generateExcelRDE($data, $file_name, $sheet_name)
+{
+    $file = Excel::create($file_name, function ($excel) use ($data, $sheet_name) {
+        $excel->sheet($sheet_name, function ($sheet) use ($data) {
+            $sheet->setColumnFormat(array(
+                'C' =>  \PHPExcel_Style_NumberFormat::FORMAT_TEXT,
+                'G' =>  \PHPExcel_Style_NumberFormat::FORMAT_TEXT,
+                'O' =>  \PHPExcel_Style_NumberFormat::FORMAT_TEXT
+
+            ));
+            $sheet->loadView('excel.view')->with('data', $data);
+
+>>>>>>> 9af8d048a269cd39a63302e2da7283dd41b2cedb
         });
     });
 
@@ -274,6 +292,10 @@ function generateExcelComisiones($data, $file_name, $sheet_name)
     return response()->json($response);
 }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9af8d048a269cd39a63302e2da7283dd41b2cedb
 function generateExcelOrdenSer($data, $file_name,$Marca,$tipoveh,$FechaInicioFiltro,$FechaFinFiltro,$idMarca,$idtipoveh,$fechacAc, $sheet_name)
 {
     $file = Excel::create($file_name, function ($excel) use ($data,$idMarca,$idtipoveh,$FechaInicioFiltro,$FechaFinFiltro,$Marca,$tipoveh,$fechacAc,$sheet_name) {

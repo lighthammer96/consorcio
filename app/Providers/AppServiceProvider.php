@@ -781,6 +781,11 @@ use App\Http\Recopro\Config\Config;
 use App\Http\Recopro\Config\ConfigRepository;
 use App\Http\Recopro\Unity\Unity;
 use App\Http\Recopro\Unity\UnityRepository;
+
+use App\Http\Recopro\ReporteDocumentosEmitidos\ReporteDocumentosEmitidos;
+use App\Http\Recopro\ReporteDocumentosEmitidos\ReporteDocumentosEmitidosInterface;
+use App\Http\Recopro\ReporteDocumentosEmitidos\ReporteDocumentosEmitidosRepository;
+
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -1019,6 +1024,9 @@ class AppServiceProvider extends ServiceProvider
         $this->registerConsumptionProduct();
         $this->registerConsumerReturn();
         $this->registerConsumerReturnProduct();
+
+        $this->registerReporteDocumentosEmitidos();
+
     }
 
     public function registerProfile()
@@ -2772,6 +2780,16 @@ class AppServiceProvider extends ServiceProvider
             return new PurchaseOrderDetailRepository(new PurchaseOrderDetail());
         });
     }
+
+    public function registerReporteDocumentosEmitidos()
+    {
+        $app = $this->app;
+
+        $app->bind(ReporteDocumentosEmitidosInterface::class, function ($app) {
+            return new ReporteDocumentosEmitidosRepository(new ReporteDocumentosEmitidos());
+        });
+    }
+
 }
 
 
