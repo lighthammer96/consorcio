@@ -43,11 +43,11 @@ class SolicitudController extends Controller
         // $dias_del_mes = date( 't', strtotime( "2022-10-1" ) );
 
         // echo $dias_del_mes;
-        $date1 = new DateTime("2015-02-14");
-        $date2 = new DateTime("2015-02-10");
-        $diff = $date1->diff($date2);
-        print_r($diff->days);
-        exit;
+        // $date1 = new DateTime("2015-02-14");
+        // $date2 = new DateTime("2015-02-10");
+        // $diff = $date1->diff($date2);
+        // print_r($diff->days);
+        // exit;
         $s = $request->input('search', '');
         $params = ['cCodConsecutivo', 'nConsecutivo', 'fecha_solicitud', 'tipo_solicitud', 'idconvenio', 'tipo_documento', 'numero_documento', 'moneda', 't_monto_total', 'pagado', 'saldo', 'facturado', 'estado', 'cliente'];
         // print_r($repo->search($s)); exit;
