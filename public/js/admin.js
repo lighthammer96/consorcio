@@ -1688,11 +1688,11 @@ function getFormSearchAsignacion(form_id, input_id, btn_id) {
         '</div>' +
         '</div>' +
         '<div class="form-group">' +
-        '<label class="col-sm-2 control-label">Fecha Inicio</label>' +
+        '<label class="col-sm-2 control-label">Fecha Inicio Venc.</label>' +
         '<div class="col-md-3">' +
         '<input type="date" class="form-control input-sm"  id="FechaInicioFiltro">' +
         '</div>' +
-        '<label class="col-sm-2 control-label">Fecha Fin</label>' +
+        '<label class="col-sm-2 control-label">Fecha Fin Venc.</label>' +
         '<div class="col-md-3">' +
         '<input type="date" class="form-control input-sm"  id="FechaFinFiltro">' +
         '</div>' +
@@ -1762,11 +1762,11 @@ function getFormSearchCuentasxcobrar(form_id, input_id, btn_id) {
         '</div>' +
         '</div>' +
         '<div class="form-group">' +
-        '<label class="col-sm-2 control-label">Fecha Inicio</label>' +
+        '<label class="col-sm-2 control-label">Fecha Inicio Venc.</label>' +
         '<div class="col-md-3">' +
         '<input type="date" class="form-control input-sm"  id="FechaInicioFiltro">' +
         '</div>' +
-        '<label class="col-sm-2 control-label">Fecha Fin</label>' +
+        '<label class="col-sm-2 control-label">Fecha Fin Venc.</label>' +
         '<div class="col-md-3">' +
         '<input type="date" class="form-control input-sm"  id="FechaFinFiltro">' +
         '</div>' +
@@ -1812,6 +1812,14 @@ function getFormSearchCuentasxcobrar(form_id, input_id, btn_id) {
         '</div>' +
         '<div class="col-md-5">' +
         '<select id="idConvenio"  style="margin-right:5px;width: 100%" name="idConvenio" class="form-control input-sm "><option value="">Convenio</option></select>' +
+        '</div>' +
+       
+
+      
+        '</div>' +
+        '<div class="form-group">' +
+        '<div class="col-md-5">' +
+        '<input type="text" id="search_cuentas_cobrar" name="search_cuentas_cobrar" class="form-control input-sm" autocomplete="off" placeholder="Buscar..." />' +
         '</div>' +
         '</div>' +
         '</form>';
@@ -3499,11 +3507,11 @@ function create_pdf_ordenServicioXpress(response) {
         pageMargins: [200, 200, 200, 200],
         content: [
             {
-                text: "" + response.con + '  ' + response.nr + "",
+                text: "" + response.con + '-' + response.nr + "",
 
-                fontSize: 14,
+                fontSize: 12,
                 bold: true,
-                absolutePosition: { x: 479, y: 64 }
+                absolutePosition: { x: 460, y: 60 }
             },
             // {
             //     text: 'X',
