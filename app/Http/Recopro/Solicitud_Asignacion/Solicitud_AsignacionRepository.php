@@ -146,7 +146,7 @@ left join ERP_Cobrador as usc on usc.id=so.idCobrador
           
         });
     }
-    public function searchAsignacionCobradorxCuentas($s,$filtro_tienda,$idInicio,$idFin,$idClienteFiltro,$idCobradorFiltro,$FechaInicioFiltro,$FechaFinFiltro,$Departamento,$provincia,$distrito,$idsector,$iddistrito,$idTipoSolicitud,$idConvenio) 
+    public function searchAsignacionCobradorxCuentas($s,$filtro_tienda,$idInicio,$idFin,$idClienteFiltro,$idCobradorFiltro,$FechaInicioFiltro,$FechaFinFiltro,$Departamento,$provincia,$distrito,$idsector,$iddistrito,$idTipoSolicitud,$idConvenio, $search_cuentas_cobrar) 
     { 
         $solitud=[];
         $filtroFechaSol=[];
@@ -157,17 +157,20 @@ left join ERP_Cobrador as usc on usc.id=so.idCobrador
             } 
         }
         if($FechaInicioFiltro!='' && $FechaFinFiltro!=''){
-              $mostrar3 = DB::select("select * from ERP_SolicitudCronograma  where convert(date,fecha_vencimiento) >= '$FechaInicioFiltro'  and convert(date,fecha_vencimiento) <='$FechaFinFiltro' and saldo_cuota>0 ");
+              $mostrar3 = DB::select("select * from ERP_SolicitudCronograma  where FORMAT(fecha_vencimiento, 'yyyy-MM-dd') BETWEEN '{$FechaInicioFiltro}' AND '{$FechaInicioFiltro}' /* convert(date,fecha_vencimiento) >= '$FechaInicioFiltro'  and convert(date,fecha_vencimiento) <='$FechaFinFiltro'*/ and saldo_cuota>0 ");
                 foreach ($mostrar3 as $row) {
                    array_push($filtroFechaSol, $row->nConsecutivo);
                 } 
         }   
-        return $this->model->orWhere(function ($q) use ($s,$filtroFechaSol,$filtro_tienda,$idInicio,$idFin,$solitud,$idClienteFiltro,$idCobradorFiltro,$FechaInicioFiltro,$FechaFinFiltro,$Departamento,$provincia,$distrito,$idsector,$iddistrito,$idTipoSolicitud,$idConvenio) {
+        return $this->model->orWhere(function ($q) use ($s,$filtroFechaSol,$filtro_tienda,$idInicio,$idFin,$solitud,$idClienteFiltro,$idCobradorFiltro,$FechaInicioFiltro,$FechaFinFiltro,$Departamento,$provincia,$distrito,$idsector,$iddistrito,$idTipoSolicitud,$idConvenio, $search_cuentas_cobrar) {
             $q->whereIn('IdTipoDocumento', ['03','01'])->where('cCodConsecutivo', 'LIKE', '%' . $s . '%')
                 ->where('nConsecutivo', 'LIKE', '%' . $s . '%')
                 ->where('fecha_solicitud', 'LIKE', '%' . $s . '%')
                 ->where('tipo_solicitud', 'LIKE', '%' . $s . '%');
-              if($FechaInicioFiltro!='' && $FechaFinFiltro!=''){
+
+        
+
+            if($FechaInicioFiltro!='' && $FechaFinFiltro!=''){
                 $q->whereIn('nConsecutivo',$filtroFechaSol);
             }    
              if(!empty($filtro_tienda)){
@@ -204,7 +207,79 @@ left join ERP_Cobrador as usc on usc.id=so.idCobrador
         }
           
         // })->where('estado','<','9');
-        })->whereIn('estado', ['6','7','8']);
+        })->whereIn('estado', ['6','7','8'])->where(function ($q) use ($search_cuentas_cobrar) {
+            $q->where('numero_documento', 'LIKE', '%' . $search_cuentas_cobrar. '%')
+            ->orWhere('nConsecutivo', 'LIKE', '%' . $search_cuentas_cobrar. '%')
+            ->orWhere('cliente', 'LIKE', '%' . $search_cuentas_cobrar. '%');
+        });
+    }
+
+    public function searchAsignacionCobradorxCuentasGet($s,$filtro_tienda,$idInicio,$idFin,$idClienteFiltro,$idCobradorFiltro,$FechaInicioFiltro,$FechaFinFiltro,$Departamento,$provincia,$distrito,$idsector,$iddistrito,$idTipoSolicitud,$idConvenio, $search_cuentas_cobrar) 
+    { 
+        $solitud=[];
+        $filtroFechaSol=[];
+        if($idInicio!='' && $idFin!=''){
+            $mostrar3 = DB::select("select *,  DATEDIFF (DAY,fecha_vencimiento, CONVERT(DATE,GETDATE())) as fe from ERP_SolicitudCronograma  where saldo_cuota>0  and DATEDIFF (DAY,fecha_vencimiento, CONVERT(DATE,GETDATE())) BETWEEN '$idInicio' AND '$idFin'");
+            foreach ($mostrar3 as $row) {
+               array_push($solitud, $row->nConsecutivo);
+            } 
+        }
+        if($FechaInicioFiltro!='' && $FechaFinFiltro!=''){
+              $mostrar3 = DB::select("select * from ERP_SolicitudCronograma  where FORMAT(fecha_vencimiento, 'yyyy-MM-dd') BETWEEN '{$FechaInicioFiltro}' AND '{$FechaInicioFiltro}' /*convert(date,fecha_vencimiento) >= '$FechaInicioFiltro'*/  and convert(date,fecha_vencimiento) <='$FechaFinFiltro' and saldo_cuota>0 ");
+                foreach ($mostrar3 as $row) {
+                   array_push($filtroFechaSol, $row->nConsecutivo);
+                } 
+        }   
+        return $this->model->orWhere(function ($q) use ($s,$filtroFechaSol,$filtro_tienda,$idInicio,$idFin,$solitud,$idClienteFiltro,$idCobradorFiltro,$FechaInicioFiltro,$FechaFinFiltro,$Departamento,$provincia,$distrito,$idsector,$iddistrito,$idTipoSolicitud,$idConvenio, $search_cuentas_cobrar) {
+            $q->whereIn('IdTipoDocumento', ['03','01'])->where('cCodConsecutivo', 'LIKE', '%' . $s . '%')
+                ->where('nConsecutivo', 'LIKE', '%' . $s . '%')
+                ->where('fecha_solicitud', 'LIKE', '%' . $s . '%')
+                ->where('tipo_solicitud', 'LIKE', '%' . $s . '%');
+
+        
+
+            if($FechaInicioFiltro!='' && $FechaFinFiltro!=''){
+                $q->whereIn('nConsecutivo',$filtroFechaSol);
+            }    
+             if(!empty($filtro_tienda)){
+              $q->Where('nCodTienda',$filtro_tienda);
+            }
+            if($idInicio!='' && $idFin!=''){
+                  $q->whereIn('nConsecutivo',$solitud);
+            }
+             if($idCobradorFiltro !='' ){
+                  $q->where('idCobrador',$idCobradorFiltro);
+            }
+            if($idClienteFiltro !='' ){
+                  $q->where('idCliente',$idClienteFiltro);
+            }
+
+
+            if(($Departamento!='')){
+              $q->Where('cDepartamento',$Departamento);
+            }
+            if(($provincia!='')){
+                  $q->Where('cProvincia',$provincia);
+            }
+             if(($iddistrito!='')){
+                  $q->Where('cDistrito',$distrito);
+            }
+            if(($idsector!='')){
+                  $q->where('idsector',$idsector);
+            }
+            if($idTipoSolicitud !='' ){
+            $q->where('tipo_solicitud',$idTipoSolicitud);
+        }
+            if($idConvenio !='' ){
+            $q->where('idconvenio',$idConvenio);
+        }
+          
+        // })->where('estado','<','9');
+        })->whereIn('estado', ['6','7','8'])->where(function ($q) use ($search_cuentas_cobrar) {
+            $q->where('numero_documento', 'LIKE', '%' . $search_cuentas_cobrar. '%')
+            ->orWhere('nConsecutivo', 'LIKE', '%' . $search_cuentas_cobrar. '%')
+            ->orWhere('cliente', 'LIKE', '%' . $search_cuentas_cobrar. '%');
+        })->get();
     }
     public function searchAsignacionAproba($s,$idCliente)
     {

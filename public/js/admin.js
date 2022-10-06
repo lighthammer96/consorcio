@@ -1688,11 +1688,11 @@ function getFormSearchAsignacion(form_id, input_id, btn_id) {
         '</div>' +
         '</div>' +
         '<div class="form-group">' +
-        '<label class="col-sm-2 control-label">Fecha Inicio</label>' +
+        '<label class="col-sm-2 control-label">Fecha Inicio Venc.</label>' +
         '<div class="col-md-3">' +
         '<input type="date" class="form-control input-sm"  id="FechaInicioFiltro">' +
         '</div>' +
-        '<label class="col-sm-2 control-label">Fecha Fin</label>' +
+        '<label class="col-sm-2 control-label">Fecha Fin Venc.</label>' +
         '<div class="col-md-3">' +
         '<input type="date" class="form-control input-sm"  id="FechaFinFiltro">' +
         '</div>' +
@@ -1762,11 +1762,11 @@ function getFormSearchCuentasxcobrar(form_id, input_id, btn_id) {
         '</div>' +
         '</div>' +
         '<div class="form-group">' +
-        '<label class="col-sm-2 control-label">Fecha Inicio</label>' +
+        '<label class="col-sm-2 control-label">Fecha Inicio Venc.</label>' +
         '<div class="col-md-3">' +
         '<input type="date" class="form-control input-sm"  id="FechaInicioFiltro">' +
         '</div>' +
-        '<label class="col-sm-2 control-label">Fecha Fin</label>' +
+        '<label class="col-sm-2 control-label">Fecha Fin Venc.</label>' +
         '<div class="col-md-3">' +
         '<input type="date" class="form-control input-sm"  id="FechaFinFiltro">' +
         '</div>' +
@@ -1812,6 +1812,14 @@ function getFormSearchCuentasxcobrar(form_id, input_id, btn_id) {
         '</div>' +
         '<div class="col-md-5">' +
         '<select id="idConvenio"  style="margin-right:5px;width: 100%" name="idConvenio" class="form-control input-sm "><option value="">Convenio</option></select>' +
+        '</div>' +
+       
+
+      
+        '</div>' +
+        '<div class="form-group">' +
+        '<div class="col-md-5">' +
+        '<input type="text" id="search_cuentas_cobrar" name="search_cuentas_cobrar" class="form-control input-sm" autocomplete="off" placeholder="Buscar..." />' +
         '</div>' +
         '</div>' +
         '</form>';
@@ -3499,11 +3507,11 @@ function create_pdf_ordenServicioXpress(response) {
         pageMargins: [200, 200, 200, 200],
         content: [
             {
-                text: "" + response.con + '  ' + response.nr + "",
+                text: "" + response.con + '-' + response.nr + "",
 
-                fontSize: 14,
+                fontSize: 12,
                 bold: true,
-                absolutePosition: { x: 479, y: 64 }
+                absolutePosition: { x: 460, y: 60 }
             },
             // {
             //     text: 'X',
@@ -3521,13 +3529,13 @@ function create_pdf_ordenServicioXpress(response) {
 
             {
                 text: razonsocial_cliente,
-                absolutePosition: { x: 102, y: 225 },////////////esto 
+                absolutePosition: { x: 90, y: 215 },////////////esto 
                 bold: true,
                 fontSize: 10,
             },
             {
-                text: modelo + ' / ' + iAnioFab,
-                absolutePosition: { x: 374, y: 225 },///////esto
+                text: modelo + '/' + iAnioFab,
+                absolutePosition: { x: 374, y: 215 },///////esto
                 bold: true,
                 fontSize: 10,
             },
@@ -3537,80 +3545,80 @@ function create_pdf_ordenServicioXpress(response) {
                 bold: true,
                 fontSize: 10,
                 // absolutePosition: { x:578 , y: 225 }///////esto
-                absolutePosition: { x: 500, y: 225 }///////esto
+                absolutePosition: { x: 500, y: 215 }///////esto
             },
             {
                 text: cChasis,
-                absolutePosition: { x: 85, y: 248 },//////esto
+                absolutePosition: { x: 85, y: 240 },//////esto
                 bold: true,
                 fontSize: 10,
             },
             {
                 text: cPlacaVeh,
-                absolutePosition: { x: 340, y: 248 },/////esto
+                absolutePosition: { x: 300, y: 240 },/////esto
                 bold: true,
                 fontSize: 10,
             },
             {
                 text: Number(nKilometraje),
-                absolutePosition: { x: 476, y: 248 },/////esto
+                absolutePosition: { x: 436, y: 240 },/////esto
                 bold: true,
                 fontSize: 10,
             },
             {
                 text: horaEnt,
                 // absolutePosition: { x:595 , y: 248 },////esto
-                absolutePosition: { x: 510, y: 248 },////esto
+                absolutePosition: { x: 510, y: 240 },////esto
                 bold: true,
                 fontSize: 10,
             },
             {
                 text: clienteNuevo,
-                absolutePosition: { x: 61, y: 272 },////esto
+                absolutePosition: { x: 61, y: 262 },////esto
                 bold: true,
                 fontSize: 10,
             },
             {
                 text: telefono,
-                absolutePosition: { x: 238, y: 272 },////esto
+                absolutePosition: { x: 218, y: 262 },////esto
                 bold: true,
                 fontSize: 10,
             },
             {
                 text: celular,
-                absolutePosition: { x: 408, y: 272 },////esto
+                absolutePosition: { x: 388, y: 262 },////esto
                 bold: true,
                 fontSize: 10,
             },
             {
                 text: horaEntre,
                 // absolutePosition: { x:571 , y: 272 },///esto
-                absolutePosition: { x: 471, y: 272 },///esto
+                absolutePosition: { x: 471, y: 262 },///esto
                 bold: true,
                 fontSize: 10,
             },
             {
                 text: horaReal,
                 // absolutePosition: { x:629 , y: 272 },///esto
-                absolutePosition: { x: 529, y: 272 },///esto
+                absolutePosition: { x: 525, y: 262 },///esto
                 bold: true,
                 fontSize: 10,
             },
             {
                 text: direccion,
-                absolutePosition: { x: 68, y: 298 },//esto
+                absolutePosition: { x: 68, y: 288 },//esto
                 bold: true,
                 fontSize: 10,
             },
             {
                 text: distrito,
-                absolutePosition: { x: 374, y: 298 },//esto
+                absolutePosition: { x: 374, y: 288 },//esto
                 bold: true,
                 fontSize: 10,
             },
             {
                 text: correo_electronico,
-                absolutePosition: { x: 68, y: 342 },//esto
+                absolutePosition: { x: 68, y: 336 },//esto
                 bold: true,
                 fontSize: 10,
             },
@@ -3668,7 +3676,7 @@ function create_pdf_ordenServicioXpress(response) {
             // },
 
 
-
+            /*
             {
                 text: cambioAciete_X,
                 absolutePosition: { x: 68, y: 149 },
@@ -3707,7 +3715,7 @@ function create_pdf_ordenServicioXpress(response) {
             },///
             {
                 text: revision_X,
-                absolutePosition: { x: 251, y: 149 },
+                absolutePosition: { x: 236, y: 139 },
                 bold: true,
                 fontSize: 14,
             },
@@ -3741,11 +3749,12 @@ function create_pdf_ordenServicioXpress(response) {
                 bold: true,
                 fontSize: 14,
             },
+            */
             {
                 text: "ST-" + response.nr,
                 fontSize: 12,
                 bold: true,
-                absolutePosition: { x: 479, y: 172 }
+                absolutePosition: { x: 479, y: 166 }
             },
             {
                 text: Number(total).toFixed(2),
@@ -3753,7 +3762,7 @@ function create_pdf_ordenServicioXpress(response) {
                 bold: true,
                 absolutePosition: { x: 479, y: 195 }
             }
-
+            
         ],
         styles: {
             header: {

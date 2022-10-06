@@ -401,6 +401,7 @@
 
                 idTipoSolicitud: $('#idTipoSolicitud').val(),
                 idConvenio: $("#idConvenio").val(),
+                search_cuentas_cobrar: $("#search_cuentas_cobrar").val(),
 
             });
         }, true);
@@ -435,6 +436,11 @@
                 FechaFinFiltro: $('#FechaFinFiltro').val(),
                 idTipoSolicitud: $('#idTipoSolicitud').val(),
                 idConvenio: $("#idConvenio").val(),
+                Departamento: $("#Departamento").val(),
+                provincia: $("#provincia").val(),
+                iddistrito: $("#distrito").val(),
+                distrito: $("#distrito option:selected").text(),
+                idsector: $('#idsector').val(),
             };
             //             $scope.openDoc('projects/excel', data_excel);
             $scope.openDoc('cuentasxcobrars/excelCuentasxCobrar', data_excel);

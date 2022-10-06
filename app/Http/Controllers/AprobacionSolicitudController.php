@@ -122,7 +122,7 @@ class AprobacionSolicitudController extends Controller
                         $fecha = $anio."-".$mes."-".$dia;
                         $date1 = new DateTime($fecha);
                         $date2 = new DateTime($fecha_actual);
-                        $diff = $date1->diff($date2);
+                        $diff = intval($date1->diff($date2));
                         if($diff < 30) {
                             $mes = $mes + 1;
                         }
