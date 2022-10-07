@@ -887,6 +887,7 @@
             modalAperturaCaja.modal('show');
         }
         $scope.saveAddMovimientoCaja = function () {
+
             var emitir_comprobante = (($("#emitir_comprobante").prop('checked')) ? 'S' : 'N');
             
             var bval = true;
@@ -908,7 +909,17 @@
                 bval = bval && $("#tipo_doc_venta").required();
                 bval = bval && $("#serie_comprobante_m").required();
             }
-            
+
+            var monto_mov = parseFloat($("#monto_mov").val());
+            if(monto_mov != 0 && $("#detalle-formas-pago-mov").html() == "" && (tipoMovimientoAdd.val() == 'SEP' || tipoMovimientoAdd.val() == 'TPL' || tipoMovimientoAdd.val() == 'ALQ')) {
+                AlertFactory.textType({
+                    title: '',
+                    message: 'Debe ingresar al menos 1 registro al detalle',
+                    type: 'info'
+                });
+                return false;
+            }
+
             if (bval) {
                 var to = cuentaBancaria.val();
                 var toCuenta = to.split('*');
@@ -924,7 +935,6 @@
                     'idBanco': banco.val(),
                     'idCuenta': toCuenta[0],
                     'numero_cuenta': toCuenta[1],
-                    
                     'serie_comprobante': $("#serie_comprobante_m").val(),
                     'numero_comprobante': $("#numero_comprobante_m").val(),
                     'IdTipoDocumento': $("#tipo_doc_venta").val(),

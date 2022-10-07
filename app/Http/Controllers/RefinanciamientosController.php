@@ -322,8 +322,10 @@ class RefinanciamientosController extends Controller
                     $fecha = $anio."-".$mes."-".$dia;
                     $date1 = new DateTime($fecha);
                     $date2 = new DateTime($fecha_actual);
-                    $diff = intval($date1->diff($date2));
-                    if($diff < 30) {
+                    $diff = $date1->diff($date2);
+                    $days = intval($diff->days);
+                    
+                    if($days < 30) {
                         $mes = $mes + 1;
                     }
                     $fecha = $anio."-".$mes."-".$dia;
