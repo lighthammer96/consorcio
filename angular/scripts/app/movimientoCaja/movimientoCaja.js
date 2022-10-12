@@ -1992,10 +1992,11 @@ $scope.emitir_comprobante = function () {
     // $("#idconyugue").focus();
     // alert($("#desTotal").val());
     
+    $("#detalle-formas-pago").html("");
+    $("#numero_comprobante").val("");
     
     if ($('#modalSolicitud').is(':visible')) {
-        $("#detalle-formas-pago").html("");
-        $("#numero_comprobante").val("");
+    
         var total = parseFloat($("#desTotal").val());
         var cuota_inicial = parseFloat($("#cuota_inicial").val());
         var saldo = parseFloat($("#saldo").val());
@@ -4201,7 +4202,7 @@ function find_solicitud_credito(id) {
 
 $(document).on("click", ".check-cuota", function (e) {
     var saldo_pagar = parseFloat($(this).attr("saldo_pagar"));
-    var nrocuota = $(this).attr("nrocuota");
+    var nrocuota = parseInt($(this).attr("nrocuota"));
     
     var saldo_mora = parseFloat($(this).attr("saldo_mora"));
     var pagado_mora = 0;
@@ -4213,7 +4214,20 @@ $(document).on("click", ".check-cuota", function (e) {
         e.preventDefault();
         e.stopPropagation();
         return false;
-    }   
+    }
+
+    var next_nrocuota = (nrocuota+1);
+    // console.log(next_nrocuota);
+    // console.log($(".check-cuota[nrocuota='"+(next_nrocuota)+"']").is(":checked"));
+
+    if($(".check-cuota[nrocuota='"+(next_nrocuota)+"']").is(":checked")) {
+        // alert("check");
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+    }
+    
+
     
     if($(this).is(":checked")) {
         $(this).parent("center").parent("td").siblings(".monto-pagar-cuota").text(saldo_pagar.toFixed(2));

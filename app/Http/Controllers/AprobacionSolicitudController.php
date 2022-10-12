@@ -133,6 +133,7 @@ class AprobacionSolicitudController extends Controller
                         if($days < 30) {
                             $mes = $mes + 1;
                         }
+                        $mes = $mes + 1;
                         $fecha = $anio."-".$mes."-".$dia;
                         // $dias_del_mes = date( 't', strtotime( $anio."-".$mes."-1" ) );
                         // if($dias_del_mes < $dia) {

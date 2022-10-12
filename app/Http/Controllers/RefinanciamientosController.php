@@ -328,6 +328,7 @@ class RefinanciamientosController extends Controller
                     if($days < 30) {
                         $mes = $mes + 1;
                     }
+                    $mes = $mes + 1;
                     $fecha = $anio."-".$mes."-".$dia;
                     
                 } else {

@@ -738,7 +738,7 @@ class MovimientoCajaController extends Controller
         $formas = DB::select($sql);
 
         foreach ($formas as $key => $value) {
-            $sql_data = "SELECT * FROM VTA_ReporteComprobantesCaja  WHERE IdCaja={$dataTienda[0]->idcaja} AND FormaPago='{$value->descripcion_subtipo}' AND Moneda='{$value->Moneda}' AND CajaNroOp={$idCajaDiaria}";
+            $sql_data = "SELECT * FROM VTA_ReporteComprobantesCaja  WHERE IdCaja={$dataTienda[0]->idcaja} AND FormaPago='{$value->descripcion_subtipo}' AND Moneda='{$value->Moneda}' AND CajaNroOp={$idCajaDiaria} ORDER BY Ticket ASC";
             $data = DB::select($sql_data);
             $formas[$key]->data = $data;
         }
