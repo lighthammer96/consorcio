@@ -298,6 +298,23 @@ class RefinanciamientosController extends Controller
                 //     $mes = $arr_date[1] + 1;
                 // }
                 $anio = $arr_date[0];
+
+                $fecha_actual = date("Y-m-d");
+                $fecha = $anio."-".$mes."-".$dia;
+                $date1 = new DateTime($fecha);
+                $date2 = new DateTime($fecha_actual);
+                // var_dump($date1);
+                // var_dump($date2);
+                
+                $diff = $date1->diff($date2);
+                $days = intval($diff->days);
+                // var_dump($days);
+                
+                // exit;
+                if($days < 30) {
+                    $mes = $mes + 1;
+                    $fecha = $anio."-".$mes."-".$dia;
+                }
                 
             } 
             // $valor_cuota = (float) $data["monto_refinanciamiento"] / (int) $data["nrocuotas_refinanciamiento"];
@@ -318,18 +335,9 @@ class RefinanciamientosController extends Controller
                     
                     // $mes = $mes + 1;
 
-                    $fecha_actual = date("Y-m-d");
+                   
                     $fecha = $anio."-".$mes."-".$dia;
-                    $date1 = new DateTime($fecha);
-                    $date2 = new DateTime($fecha_actual);
-                    $diff = $date1->diff($date2);
-                    $days = intval($diff->days);
-                    
-                    if($days < 30) {
-                        $mes = $mes + 1;
-                    }
                     $mes = $mes + 1;
-                    $fecha = $anio."-".$mes."-".$dia;
                     
                 } else {
 
