@@ -690,14 +690,15 @@
                     }
                     
             })
-            if(cosrIn=='I'){
-                AlertFactory.showWarning({
-                    title: '',
-                    message: 'El costo de los Articulos no puede ser cero'
-                });
-                cosrIn='A';
-                return false; 
-            }
+            // comentado por manuel 14/10/2022
+            // if(cosrIn=='I'){
+            //     AlertFactory.showWarning({
+            //         title: '',
+            //         message: 'El costo de los Articulos no puede ser cero'
+            //     });
+            //     cosrIn='A';
+            //     return false; 
+            // }
             var cantrIn='A';
             acodigos.forEach(function(val,index) {
                     var cantEn=$('#canMs_'+val).val();

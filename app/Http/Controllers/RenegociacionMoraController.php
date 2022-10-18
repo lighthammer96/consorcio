@@ -39,14 +39,16 @@ class RenegociacionMoraController extends Controller
         $data = $request->all();
 
         $result = array();
-
+        $result["status"] = "i";
+        $result["type"] = "success";
+        $result["msg"] = "";
         // print_r($data); exit;
 
         try {
             DB::beginTransaction();
             
             // echo  $solicitud_repositorio->get_consecutivo("ERP_SolicitudNegociaMora", "idsolicitudmora");
-           
+            $data["monto"] = (isset($data["monto"])) ? $data["monto"] : array();
             $total_pagado_mora = 0;
             $total_saldo_mora = 0;
             $monto_total = 0;

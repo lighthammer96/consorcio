@@ -1431,7 +1431,7 @@
                         var posee_serie = $("#posee-serie").val();
                         var um_id = $("#um_id").val();
                         // alert(responsa.data[0].type_id);
-                        addArticuloTable(idProductoMN.val(), desProductoMN.val(), cantProductoMN.val(), ver, codigo, tipoArt, codl, datl, idAlmacen, idLocalizacion, costo, costo_total, precio, precioTotal, impuesto_articulo, lote_articulo, cOperGrat, "", posee_serie, um_id, "", "", response.data[0].type_id, response.data[0].idCategoria, '');
+                        addArticuloTable(idProductoMN.val(), desProductoMN.val(), cantProductoMN.val(), ver, codigo, tipoArt, codl, datl, idAlmacen, idLocalizacion, costo, costo_total, precio, precioTotal, impuesto_articulo, lote_articulo, cOperGrat, "", posee_serie, um_id, "", "", response.data[0].type_id, response.data[0].idCategoria, '', '');
                         modalNada.modal('hide');
                         modalMovimietoArticulo.modal('hide');
                     } else {
@@ -2043,8 +2043,8 @@
         var LocalizacionesSele;//variable para guardar localizaciones del almacen
 
 
-        function addArticuloTable(idProducto, desProducto, cantProducto, ver, codigo, tipo, codl, datl, idAlmacen, idLocalizacion, costo, costo_total, precio, presio_total, impuesto_articulo, lote_articulo, cOperGrat, iddescuento, posee_serie, um_id, series_id_sd, articulos_id_sd, type_id, idCategoria, descripcion_articulo) {
-
+        function addArticuloTable(idProducto, desProducto, cantProducto, ver, codigo, tipo, codl, datl, idAlmacen, idLocalizacion, costo, costo_total, precio, presio_total, impuesto_articulo, lote_articulo, cOperGrat, iddescuento, posee_serie, um_id, series_id_sd, articulos_id_sd, type_id, idCategoria, descripcion_articulo, id_solicitud_articulo) {
+            
 
             if ($("#articulo_mov_det").html() != "") {
                 if (parseFloat($("#t_impuestos").val()) > 0) {
@@ -2190,13 +2190,18 @@
                 }
                
             }
+            // boton ver series
+            var button_ver_series = "";
+            if(series_id_sd != "" && articulos_id_sd != "") {
+                button_ver_series = '&nbsp;&nbsp;<button  class="btn btn-primary btn-xs ver-series" data-id_solicitud_articulo="' + id_solicitud_articulo + '" title="Ver Series" type="button"><span class="fa fa-search"></span>&nbsp;Ver Series</button>';
+            }
 
             var desactivar_del = "";
             if ($("#estado").val() == "4") {
                 desactivar_del = 'disabled="disabled"';
             }
 
-            var btn3 = $('<center><button ' + desactivar_del + ' class="btn btn-danger btn-xs delMovPro" data-tipo="' + tipo + '" title="Eliminar" data-id="' + codigo + '" type="button"><span class="fa fa-trash"></span></button>' + button_series + '</center>');
+            var btn3 = $('<center><button ' + desactivar_del + ' class="btn btn-danger btn-xs delMovPro" data-tipo="' + tipo + '" title="Eliminar" data-id="' + codigo + '" type="button"><span class="fa fa-trash"></span></button>' + button_series + button_ver_series + '</center>');
             // td6.append(btn1);
 
             var monto_exonerado = 0;
@@ -2517,6 +2522,40 @@
 
         });
 
+        
+        $(document).on("click", ".ver-series", function () {
+            var id_solicitud_articulo = $(this).data("id_solicitud_articulo");
+            // alert(id_solicitud_articulo);
+            $.post("solicitud/obtener_series", { id_solicitud_articulo: id_solicitud_articulo },
+            function (data, textStatus, jqXHR) {
+                if (data.length > 0) {
+                    var html = '';
+                    $("#detalle-series").html("");
+                    for (var i = 0; i < data.length; i++) {
+                        html += '<tr>';
+                
+                        html += '   <td>' + data[i].nombreSerie + '</td>';
+                        html += '   <td>' + data[i].chasis + '</td>';
+                        html += '   <td>' + data[i].motor + '</td>';
+                        html += '   <td>' + data[i].anio_fabricacion + '</td>';
+                        html += '   <td>' + data[i].anio_modelo + '</td>';
+                        html += '   <td>' + data[i].color + '</td>';
+                        html += '</tr>';
+                    }
+                    $("#detalle-series").html(html);
+                    $("#modal-series").modal("show");
+                } else {
+                    AlertFactory.textType({
+                        title: '',
+                        message: 'No hay datos!',
+                        type: 'info'
+                    });
+                }
+            },
+            "json"
+        );
+
+        })
 
         $(document).on("click", ".agregar-series", function () {
             var costo = $(this).data("costo");
@@ -3804,6 +3843,8 @@
             $.post("solicitud/find", { id: id },
                 function (data, textStatus, jqXHR) {
                     // console.log(data);
+
+                   
                     var hoy = new Date();
                     var hAnio = hoy.getFullYear();
                     var hmes = hoy.getMonth() + 1;
@@ -3873,7 +3914,7 @@
 
                             var codigo = Math.random().toString(36).substr(2, 18);
                             // console.log("um_id => "+data.solicitud_articulo[i].um_id);
-                            addArticuloTable(data.solicitud_articulo[i].idarticulo, data.solicitud_articulo[i].producto, data.solicitud_articulo[i].cantidad, 'A', codigo, 'NA', "", "", data.solicitud_articulo[i].idalmacen, data.solicitud_articulo[i].idlocalizacion, data.solicitud_articulo[i].costo, data.solicitud_articulo[i].costo_total, data.solicitud_articulo[i].precio_unitario, data.solicitud_articulo[i].precio_total, data.solicitud_articulo[i].impuesto, data.solicitud_articulo[i].lote, data.solicitud_articulo[i].cOperGrat, data.solicitud_articulo[i].iddescuento, data.solicitud_articulo[i].serie, data.solicitud_articulo[i].um_id, arr_id_series.join(","), arr_id_articulos.join(","), data.solicitud_articulo[i].type_id, data.solicitud_articulo[i].idCategoria, data.solicitud_articulo[i].descripcion_articulo);
+                            addArticuloTable(data.solicitud_articulo[i].idarticulo, data.solicitud_articulo[i].producto, data.solicitud_articulo[i].cantidad, 'A', codigo, 'NA', "", "", data.solicitud_articulo[i].idalmacen, data.solicitud_articulo[i].idlocalizacion, data.solicitud_articulo[i].costo, data.solicitud_articulo[i].costo_total, data.solicitud_articulo[i].precio_unitario, data.solicitud_articulo[i].precio_total, data.solicitud_articulo[i].impuesto, data.solicitud_articulo[i].lote, data.solicitud_articulo[i].cOperGrat, data.solicitud_articulo[i].iddescuento, data.solicitud_articulo[i].serie, data.solicitud_articulo[i].um_id, arr_id_series.join(","), arr_id_articulos.join(","), data.solicitud_articulo[i].type_id, data.solicitud_articulo[i].idCategoria, data.solicitud_articulo[i].descripcion_articulo, data.solicitud_articulo[i].id);
 
                         }
                     }

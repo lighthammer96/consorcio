@@ -507,4 +507,11 @@ class SolicitudRepository implements SolicitudInterface
         $result = DB::select($sql);
         return $result;
     }
+
+    public function obtener_series($id_solicitud_articulo) {
+        $sql = "SELECT * FROM ERP_SolicitudDetalle  AS sd 
+        INNER JOIN ERP_Serie AS s ON(s.idSerie=sd.idSerie)
+        WHERE sd.id_solicitud_articulo={$id_solicitud_articulo}";
+        return DB::select($sql);
+    }
 }

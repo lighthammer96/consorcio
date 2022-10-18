@@ -156,6 +156,9 @@
                 },
                 Serie: {
                     title: 'Serie'
+                },
+                Obs: {
+                    title: 'Obs',
                 }
 
             },

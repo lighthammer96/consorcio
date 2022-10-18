@@ -14,7 +14,7 @@ trait Query_movementsTrait
 {
     public function generateDataExcel($info)
     {
-        $columns[] = ['fecha_proceso_s','fecha_registro_s','Articulo','Unidad','Categoria','Tipo_Operacion','Naturaleza','Origen','idOrigen','Almacen','Localizacion','Cantidad','Costo_Unitario','Precio_Unitario','Costo_Total','Precio_Total','Lote','Serie'];
+        $columns[] = ['fecha_proceso_s','fecha_registro_s','Articulo','Unidad','Categoria','Tipo_Operacion','Naturaleza','Origen','idOrigen','Almacen','Localizacion','Cantidad','Costo_Unitario','Precio_Unitario','Costo_Total','Precio_Total','Lote','Serie', 'Obs'];
 
         foreach ($info as $i) {
             $columns[] = [
@@ -35,7 +35,8 @@ trait Query_movementsTrait
                 ['right',number_format($i->Costo_Total,2)],
                 ['right',number_format($i->Precio_Total,2)],
                 ['left', $i->Lote],
-                ['left', $i->Serie]
+                ['left', $i->Serie],
+                ['left', $i->Obs]
             ];
         }
 

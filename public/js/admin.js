@@ -9065,6 +9065,13 @@ function create_pdf_Querymovimiento(response) {
             alignment: 'center'
 
         },
+        {
+            text: 'Obs',
+            fillColor: '#eeeeee',
+            fontSize: 8,
+            alignment: 'center'
+
+        },
     ];
 
 

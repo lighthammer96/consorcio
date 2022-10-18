@@ -721,6 +721,10 @@ class SolicitudController extends Controller
     
     }
 
-   
+   public function obtener_series(Request $request, SolicitudInterface $repo) {
+    $data = $request->all();
+    $result = $repo->obtener_series($data["id_solicitud_articulo"]);
+    return response()->json($result);
+   }
 
 }

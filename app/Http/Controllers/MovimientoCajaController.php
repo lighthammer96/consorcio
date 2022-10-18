@@ -326,6 +326,7 @@ class MovimientoCajaController extends Controller
                     $data_venta["idcajero"] = auth()->id();
                     $data_venta["idtienda"] = $repo->get_caja_diaria()[0]->idtienda;
                     $data_venta["idcaja"] = $repo->get_caja_diaria()[0]->idcaja;
+                    $data_venta['descripcion'] =strtoupper($data['conceptoAdd']); 
                   
                     $this->base_model->insertar($this->preparar_datos("dbo.ERP_Venta", $data_venta));
         
@@ -404,6 +405,7 @@ class MovimientoCajaController extends Controller
                 $data_ticket["idcajero"] = auth()->id();
                 $data_ticket["idtienda"] = $repo->get_caja_diaria()[0]->idtienda;
                 $data_ticket["idcaja"] = $repo->get_caja_diaria()[0]->idcaja;
+                $data_ticket['descripcion'] =strtoupper($data['conceptoAdd']); 
     
                 $this->base_model->insertar($this->preparar_datos("dbo.ERP_Venta", $data_ticket));
                 // echo "olas"; exit;

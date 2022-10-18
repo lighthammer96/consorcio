@@ -220,7 +220,13 @@
 
             $.post("solicitud/find", { id: id },
                 function (data, textStatus, jqXHR) {
-
+                    // alert(data.solicitud[0].nomora);
+                    if(!isNaN(data.solicitud[0].nomora) && data.solicitud[0].nomora != null && data.solicitud[0].nomora == 1) {
+                        $("#mora").prop('checked', true).iCheck('update');
+                    } else {
+                        $("#mora").prop('checked', false).iCheck('update');
+                    }
+                    
                     if (data.solicitud.length > 0) {
                         $("#documento_credito").val(data.solicitud[0].documento);
                         $("#cliente_credito").val(data.solicitud[0].razonsocial_cliente);
@@ -246,10 +252,16 @@
                         var pagado_mora = 0;
                         var saldo_mora = 0;
                         for (var index = 0; index < data.solicitud_cronograma.length; index++) {
+             
+                            
+
                             pagado_mora = 0;
                             saldo_mora = 0;
                             disabled = "";
                             checked = "";
+                            if(!isNaN(data.solicitud_cronograma[index].saldo_mora) && data.solicitud_cronograma[index].saldo_mora != null) {
+                                saldo_mora = parseFloat(data.solicitud_cronograma[index].saldo_mora).toFixed(2)
+                            }
                             //    console.log(data.solicitud_cronograma[index].saldo_cuota);
                             if (data.solicitud_cronograma[index].saldo_cuota != 0 && prox_venc == "") {
                                 prox_venc = data.solicitud_cronograma[index].fecha_vencimiento_credito;
@@ -261,7 +273,8 @@
                             html += '<td><span class="inputs-hidden" nrocuota="'+data.solicitud_cronograma[index].nrocuota+'" ></span>'+data.solicitud_cronograma[index].fecha_vencimiento+'</td>';
                             
                             html += '<td class="valor-cuota">'+parseFloat(data.solicitud_cronograma[index].valor_cuota).toFixed(2)+'</td>';
-                            html += '<td class="int-moratorio">'+parseFloat(data.solicitud_cronograma[index].int_moratorio).toFixed(2)+'</td>';
+                            // html += '<td class="int-moratorio">'+parseFloat(data.solicitud_cronograma[index].int_moratorio).toFixed(2)+'</td>';
+                            html += '<td class="int-moratorio">'+saldo_mora+'</td>';
                             html += '<td class="">'+parseFloat(data.solicitud_cronograma[index].saldo_cuota).toFixed(2)+'</td>';
                             html += '<td class="">'+parseFloat(data.solicitud_cronograma[index].monto_pago).toFixed(2)+'</td>';
                             // html += '<td>'+parseFloat(data.solicitud_cronograma[index].valor_cuota).toFixed(2)+'</td>';
@@ -276,16 +289,14 @@
                             // html += '<td><center><input '+disabled+' '+checked+' saldo_pagar="'+saldo_pagar.toFixed(2)+'"  type="checkbox" nrocuota="'+data.solicitud_cronograma[index].nrocuota+'" class="check-cuota" /></center></td>';
                             // html += '<td class="monto-pagar-cuota"></td>';
                             html += '<td>'+data.solicitud_cronograma[index].nrocuota+'</td>';
-                            if(parseFloat(data.solicitud_cronograma[index].saldo_cuota) > 0) {
+                            // if(parseFloat(data.solicitud_cronograma[index].saldo_cuota) > 0) {
+                            if(saldo_mora > 0) {
 
-                                
                                 if(!isNaN(data.solicitud_cronograma[index].pagado_mora) && data.solicitud_cronograma[index].pagado_mora != null) {
                                     pagado_mora = parseFloat(data.solicitud_cronograma[index].pagado_mora).toFixed(2)
                                 }
 
-                                if(!isNaN(data.solicitud_cronograma[index].saldo_mora) && data.solicitud_cronograma[index].saldo_mora != null) {
-                                    saldo_mora = parseFloat(data.solicitud_cronograma[index].saldo_mora).toFixed(2)
-                                }
+                                
 
                                 html += '<td class=""><input int_moratorio="'+parseFloat(data.solicitud_cronograma[index].int_moratorio).toFixed(2)+'" type="number" name="monto[]" class="form-control input-sm" /></td>';
                                 html += '<td class=""><input type="text" name="motivo[]" class="form-control input-sm"/></td>';
