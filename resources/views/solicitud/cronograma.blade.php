@@ -333,10 +333,29 @@
                     echo '  <td>'.number_format($value->monto_pago, 2).'</td>';
                     echo '  <td>'.number_format($value->saldo_cuota, 2).'</td>';
                     echo '  <td>'.$value->estado.'</td>';
-                    echo '  <td>'.$fecha_ultimo_pago.'</td>';
-                    echo '  <td>'.number_format($monto_ultimo_pago, 2).'</td>';
+                    echo '  <td></td>';
+                    // echo '  <td>'.$fecha_ultimo_pago.'</td>';
+                    echo '  <td></td>';
+                    // echo '  <td>'.number_format($monto_ultimo_pago, 2).'</td>';
 
                     echo '</tr>';
+
+                    foreach ($value->pagos as $kp => $vp) {
+                        echo '<tr>';
+                        echo '  <td></td>';
+                        echo '  <td></td>';
+                        echo '  <td></td>';
+                        echo '  <td></td>';
+                        echo '  <td></td>';
+                        echo '  <td></td>';
+                        echo '  <td></td>';
+                        echo '  <td></td>';
+                        echo '  <td>'.$vp->serie_comprobante.'-'.$vp->numero_comprobante.'</td>';
+                        echo '  <td>'.$vp->fecha_emision.'</td>';
+                        echo '  <td>'.number_format($vp->monto_total, 2).'</td>';
+
+                        echo '</tr>';
+                    }
 
                 }
                 echo '<tr>';

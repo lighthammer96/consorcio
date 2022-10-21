@@ -45,7 +45,7 @@ trait VentasTrait
 
     public function generateDataExcelListaCobranzaCuotas($info)
     {
-        $columns[] = ['COBRADOR', 'FEC. ULT. PAGO', 'CLIENTE', '# CTA', 'NRO RECIBO', 'FECHA VENCIMIENTO', 'MONEDA DOC.', 'TOTAL CTA SOLES', 'MONTO CTA SOLES', 'MORA SOLES', 'TOTAL CTA DOLARES', 'MONTO CTA DOLARES', 'MORA DOLARES', 'ATRASO', 'ESTADO', 'NRO COBRANZA'];
+        $columns[] = ['COBRADOR', 'FEC. ULT. PAGO', 'CLIENTE', '# CTA', 'NRO SOLICITUD', 'FECHA VENCIMIENTO', 'MONEDA DOC.', 'TOTAL CTA SOLES', 'MONTO CTA SOLES', 'MORA SOLES', 'TOTAL CTA DOLARES', 'MONTO CTA DOLARES', 'MORA DOLARES', 'ATRASO', 'ESTADO', 'NRO COBRANZA'];
         // echo "<pre>";
         // print_r($info);
         // exit;
@@ -60,7 +60,7 @@ trait VentasTrait
                 ['center', $i->fecha_emision],
                 ['center', $i->razonsocial_cliente],
                 ['center', $i->nrocuota.'-'.$i->nrocuotas],
-                ['center', '-.-'],
+                ['center', $i->cCodConsecutivo."-".$i->nConsecutivo],
                 ['center', $i->fecha_vencimiento],
                 ['center', $i->moneda],
                 ['center', number_format($total_cte_soles, 2)],

@@ -121,7 +121,7 @@
                 <td style="font-weight  : bold; width: 80px;" align="center" rowspan="2">Fec. Ult. Pago</td>
                 <td style="font-weight  : bold; width: 200px;" align="center" rowspan="2">Cliente</td>
                 <td style="font-weight  : bold; width: 30px;" align="center" rowspan="2"># Cta</td>
-                <td style="font-weight  : bold; width: 40px;" align="center" rowspan="2">Nro Recibo</td>
+                <td style="font-weight  : bold; width: 40px;" align="center" rowspan="2">Nro Solicitud</td>
                 <td style="font-weight  : bold; width: 70px;" align="center" rowspan="2">Fecha Vencimiento</td>
                 <td style="font-weight  : bold; width: 50px;" align="center" rowspan="2">Moneda Doc.</td>
                 <td style="font-weight  : bold; width: 50px;" align="center" rowspan="2">Total Cta Soles</td>
@@ -174,7 +174,7 @@
                         echo '  <td style="width: 80px !important;">'.$vp->fecha_emision.'</td>';
                         echo '  <td style="width: 205px !important;">'.$vp->razonsocial_cliente.'</td>';
                         echo '  <td style="width: 30px !important;">'.$vp->nrocuota.'-'.$vp->nrocuotas.'</td>';
-                        echo '  <td style="width: 40px !important;">-.-</td>';
+                        echo '  <td style="width: 40px !important;">'.$vp->cCodConsecutivo.'-'.$vp->nConsecutivo.'</td>';
                         echo '  <td style="width: 71px !important;">'.$vp->fecha_vencimiento.'</td>';
                         echo '  <td style="width: 51px !important;">'.$vp->moneda.'</td>';
                         echo '  <td style="width: 51px !important;">'.number_format($total_cte_soles, 2).'</td>';

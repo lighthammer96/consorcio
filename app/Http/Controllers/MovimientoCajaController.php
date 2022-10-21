@@ -2315,7 +2315,9 @@ class MovimientoCajaController extends Controller
 
         foreach ($datos["solicitud_cronograma"] as $key => $value) {
             $ultimo_pago_x_cuota = $visita_repo->ultimo_pago_x_cuota($cCodConsecutivo, $nConsecutivo, $value->nrocuota);
+            $pagos = $visita_repo->pagos_x_cuota($cCodConsecutivo, $nConsecutivo, $value->nrocuota);
             $datos["solicitud_cronograma"][$key]->ultimo_pago_x_cuota = $ultimo_pago_x_cuota;
+            $datos["solicitud_cronograma"][$key]->pagos = $pagos;
         }
         // echo "<pre>";
         // print_r($datos);

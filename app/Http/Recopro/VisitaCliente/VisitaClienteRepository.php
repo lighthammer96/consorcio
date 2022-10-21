@@ -260,4 +260,13 @@ class VisitaClienteRepository implements VisitaClienteInterface
 
         return DB::select($sql);
     }
+
+    public function pagos_x_cuota($cCodConsecutivo, $nConsecutivo, $nrocuota) {
+        $sql = "SELECT v.*, FORMAT(v.fecha_emision, 'dd-MM-yyyy') AS fecha_emision, FORMAT(v.fecha_emision, 'dd/MM/yyyy') AS fecha_emision_user, vd.monto_total    FROM ERP_Venta AS v
+        INNER JOIN ERP_VentaDetalle AS vd ON(v.idventa=vd.idventa)
+        WHERE v.cCodConsecutivo_solicitud='{$cCodConsecutivo}' AND v.nConsecutivo_solicitud={$nConsecutivo} AND vd.nrocuota = {$nrocuota} AND ISNULL(v.anulado, 'N')<>'S'
+        ORDER BY v.fecha_emision DESC";
+
+        return DB::select($sql);
+    }
 }

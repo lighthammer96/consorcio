@@ -50,7 +50,7 @@ class SolicitudController extends Controller
         // exit;
         $s = $request->input('search', '');
         $params = ['cCodConsecutivo', 'nConsecutivo', 'fecha_solicitud', 'tipo_solicitud', 'idconvenio', 'tipo_documento', 'numero_documento', 'moneda', 't_monto_total', 'pagado', 'saldo', 'facturado', 'estado', 'cliente'];
-        // print_r($repo->search($s)); exit;
+        // print_r($s); exit;
         return parseList($repo->search($s), $request, 'cCodConsecutivo', $params);
     }
     
