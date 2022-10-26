@@ -870,10 +870,15 @@
         } 
         function seleccionarModal(codigo,descripcionArt,idTipoArt,serie,lote,costo) {
             console.log(idTipoArt,serie,lote);
+            // TODO: Debido a estas sentencias todos los articulos abren el modal ModalNada, pero hay ciertos articulos que deberian abrir
+            // con otro modal, para solucionarlo comente o borre las 3 lineas siguientes, pero debera implementar las funciones para manejar
+            // esos articulos y sus modales!.
+            /*
             idTipoArt=1;
             serie=0;
             lote=0;
             console.log("total");
+            */
             if(idTipoArt=='3'){
                 modalKit.modal('show');
                 $('#cantProductoMK').attr('onkeypress','return soloNumeros(event)');
@@ -1029,6 +1034,7 @@
 
                });
         }
+
         $scope.guardarMovimientoDetalle = function(){
             var bval =true;
 
@@ -1965,6 +1971,7 @@
             }
 
         }
+
         $scope.EliminarMovimiento = function(){
 
             var id=idMovimientoDelete.val();
@@ -1993,10 +2000,9 @@
                 }); 
 
             }
-               
-          
 
         }
+
         $scope.addSeleccSerie = function(){
             table_serie_cabecera.html("");
             articulo_serie_det.html("");
@@ -2035,12 +2041,11 @@
                     });
                     }
                });
-
-               
             }
         }
-        function addArtNada(){
-            console.log("entro nada");
+
+        $scope.addArtNada = function() {
+            console.log("entro a la función addArtNada");
             var bval = true;
             bval = bval && cantProductoMN.required();
             if (bval) {
@@ -2310,18 +2315,7 @@
                         });
                         nConsecutivo.val(response.nco);
                         estado.val(response.estado);
-                        // var natudata = idTipoOperacion.val();
-                        // var co=natudata.split('*');
-                        // var na=co[1];
-                        // idNaturaleza.val(na);
                         idMovimiento.val(response.code);
-                        
-                        // if(response.estado==0){
-                        //     p_state.val("REGISTRADO");
-                        // }else{
-                        //      p_state.val("PROCESADO");
-                        // };
-
                         idTipoOperacion.prop('disabled',true);
                         idTipoOperacion.trigger('change');
                         btn_movimiento_detalle.prop('disabled',false);
@@ -2992,7 +2986,9 @@
                 search: $('#search_cc3').val()
             });
         }, false);
+
     }
+
 
     function Config($stateProvider, $urlRouterProvider) {
         $stateProvider

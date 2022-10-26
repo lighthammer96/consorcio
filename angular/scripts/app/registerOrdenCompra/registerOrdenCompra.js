@@ -538,8 +538,6 @@
             console.log("enntro checkakakakakakkaka");
         });
       
-
-
         $(document).on("ifChanged", "#p_state", function () {
           
            console.log("total chekk");
@@ -547,7 +545,6 @@
            calcular_total_orden();
         });
 
-        
         function seleccionarModal(codigo,descripcionArt,idTipoArt,serie,lote,costo) {
            
             idTipoArt=1;
@@ -653,9 +650,8 @@
 
                });
         }
-        $scope.addArtsolicitud = function(){
 
-              
+        $scope.addArtsolicitud = function() {
                 var ver='A';
                 var tipoArt='NA';
                 var codl="";
@@ -809,7 +805,7 @@
             tdpr.append(inpr).append(inpModoDetalle);
 
             var tdpreT = $('<td></td>');
-            var inpPreTo = $('<input type="text" class="m_articulo_precioTotal form-control input-sm " value="'+addCommas(redondeodecimale(precioTotal).toFixed(2))+'" disabled />');
+            var inpPreTo = $('<input type="text" id="preTs_'+codigo+'" class="m_articulo_precioTotal form-control input-sm " value="'+addCommas(redondeodecimale(precioTotal).toFixed(2))+'" disabled />');
 
             tdpreT.append(inpPreTo);
             // if(costo !=0 || costo!=""){
@@ -824,7 +820,6 @@
             //  if(naturalezaGeneral=="C"){
             //     impor=0;
             //  }
-            var tdDescue = $('<td></td>');
             var tdPorcentaje = $('<td></td>');
             var tdMonto = $('<td></td>');
  
@@ -845,10 +840,10 @@
                 var inp3 = $('<input type="hidden" id="canMs_'+codigo+'" class="m_articulo_cantidad" value="' + cantProducto + '" />');
             }
              var tdCanP = $('<td class="text-center"></td>');
-             var inpCanP = $('<input type="text"  onkeypress="return soloNumeros(event)" class="m_articulo_cantidadCanP form-control input-sm" disabled value="' + cantPend + '" />');
+             var inpCanP = $('<input type="text" id="canPs_'+codigo+'" onkeypress="return soloNumeros(event)" class="m_articulo_cantidadCanP form-control input-sm" disabled value="' + cantPend + '" />');
 
              var tdCanR= $('<td class="text-center"></td>');
-             var inpCanR = $('<input type="text"  onkeypress="return soloNumeros(event)" class="m_articulo_cantidadCanR form-control input-sm" disabled value="' + cantReci + '" />');
+             var inpCanR = $('<input type="text" id="canRs_'+codigo+'" onkeypress="return soloNumeros(event)" class="m_articulo_cantidadCanR form-control input-sm" disabled value="' + cantReci + '" />');
 
              var tdCanD= $('<td class="text-center"></td>');
              var inpCanD = $('<input type="text"  onkeypress="return soloNumeros(event)" class="m_articulo_cantidadCanD form-control input-sm" disabled value="' + cantDevu + '" />');
@@ -866,10 +861,8 @@
                 // var inpl=$('<select id="'+codigo+'" data-idArl="'+idProducto+'" class="m_articulo_idLoc form-control input-sm"></select>');
             
             // }
-            var monto=$('<input type="text" id="monto_'+codigo+'" class="monto form-control input-sm"  value="'+addCommas(redondeodecimale(nDescuento).toFixed(2))+'"  readonly/>');
-            var porc=$('<input type="text" id="porc_'+codigo+'" class="porcent form-control input-sm"  value="'+addCommas(redondeodecimale(nPorcDescuento).toFixed(0))+'"  readonly/>');
-            var inpDes=$('<select id="id_desc_'+codigo+'" class="descuentosSelect form-control input-sm" data-desc="'+codigo+'"  style="width: 100%"  ></select>');
-
+            var monto=$('<input type="text" id="monto_'+codigo+'" class="monto form-control input-sm"  value="'+addCommas(redondeodecimale(nDescuento).toFixed(2))+'" onkeypress="return soloNumeros(event)" />');
+            var porc=$('<input type="text" id="porc_'+codigo+'" class="porcent form-control input-sm"  value="'+addCommas(redondeodecimale(nPorcDescuento).toFixed(0))+'" onkeypress="return soloNumeros(event)" />');
 
             var td4 = $('<td class="text-center"></td>');
             var tdObser = $('<td class="text-center"></td>');
@@ -884,7 +877,7 @@
             tdCanR.append(inpCanR);
             tdCanD.append(inpCanD);
 
-            tdDescue.append(inpDes);
+            //tdDescue.append(inpDes);
             tdPorcentaje.append(porc);
             tdMonto.append(monto);
 
@@ -916,7 +909,7 @@
             var btn3 = $('<button class="btn btn-danger btn-xs delMovPro" data-tipo="'+tipo+'" data-ident="'+iddet+'" title="Eliminar" data-id="' + codigo + '" type="button"><span class="fa fa-trash"></span></button>');
             td6.append(btn1);
             td8.append(btn3);
-            tr.append(td1).append(td2).append(td3).append(tdCanP).append(tdCanR).append(tdCanD).append(tdpr).append(tdpreT).append(tdDescue).append(tdPorcentaje).append(tdMonto).append(tdValComp).append(tdim).append(tdTotalComp).append(td5).append(td4).append(td8);
+            tr.append(td1).append(td2).append(td3).append(tdCanP).append(tdCanR).append(tdCanD).append(tdpr).append(tdpreT).append(tdPorcentaje).append(tdMonto).append(tdValComp).append(tdim).append(tdTotalComp).append(td5).append(td4).append(td8);
             articulo_mov_det.append(tr);
            //  addAlmaSelec(codigo);
            //  addlocSele(codigo);
@@ -972,6 +965,7 @@
                 });
                 e.preventDefault();
             });
+
              $('.addMovPro').click(function (e) {
                 var idArticuloAl = $(this).attr('data-ida');
                 modalAlmacenArticulo.modal('show');
@@ -979,43 +973,121 @@
                 $('#LoadRecordsButtonCC3').click();
                 e.preventDefault();
             });
-           
+
+
+            // NOTE: Aqui se deberia colocar los eventos para manejar cada evento de alguna en especifico
+            // ya que podemos obtener el contenido de las demas en la fila
+            // Lo que se hace actualmente buscar por "clase" en toda la tabla la celda en especifico :|
+
+            // Evento cuando se cambia la cantidad del registro
+            $('#canMs_' + codigo).change(function(e) {
+                const cantidad = e.target.value;
+                var cantidadPendiente = $('#canPs_' + codigo);
+                const cantidadRecibida  = $('#canRs_' + codigo);
+                // Cambiamos la cantidad pendiente
+                console.log("Nueva Cantidad: " + cantidad + " Cantidad Recibida: " + cantidadRecibida.val());
+                cantidadPendiente.val(cantidad - cantidadRecibida.val())
+
+                // Cambiamos el precio total
+
+            });
+
+            // Evento para input de "Precio Unitario"
+            $('#preMs_'+ codigo).change(function(e) {
+                var precioUnitario = e.target.value;
+                if (precioUnitario == '' || precioUnitario == null) {
+                    precioUnitario = 0;
+                    $('#preMs_'+ codigo).val(0);
+                }
+                var precioTotal = $('#preTs_' + codigo);
+                var montoDescuento = $('#monto_' + codigo);
+                var cantidadPendiente = $('#canPs_' + codigo);
+                var precio = cantidadPendiente.val() * precioUnitario; // Precio sin descuento
+                precio -= montoDescuento.val();
+                precioTotal.val(addCommas(redondeodecimale(precio).toFixed(2)));
+            });
+
+            // Eventos para el input "Monto descuento"
+            // Evento cuando se cambia el valor de monto de descuento
+            $('#monto_' + codigo).change(function (e) {
+                console.log("Entro al onchange del monto de descuento");
+                var montoDescuento = e.target.value;
+                var precioTotal = $('#preTs_' + codigo);
+                if (montoDescuento > precioTotal.val() || montoDescuento < 0 || montoDescuento == '') {
+                    montoDescuento = 0;
+                    $('#monto_' + codigo).val(0);
+                }
+                var porcentajeDescuento = $('#porc_' + codigo);
+                var porcentaje = (montoDescuento * 100.0) / precioTotal.val();
+                porcentajeDescuento.val(addCommas(redondeodecimale(porcentaje).toFixed(2))); // Configuramos el nuevo porcentaje
+                console.log("Finalizo el onchange del monto de descuento");
+
+            });
+
+            // Evento para cuando se desea ingresar un monto de descuento para el registro
+            $('#monto_' + codigo).click(function (e) {
+                console.log("Presionaste para cambiar el valor del monto de descuento");
+                var porcentajeDescuento =  $('#porc_' + codigo);
+                porcentajeDescuento.val('');
+            });
+
+            // Evento cuando se desea ingresar un porcentaje de descuento para el registro
+            $('#porc_' + codigo).change(function (e) {
+                console.log("Entro al onchange del porcentaje de descuento");
+                var porcentajeDescuento = e.target.value;
+                if (porcentajeDescuento < 0 || porcentajeDescuento > 100 || porcentajeDescuento == '') { // TODO: Para la moyoria de las veces
+                    porcentajeDescuento = 0;
+                    $('#porc_' + codigo).val(0);
+                }
+                var precioTotal = $('#preTs_' + codigo);
+                var montoDescuento =  $('#monto_' + codigo);
+                var monto = precioTotal.val() * (porcentajeDescuento / 100.0);
+                montoDescuento.val(addCommas(redondeodecimale(monto).toFixed(2)))
+            });
+
+            // Evento cuando se desea ingresar un porcentaje de descuento para el registro
+            $('#porc_' + codigo).click(function (e) {
+                console.log("Presionaste para cambiar el porcentaje de descuento");
+                var montoDescuento =  $('#monto_' + codigo);
+                montoDescuento.val('');
+            });
 
         }
-        totalDescuento.change(function() { 
-                var val=$(this).val();
-                if(val==""){
-                    porcentajeTotal.val(0);
-                    montoTotal.val(0);
-                }else{
-                    var arrayRe=val.split("*");
-                    var code=arrayRe[0];
-                    var porc=arrayRe[1];
-                    var mont=Number(arrayRe[2]);
-                    var porTotal=Number((Number(porc)*Number($("#desTotal").attr('data-total')))/100);
-                    console.log(porTotal,"porcenataje total");
-                    $("#porcentajeTotal").val(porc);
-                    if(porc==0 || porc==""){
-                           var porTotal=mont;
-                    }
-                    $("#montoTotal").val(porTotal.toFixed(2));
-                 
-                    
+
+        totalDescuento.change(function () {
+            var val = $(this).val();
+            if (val == "") {
+                porcentajeTotal.val(0);
+                montoTotal.val(0);
+            } else {
+                var arrayRe = val.split("*");
+                var code = arrayRe[0];
+                var porc = arrayRe[1];
+                var mont = Number(arrayRe[2]);
+                var porTotal = Number((Number(porc) * Number($("#desTotal").attr('data-total'))) / 100);
+                console.log(porTotal, "porcenataje total");
+                $("#porcentajeTotal").val(porc);
+                if (porc == 0 || porc == "") {
+                    var porTotal = mont;
                 }
-              
-                var totalDes=$("#desTotal").attr('data-total');
-                totalDes=Number(totalDes);
-                if(totalDescuento.val()!='' ){
-                    if(montoTotal.val()<1){
-                           totalDes=Number(totalDes)-Number(montoTotal.val());
-                        }else{
-                           
-                            totalDes=Number(totalDes)-Number(montoTotal.val());
-                        }
+                $("#montoTotal").val(porTotal.toFixed(2));
+
+            }
+
+            var totalDes = $("#desTotal").attr('data-total');
+            totalDes = Number(totalDes);
+            if (totalDescuento.val() != '') {
+                if (montoTotal.val() < 1) {
+                    totalDes = Number(totalDes) - Number(montoTotal.val());
+                } else {
+
+                    totalDes = Number(totalDes) - Number(montoTotal.val());
                 }
-                desTotal.val(addCommas(redondeodecimale(totalDes).toFixed(2)));
+            }
+            desTotal.val(addCommas(redondeodecimale(totalDes).toFixed(2)));
         });
-         function  calcular_total_orden(){
+
+        function  calcular_total_orden(){
 
             console.log("bbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
             var suma_total=0;
@@ -1064,18 +1136,19 @@
         
         }
         
-        $(document).on("keyup", ".m_articulo_cantidad",".m_articulo_precio", function () {
-          
-            calcular_total_orden();
-        });
-           $(document).on("keyup",".m_articulo_precio", function () {
-           
-            calcular_total_orden();
-        });
-         $(document).on("change",".m_articulo_precio", function () {
-          
-            calcular_total_orden();
-        });
+        // $(document).on("keyup", ".m_articulo_cantidad",".m_articulo_precio", function () {
+
+        //     calcular_total_orden();
+        // });
+        //    $(document).on("keyup",".m_articulo_precio", function () {
+
+        //     calcular_total_orden();
+        // });
+        //  $(document).on("change",".m_articulo_precio", function () {
+
+        //     calcular_total_orden();
+        // });
+
         function calcularDescuentoDetalle(e){
             console.log("entro descontrooeoeoeooeoe");
             var codigo=$(e).attr('data-desc');
