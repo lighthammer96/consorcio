@@ -793,19 +793,19 @@
             // subt=Number(preci_t)*Number(cantidad)+Number(impuesto_can);
             var tdim = $('<td></td>');
 
-            var impuestoRe = $('<input type="number" class="totalImpuesto_articulo form-control input-sm" data-impues="'+ident_impuesto+'" value="'+impuesto_can+'" readonly/>');
+            var impuestoRe = $('<input type="number" step="0.01" id="impuesto_'+codigo+'" class="totalImpuesto_articulo form-control input-sm" data-impues="'+ident_impuesto+'" value="'+impuesto_can+'" />');
 
             tdim.append(impuestoRe);
 
             var tdpr = $('<td></td>');
-            var inpr = $('<input type="number" id="preMs_'+codigo+'" min="1" class="m_articulo_precio form-control input-sm" value="' + precionew + '" />');
+            var inpr = $('<input type="number" id="preMs_'+codigo+'" min="1" step="0.01" class="m_articulo_precio form-control input-sm" value="' + precionew + '" />');
 
             var inpModoDetalle = $('<input type="hidden"   class="modo_detalle form-control input-sm" value="' + iddet + '" />');
 
             tdpr.append(inpr).append(inpModoDetalle);
 
             var tdpreT = $('<td></td>');
-            var inpPreTo = $('<input type="text" id="preTs_'+codigo+'" class="m_articulo_precioTotal form-control input-sm " value="'+addCommas(redondeodecimale(precioTotal).toFixed(2))+'" disabled />');
+            var inpPreTo = $('<input type="text" id="preTs_'+codigo+'" class="m_articulo_precioTotal form-control input-sm " value="'+addCommas(redondeodecimale(precioTotal).toFixed(2))+'" readonly />');
 
             tdpreT.append(inpPreTo);
             // if(costo !=0 || costo!=""){
@@ -840,20 +840,20 @@
                 var inp3 = $('<input type="hidden" id="canMs_'+codigo+'" class="m_articulo_cantidad" value="' + cantProducto + '" />');
             }
              var tdCanP = $('<td class="text-center"></td>');
-             var inpCanP = $('<input type="text" id="canPs_'+codigo+'" onkeypress="return soloNumeros(event)" class="m_articulo_cantidadCanP form-control input-sm" disabled value="' + cantPend + '" />');
+             var inpCanP = $('<input type="text" id="canPs_'+codigo+'" onkeypress="return soloNumeros(event)" class="m_articulo_cantidadCanP form-control input-sm" readonly value="' + cantPend + '" />');
 
              var tdCanR= $('<td class="text-center"></td>');
-             var inpCanR = $('<input type="text" id="canRs_'+codigo+'" onkeypress="return soloNumeros(event)" class="m_articulo_cantidadCanR form-control input-sm" disabled value="' + cantReci + '" />');
+             var inpCanR = $('<input type="text" id="canRs_'+codigo+'" onkeypress="return soloNumeros(event)" class="m_articulo_cantidadCanR form-control input-sm" readonly value="' + cantReci + '" />');
 
              var tdCanD= $('<td class="text-center"></td>');
-             var inpCanD = $('<input type="text"  onkeypress="return soloNumeros(event)" class="m_articulo_cantidadCanD form-control input-sm" disabled value="' + cantDevu + '" />');
+             var inpCanD = $('<input type="text"  onkeypress="return soloNumeros(event)" class="m_articulo_cantidadCanD form-control input-sm" readonly value="' + cantDevu + '" />');
 
 
              var tdValComp= $('<td class="text-center"></td>');
-             var inpValComp = $('<input type="text"  disabled  class="valor_compra_detalle form-control input-sm" value="' +addCommas(redondeodecimale(valorCompra).toFixed(2))  + '" />');
+             var inpValComp = $('<input type="text" id="valComp_'+codigo+'" readonly  class="valor_compra_detalle form-control input-sm" value="' +addCommas(redondeodecimale(valorCompra).toFixed(2))  + '" />');
 
              var tdTotalComp= $('<td class="text-center"></td>');
-             var inpTotalComp = $('<input type="text"  disabled  class="m_total_detalle form-control input-sm" value="' +addCommas(redondeodecimale(totaldetalle).toFixed(2))  + '" />');
+             var inpTotalComp = $('<input type="text"  readonly   id="totalDetalle_'+codigo+'" class="m_total_detalle form-control input-sm" value="' +addCommas(redondeodecimale(totaldetalle).toFixed(2))  + '" />');
 
                 // var td2 = $('<td></td>');
                 // var tdy = $('<td></td>');
@@ -861,8 +861,8 @@
                 // var inpl=$('<select id="'+codigo+'" data-idArl="'+idProducto+'" class="m_articulo_idLoc form-control input-sm"></select>');
             
             // }
-            var monto=$('<input type="text" id="monto_'+codigo+'" class="monto form-control input-sm"  value="'+addCommas(redondeodecimale(nDescuento).toFixed(2))+'" onkeypress="return soloNumeros(event)" />');
-            var porc=$('<input type="text" id="porc_'+codigo+'" class="porcent form-control input-sm"  value="'+addCommas(redondeodecimale(nPorcDescuento).toFixed(0))+'" onkeypress="return soloNumeros(event)" />');
+            var monto=$('<input type="number" id="monto_'+codigo+'" class="monto form-control input-sm"  step="0.01" value="'+addCommas(redondeodecimale(nDescuento).toFixed(2))+'" />');
+            var porc=$('<input type="number" id="porc_'+codigo+'" class="porcent form-control input-sm"  step="0.01" value="'+addCommas(redondeodecimale(nPorcDescuento).toFixed(2))+'"  />');
 
             var td4 = $('<td class="text-center"></td>');
             var tdObser = $('<td class="text-center"></td>');
@@ -916,7 +916,6 @@
            // console.log("entro 123456");
             addDescuentos(idProducto,idDescuento,codigo);
               $('#estadoEnv_'+codigo+' option[value='+estado+']').prop('selected', 'selected').change();
-           
 
              $('.delMovPro').click(function (e) {
                 var code = $(this).attr('data-id');
@@ -977,9 +976,32 @@
 
             // NOTE: Aqui se deberia colocar los eventos para manejar cada evento de alguna en especifico
             // ya que podemos obtener el contenido de las demas en la fila
-            // Lo que se hace actualmente buscar por "clase" en toda la tabla la celda en especifico :|
+            // Lo que se hace actualmente es buscar por "clase" en toda la tabla la celda en especifico :|
 
-            // Evento cuando se cambia la cantidad del registro
+            $('#impuesto_' + codigo).change(function(e) {
+                console.log("Cambiaste el impuesto a: " + $(this).val());
+                changeImpuestoDetalle(codigo);
+            });
+
+            // Eventos cuando se desea ingresar un monto de descuento en el registro  "Monto descuento"
+            $('#monto_' + codigo).change(function (e) {
+                console.log("Cambiaste el monto de descuento a: " + $(this).val());
+                changeMontoDescuento(codigo);
+            });
+
+            // Evento cuando se desea ingresar un porcentaje de descuento para el registro "Porcentaje Descuento"
+            $('#porc_' + codigo).change(function (e) {
+                console.log("Cambiaste el porcentaje de descuento a: " + $(this).val());
+                changePorcentajeDescuento(codigo);
+            });
+
+            // Evento para input de "Precio Unitario"
+            $('#preMs_'+ codigo).change(function(e) {
+                console.log("Cambiaste el precio unitario a: " + $(this).val());
+                changePrecioUnitario(codigo);
+            });
+
+            // Evento cuando se cambia la cantidad del registro "Cantidad"
             $('#canMs_' + codigo).change(function(e) {
                 const cantidad = e.target.value;
                 var cantidadPendiente = $('#canPs_' + codigo);
@@ -987,72 +1009,123 @@
                 // Cambiamos la cantidad pendiente
                 console.log("Nueva Cantidad: " + cantidad + " Cantidad Recibida: " + cantidadRecibida.val());
                 cantidadPendiente.val(cantidad - cantidadRecibida.val())
-
-                // Cambiamos el precio total
-
-            });
-
-            // Evento para input de "Precio Unitario"
-            $('#preMs_'+ codigo).change(function(e) {
-                var precioUnitario = e.target.value;
-                if (precioUnitario == '' || precioUnitario == null) {
-                    precioUnitario = 0;
-                    $('#preMs_'+ codigo).val(0);
-                }
-                var precioTotal = $('#preTs_' + codigo);
-                var montoDescuento = $('#monto_' + codigo);
-                var cantidadPendiente = $('#canPs_' + codigo);
-                var precio = cantidadPendiente.val() * precioUnitario; // Precio sin descuento
-                precio -= montoDescuento.val();
-                precioTotal.val(addCommas(redondeodecimale(precio).toFixed(2)));
-            });
-
-            // Eventos para el input "Monto descuento"
-            // Evento cuando se cambia el valor de monto de descuento
-            $('#monto_' + codigo).change(function (e) {
-                console.log("Entro al onchange del monto de descuento");
-                var montoDescuento = e.target.value;
-                var precioTotal = $('#preTs_' + codigo);
-                if (montoDescuento > precioTotal.val() || montoDescuento < 0 || montoDescuento == '') {
-                    montoDescuento = 0;
-                    $('#monto_' + codigo).val(0);
-                }
-                var porcentajeDescuento = $('#porc_' + codigo);
-                var porcentaje = (montoDescuento * 100.0) / precioTotal.val();
-                porcentajeDescuento.val(addCommas(redondeodecimale(porcentaje).toFixed(2))); // Configuramos el nuevo porcentaje
-                console.log("Finalizo el onchange del monto de descuento");
-
-            });
-
-            // Evento para cuando se desea ingresar un monto de descuento para el registro
-            $('#monto_' + codigo).click(function (e) {
-                console.log("Presionaste para cambiar el valor del monto de descuento");
-                var porcentajeDescuento =  $('#porc_' + codigo);
-                porcentajeDescuento.val('');
-            });
-
-            // Evento cuando se desea ingresar un porcentaje de descuento para el registro
-            $('#porc_' + codigo).change(function (e) {
-                console.log("Entro al onchange del porcentaje de descuento");
-                var porcentajeDescuento = e.target.value;
-                if (porcentajeDescuento < 0 || porcentajeDescuento > 100 || porcentajeDescuento == '') { // TODO: Para la moyoria de las veces
-                    porcentajeDescuento = 0;
-                    $('#porc_' + codigo).val(0);
-                }
-                var precioTotal = $('#preTs_' + codigo);
-                var montoDescuento =  $('#monto_' + codigo);
-                var monto = precioTotal.val() * (porcentajeDescuento / 100.0);
-                montoDescuento.val(addCommas(redondeodecimale(monto).toFixed(2)))
-            });
-
-            // Evento cuando se desea ingresar un porcentaje de descuento para el registro
-            $('#porc_' + codigo).click(function (e) {
-                console.log("Presionaste para cambiar el porcentaje de descuento");
-                var montoDescuento =  $('#monto_' + codigo);
-                montoDescuento.val('');
             });
 
         }
+
+        // Verifica el nuevo impuesto ingresado y cambia el total del detalle
+        function changeImpuestoDetalle(codigo) {
+            var impuesto = $('#impuesto_' + codigo).val();
+            if (impuesto < 0 || impuesto == '' || impuesto == null) {
+                impuesto = 0;
+                $('#impuesto_' + codigo).val(0)
+            }
+            var valorCompra = $('#valComp_' + codigo);
+            var totalDetalle = $('#totalDetalle_' + codigo);
+            var nuevoTotal = redondeodecimale(valorCompra.val()) + redondeodecimale(impuesto);
+            totalDetalle.val(addCommas(redondeodecimale(nuevoTotal).toFixed(2)))
+            ingresarTotalOrden();
+        }
+
+        // Verifica el nuevo monto de descuento ingresado y cambia el Valor de Compra
+        // Ademas de ejecutar cambios hacia la derecha de la tabla de detalle
+        function changeMontoDescuento(codigo) {
+            var montoDescuento = redondeodecimale($('#monto_' + codigo).val());
+            var precioTotal = $('#preTs_' + codigo);
+            if (montoDescuento > redondeodecimale(precioTotal.val()) || montoDescuento < 0 || isNaN(montoDescuento)) {
+                montoDescuento = 0;
+                $('#monto_' + codigo).val(0);
+            }
+            var porcentajeDescuento = $('#porc_' + codigo);
+            var valorCompra = $('#valComp_' + codigo);
+            var porcentaje = redondeodecimale((montoDescuento * 100.0) / redondeodecimale(precioTotal.val()));
+            if (isNaN(porcentaje))
+                porcentaje = 0;
+            porcentajeDescuento.val(addCommas(porcentaje.toFixed(2))); // Configuramos el nuevo porcentaje
+            valorCompra.val(addCommas(redondeodecimale(precioTotal.val() - montoDescuento).toFixed(2)))
+            changeImpuestoDetalle(codigo);
+        }
+
+        // Verifica el nuevo porcentaje de descuento ingresado y cambia el Valor de Compra
+        // Ademas de ejecutar cambios hacia la derecha de la tabla de detalle
+        function changePorcentajeDescuento(codigo) {
+            var porcentajeDescuento = $('#porc_' + codigo).val();
+            if (porcentajeDescuento < 0 || porcentajeDescuento > 100 || porcentajeDescuento == '' || porcentajeDescuento == null) { // TODO: Para la moyoria de las veces lo maximo es 100%
+                porcentajeDescuento = 0;
+                $('#porc_' + codigo).val(addCommas(0));
+            }
+            var montoDescuento = $('#monto_' + codigo);
+            var precioTotal = $('#preTs_' + codigo);
+            var valorCompra = $('#valComp_' + codigo);
+            var monto = precioTotal.val() * (porcentajeDescuento / 100.0); // Porcentaje de descuento expresado en monto
+            montoDescuento.val(addCommas(redondeodecimale(monto).toFixed(2)))
+            valorCompra.val(addCommas(redondeodecimale(precioTotal.val() - monto).toFixed(2)))
+            changeImpuestoDetalle(codigo);
+        }
+
+        // Verifica el nuevo precio unitario ingresado y cambia el precio total
+        // Ademas de ejecutar cambios hacia la derecha de la tabla de detalle
+        function changePrecioUnitario(codigo) {
+            var precioUnitario = $('#preMs_'+ codigo).val();
+            if (precioUnitario < 0 || precioUnitario == '' || precioUnitario == null) {
+                precioUnitario = 0;
+                $('#preMs_' + codigo).val(0);
+            }
+            var precioTotal = $('#preTs_' + codigo);
+            var cantidadPendiente = $('#canPs_' + codigo);
+            var precio = cantidadPendiente.val() * precioUnitario; // Precio sin descuento
+            precioTotal.val(addCommas(redondeodecimale(precio).toFixed(2)));
+            changeMontoDescuento(codigo);
+        }
+
+        // Verifica la nueva cantidad ingresada y cambia la cantidad pendiente
+        // Ademas de ejecutar cambios hacia la derecha de la tabla de detalle
+        function changeCantidad(codigo) {
+            return;
+        }
+
+        function ingresarTotalOrden() {
+            var totalesDetalles = $('#articulo_mov_det tr td input[id^="totalDetalle"]');
+            var total = 0.0;
+            totalesDetalles.each(function() {
+                total += redondeodecimale($(this).val());
+            });
+            var montoTotalDescuento = $('#montoTotal');
+            total -= redondeodecimale(montoTotalDescuento.val());
+            $('#desTotal').val(addCommas(redondeodecimale(total).toFixed(2)));
+        }
+
+        // Para el cambio del monto de descuento total de la orden de compra
+        montoTotal.change(function(e) {
+            console.log("Cambiaste el monto total de descuento a: " + $(this).val());
+            var montoDescuento = redondeodecimale($(this).val());
+            var porcentajeTotalDescuento = $('#porcentajeTotal');
+            var totalOrden = $('#desTotal');
+            if (montoDescuento > redondeodecimale(totalOrden.val()) || montoDescuento < 0 || isNaN(montoDescuento)) {
+                montoDescuento = 0;
+                $(this).val(addCommas(0));
+            }
+            var porcentaje = redondeodecimale((montoDescuento * 100.0) / redondeodecimale(totalOrden.val()));
+            if (isNaN(porcentaje))
+                porcentaje = 0;
+            porcentajeTotalDescuento.val(addCommas(porcentaje));
+            ingresarTotalOrden();
+        });
+
+        // Para el cambio del porcentaje de descuento total de la orden de compra
+        porcentajeTotal.change(function(e) {
+            console.log("Cambiaste el porcentaje total de descuento a: " + $(this).val());
+            var porcentaje = redondeodecimale($(this).val());
+            if (porcentaje < 0 || porcentaje > 100 || porcentaje == '' || porcentaje == null || isNaN(porcentaje)) {
+                porcentaje = 0;
+                $(this).val(addCommas(0));
+            }
+            var montoDescuento = $('#montoTotal');
+            var totalOrden = $('#desTotal');
+            var monto = totalOrden.val() * (porcentaje / 100.0); // Porcentaje de descuento expresado en monto
+            montoDescuento.val(addCommas(redondeodecimale(monto)));
+            ingresarTotalOrden();
+        });
 
         totalDescuento.change(function () {
             var val = $(this).val();
@@ -1136,19 +1209,6 @@
         
         }
         
-        // $(document).on("keyup", ".m_articulo_cantidad",".m_articulo_precio", function () {
-
-        //     calcular_total_orden();
-        // });
-        //    $(document).on("keyup",".m_articulo_precio", function () {
-
-        //     calcular_total_orden();
-        // });
-        //  $(document).on("change",".m_articulo_precio", function () {
-
-        //     calcular_total_orden();
-        // });
-
         function calcularDescuentoDetalle(e){
             console.log("entro descontrooeoeoeooeoe");
             var codigo=$(e).attr('data-desc');
@@ -1182,55 +1242,43 @@
             calcular_total_orden();
         });
         
+        $scope.addArticuloSolicitud = function () {
+            titlemodalMovimietoArticulo.html('Nuevo Articulo');
+            if ($("#identificador_solicitud_compra").val() != 'I') {
+                table_container_ccsolart.jtable('destroy');
+            }
+            cargartableSolicitufArti();
+            $("#identificador_solicitud_compra").val("A");
+            modalSolicitudArticulo.modal('show');
 
-        // $(document).on("keyup", ".m_articulo_cantidad", function () {
-        //     var valorCant=$(this).val();
-        //     $(this).closest("tr").find("td:eq(3)").children("input").val(valorCant);
-        //     var precioUnitario=$(this).closest("tr").find("td:eq(6)").children("input").val();
-        //     var precioTotal=Number(valorCant)*Number(precioUnitario);
-        //     $(this).closest("tr").find("td:eq(7)").children("input").val(addCommas(redondeodecimale(precioTotal).toFixed(2)));
-        // });
-        $scope.addArticuloSolicitud = function(){
-           
-                
-                titlemodalMovimietoArticulo.html('Nuevo Articulo');
-                if($("#identificador_solicitud_compra").val()!='I'){
-                     table_container_ccsolart.jtable('destroy');
-                  }
-                cargartableSolicitufArti();
-                $("#identificador_solicitud_compra").val("A");  
-                modalSolicitudArticulo.modal('show');
-            
-                $('#search_ccsolart').val('');
-                $('#LoadRecordsButtonCCsolart').click();
-                $("#table_container_solicitudCompra .jtable-main-container .jtable-bottom-panel .jtable-left-area .jtable-goto-page select ").val("1").trigger("change");
-          
-            
+            $('#search_ccsolart').val('');
+            $('#LoadRecordsButtonCCsolart').click();
+            $("#table_container_solicitudCompra .jtable-main-container .jtable-bottom-panel .jtable-left-area .jtable-goto-page select ").val("1").trigger("change");
         }
 
-        
-        
-         function getDataForProforma () {
-            RESTService.all('registerOrdenCompras/data_formOrdenPro', '', function(response) {
+        function getDataForProforma() {
+            RESTService.all('registerOrdenCompras/data_formOrdenPro', '', function (response) {
                 if (!_.isUndefined(response.status) && response.status) {
-                     igv=response.igv[0].value;
+                    igv = response.igv[0].value;
                     //   articulos_repuestos.append('<option value="">Seleccionar</option>');
                     //  _.each(response.articulos_repuestos, function(item) {
                     //     articulos_repuestos.append('<option value="'+item.id+'*'+item.nPrecio+'">'+item.code_article+' '+item.description+'</option>');
                     // });
-                } 
-            }, function() {
+                }
+            }, function () {
                 getDataForProforma();
             });
         }
+
         getDataForProforma();
 
-         function calcular_impueso(precio,cantidad){
-            var impu=(Number(precio)*Number(cantidad))*((Number(igv)/100));
-            impu=impu.toFixed(2);
+        function calcular_impueso(precio, cantidad) {
+            var impu = (Number(precio) * Number(cantidad)) * ((Number(igv) / 100));
+            impu = impu.toFixed(2);
             return impu;
         }
-        function addArtNada(){
+
+        $scope.addArtNada = function() {
           
             var bval = true;
             bval = bval && cantProductoMN.required();
