@@ -401,9 +401,13 @@ class CPETask extends Command
             if($anulado == "N") {
                 $sql_update = "UPDATE ERP_Venta SET enviado_cpe=1 WHERE idventa={$idventa}";
                 DB::statement($sql_update);
+                $texto = date("Y-m-d H:i:s");
+                Storage::append("log.txt", $texto." envio_json_cpe correctamente: ".$filename);
             } else {
                 $sql_update = "UPDATE ERP_Venta SET enviado_anulado=1 WHERE idventa={$idventa}";
                 DB::statement($sql_update);
+                $texto = date("Y-m-d H:i:s");
+                Storage::append("log.txt", $texto." envio_json_cpe anulado correctamente: ".$filename);
             }
            
         }
