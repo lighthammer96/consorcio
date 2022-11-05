@@ -324,7 +324,7 @@ where IdTipoDocumento in ('01','03')");
     }
     public function get_clientePersona($documento){
    
-          $mostrar3=DB::select("SELECT * FROM ERP_Persona as ti left join ERP_Ubigeo as ub on ti.cUbigeo=ub.cCodUbigeo where ti.cNumerodocumento='$documento'");
+          $mostrar3=DB::select("SELECT ti.*, FORMAT(ti.dFechanacimiento, 'yyyy-MM-dd') AS dFechanacimiento_server FROM ERP_Persona as ti left join ERP_Ubigeo as ub on ti.cUbigeo=ub.cCodUbigeo where ti.cNumerodocumento='$documento'");
           return $mostrar3;
     }
      public function destroy_orden($id,$no)

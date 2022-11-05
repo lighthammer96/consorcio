@@ -191,6 +191,8 @@
                     getDistrito(data_p[0].cCodUbigeo, data_p[0].cProvincia);
                     getSector(data_p[0].idsector, data_p[0].cCodUbigeo);
 
+                    // console.log(data_p[0].dFechanacimiento);
+                    $("#dFechanacimiento").val(data_p[0].dFechanacimiento_server);
                     modaClientes.modal('show');
                     console.log(data_p);
                 } else {
@@ -403,11 +405,13 @@
                     'cNombres':$("#cNombres_c").val(),
                     'cApepat':$("#cApepat_c").val(),
                     'cApemat':$("#cApemat_c").val(),
+                    'dFechanacimiento':$("#dFechanacimiento").val(),
 
                 };
                 var cli_id = (cliente_id.val() === '') ? 0 : cliente_id.val();
                 RESTService.updated('customers/createCliente', cli_id, params, function (response) {
                     if (!_.isUndefined(response.status) && response.status) {
+                        $("#formulario-clientes").trigger("reset");
                         modaClientes.modal('hide');
                         AlertFactory.textType({
                             title: '',

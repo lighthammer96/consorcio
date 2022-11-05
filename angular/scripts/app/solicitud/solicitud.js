@@ -528,6 +528,7 @@
                     'cNombres':$("#cNombres_c").val(),
                     'cApepat':$("#cApepat_c").val(),
                     'cApemat':$("#cApemat_c").val(),
+                    'dFechanacimiento':$("#dFechanacimiento").val(),
 
                 };
                 var cli_id = (cliente_id.val() === '') ? 0 : cliente_id.val();
@@ -606,6 +607,8 @@
                     if (!_.isUndefined(response.status) && response.status) {
                         var datos = response.data;
                         if (datos.length == 0) {
+                            $("#formulario-clientes").trigger("reset");
+
                             titleModalClientes.html('Nuevo Cliente');
                             modaClientes.modal('show');
                             var bandera = 'xxxxx';
@@ -4010,7 +4013,7 @@
 
             $("#cCodConsecutivo").removeAttr("disabled");
             $("#IdMoneda").removeAttr("disabled");
-            $("#id_tipoDoc_Venta_or_solicitud").removeAttr("disabled");
+            // $("#id_tipoDoc_Venta_or_solicitud").removeAttr("disabled");
             $("#tipo_solicitud").removeAttr("disabled");
             $("#idconvenio").removeAttr("disabled");
             $("#idvendedor").removeAttr("disabled");

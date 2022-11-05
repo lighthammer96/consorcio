@@ -37,10 +37,15 @@ class PeriodoController extends Controller
         $table="ERP_Periodo";
         $data['periodo'] = strtoupper($data['periodo']);
         $estado='A';
+        $estado_cc='A';
         if(!isset($data['estado'])){
             $estado='I';
         };
+        if(!isset($data['estado_cc'])){
+            $estado_cc='I';
+        };
         $data['estado'] =  $estado;
+        $data['estado_cc'] =  $estado_cc;
         $b = $repo->findByCode($data['periodo']);
         $data_ide='A';
         if ($b) {

@@ -64,6 +64,9 @@ class CustomerController extends Controller
             $idPersonacl='';
             $dato['cTipopersona'] = $tip;
             $dato['cRazonsocial'] = strtoupper($raz);
+            if(isset($data["dFechanacimiento"])) {
+                $dato['dFechanacimiento'] = $data["dFechanacimiento"];
+            }
             $w = $rePer->findByCode($data['documento']);
             $val = $repo->findByCode($data['documento']);
 
