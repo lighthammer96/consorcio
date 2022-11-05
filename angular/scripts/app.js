@@ -134,6 +134,7 @@
         'sys.app.lista_cobranza_cuotas',
         'sys.app.avance_morosidad',
         'sys.app.reporteDocumentosEmitidos',
+        'sys.app.cierre_cuentas_cobrar',
         
         // Almacen
         'sys.app.receptions',

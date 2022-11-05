@@ -20,112 +20,118 @@
           <h4 class="modal-title" id="titleModalClientes"></h4>
         </div>
         <div class="modal-body">
-              <div class="form-horizontal">
-                 <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <input type="hidden" class="form-control input-sm " id="cliente_id" >
-                            <input type="hidden" class="form-control input-sm " id="nombreD" >
-                            <input type="hidden" class="form-control input-sm " id="apellidoPaternoD" >
-                            <input type="hidden" class="form-control input-sm " id="apellidoMaternoD" >
-                            <input type="hidden" class="form-control input-sm " id="razonsocial_clienteD" >
-                            <input type="hidden" class="form-control input-sm " id="cNombres_c" name="cNombres_c">
-                            <input type="hidden" class="form-control input-sm " id="cApepat_c" name="cApepat_c">
-                            <input type="hidden" class="form-control input-sm " id="cApemat_c" name="cApemat_c">
-                            <label class="col-sm-2 control-label">Tipo Documento</label>
-                            <div class="col-sm-4">
-                                 <select id="tipodoc" class="form-control input-sm" ></select>
-                            </div>
-                            <label class="col-sm-2 control-label">Documento</label>
-                            <div class="col-sm-4">
-                                <input type="text" class="form-control input-sm " id="documento" maxlength="11">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Tipo Cliente</label>
-                            <div class="col-sm-4">
-                                <select id="id_tipocli" class="form-control input-sm"></select>
-                            </div>
-                            <label class="col-sm-2 control-label">Tipo Doc. de Venta</label>
-                            <div class="col-sm-4">
-                                <select id="id_tipoDoc_Venta" class="form-control input-sm"></select>
-                            </div>
-                           
-                        </div>
-                        <div class="form-group">
-                             <input type="hidden" class="form-control input-sm " id="tienda_id" >
-                            <label class="col-sm-2 control-label">Razon Social</label>
-                            <div class="col-sm-10">
-                                 <input id="razonsocial_cliente" class="form-control input-sm" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <input type="hidden" class="form-control input-sm " id="tienda_id" >
-                            <label class="col-sm-2 control-label">Dirección</label>
-                            <div class="col-sm-10">
-                                 <input id="direccion" class="form-control input-sm" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Contacto</label>
-                            <div class="col-sm-4">
-                                <input type="text" class="form-control input-sm " id="contacto">
-                            </div>
-                            <label class="col-sm-2 control-label">Correo</label>
-                            <div class="col-sm-4">
-                                <input type="text" class="form-control input-sm " id="correo_electronico">
-                            </div>
-                           
-                        </div>
-                        <div class="form-group">
-                             <input type="hidden" class="form-control input-sm " id="tienda_id" >
-                            <label class="col-sm-2 control-label">Celular</label>
-                            <div class="col-sm-4">
-                                 <input id="celular" class="form-control input-sm" />
-                            </div>
-                            <label class="col-sm-2 control-label">Teléfono</label>
-                            <div class="col-sm-4">
-                                <input type="text" class="form-control input-sm " id="telefono">
-                            </div>
-                          
-                        </div>
-                        <div class="form-group">
-                              <label class="col-sm-2 control-label">Departamento</label>
-                            <div class="col-sm-4">
-                                <select id="departamento" class="form-control input-sm" ></select>
-                            </div>
-                            <label class="col-sm-2 control-label">Provincia</label>
-                            <div class="col-sm-4">
-                                <select id="provincia" class="form-control input-sm"></select>
-                            </div>
-                        </div> 
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Distrito</label>
-                            <div class="col-sm-4">
-                                <select id="distrito" class="form-control input-sm"></select>
-                            </div>
-                            <label class="col-sm-2 control-label">Sector</label>
-                            <div class="col-sm-4">
-                                <select id="idsector" class="form-control input-sm"></select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            
-                             <label class="col-sm-2 control-label">Estado Civil</label>
-                                        <div class="col-sm-4">
-                                            <select class="form-control input-sm" id="cEstadoCivil">
-                                                <option value="">Seleccionar</option>
-                                                <option value="S">Soltero</option>
-                                                <option value="C">Casado</option>
-                                                <option value="D">Divorciado</option>
-                                                <option value="V">Viudo</option>
-                                                <option value="X">Conviviente</option>
-                                            </select>
-                                        </div>
-                        </div>
-                    </div>
-                 </div>   
-              </div>  
+            <form action="#" id="formulario-clientes">
+                <div class="form-horizontal">
+                    <div class="row">
+                       <div class="col-md-12">
+                           <div class="form-group">
+                               <input type="hidden" class="form-control input-sm " id="cliente_id" >
+                               <input type="hidden" class="form-control input-sm " id="nombreD" >
+                               <input type="hidden" class="form-control input-sm " id="apellidoPaternoD" >
+                               <input type="hidden" class="form-control input-sm " id="apellidoMaternoD" >
+                               <input type="hidden" class="form-control input-sm " id="razonsocial_clienteD" >
+                               <input type="hidden" class="form-control input-sm " id="cNombres_c" name="cNombres_c">
+                               <input type="hidden" class="form-control input-sm " id="cApepat_c" name="cApepat_c">
+                               <input type="hidden" class="form-control input-sm " id="cApemat_c" name="cApemat_c">
+                               <label class="col-sm-2 control-label">Tipo Documento</label>
+                               <div class="col-sm-4">
+                                    <select id="tipodoc" class="form-control input-sm" ></select>
+                               </div>
+                               <label class="col-sm-2 control-label">Documento</label>
+                               <div class="col-sm-4">
+                                   <input type="text" class="form-control input-sm " id="documento" maxlength="11">
+                               </div>
+                           </div>
+                           <div class="form-group">
+                               <label class="col-sm-2 control-label">Tipo Cliente</label>
+                               <div class="col-sm-4">
+                                   <select id="id_tipocli" class="form-control input-sm"></select>
+                               </div>
+                               <label class="col-sm-2 control-label">Tipo Doc. de Venta</label>
+                               <div class="col-sm-4">
+                                   <select id="id_tipoDoc_Venta" class="form-control input-sm"></select>
+                               </div>
+                              
+                           </div>
+                           <div class="form-group">
+                                <input type="hidden" class="form-control input-sm " id="tienda_id" >
+                               <label class="col-sm-2 control-label">Razon Social</label>
+                               <div class="col-sm-10">
+                                    <input id="razonsocial_cliente" class="form-control input-sm" />
+                               </div>
+                           </div>
+                           <div class="form-group">
+                               <input type="hidden" class="form-control input-sm " id="tienda_id" >
+                               <label class="col-sm-2 control-label">Dirección</label>
+                               <div class="col-sm-10">
+                                    <input id="direccion" class="form-control input-sm" />
+                               </div>
+                           </div>
+                           <div class="form-group">
+                               <label class="col-sm-2 control-label">Contacto</label>
+                               <div class="col-sm-4">
+                                   <input type="text" class="form-control input-sm " id="contacto">
+                               </div>
+                               <label class="col-sm-2 control-label">Correo</label>
+                               <div class="col-sm-4">
+                                   <input type="text" class="form-control input-sm " id="correo_electronico">
+                               </div>
+                              
+                           </div>
+                           <div class="form-group">
+                                <input type="hidden" class="form-control input-sm " id="tienda_id" >
+                               <label class="col-sm-2 control-label">Celular</label>
+                               <div class="col-sm-4">
+                                    <input id="celular" class="form-control input-sm" />
+                               </div>
+                               <label class="col-sm-2 control-label">Teléfono</label>
+                               <div class="col-sm-4">
+                                   <input type="text" class="form-control input-sm " id="telefono">
+                               </div>
+                             
+                           </div>
+                           <div class="form-group">
+                                 <label class="col-sm-2 control-label">Departamento</label>
+                               <div class="col-sm-4">
+                                   <select id="departamento" class="form-control input-sm" ></select>
+                               </div>
+                               <label class="col-sm-2 control-label">Provincia</label>
+                               <div class="col-sm-4">
+                                   <select id="provincia" class="form-control input-sm"></select>
+                               </div>
+                           </div> 
+                           <div class="form-group">
+                               <label class="col-sm-2 control-label">Distrito</label>
+                               <div class="col-sm-4">
+                                   <select id="distrito" class="form-control input-sm"></select>
+                               </div>
+                               <label class="col-sm-2 control-label">Sector</label>
+                               <div class="col-sm-4">
+                                   <select id="idsector" class="form-control input-sm"></select>
+                               </div>
+                           </div>
+                           <div class="form-group">
+                               
+                               <label class="col-sm-2 control-label">Estado Civil</label>
+                               <div class="col-sm-4">
+                                   <select class="form-control input-sm" id="cEstadoCivil">
+                                       <option value="">Seleccionar</option>
+                                       <option value="S">Soltero</option>
+                                       <option value="C">Casado</option>
+                                       <option value="D">Divorciado</option>
+                                       <option value="V">Viudo</option>
+                                       <option value="X">Conviviente</option>
+                                   </select>
+                               </div>
+                               <label class="col-sm-2 control-label">Fecha Nacimiento</label>
+                               <div class="col-sm-4">
+                                   <input type="date" name="dFechanacimiento" id="dFechanacimiento" class="form-control input-sm">
+                               </div>
+                           </div>
+                       </div>
+                    </div>   
+                 </div> 
+            </form> 
         </div>
         <div class="modal-footer">
         <button type="button" class="btn btn-danger-admin btn-sm" ng-click="saveCliente()" >Guardar</button>  

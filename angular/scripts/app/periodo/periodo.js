@@ -162,6 +162,7 @@
                   
                     'anio': anio.val(),
                     'estado':estado.val(),
+                    'estado_cc':$("#estado_cc").val(),
                     'anual': ((p_state.prop('checked')) ? 'A' : 'I'),
                     'mes': mes.val(),
                     'fechaInicio': fechaInico.val(),

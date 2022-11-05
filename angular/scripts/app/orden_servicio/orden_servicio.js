@@ -742,6 +742,7 @@
                         var datos = response.data;
                         console.log("entro")
                         if (datos.length == 0) {
+                            $("#formulario-clientes").trigger("reset");
                             titleModalClientes.html('Nuevo Cliente');
                             modaClientes.modal('show');
                             var bandera = 'xxxxx';
@@ -784,6 +785,7 @@
                             if (nConsecutivo.val() == "") {
                                 id_tipoDoc_Venta_or.focus();
                             }
+                            $("#dFechanacimiento").val(datos[0].dFechanacimiento_server);
 
                             // llenarServicios();
 
@@ -3071,6 +3073,7 @@
                     'cNombres':$("#cNombres_c").val(),
                     'cApepat':$("#cApepat_c").val(),
                     'cApemat':$("#cApemat_c").val(),
+                    'dFechanacimiento':$("#dFechanacimiento").val(),
 
                 };
                 var cli_id = (cliente_id.val() === '') ? 0 : cliente_id.val();

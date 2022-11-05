@@ -130,6 +130,11 @@ use App\Http\Recopro\Movimiento_cierre\Movimiento_cierre;
 use App\Http\Recopro\Movimiento_cierre\Movimiento_cierreInterface;
 use App\Http\Recopro\Movimiento_cierre\Movimiento_cierreRepository;
 
+use App\Http\Recopro\CierreCuentasCobrar\CierreCuentasCobrar; 
+use App\Http\Recopro\CierreCuentasCobrar\CierreCuentasCobrarInterface;
+use App\Http\Recopro\CierreCuentasCobrar\CierreCuentasCobrarRepository;
+
+
 use App\Http\Recopro\ReporteCreditosAprobado\ReporteCreditosAprobado; 
 use App\Http\Recopro\ReporteCreditosAprobado\ReporteCreditosAprobadoInterface;
 use App\Http\Recopro\ReporteCreditosAprobado\ReporteCreditosAprobadoRepository;
@@ -158,6 +163,10 @@ use App\Http\Recopro\Movimiento_Articulo_cierre\Movimiento_Articulo_cierreReposi
 use App\Http\Recopro\View_movimiento_cierre\View_movimiento_cierre; 
 use App\Http\Recopro\View_movimiento_cierre\View_movimiento_cierreInterface;
 use App\Http\Recopro\View_movimiento_cierre\View_movimiento_cierreRepository;
+
+use App\Http\Recopro\View_cierre_cuentas_cobrar\View_cierre_cuentas_cobrar; 
+use App\Http\Recopro\View_cierre_cuentas_cobrar\View_cierre_cuentas_cobrarInterface;
+use App\Http\Recopro\View_cierre_cuentas_cobrar\View_cierre_cuentas_cobrarRepository;
 
 use App\Http\Recopro\Movimiento_Detalle_cierre\Movimiento_Detalle_cierre; 
 use App\Http\Recopro\Movimiento_Detalle_cierre\Movimiento_Detalle_cierreInterface;
@@ -828,6 +837,7 @@ class AppServiceProvider extends ServiceProvider
         $this->registerGuiaRemisionProducto();
         $this->registerGuiaRemisionDetalle();
         $this->registerMovimiento_cierre();
+        $this->registerCierreCuentasCobrar();
         $this->registerReporteCreditosAprobado();
         $this->registerReporteMeta();
         $this->registerReporteRepuesto();
@@ -856,6 +866,7 @@ class AppServiceProvider extends ServiceProvider
         $this->registerMovimiento_Articulo_cierre();
         $this->registerMovimiento_Detalle_cierre();
         $this->registerView_movimiento_cierre();
+        $this->registerView_cierre_cuentas_cobrar();
 
         $this->registerPeriodo();
         $this->registerAprobacionSolicitud();
@@ -1375,6 +1386,15 @@ class AppServiceProvider extends ServiceProvider
             return new Movimiento_cierreRepository(new Movimiento_cierre());
         });
     }
+
+    public function registerCierreCuentasCobrar()
+    {
+        $app = $this->app;
+
+        $app->bind(CierreCuentasCobrarInterface::class, function ($app) {
+            return new CierreCuentasCobrarRepository(new CierreCuentasCobrar());
+        });
+    }
      public function registerGuiaRemisionDetalle()
     {
         $app = $this->app;
@@ -1421,6 +1441,15 @@ class AppServiceProvider extends ServiceProvider
 
         $app->bind(View_movimiento_cierreInterface::class, function ($app) {
             return new View_movimiento_cierreRepository(new View_movimiento_cierre());
+        });
+    }
+
+    public function registerView_cierre_cuentas_cobrar()
+    {
+        $app = $this->app;
+
+        $app->bind(View_cierre_cuentas_cobrarInterface::class, function ($app) {
+            return new View_cierre_cuentas_cobrarRepository(new View_cierre_cuentas_cobrar());
         });
     }
      public function registerVW_CierreInventarioPeriodo()

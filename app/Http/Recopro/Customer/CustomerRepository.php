@@ -102,7 +102,7 @@ where IdTipoDocumento in ('01','03')");
     }
     public function find($id) 
     {
-        $sql = "SELECT ti.*, p.*, FORMAT(p.dFechanacimiento, 'dd/MM/yyyy') AS dFechanacimiento , ub.*, DATEDIFF(yy,p.dFechanacimiento, GETDATE()) AS edad,
+        $sql = "SELECT ti.*, p.*, FORMAT(p.dFechanacimiento, 'dd/MM/yyyy') AS dFechanacimiento , ub.*, DATEDIFF(yy,p.dFechanacimiento, GETDATE()) AS edad, FORMAT(p.dFechanacimiento, 'yyyy-MM-dd') AS dFechanacimiento_server, 
         CONCAT(ti.direccion,'-',ub.cDistrito) AS direccion_ubigeo
          FROM ERP_Clientes as ti
         left join ERP_Ubigeo as ub on ti.ubigeo=ub.cCodUbigeo 
@@ -114,7 +114,9 @@ where IdTipoDocumento in ('01','03')");
     }
     public function get_cliente_document($id)
     {
-        $mostra=DB::select("SELECT sect.descripcion as sector ,ti.id as idCliente , tipo.descripcion as tipo_cliente_descr,* FROM ERP_Clientes as ti left join ERP_Ubigeo as ub on ti.ubigeo=ub.cCodUbigeo inner join ERP_TipoCliente  as tipo on tipo.id=ti.id_tipocli left join ERP_Sector as sect on (sect.id=ti.idsector) where ti.documento='$id'");
+        $mostra=DB::select("SELECT sect.descripcion as sector ,ti.id as idCliente , tipo.descripcion as tipo_cliente_descr,*, FORMAT(p.dFechanacimiento, 'yyyy-MM-dd') AS dFechanacimiento_server  FROM ERP_Clientes as ti left join ERP_Ubigeo as ub on ti.ubigeo=ub.cCodUbigeo inner join ERP_TipoCliente  as tipo on tipo.id=ti.id_tipocli left join ERP_Sector as sect on (sect.id=ti.idsector)
+         LEFT JOIN ERP_Persona AS p ON(p.idPersona=ti.idPersona)
+        where ti.documento='$id'");
         return $mostra;
     }
 
