@@ -146,15 +146,28 @@ class CierreCuentasCobrarController extends Controller
     {
        
         try {
-            $data = $request->all();
-            $periodo = $data['periodo'];
-            $estado = $data['estado'];
-            
-            $w = $repoView->findByCode($periodo);
-            if ($w) {
-                throw new \Exception('Ya existe un cierre en ese periodo. Por favor ingrese otro periodo.');
-            }
-             
+                $data = $request->all();
+                print_r($data); exit;
+                $periodo = $data['periodo'];
+                $estado = $data['estado'];
+                
+                $w = $repoView->findByCode($periodo);
+                if ($w) {
+                    throw new \Exception('Ya existe un cierre en ese periodo. Por favor ingrese otro periodo.');
+                }
+                
+                $sql_statement = "
+                INSERT INTO dbo.ERP_Solicitud_cierre 
+                SELECT cCodConsecutivo, nConsecutivo, fecha_solicitud, tipo_solicitud, origen, idconvenio, idvendedor, idcliente, idmoneda, 
+                estado, fecha_vencimiento, descuento_id, t_porcentaje_descuento, t_monto_descuento, t_monto_subtotal, t_monto_exonerado, 
+                t_monto_afecto, t_monto_inafecto, t_impuestos, t_monto_total, monto_descuento_detalle, subtotal_detalle, 
+                monto_exonerado_detalle, monto_afecto_detalle, monto_inafecto_detalle, impuestos_detalle, monto_total_detalle, 
+                user_created, user_updated, user_deleted, created_at, updated_at, deleted_at, comentarios, IdTipoDocumento, t_nOperGratuita, 
+                cCodConsecutivoO, nConsecutivoO, intereses, saldo, facturado, pagado, idCobrador, nomora, tipo, condicion_pago, 
+                comentario_aprobacion, int_moratorio, pagado_mora, saldo_mora, comentario_facturacion, descripcion_adicional_clausula, 
+                fecha_calc_mora, '2022-10' AS periodo FROM dbo.ERP_Solicitud 
+                WHERE FORMAT(fecha_solicitud, 'yyyy')=2022 AND FORMAT(fecha_solicitud, 'MM')=10;";
+
                 $movimiento=$repo->getMovimientosCierre($periodo);
                
                 $movimiento_articulo=$repo->getMovimientosCierreArticulo($periodo);
@@ -162,28 +175,13 @@ class CierreCuentasCobrarController extends Controller
                 $movimiento_articulo_detalle=$repo->getMovimientosCierreArticuloDetalle($periodo);
               
                 $repoPeri->update_pc($periodo);     
-                //  $dato=[];   
-                //  $dato['idMovimiento'] = $row->idMovimiento;
-                //  $dato['idTipoOperacion'] = $row->idTipoOperacion;
-                //  $dato['fecha_registro'] = $row->fecha_registro;
-                //  $dato['fecha_proceso'] = $row->fecha_proceso;
-                //  $dato['idUsuario'] = $row->idUsuario;
-                //  $dato['naturaleza'] = $row->naturaleza;
-                //  $dato['observaciones'] = $row->observaciones;
-                //  $dato['idMoneda'] = $row->idMoneda;
-                //  $dato['cCodConsecutivo'] = $row->cCodConsecutivo;
-                //  $dato['nConsecutivo'] = $row->nConsecutivo;
-                //  $dato['periodo'] = $periodo;
-                //  $dato['estado'] = 'P';
-                //  $repo->create($dato);
-                // };
-          
+              
            
-            DB::commit();
-            return response()->json([
-                'status' => true,
-                // 'code' => $idMovimiento
-            ]);
+                DB::commit();
+                return response()->json([
+                    'status' => true,
+                    // 'code' => $idMovimiento
+                ]);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json([
