@@ -534,12 +534,16 @@
 
         $('#p_state').iCheck({
             checkboxClass: 'icheckbox_square-green'
-        }).on('ifChanged', function (event) {
+        }).on('ifChanged', function (e) {
+            $(this).trigger("change", e);
+        });
+
+        $('#p_state').change(function(e) {
             if ($(this).prop("checked")) {
                 console.log("El calculo del impuesto esta activo");
 
                 var lista = $('#articulo_mov_det tr td input[id^="valComp_"]');
-                lista.each(function() {
+                lista.each(function () {
                     var id = $(this).prop("id");
                     var codigo = id.substring(id.indexOf("_") + 1);
                     ingresarImpuesto(codigo);
@@ -1133,23 +1137,16 @@
         }
 
         /**
-         * Calcula e ingresa el input "Valor Compra Descuento"
+         * Calcula e ingresa el input "Valor Compra Descuento" usando el "porcentaje de descuento global"
          * @param String codigo - Codigo que identifica a la fila
          */
         function ingresarValCompDescuento(codigo) {
             var valComp = redondeodecimale($('#valComp_' + codigo).val());
-            var montoTotalDescuento = redondeodecimale($('#montoTotal').val());
             var valCompDescuento = 0;
-            if (montoTotalDescuento != 0) {
-                valCompDescuento = valComp - montoTotalDescuento;
-                $('#valCompDescuento_' + codigo).val(redondeodecimale(valCompDescuento).toFixed(2));
-            }
-            else {
-                var porcentajeTotalDescuento = redondeodecimale($('#porcentajeTotal').val());
-                var monto = valComp * (porcentajeTotalDescuento / 100.0);
-                valCompDescuento = valComp - monto;
-                $('#valCompDescuento_' + codigo).val(redondeodecimale(valCompDescuento).toFixed(2));
-            }
+            var porcentajeTotalDescuento = redondeodecimale($('#porcentajeTotal').val());
+            var monto = valComp * (porcentajeTotalDescuento / 100.0);
+            valCompDescuento = valComp - monto;
+            $('#valCompDescuento_' + codigo).val(redondeodecimale(valCompDescuento).toFixed(2));
         }
 
         /**
@@ -1161,8 +1158,8 @@
             totalesDetalles.each(function() {
                 total += redondeodecimale($(this).val());
             });
-            $('#desTotal').val(addCommas(redondeodecimale(total).toFixed(2)));
-            $('#subTotalFinal').html(addCommas(redondeodecimale(total).toFixed(2))); // El footer de la columna "Sub Total"
+            $('#desTotal').val(redondeodecimale(total).toFixed(2));
+            $('#subTotalFinal').html(redondeodecimale(total).toFixed(2)); // El footer de la columna "Sub Total"
 
             // Ingresar totales extras
             // NOTE: Estos podrian ir en funciones aparte y llamarse desde aqui
@@ -1174,7 +1171,7 @@
             lista.each(function() {
                 total += redondeodecimale($(this).val());
             })
-            $('#cantidadFinal').html(addCommas(redondeodecimale(total).toFixed(2))); // El footer de la columna "Cantidad"
+            $('#cantidadFinal').html(redondeodecimale(total).toFixed(2)); // El footer de la columna "Cantidad"
 
             // Total de la columna "Precio Total"
             total = 0;
@@ -1182,7 +1179,7 @@
             lista.each(function() {
                 total += redondeodecimale($(this).val());
             })
-            $('#precioTotalFinal').html(addCommas(redondeodecimale(total).toFixed(2))); // El footer de la columna "Precio Total"
+            $('#precioTotalFinal').html(redondeodecimale(total).toFixed(2)); // El footer de la columna "Precio Total"
 
             // Total de la columna "Valor Compra"
             total = 0;
@@ -1190,7 +1187,7 @@
             lista.each(function() {
                 total += redondeodecimale($(this).val());
             })
-            $('#valorCompraFinal').html(addCommas(redondeodecimale(total).toFixed(2))); // El footer de la columna "Valor Compra"
+            $('#valorCompraFinal').html(redondeodecimale(total).toFixed(2)); // El footer de la columna "Valor Compra"
 
             // Total de la columna "Valor Compra Descuento"
             total = 0;
@@ -1198,10 +1195,17 @@
             lista.each(function() {
                 total += redondeodecimale($(this).val());
             })
-            $('#valCompDescuentoFinal').html(addCommas(redondeodecimale(total).toFixed(2))); // El footer de la columna "Valor Compra Descuento"
+            $('#valCompDescuentoFinal').html(redondeodecimale(total).toFixed(2)); // El footer de la columna "Valor Compra Descuento"
+
+            // Total de la columna "Impuesto"
+            total = 0;
+            lista = $('#articulo_mov_det tr td input[id^="impuesto"]');
+            lista.each(function() {
+                total += redondeodecimale($(this).val());
+            })
+            $('#impuestoFinal').html(redondeodecimale(total).toFixed(2)); // El footer de la columna "Valor Compra Descuento"
 
         }
-
 
         /*
          *  FUNCIONES PARA EL INPUT DE MONTO DE DESCUENTO GLOBAL
@@ -1211,8 +1215,8 @@
             console.log("Cambiaste el monto total de descuento a: " + $(this).val());
             var monto = redondeodecimale($(this).val());
             if (monto < 0 || monto == '' || monto == null || isNaN(monto)) {
-                $(this).val(addCommas(redondeodecimale(0).toFixed(2)));
-                $('#porcentajeTotal').val(addCommas(redondeodecimale(0).toFixed(2)));
+                $(this).val(redondeodecimale(0).toFixed(2));
+                $('#porcentajeTotal').val(redondeodecimale(0).toFixed(2));
             }
             changeMontoDescuentoGlobal($(this));
         });
@@ -1222,39 +1226,33 @@
          * @param Objetc e - Elemento JQuery que ocaciona el cambio
          */
         function changeMontoDescuentoGlobal(e) {
-            var jValCompDescuentos = $('#articulo_mov_det tr td input[id^="valCompDescuento"]');
-            var jValComps = $('#articulo_mov_det tr td input[id^="valComp"]');
-
-            $('#porcentajeTotal').val(0.00);
-
-            // Primero verificamos que el nuevo monto de descuento no sea mayor a algun "Valor Compra"
+            var valorCompra = redondeodecimale($('#valorCompraFinal').html());
             var montoDescuento = redondeodecimale(e.val());
-            var correcto = true;
-            jValComps.each(function() {
-                if (montoDescuento > redondeodecimale($(this).val())) {
-                    correcto = false;
-                    return;
-                }
-            });
 
-            console.log("El monto es menor a todos los Valor Compra");
-
-            // Si el nuevo monto de descuento es mayor entonces colocamos su valor a 0
-            if (correcto == false) {
-                console.log("El monto es mayor a algun Valor Compra");
-                e.val(addCommas(redondeodecimale(0).toFixed(2)));
-                $('#porcentajeTotal').val(addCommas(redondeodecimale(0).toFixed(2)));
+            if (montoDescuento > valorCompra) { // NOTE: Para la mayoria de las veces
+                console.log("El monto de descuento es mayor al valor de compra");
+                montoDescuento = 0;
+                e.val(0.0);
+                $('#porcentajeTotal').val(0.0);
             }
 
-            jValCompDescuentos.each(function() {
+            // Monto de descuento expresado en porcentaje
+            var porcentaje = (100.0 * montoDescuento) / valorCompra;
+            $('#porcentajeTotal').val(redondeodecimale(porcentaje));
+
+            var jValCompDescuentos = $('#articulo_mov_det tr td input[id^="valCompDescuento"]');
+
+            jValCompDescuentos.each(function () {
                 var id = $(this).prop("id");
                 var codigo = id.substring(id.indexOf("_") + 1);
                 ingresarValCompDescuento(codigo);
                 if ($('#p_state').prop('checked'))
                     ingresarImpuesto(codigo);
                 ingresarSubTotal(codigo);
+
             });
             ingresarTotalOrden();
+
         }
 
         /*
@@ -1279,8 +1277,6 @@
         function changePorcentajeDescuentoGlobal(e) {
             var jValCompDescuentos = $('#articulo_mov_det tr td input[id^="valCompDescuento"]');
 
-            $('#montoTotal').val(0.00);
-
             jValCompDescuentos.each(function() {
                 var id = $(this).prop("id");
                 var codigo = id.substring(id.indexOf("_") + 1);
@@ -1291,6 +1287,9 @@
 
             });
             ingresarTotalOrden();
+            // Actualizamos el input "Monto descuento global"
+            var valorCompra          = redondeodecimale($('#valorCompraFinal').html());
+            $('#montoTotal').val(redondeodecimale(valorCompra * redondeodecimale(e.val() / 100.0)).toFixed(2));
         }
 
         $scope.addArticuloSolicitud = function () {
