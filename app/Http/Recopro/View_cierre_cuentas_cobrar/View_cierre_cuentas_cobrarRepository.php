@@ -68,7 +68,7 @@ class View_cierre_cuentas_cobrarRepository implements View_cierre_cuentas_cobrar
     }
      public function findByCode($code)
     {
-        return $this->model->where('periodo', $code)->first();
+        return $this->model->where('periodo', $code)->where("estado", "P")->first();
     }
 
 }

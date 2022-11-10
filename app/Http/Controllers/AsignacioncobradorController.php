@@ -62,6 +62,7 @@ class AsignacioncobradorController extends Controller
         //  var_dump($datafilcab); exit;
 
         $solitud = array();
+        
         foreach ($datafilcab as $row) {
             array_push($solitud, $row->idventa);
         }

@@ -147,9 +147,12 @@ class CierreCuentasCobrarController extends Controller
        
         try {
                 $data = $request->all();
-                print_r($data); exit;
+                // print_r($data); exit;
                 $periodo = $data['periodo'];
                 $estado = $data['estado'];
+                $array = explode("-", $periodo);
+                $anio = intval($array[0]);
+                $mes = intval($array[1]);
                 
                 $w = $repoView->findByCode($periodo);
                 if ($w) {
@@ -165,16 +168,46 @@ class CierreCuentasCobrarController extends Controller
                 user_created, user_updated, user_deleted, created_at, updated_at, deleted_at, comentarios, IdTipoDocumento, t_nOperGratuita, 
                 cCodConsecutivoO, nConsecutivoO, intereses, saldo, facturado, pagado, idCobrador, nomora, tipo, condicion_pago, 
                 comentario_aprobacion, int_moratorio, pagado_mora, saldo_mora, comentario_facturacion, descripcion_adicional_clausula, 
-                fecha_calc_mora, '2022-10' AS periodo FROM dbo.ERP_Solicitud 
-                WHERE FORMAT(fecha_solicitud, 'yyyy')=2022 AND FORMAT(fecha_solicitud, 'MM')=10;";
-
-                $movimiento=$repo->getMovimientosCierre($periodo);
+                fecha_calc_mora, '{$periodo}' AS periodo FROM dbo.ERP_Solicitud 
+                WHERE FORMAT(fecha_solicitud, 'yyyy')={$anio} AND FORMAT(fecha_solicitud, 'MM')={$mes};
+                
+                INSERT INTO dbo.ERP_SolicitudCredito_cierre 
+                SELECT sc.cCodConsecutivo, sc.nConsecutivo, sc.idconyugue, sc.idfiador, sc.idfiadorconyugue, sc.monto_venta, sc.intereses, sc.cuota_inicial, 
+                sc.fecha_pago_inicial, sc.valor_cuota, sc.nro_cuotas, sc.total_financiado, sc.dia_pago, sc.fecha_iniciopago, sc.tipo_vivienda, sc.propietario, 
+                sc.monto_alquiler, sc.profesion, sc.centro_trabajo, sc.cargo, sc.tiempo_laboral, sc.direccion_trabajo, sc.razon_social_negocio, sc.actividad_negocio, 
+                sc.direccion_negocio, sc.ingreso_neto_mensual, sc.ingreso_neto_conyugue, sc.otros_ingresos, sc.total_ingresos, sc.tipo_vivienda_fiador, 
+                sc.propietario_fiador, sc.monto_alquiler_fiador, sc.profesion_fiador, sc.centro_trabajo_fiador, sc.cargo_fiador, sc.tiempo_laboral_fiador, 
+                sc.direccion_trabajo_fiador, sc.razon_social_negocio_fiador, sc.actividad_negocio_fiador, sc.direccion_negocio_fiador, 
+                sc.ingreso_neto_mensual_fiador, sc.ingreso_neto_conyugue_fiador, sc.otros_ingresos_fiador, sc.total_ingresos_fiador, sc.user_created, 
+                sc.user_updated, sc.user_deleted, sc.created_at, sc.updated_at, sc.deleted_at, sc.valor_cuota_final, sc.cargo_independiente, 
+                sc.tiempo_laboral_independiente, sc.cargo_independiente_fiador, sc.tiempo_laboral_independiente_fiador, sc.dia_vencimiento_cuota, '{$periodo}' AS periodo
+                FROM dbo.ERP_SolicitudCredito AS sc
+                INNER JOIN dbo.ERP_Solicitud AS s ON(s.cCodConsecutivo=sc.cCodConsecutivo AND s.nConsecutivo=sc.nConsecutivo)
+                WHERE FORMAT(s.fecha_solicitud, 'yyyy')={$anio} AND FORMAT(s.fecha_solicitud, 'MM')={$mes};
+                
+                INSERT INTO dbo.ERP_SolicitudCronograma_cierre 
+                SELECT sc.cCodConsecutivo, sc.nConsecutivo, sc.nrocuota, sc.fecha_vencimiento, sc.valor_cuota, sc.int_moratorio, sc.saldo_cuota, sc.monto_pago, 
+                sc.user_created, sc.user_updated, sc.user_deleted, sc.created_at, sc.updated_at, sc.deleted_at, sc.dias_mora, sc.pagado_mora, sc.saldo_mora, '{$periodo}' AS periodo
+                FROM dbo.ERP_SolicitudCronograma AS sc
+                INNER JOIN dbo.ERP_Solicitud AS s ON(s.cCodConsecutivo=sc.cCodConsecutivo AND s.nConsecutivo=sc.nConsecutivo)
+                WHERE FORMAT(s.fecha_solicitud, 'yyyy')={$anio} AND FORMAT(s.fecha_solicitud, 'MM')={$mes};
+                
+                INSERT INTO dbo.ERP_SolicitudNegociaMora_cierre 
+                SELECT snm.idsolicitudmora, snm.cCodConsecutivo, snm.nConsecutivo, snm.nrocuota, snm.fechareg, snm.monto, snm.motivo, snm.user_created, 
+                snm.user_updated, snm.user_deleted, snm.created_at, snm.updated_at, snm.deleted_at, '{$periodo}' AS periodo
+                FROM dbo.ERP_SolicitudNegociaMora AS snm
+                INNER JOIN dbo.ERP_Solicitud AS s ON(s.cCodConsecutivo=snm.cCodConsecutivo AND s.nConsecutivo=snm.nConsecutivo)
+                WHERE FORMAT(s.fecha_solicitud, 'yyyy')={$anio} AND FORMAT(s.fecha_solicitud, 'MM')={$mes};
+                
+                UPDATE dbo.ERP_Periodo SET estado_cc='P' WHERE periodo='{$periodo}';";
+                DB::statement($sql_statement);
+                // $movimiento=$repo->getMovimientosCierre($periodo);
                
-                $movimiento_articulo=$repo->getMovimientosCierreArticulo($periodo);
+                // $movimiento_articulo=$repo->getMovimientosCierreArticulo($periodo);
             
-                $movimiento_articulo_detalle=$repo->getMovimientosCierreArticuloDetalle($periodo);
+                // $movimiento_articulo_detalle=$repo->getMovimientosCierreArticuloDetalle($periodo);
               
-                $repoPeri->update_pc($periodo);     
+                // $repoPeri->update_pc($periodo);     
               
            
                 DB::commit();
