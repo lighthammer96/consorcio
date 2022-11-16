@@ -134,7 +134,8 @@ function getDatosCliente(){
                     
                     cEmail.val(data_p[0].cEmail);
                     cCelular.val(data_p[0].cCelular);
-                    dFechanacimiento.val(data_p.dFechanacimiento2);
+                    // dFechanacimiento.val(data_p.dFechanacimiento2);
+                    dFechanacimiento.val(data_p[0].dFechanacimiento_server);
                     cEstadoCivil.val(data_p[0].cEstadoCivil).trigger('change');;
                     cApepat.val(data_p[0].cApepat);
                     cApemat.val(data_p[0].cApemat);

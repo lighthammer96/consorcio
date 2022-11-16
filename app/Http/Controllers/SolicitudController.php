@@ -74,7 +74,7 @@ class SolicitudController extends Controller
     public function list_creditos(Request $request, SolicitudCreditoInterface $repo)
     {
         $s = $request->input('search', '');
-        $params = ['cCodConsecutivo', 'nConsecutivo', 'fecha_solicitud', 'tipo_solicitud', 'idconvenio', 'tipo_documento', 'numero_documento', 'cliente', 'moneda', 't_monto_total', 'pagado', 'saldo', 'facturado', 'estado'];
+        $params = ['cCodConsecutivo', 'nConsecutivo', 'fecha_solicitud', 'tipo_solicitud', 'idconvenio', 'tipo_documento', 'numero_documento', 'cliente', 'moneda', 't_monto_total', 'pagado', 'saldo', 'facturado', 'estado', 'cuota', 'documento', 'serie'];
         // print_r($repo->search($s)); exit;
         return parseList($repo->search($s), $request, 'cCodConsecutivo', $params);
     }

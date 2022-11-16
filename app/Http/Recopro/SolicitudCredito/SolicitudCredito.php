@@ -17,7 +17,7 @@ class SolicitudCredito extends Model
 
     protected $table = 'ERP_view_solicitud_credito';
 
-    protected $fillable = ['cCodConsecutivo', 'nConsecutivo', 'fecha_solicitud', 'tipo_solicitud', 'idcliente', 'idmoneda', 'estado', 'tipo_documento', 'numero_documento', 'cliente', 'moneda', 'saldo', 'pagado', 'facturado', 'moneda', 't_monto_total','tipo_comprobante'];
+    protected $fillable = ['cCodConsecutivo', 'nConsecutivo', 'fecha_solicitud', 'tipo_solicitud', 'idcliente', 'idmoneda', 'estado', 'tipo_documento', 'numero_documento', 'cliente', 'moneda', 'saldo', 'pagado', 'facturado', 'moneda', 't_monto_total','tipo_comprobante', 'cuota', 'documento', 'serie'];
     protected $primaryKey = 'cCodConsecutivo';
     protected $keyType = 'string';
     public $incrementing = false;

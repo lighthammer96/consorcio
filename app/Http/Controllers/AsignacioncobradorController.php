@@ -59,7 +59,7 @@ class AsignacioncobradorController extends Controller
         //  $datafilcab=$repo->allFiltro($s,$filtro_tienda,$idInicio,$idFin,$idClienteFiltro,$idCobradorFiltro,$FechaInicioFiltro,$FechaFinFiltro,$idTipoSolicitud,$idConvenio, $search_cuentas_cobrar);
         $datafilcab = $repo->searchAsignacionCobradorxCuentasGet($s, $filtro_tienda, $idInicio, $idFin, $idClienteFiltro, $idCobradorFiltro, $FechaInicioFiltro, $FechaFinFiltro, $Departamento, $provincia, $distrito, $idsector, $iddistrito, $idTipoSolicitud, $idConvenio, $search_cuentas_cobrar);
 
-        //  var_dump($datafilcab); exit;
+        //  print_r($datafilcab); exit;
 
         $solitud = array();
         
@@ -107,10 +107,18 @@ class AsignacioncobradorController extends Controller
         $idTipoSolicitud = $request->input('idTipoSolicitud', '');
         $idConvenio = $request->input('idConvenio', '');
 
+        $search_cuentas_cobrar = $request->input('search_cuentas_cobrar', '');
+
+        $Departamento = $request->input('Departamento', '');
+        $provincia = $request->input('provincia', '');
+        $iddistrito = $request->input('iddistrito', '');
+        $distrito = $request->input('distrito', '');
+
+        $idsector = $request->input('idsector', '');
 
 
-        $datafilcab = $repo->allFiltro($s, $filtro_tienda, $idInicio, $idFin, $idClienteFiltro, $idCobradorFiltro, $FechaInicioFiltro, $FechaFinFiltro, $idTipoSolicitud, $idConvenio);
-
+        // $datafilcab = $repo->allFiltro($s, $filtro_tienda, $idInicio, $idFin, $idClienteFiltro, $idCobradorFiltro, $FechaInicioFiltro, $FechaFinFiltro, $idTipoSolicitud, $idConvenio);
+        $datafilcab = $repo->searchAsignacionCobradorxCuentasGet($s, $filtro_tienda, $idInicio, $idFin, $idClienteFiltro, $idCobradorFiltro, $FechaInicioFiltro, $FechaFinFiltro, $Departamento, $provincia, $distrito, $idsector, $iddistrito, $idTipoSolicitud, $idConvenio, $search_cuentas_cobrar);
         $solitud = array();
         foreach ($datafilcab as $row) {
             array_push($solitud, $row->idventa);

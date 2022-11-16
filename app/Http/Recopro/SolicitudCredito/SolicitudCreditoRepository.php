@@ -31,6 +31,9 @@ class SolicitudCreditoRepository implements SolicitudCreditoInterface
             $q->orWhere('nConsecutivo', 'LIKE', '%' . $s . '%');
             $q->orWhere('fecha_solicitud', 'LIKE', '%' . $s . '%');
             $q->orWhere('tipo_solicitud', 'LIKE', '%' . $s . '%');
+            $q->orWhere('cuota', 'LIKE', '%' . $s . '%');
+            $q->orWhere('documento', 'LIKE', '%' . $s . '%');
+            $q->orWhere('serie', 'LIKE', '%' . $s . '%');
         })->orderBy('fecha_solicitud', 'DESC');
     }
 
