@@ -2273,7 +2273,7 @@ function create_pdfVC(response) {
     // } 
     pdfMake.createPdf(docDefinition).print({}, win);
 }
-function crearTablaCCsoles(data, dataBodyReportes, dataMoneda, cambio) {
+function crearTablaCCsoles_(data, dataBodyReportes, dataMoneda, cambio) {
     var subtituloSolesEfec = [
         { fontSize: 8, text: "DOCUMENTO", fillColor: '#eeeeee' },
         { fontSize: 8, text: "FEC DOC", fillColor: '#eeeeee' },
@@ -2514,6 +2514,198 @@ function crearTablaCCsoles(data, dataBodyReportes, dataMoneda, cambio) {
 
     return dataBodyReportes;
 }
+
+function crearTablaCCsoles(data, dataBodyReportes, dataMoneda, cambio) {
+    var subtituloSolesEfec = [
+        { fontSize: 8, text: "DOCUMENTO", fillColor: '#eeeeee' },
+        { fontSize: 8, text: "SOLICITUD", fillColor: '#eeeeee' },
+        { fontSize: 8, text: "FEC DOC", fillColor: '#eeeeee' },
+        { fontSize: 8, text: "FEC VENC", fillColor: '#eeeeee' },
+        { fontSize: 8, text: "DIAS VENCIDOS", fillColor: '#eeeeee' },
+        { fontSize: 8, text: "FEC ULT. PAGO ", fillColor: '#eeeeee' },
+        { fontSize: 8, text: "MONEDA", fillColor: '#eeeeee' },
+        { fontSize: 8, text: "MONTO TOTAL", fillColor: '#eeeeee' },
+        { fontSize: 8, text: "MONTO PENDIENTE", fillColor: '#eeeeee' },
+        { fontSize: 8, text: "VENDEDOR", fillColor: '#eeeeee' },
+        { fontSize: 8, text: "COBRADOR", fillColor: '#eeeeee' },
+    ];
+    dataBodyReportes.push(subtituloSolesEfec);
+    // var ind = 'C';
+    var conc = 1;
+    var consol = 0;
+    var condol = 0;
+    var contfi = 0;
+    // var tem = '';
+    var totalsole = 0;
+    var totaldola = 0;
+    var array = [];
+    var contador = 1;
+    for (var i = 0; i < data.length; i++) {
+        var fecul = '';
+        if (data[i].fecultpago != null) {
+            fecul = moment(data[i].fecultpago).format('DD/MM/YYYY');
+        }
+       
+
+        if(!array.includes(data[i].cliente)) {
+            if(conc > 1) {
+                var subtituloSolesEfec = [
+                    { fontSize: 8, text: "Total por Cobrar en Moneda Base", fillColor: '#eeeeee', colSpan: 6, alignment: 'center', border: [true, false, false, false] },
+                    {},
+                    {},
+                    {},
+                    {},
+                    {},
+                    { fontSize: 8, text: "Soles:", fillColor: '#eeeeee', colSpan: 2, alignment: 'center', border: [false, false, false, false] },
+                    {},
+                    { fontSize: 8, text: dataMoneda[0].Simbolo + " " + addCommas(redondeodecimale(consol).toFixed(2)), fillColor: '#eeeeee', border: [false, false, false, false] },
+                    { fontSize: 8, text: "Nro. Registros Total: " + contfi, fillColor: '#eeeeee', colSpan: 2, border: [false, false, true, false] },
+                    {},
+                ];
+                dataBodyReportes.push(subtituloSolesEfec);
+                var dola = [
+                    { fontSize: 8, text: "", fillColor: '#eeeeee', colSpan: 6, alignment: 'center', border: [true, false, false, true] },
+                    {},
+                    {},
+                    {},
+                    {},
+                    {},
+                    { fontSize: 8, text: "Dolares:", fillColor: '#eeeeee', colSpan: 2, alignment: 'center', border: [false, false, false, true] },
+                    {},
+                    { fontSize: 8, text: dataMoneda[1].Simbolo + " " + addCommas(redondeodecimale(condol).toFixed(2)), fillColor: '#eeeeee', border: [false, false, false, true] },
+                    { fontSize: 8, text: "", fillColor: '#eeeeee', colSpan: 2, border: [false, false, true, true] },
+                    {},
+                ];
+               
+               
+                contfi = 0;
+                consol = 0;
+                condol = 0;
+                dataBodyReportes.push(dola);
+              
+            }
+
+             // cliente
+
+            var primerclien = [
+                { fontSize: 9, text: conc + '.' + ' Cliente', border: [true, true, false, false] },
+                { fontSize: 8, text: data[i].cliente, colSpan: 4, border: [false, true, false, false] },
+                {},
+                {},
+                {},
+                { fontSize: 8, text: data[i].documento_cliente, border: [false, true, false, false] },
+                { fontSize: 8, text: data[i].direccion + ' ' + data[i].cDepartamento + ' ' + data[i].cProvincia + ' ' + data[i].cDistrito, border: [false, true, true, false], colSpan: 5 },
+                {},
+                {},
+                {},
+                {},
+            ];
+
+           
+            dataBodyReportes.push(primerclien);
+            conc = conc + 1;
+            array = [];
+        }
+
+        //detalle
+        var demasclien = [
+            { fontSize: 8, text: data[i].documento_ven },
+            { fontSize: 8, text: data[i].cCodConsecutivo+"-"+data[i].nConsecutivo },
+            { fontSize: 8, text: moment(data[i].fecha_emision).format('DD/MM/YYYY') },
+            { fontSize: 8, text: moment(data[i].fecha_vencimiento).format('DD/MM/YYYY') },
+            { fontSize: 8, text: diasmora(data[i].fecha_vencimiento, data[i].monto_pendiente) },
+            { fontSize: 8, text: fecul },
+            { fontSize: 8, text: data[i].moneda },
+            { fontSize: 8, text: data[i].Simbolo + ' ' + redondeodecimale(data[i].monto_total).toFixed(2) },
+            { fontSize: 8, text: data[i].Simbolo + ' ' + redondeodecimale(data[i].monto_pendiente).toFixed(2) },
+            { fontSize: 8, text: data[i].vendedor },
+            { fontSize: 8, text: data[i].cobrador },
+        ];
+
+        if (data[i].idmoneda == '1') {
+            consol = consol + Number(data[i].monto_pendiente);
+            totalsole = totalsole + Number(data[i].monto_pendiente);
+        } else {
+            condol = condol + Number(data[i].monto_pendiente);
+            totaldola = totaldola + Number(data[i].monto_pendiente);
+
+        }
+        // console.log("totalsole: "+totalsole);
+        dataBodyReportes.push(demasclien);
+        array.push(data[i].cliente);
+
+        // para el ultimo registro
+        if(data.length == contador) {
+            contfi ++;
+            var subtituloSolesEfec = [
+                { fontSize: 8, text: "Total por Cobrar en Moneda Base", fillColor: '#eeeeee', colSpan: 6, alignment: 'center', border: [true, false, false, false] },
+                {},
+                {},
+                {},
+                {},
+                {},
+                { fontSize: 8, text: "Soles:", fillColor: '#eeeeee', colSpan: 2, alignment: 'center', border: [false, false, false, false] },
+                {},
+                { fontSize: 8, text: dataMoneda[0].Simbolo + " " + addCommas(redondeodecimale(consol).toFixed(2)), fillColor: '#eeeeee', border: [false, false, false, false] },
+                { fontSize: 8, text: "Nro. Registros Total: " + contfi, fillColor: '#eeeeee', colSpan: 2, border: [false, false, true, false] },
+                {},
+            ];
+            dataBodyReportes.push(subtituloSolesEfec);
+            var dola = [
+                { fontSize: 8, text: "", fillColor: '#eeeeee', colSpan: 6, alignment: 'center', border: [true, false, false, true] },
+                {},
+                {},
+                {},
+                {},
+                {},
+                { fontSize: 8, text: "Dolares:", fillColor: '#eeeeee', colSpan: 2, alignment: 'center', border: [false, false, false, true] },
+                {},
+                { fontSize: 8, text: dataMoneda[1].Simbolo + " " + addCommas(redondeodecimale(condol).toFixed(2)), fillColor: '#eeeeee', border: [false, false, false, true] },
+                { fontSize: 8, text: "", fillColor: '#eeeeee', colSpan: 2, border: [false, false, true, true] },
+                {},
+            ];
+            dataBodyReportes.push(dola);
+        }
+
+        contfi ++;
+        contador ++;
+
+
+    }
+   
+
+    var fina = [
+        { fontSize: 8, text: "Total por Cobrar a T.C: " + cambio[0].Mensaje, fillColor: '#eeeeee', colSpan: 6, alignment: 'center', border: [true, false, false, false] },
+        {},
+        {},
+        {},
+        {},
+        {},
+        { fontSize: 8, text: "", fillColor: '#eeeeee', colSpan: 2, alignment: 'center', border: [false, false, false, false] },
+        {},
+        { fontSize: 8, text: dataMoneda[0].Simbolo + " " + addCommas(redondeodecimale(totalsole).toFixed(2)), fillColor: '#eeeeee', colSpan: 3, border: [false, false, true, false] },
+        {},
+        {},
+    ];
+    dataBodyReportes.push(fina);
+    var finb = [
+        { fontSize: 8, text: "", fillColor: '#eeeeee', colSpan: 6, alignment: 'center', border: [true, false, false, true] },
+        {},
+        {},
+        {},
+        {},
+        {},
+        { fontSize: 8, text: "Dolares:", fillColor: '#eeeeee', colSpan: 2, alignment: 'center', border: [false, false, false, true] },
+        {},
+        { fontSize: 8, text: dataMoneda[1].Simbolo + " " + addCommas(redondeodecimale((totaldola) + (totalsole / Number(cambio[0].Mensaje))).toFixed(2)), fillColor: '#eeeeee', border: [false, false, false, true] },
+        { fontSize: 8, text: "", fillColor: '#eeeeee', colSpan: 2, border: [false, false, true, true] },
+        {},
+    ];
+
+    dataBodyReportes.push(finb);
+
+    return dataBodyReportes;
+}
 function diasmora(fecha_vencimiento, saldo_cuota) {
     var fecha1 = moment(fecha_vencimiento).format('YYYY/MM/DD');
     var fecha1 = new Date(fecha1);
@@ -2557,7 +2749,7 @@ function create_CCpdf(response) {
         // by default we use portrait, you can change it to landscape if you wish
         pageOrientation: 'landscape',
         // [left, top, right, bottom] or [horizontal, vertical] or just a number for equal margins
-        // pageMargins: [15, 15, 15, 15],
+        pageMargins: [10, 15, 15, 5],
         content: [
             {
                 columns: [
@@ -2581,7 +2773,7 @@ function create_CCpdf(response) {
                 margin: [0, 0, 0, 0],
                 style: 'tableExample',
                 table: {
-                    widths: [70, 60, 60, 40, 60, 40, 60, 60, 120, 110],
+                    widths: [70, 50, 60, 60, 40, 60, 40, 60, 60, 120, 105],
                     body:
                         datscc,
                 },
@@ -2626,6 +2818,7 @@ function create_CCpdf(response) {
     // } else {
     //     pdfMake.createPdf(docDefinition).print({}, win);
     // }
+    console.log(docDefinition);
     pdfMake.createPdf(docDefinition).print({}, win);
 }
 
