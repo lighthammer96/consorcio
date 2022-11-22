@@ -45,6 +45,7 @@ class RegisterOrdenCompraArticuloRepository implements RegisterOrdenCompraArticu
         $attributes['user_updated'] = auth()->id();
         return $this->model->create($attributes);
     }
+
     public function get_consecutivo($table,$id)
     {     $mostrar=DB::select("select top 1 * from $table order by CONVERT(INT, $id) DESC");
          $actu=0;

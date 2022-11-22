@@ -360,12 +360,9 @@
                     var data_p = response.data;
                     var dataDescuento=response.dataDescuento;
 
-
                     var mov_ar=response.movimiento_Ar;
 
-
                     titlemodalMovimieto.html('Editar  Orden de Compra '+'['+ data_p.id+ ']');
-                    
                     btn_movimiento_detalle.prop('disabled',false);
                     btn_movimiento_detalle.trigger('change');
 
@@ -429,9 +426,6 @@
                      //     btn_movimiento_detalle.prop('disabled',true);
                      // }
 
-                    
-                    
-                    
                     articulo_mov_det.html("");
                      mov_ar.map(function(index) {
                         var ver='A';
@@ -450,7 +444,7 @@
                         if(index.nIdDscto!=0){
                             idDescuento =index.nIdDscto+"*"+porcen+'*'+monto;
                          }
-                        addArticuloTable(index.idDetalle,index.idArticulo,index.productoDescripcion,Math.trunc(index.cantidad),ver,index.idDetalle,tipoArt,codl,datl,index.iEstado,index.dFecRequerida_add,"","",Math.trunc(index.cantidad),Math.trunc(index.cantidadRecibida),Math.trunc(index.cantidadDevuelta),Number(index.precioUnitario),Number(index.precioTotal),idDescuento,index.nImpuesto,Number(index.nPorcDescuento),Number(index.nDescuento),ident_impuesto,index.codSolicitud,Number(index.total),Number(index.valorCompra));
+                        addArticuloTable(index.idDetalle,index.idArticulo,index.productoDescripcion,Math.trunc(index.cantidad),ver,index.idDetalle,tipoArt,codl,datl,index.iEstado,index.dFecRequerida_add,"","",Math.trunc(index.cantidad),Math.trunc(index.cantidadRecibida),Math.trunc(index.cantidadDevuelta),Number(index.precioUnitario),Number(index.precioTotal),idDescuento,index.nImpuesto,Number(index.nPorcDescuento),Number(index.nDescuento),ident_impuesto,index.codSolicitud,Number(index.total),Number(index.valorCompra), Number(index.valorCompraDescuento));
                         // addArticuloTable(iddet,index.idArticulo,index.description,Math.trunc(index.cantidad),ver,index.consecutivo,tipo,codl,datl,index.estado,index.fecha_requerida_ad,index.unidaMedida,obser);                      
                       })
                    activarbotones();
@@ -785,7 +779,12 @@
             }); 
         }
 
-        function addArticuloTable(iddet,idProducto,desProducto,cantProducto,ver,codigo,tipo,codl,datl,estado,fecharequerida,unida,obser,cantPend,cantReci,cantDevu,precio,precioTotal,idDescuento,impuesTotal,nPorcDescuento,nDescuento,ident_impuesto,codSoli,totaldetalle,valorCompra){
+        /*
+         * TODO: :O
+         * TODO: ????
+         * TODO: Refactorizar! :D
+         */
+        function addArticuloTable(iddet,idProducto,desProducto,cantProducto,ver,codigo,tipo,codl,datl,estado,fecharequerida,unida,obser,cantPend,cantReci,cantDevu,precio,precioTotal,idDescuento,impuesTotal,nPorcDescuento,nDescuento,ident_impuesto,codSoli,totaldetalle,valorCompra,valorCompraDescuento){
             acodigos.push(codigo);
             console.log(idDescuento,"descuentos id total");
             var costonew=0;
@@ -929,7 +928,7 @@
             var btn3 = $('<button class="btn btn-danger btn-xs delMovPro" data-tipo="'+tipo+'" data-ident="'+iddet+'" title="Eliminar" data-id="' + codigo + '" type="button"><span class="fa fa-trash"></span></button>');
 
             var tdValCompDescuento = $('<td class="text-center"></td>'); // Valor de compra con el descuento general
-            var inpValCompDescuento = $('<input type="number" id="valCompDescuento_'+codigo+'" class="form-control input-sm" readonly step="0.01" value="'+redondeodecimale(0).toFixed(2)+'" />');
+            var inpValCompDescuento = $('<input type="number" id="valCompDescuento_'+codigo+'" class="form-control input-sm valor_compra_detalle_descuento" readonly value="'+redondeodecimale(valorCompraDescuento).toFixed(2)+'" />');
             tdValCompDescuento.append(inpValCompDescuento);
 
 
@@ -1413,10 +1412,11 @@
                 });
                 return false; 
             }
-            var subtotal=Number($("#desTotal").attr('data-total'))-Number($("#desTotal").attr('data-impuesto'));
-            var valorCompra= Number(desTotal.val())-Number($("#desTotal").attr('data-impuesto'));
-            var totalValorDescu=$("#totalDescuento").val();
+            var subtotal= Number($("#subTotalFinal").html());
+            var valorCompra= Number($("#valorCompraFinal").html()); //Number(desTotal.val())-Number($("#desTotal").attr('data-impuesto'));
+            var totalValorDescu = 0; // TODO: Este id ya no existe, por el momento //$("#totalDescuento").val();
             var arrDes=0;
+
             if(totalValorDescu!=''){
                 arrDes=totalValorDescu.split('*');
                 arrDes=arrDes[0];
@@ -1491,9 +1491,6 @@
                 return false; 
             }
             if (bval) {
-                
-                
-                
                 var idartEnv = [];
                     $.each($('.m_articulo_id'), function (idx, item) {
                         idartEnv[idx] = $(item).val();
@@ -1553,6 +1550,7 @@
                 });
                 impuesto_articulo = impuesto_articulo.join(',');
 
+                /* TODO: Campo no considerado en la pagina, pero esta en la base de datos
                 var idDescuenDeta=[];
                 $.each($('.descuentosSelect'), function (idx, item) {
                   
@@ -1561,8 +1559,9 @@
                     var coded=arrayRe[0];
                     idDescuenDeta[idx] =coded
                 });
-
                 idDescuenDeta = idDescuenDeta.join(',');
+                */
+
 
                  var porDeta =[];
                 $.each($('.porcent'), function (idx, item) {
@@ -1616,7 +1615,11 @@
                 }); 
                 codSolicitud = codSolicitud.join(',');
 
-
+                var valorCompraDetalleDescuento = [];
+                $.each($('.valor_compra_detalle_descuento'), function (idx, item) {
+                    valorCompraDetalleDescuento[idx] = $(item).val();
+                });
+                valorCompraDetalleDescuento = valorCompraDetalleDescuento.join(',');
 
                 var params = {
                     'id': idMovimiento.val(),
@@ -1647,7 +1650,7 @@
                     'precioUnitario':idalpretEnv,
                     'precioTotal':idalPrtolEnv,
                     'nImpuestoDetalle':impuesto_articulo,
-                    'nIdDsctoDetalle':idDescuenDeta,
+                    //'nIdDsctoDetalle':idDescuenDeta, // TODO: Borrado de la vista, pero tiene espacio en la base de datos :|
                     'nDescuentoDetalle':montoDeta,
                     'nPorcDescuentoDetalle':porDeta,
                     'valorCompraDetalle':valorCompraDetalle,
@@ -1656,8 +1659,12 @@
                     'iEstadoDetalle':estadoDetalle,
                     'detalleModo':detalleModo,
                     'codSolicitud':codSolicitud,
+                    'valorCompraDescuento':valorCompraDetalleDescuento,
                 };
                 var movimiento_id = (idMovimiento.val() === '') ? 0 : idMovimiento.val();
+
+                console.log("PARAM: ");
+                console.log(params);
 
                 RESTService.updated('registerOrdenCompras/saveMovimiento', movimiento_id, params, function(response) {
                     if (!_.isUndefined(response.status) && response.status) {
