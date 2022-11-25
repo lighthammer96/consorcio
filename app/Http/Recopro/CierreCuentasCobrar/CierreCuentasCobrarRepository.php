@@ -157,8 +157,13 @@ inner join ERP_Productos P on P.id = D.idArticulo");
     }
      public function reversarMovimientos($id)
     {
-        DB::table('ERP_almacen_stock_cierre')->where('periodo',$id)->delete();
-        DB::table('ERP_almacen_stock_localizacion_detalle_cierre')->where('periodo',$id)->delete();
-        DB::table('ERP_almacen_stock_localizacion_cierre')->where('periodo',$id)->delete();
+        // DB::table('ERP_almacen_stock_cierre')->where('periodo',$id)->delete();
+        // DB::table('ERP_almacen_stock_localizacion_detalle_cierre')->where('periodo',$id)->delete();
+        // DB::table('ERP_almacen_stock_localizacion_cierre')->where('periodo',$id)->delete();
+
+        DB::table('ERP_Solicitud_cierre')->where('periodo',$id)->delete();
+        DB::table('ERP_SolicitudCredito_cierre')->where('periodo',$id)->delete();
+        DB::table('ERP_SolicitudCronograma_cierre')->where('periodo',$id)->delete();
+        DB::table('ERP_SolicitudNegociaMora_cierre')->where('periodo',$id)->delete();
     }
 }

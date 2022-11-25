@@ -108,7 +108,7 @@ class CierreCuentasCobrarController extends Controller
             $periodo = $data['periodo'];
             $porciones = explode("*", $periodo);
             $estado = $data['estado'];
-            $repo->update_mc($porciones[0]);
+            $repo->update_cc($porciones[0]);
             DB::commit();
             return response()->json([
                 'status' => true,
@@ -122,13 +122,15 @@ class CierreCuentasCobrarController extends Controller
             ]);
         }
     } 
+
+    
     public function reversarCierre($id, CierreCuentasCobrarInterface $repo, Request $request, View_cierre_cuentas_cobrarInterface $repoView,PeriodoInterface $peri)
     {
        
         try {
             $data = $request->all();
             $reversar=$repo->reversarMovimientos($id);
-            $peri->update_mr($id);
+            $peri->update_cc_mr($id);
             DB::commit();
             return response()->json([
                 'status' => true,

@@ -26,6 +26,20 @@
         var btnImprimir = $("#btnImprimir");
         var btnExcel = $("#btnExcel");
 
+        // $("#btnExcel").click(function (e) {
+        //     if (periodo.val() != '') {
+        //         if (estado.val() != '') {
+        //             var data_excel = {
+        //                 periodo: periodo.val(),
+        //                 estado: $("#estado option:selected").text(),
+        //             }
+        //             $scope.openDoc('cierre_cuentas_cobrar/excelPerido', data_excel);
+        //         };
+        //     }
+
+
+        // });
+
         $("#btnExcel").click(function (e) {
             if (periodo.val() != '') {
                 if (estado.val() != '') {
@@ -33,7 +47,8 @@
                         periodo: periodo.val(),
                         estado: $("#estado option:selected").text(),
                     }
-                    $scope.openDoc('cierre_cuentas_cobrar/excelPerido', data_excel);
+                    // $scope.openDoc('cierre_cuentas_cobrar/excelPerido', data_excel);
+                    $scope.openDoc('cierre_cuentas_cobrar/excelCuentasxCobrar_cierre', data_excel);
                 };
             }
 
@@ -49,6 +64,20 @@
         modalCierreCuentasCobrar.on('hidden.bs.modal', function (e) {
             cleanMoCi();
         });
+        // $("#btnImprimir").click(function (e) {
+        //     if (periodo.val() != '') {
+        //         if (estado.val() != '') {
+        //             var data_pdf = {
+        //                 periodo: periodo.val(),
+        //                 estado: $("#estado option:selected").text(),
+        //             }
+        //             $scope.loadQueryStockPDFCierre('cierre_cuentas_cobrar/pdf', data_pdf);
+        //         };
+
+        //     }
+
+        // });
+
         $("#btnImprimir").click(function (e) {
             if (periodo.val() != '') {
                 if (estado.val() != '') {
@@ -56,12 +85,12 @@
                         periodo: periodo.val(),
                         estado: $("#estado option:selected").text(),
                     }
-                    $scope.loadQueryStockPDFCierre('cierre_cuentas_cobrar/pdf', data_pdf);
+                    // $scope.loadQueryStockPDFCierre('cierre_cuentas_cobrar/pdf', data_pdf);
+                    $scope.loadCCPDF('cierre_cuentas_cobrar/cuentasporcobrar_cierre', data_pdf);
                 };
-                //             $scope.openDoc('projects/excel', data_pdf);
+
             }
 
-            // $scope.openDoc('query_movements/pdf',data_pdf);
         });
 
         function cleanMoCi() {
@@ -147,7 +176,7 @@
                         btnReversar.prop('disabled', false);
                         btnCierreInventario.prop('disabled', false);
                     }
-                    $("#LoadRecordsButtonMovimiento_cierre2").click();
+                    // $("#LoadRecordsButtonMovimiento_cierre2").click();
                     modalCierreCuentasCobrar.modal('show');
                 } else {
                     AlertFactory.textType({
@@ -222,8 +251,11 @@
                         btnReversar.prop('disabled', true);
                         btnCierreInventario.prop('disabled', true);
                         estado.val('C');
-                        $('#LoadRecordsButtonMovimiento_cierre2').click();
-                        $('#LoadRecordsButtonMovimiento_cierre').click();
+                        // $('#LoadRecordsButtonMovimiento_cierre2').click();
+                        // $('#LoadRecordsButtonMovimiento_cierre').click();
+
+                        $('#table_container_Cierre_cuentas_cobrar2').click();
+                        $('#table_container_Cierre_cuentas_cobrar').click();
                     } else {
                         var msg_ = (_.isUndefined(response.message)) ?
                             'No se pudo guardar el movimiento. Intente nuevamente.' : response.message;
