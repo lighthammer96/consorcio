@@ -391,33 +391,28 @@ class RegisterOrdenCompraController extends Controller
             ]);
         }
     }
-    public function createUpdate($id, RegisterOrdenCompraInterface $repo, Request $request, OperationInterface $opRepo,RegisterOrdenCompraArticuloInterface $repoArti,SolicitudCompraArticuloInterface $repoSolComp)
+    public function createUpdate($id, RegisterOrdenCompraInterface $repo, Request $request, OperationInterface $opRepo, RegisterOrdenCompraArticuloInterface $repoArti, SolicitudCompraArticuloInterface $repoSolComp)
     {
-        
         try {
 
             $data = $request->all();
-            $table="ERP_OrdenCompra";
-            $idt='id';
-            $idcon='nConsecutivo';
+            $table = "ERP_OrdenCompra";
+            $idt = 'id';
+            $idcon = 'nConsecutivo';
             if ($id != 0) {
                 $repo->update($id, $data);
                 $movement = $repo->find($id);
                 $id = $movement->id;
                 $estado = $movement->iEstado;
                 $nco = $movement->nConsecutivo;
-
-            }else {
-                $data['id'] = $repo->get_consecutivo($table,$idt);
-                $data['nConsecutivo'] = $repo->get_consecutivo($table,$idcon);
+            } else {
+                $data['id'] = $repo->get_consecutivo($table, $idt);
+                $data['nConsecutivo'] = $repo->get_consecutivo($table, $idcon);
                 $movement = $repo->create($data);
                 $id = $movement->id;
                 $estado = $movement->iEstado;
                 $nco = $movement->nConsecutivo;
             }
-
-            
-
 
             $idArticulo = $data['idArticulo'];
             $idArticulo = explode(',', $idArticulo);
@@ -430,7 +425,6 @@ class RegisterOrdenCompraController extends Controller
 
             $cantidadPendiente = $data['cantidadPendiente'];
             $cantidadPendiente = explode(',', $cantidadPendiente);
-
 
             $cantidadRecibida = $data['cantidadRecibida'];
             $cantidadRecibida = explode(',', $cantidadRecibida);
@@ -447,9 +441,9 @@ class RegisterOrdenCompraController extends Controller
             $nImpuestoDetalle = $data['nImpuestoDetalle'];
             $nImpuestoDetalle = explode(',', $nImpuestoDetalle);
 
-            ////
-            $nIdDsctoDetalle = $data['nIdDsctoDetalle'];
-            $nIdDsctoDetalle = explode(',', $nIdDsctoDetalle);
+            // TODO: Campo no considerado en la pagina, pero esta en la base de datos
+            // $nIdDsctoDetalle = $data['nIdDsctoDetalle'];
+            // $nIdDsctoDetalle = explode(',', $nIdDsctoDetalle);
 
             $nDescuentoDetalle = $data['nDescuentoDetalle'];
             $nDescuentoDetalle = explode(',', $nDescuentoDetalle);
@@ -457,78 +451,72 @@ class RegisterOrdenCompraController extends Controller
             $nPorcDescuentoDetalle = $data['nPorcDescuentoDetalle'];
             $nPorcDescuentoDetalle = explode(',', $nPorcDescuentoDetalle);
 
-
             $valorCompraDetalle = $data['valorCompraDetalle'];
             $valorCompraDetalle = explode(',', $valorCompraDetalle);
-
 
             $totalDetalle = $data['totalDetalle'];
             $totalDetalle = explode(',', $totalDetalle);
 
-
             $dFecRequeridaDetalle = $data['dFecRequeridaDetalle'];
             $dFecRequeridaDetalle = explode(',', $dFecRequeridaDetalle);
-
 
             $iEstadoDetalle = $data['iEstadoDetalle'];
             $iEstadoDetalle = explode(',', $iEstadoDetalle);
 
-
             $detalleModo = $data['detalleModo'];
             $detalleModo = explode(',', $detalleModo);
 
+            $valorCompraDetalleDescuento = $data['valorCompraDescuento'];
+            $valorCompraDetalleDescuento = explode(',', $valorCompraDetalleDescuento);
 
             for ($i = 0; $i < count($idArticulo); $i++) {
-                    $datoLo = [];
-                    $datoLo['idArticulo'] = $idArticulo[$i];
-                    $datoLo['idOrden'] = $id;
-                    $datoLo['cantidad'] = $cantidad[$i]; 
-                    $datoLo['codSolicitud'] = $codSolicitud[$i]; 
-                    $datoLo['cantidadPendiente'] = $cantidadPendiente[$i];
-                    $datoLo['cantidadRecibida'] = $cantidadRecibida[$i];
-                    $datoLo['cantidadDevuelta'] = $cantidadDevuelta[$i];
-                    $datoLo['precioUnitario'] = $precioUnitario[$i];
-                    $datoLo['precioTotal'] = $precioTotal[$i];
-                    $datoLo['nImpuesto'] = $nImpuestoDetalle[$i];
-                    $datoLo['nIdDscto'] = $nIdDsctoDetalle[$i];
-                    $datoLo['nDescuento'] = $nDescuentoDetalle[$i];
-                    $datoLo['nPorcDescuento'] = $nPorcDescuentoDetalle[$i];
-                    $datoLo['valorCompra'] = $valorCompraDetalle[$i];
-                    $datoLo['total'] = $totalDetalle[$i];
-                    $datoLo['dFecRequerida'] = $dFecRequeridaDetalle[$i];
-                    $esta=$iEstadoDetalle[$i];
-                    if($iEstadoDetalle[$i]=='N'){
-                        $esta=1;
-                    }
-                    $datoLo['iEstado'] = $esta;
+                $datoLo = [];
+                $datoLo['idArticulo'] = $idArticulo[$i];
+                $datoLo['idOrden'] = $id;
+                $datoLo['cantidad'] = $cantidad[$i];
+                $datoLo['codSolicitud'] = $codSolicitud[$i];
+                $datoLo['cantidadPendiente'] = $cantidadPendiente[$i];
+                $datoLo['cantidadRecibida'] = $cantidadRecibida[$i];
+                $datoLo['cantidadDevuelta'] = $cantidadDevuelta[$i];
+                $datoLo['precioUnitario'] = $precioUnitario[$i];
+                $datoLo['precioTotal'] = $precioTotal[$i];
+                $datoLo['nImpuesto'] = $nImpuestoDetalle[$i];
+                //$datoLo['nIdDscto'] = $nIdDsctoDetalle[$i];
+                $datoLo['nDescuento'] = $nDescuentoDetalle[$i];
+                $datoLo['nPorcDescuento'] = $nPorcDescuentoDetalle[$i];
+                $datoLo['valorCompra'] = $valorCompraDetalle[$i];
+                $datoLo['total'] = $totalDetalle[$i];
+                $datoLo['dFecRequerida'] = $dFecRequeridaDetalle[$i];
+                $datoLo['valorCompraDescuento'] = $valorCompraDetalleDescuento[$i];
+
+                $esta = $iEstadoDetalle[$i];
+                if ($iEstadoDetalle[$i] == 'N') {
+                    $esta = 1;
+                }
+                $datoLo['iEstado'] = $esta;
 
                 if ($detalleModo[$i] == 0) {
                     $idt = 'id';
-                    $table ="ERP_OrdenCompraArticulo";
-                    $datoLo['id'] = $repoArti->get_consecutivo($table,$idt);
+                    $table = "ERP_OrdenCompraArticulo";
+                    $datoLo['id'] = $repoArti->get_consecutivo($table, $idt);
                     $repoArti->create($datoLo);
-                }else {
+                } else {
                     $repoArti->update($detalleModo[$i], $datoLo);
                 };
-
             }
-             for ($i = 0; $i < count($codSolicitud); $i++) {
-                $dataSo=[];
+            for ($i = 0; $i < count($codSolicitud); $i++) {
+                $dataSo = [];
                 $dataSo['estado'] =  2;
                 $repoSolComp->update_estado($codSolicitud[$i], $dataSo);
-             }
-             $this->cambiarEstadoSolicitud($id,$repoSolComp);
+            }
+            $this->cambiarEstadoSolicitud($id, $repoSolComp);
 
-
-
-            
-          
             DB::commit();
             return response()->json([
                 'status' => true,
                 'code' => $id,
-                'estado'=>$estado,
-                'nco'=>$nco,
+                'estado' => $estado,
+                'nco' => $nco,
             ]);
         } catch (\Exception $e) {
             DB::rollBack();

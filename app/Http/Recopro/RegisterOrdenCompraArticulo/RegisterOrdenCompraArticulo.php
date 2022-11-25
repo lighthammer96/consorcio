@@ -21,7 +21,7 @@ class RegisterOrdenCompraArticulo extends Model
 
     public $incrementing = false;
 
-    protected $fillable = ['id', 'idArticulo','idOrden','cantidad','cantidadPendiente','cantidadRecibida','cantidadDevuelta','precioUnitario','precioTotal','nImpuesto','nIdDscto','nDescuento','codSolicitud','nPorcDescuento','valorCompra','total','dFecRequerida','iEstado','user_created','user_updated'];
+    protected $fillable = ['id', 'idArticulo','idOrden','cantidad','cantidadPendiente','cantidadRecibida','cantidadDevuelta','precioUnitario','precioTotal','nImpuesto','nIdDscto','nDescuento','codSolicitud','nPorcDescuento','valorCompra','total','dFecRequerida','iEstado','user_created','user_updated', 'valorCompraDescuento'];
     
      public function user_c()
     {
