@@ -344,7 +344,7 @@
                 
                 
 
-                echo '</div><br>';
+                echo '</div>';
                 $cont ++;
 
                 if($cont == 20 ) {
