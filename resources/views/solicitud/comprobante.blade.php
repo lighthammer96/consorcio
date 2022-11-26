@@ -344,7 +344,7 @@
                 
                 
 
-                echo '</div>';
+                echo '</div><br>';
                 $cont ++;
 
                 if($cont == 20 ) {
@@ -356,7 +356,7 @@
                         <div class="col" style="width: 52.5%; border-left: 1px solid white; border-bottom: 1px solid black; border-right: 1px solid black; background: #adadad;">DESCRIPCION</div>
                         <div class="col" style="width: 15%; border-left: 1px solid white; border-bottom: 1px solid black; border-right: 1px solid black; background: #adadad;">P. UNITARIO</div>
                         <div class="col" style="width: 15%; border-left: 1px solid white; border-bottom: 1px solid black; border-right: 1px solid black; background: #adadad;">VALOR DE VENTA</div>
-                    </div>';
+                    </div><br>';
                 }
 
             }
@@ -382,7 +382,7 @@
                         echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 52.5%;">(-) ANTICIPO SEPARACIÓN '.$vs->serie_comprobante.'-'.$vs->numero_comprobante.'</div>';
                         echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 15%;">-'.number_format($vs->t_monto_total, 2).'</div>';
                         echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 15%;">-'.number_format($vs->t_monto_total, 2).'</div>';
-                    echo '</div>';
+                    echo '</div><br>';
                     $cont ++;
                 }
             }
