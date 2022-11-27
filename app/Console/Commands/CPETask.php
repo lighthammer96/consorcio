@@ -805,7 +805,8 @@ class CPETask extends Command
                 $detalle_venta["prec_unit_item"] = "0.00";
                 $detalle_venta["val_vta_item"] = sprintf('%.2f', round($sub_tot, 2));
                 $detalle_venta["base_igv"] = sprintf('%.2f', round($sub_tot, 2));
-                $detalle_venta["val_ref_unit_item"] = sprintf('%.2f', round($sub_tot, 2));
+                // $detalle_venta["val_ref_unit_item"] = sprintf('%.2f', round($sub_tot, 2));
+                $detalle_venta["val_ref_unit_item"] = sprintf('%.2f', round($precio_unitario, 2));
                 $total_gratuito += $sub_tot;
             } else {
                 $detalle_venta["val_vta_item"] = sprintf('%.2f', round($value->precio_total, 2));
