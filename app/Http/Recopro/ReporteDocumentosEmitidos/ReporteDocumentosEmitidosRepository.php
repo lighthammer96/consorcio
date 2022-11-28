@@ -24,8 +24,10 @@ class ReporteDocumentosEmitidosRepository implements ReporteDocumentosEmitidosIn
         $model = $this->model;
 
         if(!empty($_REQUEST["FechaInicioFiltro"]) && !empty($_REQUEST["FechaFinFiltro"])) {
-            $inicio = str_replace("-", "/", $_REQUEST["FechaInicioFiltro"]);
-            $fin = str_replace("-", "/", $_REQUEST["FechaFinFiltro"]);
+            // $inicio = str_replace("-", "/", $_REQUEST["FechaInicioFiltro"]);
+            // $fin = str_replace("-", "/", $_REQUEST["FechaFinFiltro"]);
+            $inicio = $_REQUEST["FechaInicioFiltro"];
+            $fin = $_REQUEST["FechaFinFiltro"];
             $model = $model->whereBetween('FechaEmisionServer', [$inicio, $fin]);
         }
 
