@@ -25,6 +25,9 @@ class ReporteRepuestoController extends Controller
 
     public function all(Request $request, ReporteRepuestoInterface $repo)
     {   
+        ini_set('max_execution_time', '3000');
+        set_time_limit(3000);
+        
         $s = $request->input('search', '');
         $filtro_tienda = $request->input('filtro_tienda', '');
 
