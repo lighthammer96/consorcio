@@ -17,6 +17,7 @@ use App\Http\Recopro\Solicitud_Asignacion\Solicitud_AsignacionInterface;
 use App\Http\Recopro\SolicitudCronograma\SolicitudCronogramaInterface;
 use App\Http\Recopro\Query_movements\Query_movementsInterface;
 use App\Http\Recopro\Orden_servicio\Orden_servicioInterface;
+use App\Http\Recopro\Solicitud_Asignacion_cierre\Solicitud_Asignacion_cierreInterface;
 use DB;
 
 class AsignacioncobradorController extends Controller
@@ -90,6 +91,42 @@ class AsignacioncobradorController extends Controller
 
         return generateExcelCuentasxCobrar($data_cabe, $simboloMoneda, $cambio, 'CUENTAS POR COBRAR POR CLIENTE', 'Cuentas');
     }
+
+    public function excelCuentasxCobrar_cierre(Request $request, Orden_servicioInterface $repOs, Query_movementsInterface $repomo, Solicitud_Asignacion_cierreInterface $repo)
+    {
+
+        ini_set('max_execution_time', '3000');
+        set_time_limit(3000);
+        
+        $data = $request->all();
+        $array = explode("*", $data["periodo"]);
+        $periodo = $array[0];
+
+
+      
+        $datafilcab = $repo->searchAsignacionCobradorxCuentasGet($periodo);
+
+
+
+        $solitud = array();
+        
+        foreach ($datafilcab as $row) {
+            array_push($solitud, $row->idventa);
+        }
+
+        $fecha_actual = date("Y-m-d");
+        $cambio = $repOs->cambio_tipo(2, $fecha_actual);
+
+        $solitud = implode(",", $solitud);
+        $simboloMoneda = $repomo->getSimboloMonedaTotal();
+        $data_compania = $repo->get_compania();
+        $data_cabe = $repo->get_cuentas_caber($solitud);
+
+    
+
+        return generateExcelCuentasxCobrar($data_cabe, $simboloMoneda, $cambio, 'CUENTAS POR COBRAR POR CLIENTE', 'Cuentas');
+    }
+
     public function pdf_cuentasxcobrar(Request $request, Orden_servicioInterface $repOs, Query_movementsInterface $repomo, Solicitud_AsignacionInterface $repo)
     {
 
@@ -148,6 +185,46 @@ class AsignacioncobradorController extends Controller
             'cambio' => $cambio,
         ]);
     }
+
+
+    public function pdf_cuentasxcobrar_cierre(Request $request, Orden_servicioInterface $repOs, Query_movementsInterface $repomo, Solicitud_Asignacion_cierreInterface $repo)
+    {
+        $data = $request->all();
+        $array = explode("*", $data["periodo"]);
+        $periodo = $array[0];
+        // print_r($data); exit;
+
+        $datafilcab = $repo->searchAsignacionCobradorxCuentasGet($periodo);
+        $solitud = array();
+        foreach ($datafilcab as $row) {
+            array_push($solitud, $row->idventa);
+        }
+
+        $fecha_actual = date("Y-m-d");
+        $cambio = $repOs->cambio_tipo(2, $fecha_actual);
+
+        $solitud = implode(",", $solitud);
+        $simboloMoneda = $repomo->getSimboloMonedaTotal();
+        $data_compania = $repo->get_compania();
+        $data_cabe = $repo->get_cuentas_caber($solitud);
+        $data_compania = $repo->get_compania();
+
+        $path = public_path('/' . $data_compania[0]->ruta_logo);
+        if (!file_exists($path)) {
+            $path = public_path('/img/a1.jpg');
+        }
+        $type_image = pathinfo($path, PATHINFO_EXTENSION);
+        $image = file_get_contents($path);
+        $image = 'data:image/' . $type_image . ';base64,' . base64_encode($image);
+        return response()->json([
+            'status' => true,
+            'img' => $image,
+            'data_cabe' => $data_cabe,
+            'simboloMoneda' => $simboloMoneda,
+            'cambio' => $cambio,
+        ]);
+    }
+
     public function tarjetaCobranza(Solicitud_AsignacionInterface $repo, Request $request)
     {
         $cCodConsecutivo =  $request->input('cCodConsecutivo');

@@ -18,10 +18,10 @@ class PeriodoRepository implements PeriodoInterface
         $this->model = $model; 
        
     }
-      public function update_mr($id)
+      public function update_cc_mr($id)
     {
         $attributes['user_updated'] = auth()->id();
-        $attributes['estado'] = 'A';
+        $attributes['estado_cc'] = 'A';
         $this->model->where('periodo',$id)->update($attributes);
     }
      public function update_mc($id)
@@ -30,6 +30,14 @@ class PeriodoRepository implements PeriodoInterface
         $attributes['estado'] = 'C';
         $this->model->where('periodo',$id)->update($attributes);
     }
+
+    public function update_cc($id)
+    {
+        $attributes['user_updated'] = auth()->id();
+        $attributes['estado_cc'] = 'C';
+        $this->model->where('periodo',$id)->update($attributes);
+    }
+
       public function update_pc($id)
     {
         $attributes['user_updated'] = auth()->id();

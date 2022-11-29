@@ -312,6 +312,10 @@ use App\Http\Recopro\Solicitud_Asignacion\Solicitud_Asignacion;
 use App\Http\Recopro\Solicitud_Asignacion\Solicitud_AsignacionInterface;
 use App\Http\Recopro\Solicitud_Asignacion\Solicitud_AsignacionRepository;
 
+use App\Http\Recopro\Solicitud_Asignacion_cierre\Solicitud_Asignacion_cierre;
+use App\Http\Recopro\Solicitud_Asignacion_cierre\Solicitud_Asignacion_cierreInterface;
+use App\Http\Recopro\Solicitud_Asignacion_cierre\Solicitud_Asignacion_cierreRepository;
+
 use App\Http\Recopro\Ventas\Ventas;
 use App\Http\Recopro\Ventas\VentasInterface;
 use App\Http\Recopro\Ventas\VentasRepository;
@@ -871,6 +875,7 @@ class AppServiceProvider extends ServiceProvider
         $this->registerPeriodo();
         $this->registerAprobacionSolicitud();
         $this->registerSolicitud_Asignacion();
+        $this->registerSolicitud_Asignacion_cierre();
         $this->registerVW_CierreInventarioPeriodo();
         $this->registerAprobacionTotal();
         $this->registerCategoriaVehicular();
@@ -1484,6 +1489,15 @@ class AppServiceProvider extends ServiceProvider
             return new Solicitud_AsignacionRepository(new Solicitud_Asignacion());
         });
     }
+    public function registerSolicitud_Asignacion_cierre()
+    {
+        $app = $this->app;
+
+        $app->bind(Solicitud_Asignacion_cierreInterface::class, function ($app) {
+            return new Solicitud_Asignacion_cierreRepository(new Solicitud_Asignacion_cierre());
+        });
+    }
+
       public function registerAprobacionSolicitud()
     {
         $app = $this->app;

@@ -26,6 +26,7 @@ Route::get('cuentasxcobrars/tarjetaCobranza', ['as' => 'cuentasxcobrars.tarjetaC
  
 Route::get('cuentasxcobrars/cuentasporcobrar', ['as' => 'cuentasxcobrars.cuentasporcobrar', 'uses' => 'AsignacioncobradorController@pdf_cuentasxcobrar']); 
 
+Route::get('cuentasxcobrars/cuentasporcobrar_cierre', ['as' => 'cuentasxcobrars.cuentasporcobrar_cierre', 'uses' => 'AsignacioncobradorController@pdf_cuentasxcobrar_cierre']); 
 
 Route::get('cuentasxcobrars/TraerDepartamentosOrde/{id}', ['as' => 'cuentasxcobrars.TraerDepartamentosOrde', 'uses' => 'UbigeoController@TraerDepartamentos']);
 

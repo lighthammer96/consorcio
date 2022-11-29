@@ -33,3 +33,7 @@ Route::get('cierre_cuentas_cobrar/findMov/{id}', ['as' => 'cierre_cuentas_cobrar
 Route::get('cierre_cuentas_cobrar/reversarCierre/{id}', ['as' => 'cierre_cuentas_cobrar.reversarCierre', 'uses' => 'CierreCuentasCobrarController@reversarCierre']);  
 
 Route::get('cierre_cuentas_cobrar/pdf', ['as' => 'cierre_cuentas_cobrar.pdf', 'uses' => 'CierreCuentasCobrarController@pdf']);
+
+Route::get('cierre_cuentas_cobrar/cuentasporcobrar_cierre', ['as' => 'cierre_cuentas_cobrar.cuentasporcobrar_cierre', 'uses' => 'AsignacioncobradorController@pdf_cuentasxcobrar_cierre']); 
+
+Route::get('cierre_cuentas_cobrar/excelCuentasxCobrar_cierre', ['as' => 'cierre_cuentas_cobrar.excelCuentasxCobrar_cierre', 'uses' => 'AsignacioncobradorController@excelCuentasxCobrar_cierre']);

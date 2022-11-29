@@ -309,8 +309,8 @@
             
             <div class="col" style="width: 8%; border-left: 1px solid white; border-bottom: 1px solid black; border-right: 1px solid black; background: #adadad;">CANT.</div>
             <div class="col" style="width: 8%; border-left: 1px solid white; border-bottom: 1px solid black; border-right: 1px solid black; background: #adadad;">UND</div>
-            <div class="col" style="width: 52.5%; border-left: 1px solid white; border-bottom: 1px solid black; border-right: 1px solid black; background: #adadad;">DESCRIPCION</div>
-            <div class="col" style="width: 15%; border-left: 1px solid white; border-bottom: 1px solid black; border-right: 1px solid black; background: #adadad;">P. UNITARIO</div>
+            <div class="col" style="width: 57.5%; border-left: 1px solid white; border-bottom: 1px solid black; border-right: 1px solid black; background: #adadad;">DESCRIPCION</div>
+            <div class="col" style="width: 10%; border-left: 1px solid white; border-bottom: 1px solid black; border-right: 1px solid black; background: #adadad;">P. UNITARIO</div>
             <div class="col" style="width: 15%; border-left: 1px solid white; border-bottom: 1px solid black; border-right: 1px solid black; background: #adadad;">VALOR DE VENTA</div>
         </div>      
         <?php 
@@ -330,10 +330,10 @@
 
                 //     echo '  <div class="col">'.$value->producto.'-'.$value->code_article.'</div>';
                 // } else {
-                    echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 52.5%;">' . $value->producto .'-'. $value->descripcion_articulo."-". $value->code_article. '</div>';
+                    echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 57.5%;">' . $value->producto .'-'. $value->descripcion_articulo."-". $value->code_article. '</div>';
                 // }
                 
-                echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 15%;">'.number_format($value->precio_unitario, 2).'</div>';
+                echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 10%;">'.number_format($value->precio_unitario, 2).'</div>';
                 if($value->cOperGrat != "S") {
 
                     echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 15%;">'.number_format($value->precio_total, 2).'</div>';
@@ -353,10 +353,10 @@
                     <div class="row" style="font-size: 12px !important;" >
                         <div class="col" style="width: 8%; border-left: 1px solid white; border-bottom: 1px solid black; border-right: 1px solid black; background: #adadad;">CANT.</div>
                         <div class="col" style="width: 8%; border-left: 1px solid white; border-bottom: 1px solid black; border-right: 1px solid black; background: #adadad;">UND</div>
-                        <div class="col" style="width: 52.5%; border-left: 1px solid white; border-bottom: 1px solid black; border-right: 1px solid black; background: #adadad;">DESCRIPCION</div>
-                        <div class="col" style="width: 15%; border-left: 1px solid white; border-bottom: 1px solid black; border-right: 1px solid black; background: #adadad;">P. UNITARIO</div>
+                        <div class="col" style="width: 57.5%; border-left: 1px solid white; border-bottom: 1px solid black; border-right: 1px solid black; background: #adadad;">DESCRIPCION</div>
+                        <div class="col" style="width: 10%; border-left: 1px solid white; border-bottom: 1px solid black; border-right: 1px solid black; background: #adadad;">P. UNITARIO</div>
                         <div class="col" style="width: 15%; border-left: 1px solid white; border-bottom: 1px solid black; border-right: 1px solid black; background: #adadad;">VALOR DE VENTA</div>
-                    </div>';
+                    </div><br>';
                 }
 
             }
@@ -366,8 +366,8 @@
             //     echo '<div class="row">';
             //     echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 8%;">1.00</div>';
             //     echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 8%;">UND</div>';
-            //     echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 52.5%;">(-) ANTICIPO SEPARACIÓN '.$venta_anticipo_separacion[0]->serie_comprobante.'-'.$venta_anticipo_separacion[0]->numero_comprobante.'</div>';
-            //     echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 15%;">-'.number_format($venta_anticipo_separacion[0]->t_monto_total, 2).'</div>';
+            //     echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 57.5%;">(-) ANTICIPO SEPARACIÓN '.$venta_anticipo_separacion[0]->serie_comprobante.'-'.$venta_anticipo_separacion[0]->numero_comprobante.'</div>';
+            //     echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 10%;">-'.number_format($venta_anticipo_separacion[0]->t_monto_total, 2).'</div>';
             //     echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 15%;">-'.number_format($venta_anticipo_separacion[0]->t_monto_total, 2).'</div>';
             //     echo '</div>';
             //     $cont ++;
@@ -379,10 +379,10 @@
                     echo '<div class="row">';
                         echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 8%;">1.00</div>';
                         echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 8%;">NIU</div>';
-                        echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 52.5%;">(-) ANTICIPO SEPARACIÓN '.$vs->serie_comprobante.'-'.$vs->numero_comprobante.'</div>';
+                        echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 57.5%;">(-) ANTICIPO SEPARACIÓN '.$vs->serie_comprobante.'-'.$vs->numero_comprobante.'</div>';
+                        echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 10%;">-'.number_format($vs->t_monto_total, 2).'</div>';
                         echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 15%;">-'.number_format($vs->t_monto_total, 2).'</div>';
-                        echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 15%;">-'.number_format($vs->t_monto_total, 2).'</div>';
-                    echo '</div>';
+                    echo '</div><br>';
                     $cont ++;
                 }
             }
@@ -399,8 +399,8 @@
                     echo '<div class="row">';
                     echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 8%;">1.00</div>';
                     echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 8%;">NIU</div>';
-                    echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 52.5%;">(-) ANTICIPO '.$venta_anticipo[0]->serie_comprobante.'-'.$venta_anticipo[0]->numero_comprobante.'</div>';
-                    echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 15%;">-'.number_format($venta_anticipo[0]->t_monto_total, 2).'</div>';
+                    echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 57.5%;">(-) ANTICIPO '.$venta_anticipo[0]->serie_comprobante.'-'.$venta_anticipo[0]->numero_comprobante.'</div>';
+                    echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 10%;">-'.number_format($venta_anticipo[0]->t_monto_total, 2).'</div>';
                     echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 15%;">-'.number_format($venta_anticipo[0]->t_monto_total, 2).'</div>';
                     echo '</div>';
                 }
@@ -411,8 +411,8 @@
                         echo '<div class="row">';
                             echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 8%;">1.00</div>';
                             echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 8%;">NIU</div>';
-                            echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 52.5%;">(-) ANTICIPO SEPARACIÓN '.$vs->serie_comprobante.'-'.$vs->numero_comprobante.'</div>';
-                            echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 15%;">-'.number_format($vs->t_monto_total, 2).'</div>';
+                            echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 57.5%;">(-) ANTICIPO SEPARACIÓN '.$vs->serie_comprobante.'-'.$vs->numero_comprobante.'</div>';
+                            echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 10%;">-'.number_format($vs->t_monto_total, 2).'</div>';
                             echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 15%;">-'.number_format($vs->t_monto_total, 2).'</div>';
                         echo '</div>';
                         $cont ++;
@@ -422,7 +422,7 @@
                 echo '<div class="row">';
                 echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 8%;"></div>';
                 echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 8%;"></div>';
-                echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 52.5%;">
+                echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 57.5%;">
                             Marca              : '.$marca.'<br>
                             Modelo             : '.$modelo.'<br>
                             Año de Modelo : '.$anio_modelo.'<br>
@@ -430,7 +430,7 @@
                             # Serie            : '.$serie.'<br>
                             # Motor            : '.$motor.'<br>
                         </div>';
-                echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 15%;"></div>';
+                echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 10%;"></div>';
                 echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 15%;"></div>';
                 echo '</div><br>';
                 $cont ++;
@@ -449,7 +449,7 @@
                 echo '<div class="row">';
                 echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 8%;"></div>';
                 echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 8%;"></div>';
-                echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 52.5%;">
+                echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 57.5%;">
                             Marca              : '.$marca.'<br>
                             Modelo             : '.$modelo.'<br>
                             Año de Modelo : '.$anio_modelo.'<br>
@@ -457,7 +457,7 @@
                             # Serie            : '.$serie.'<br>
                             # Motor            : '.$motor.'<br>
                         </div>';
-                echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 15%;"></div>';
+                echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 10%;"></div>';
                 echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 15%;"></div>';
                 echo '</div><br>';
                 $cont ++;
@@ -477,10 +477,10 @@
             echo '<div class="row">';
             echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 8%;"></div>';
             echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 8%;"></div>';
-            echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 52.5%;">
+            echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 57.5%;">
                         <br>'.$comentario_facturacion.'
                     </div>';
-            echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 15%;"></div>';
+            echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 10%;"></div>';
             echo '  <div class="col" style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; width: 15%;"></div>';
             echo '</div>';
             $cont ++;
@@ -490,8 +490,8 @@
                 <div class="row" style="font-size: 12px !important;" >
                     <div class="col" style="width: 8%; border-left: 1px solid white; border-bottom: 1px solid black; border-right: 1px solid black; background: #adadad;">CANT.</div>
                     <div class="col" style="width: 8%; border-left: 1px solid white; border-bottom: 1px solid black; border-right: 1px solid black; background: #adadad;">UND</div>
-                    <div class="col" style="width: 52.5%; border-left: 1px solid white; border-bottom: 1px solid black; border-right: 1px solid black; background: #adadad;">DESCRIPCION</div>
-                    <div class="col" style="width: 15%; border-left: 1px solid white; border-bottom: 1px solid black; border-right: 1px solid black; background: #adadad;">P. UNITARIO</div>
+                    <div class="col" style="width: 57.5%; border-left: 1px solid white; border-bottom: 1px solid black; border-right: 1px solid black; background: #adadad;">DESCRIPCION</div>
+                    <div class="col" style="width: 10%; border-left: 1px solid white; border-bottom: 1px solid black; border-right: 1px solid black; background: #adadad;">P. UNITARIO</div>
                     <div class="col" style="width: 15%; border-left: 1px solid white; border-bottom: 1px solid black; border-right: 1px solid black; background: #adadad;">VALOR DE VENTA</div>
                 </div>';
             }

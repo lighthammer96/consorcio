@@ -25,6 +25,8 @@ class ReporteRepuestoController extends Controller
 
     public function all(Request $request, ReporteRepuestoInterface $repo)
     {   
+        ini_set('max_execution_time', '3000');
+        set_time_limit(3000);
         $s = $request->input('search', '');
         $filtro_tienda = $request->input('filtro_tienda', '');
 
@@ -86,6 +88,9 @@ class ReporteRepuestoController extends Controller
 
     public function excel(ReporteRepuestoInterface $repo,Request $request)
     {
+        ini_set('max_execution_time', '3000');
+        set_time_limit(3000);
+
          $s = $request->input('search', '');
         $filtro_tienda = $request->input('filtro_tienda', '');
         $idClienteFiltro = $request->input('idClienteFiltro', '');
@@ -97,6 +102,9 @@ class ReporteRepuestoController extends Controller
     }
     public function pdf(ReporteRepuestoInterface $repo,Request $request,Query_movementsInterface $repom,Solicitud_AsignacionInterface $repcom)
     {
+        ini_set('max_execution_time', '3000');
+        set_time_limit(3000);
+        
             $s = $request->input('search', '');
             $filtro_tienda = $request->input('filtro_tienda', '');
             $idClienteFiltro = $request->input('idClienteFiltro', '');

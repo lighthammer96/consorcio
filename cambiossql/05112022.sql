@@ -194,3 +194,28 @@ CREATE TABLE ERP_SolicitudNegociaMora_cierre (
 	CONSTRAINT fk_solicitud_cronograma_solicitud_negocia_mora_cierre FOREIGN KEY (cCodConsecutivo,nConsecutivo,nrocuota) 
 	REFERENCES Consorcio_Pruebas.dbo.ERP_SolicitudCronograma(cCodConsecutivo,nConsecutivo,nrocuota)
 );
+
+
+
+
+CREATE VIEW [dbo].[ERP_view_solicitud_Asignacion_cierre] AS 
+SELECT conv.descripcionconvenio as convenio,sect.descripcion as sector,c.idsector,ubi.cDepartamento,ubi.cProvincia,ubi.cDistrito,v.idventa,
+v.IdTipoDocumento,v.serie_comprobante,v.numero_comprobante,co.id as idCobrador ,c.id as idCliente ,c.razonsocial_cliente as cliente , 
+tdoc.Descripcion as tipoComprobanteText,co.descripcion as Cobrador, con.nCodTienda, v.tipo_comprobante,s.cCodConsecutivo, s.nConsecutivo, s.fecha_solicitud, s.tipo_solicitud, s.estado, s.idconvenio, s.descuento_id, tc.cDescripcion AS tipo_documento, c.documento AS numero_documento, m.Descripcion AS moneda, s.t_monto_total,
+CASE WHEN s.saldo IS NULL THEN 0 ELSE s.saldo END AS saldo,
+CASE WHEN s.pagado IS NULL THEN 0 ELSE s.pagado END
+ AS pagado,
+CASE WHEN s.facturado IS NULL THEN 0 ELSE s.facturado END AS facturado, s.periodo 
+FROM ERP_Solicitud_cierre AS s
+INNER JOIN ERP_Clientes AS c ON(s.idcliente=c.id)
+left join ERP_Ubigeo as ubi on (ubi.cCodUbigeo=c.ubigeo)
+INNER JOIN ERP_TABLASUNAT AS tc ON(cnombretabla = 'TIPO_DOCUMENTO' AND tc.cCodigo=c.tipodoc)
+INNER JOIN ERP_Moneda AS m ON(m.IdMoneda=s.idmoneda)
+INNER JOIN ERP_Venta AS v on(v.cCodConsecutivo_solicitud=s.cCodConsecutivo and v.nConsecutivo_solicitud=s.nConsecutivo and v.tipo_comprobante = 0 and 
+v.IdTipoDocumento in ('03','01') and isnull(v.anulado,'N') = 'N')
+INNER JOIN ERP_Consecutivos AS con on (con.cCodConsecutivo=s.cCodConsecutivo)
+INNER JOIN ERP_TipoDocumento AS tdoc on (v.IdTipoDocumento=tdoc.IdTipoDocumento)
+left  join ERP_Cobrador as co on(s.idCobrador=co.id)
+left join ERP_Convenios as conv  on(conv.idconvenio=s.idconvenio)
+left join erp_sector as sect on (sect.id=c.idsector)
+WHERE S.saldo > 0 AND S.estado > 5;
