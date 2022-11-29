@@ -284,15 +284,13 @@
 
 
        
-         btn_imprimirMovimiento.click(function(e){
-          
-            var id= idMovimiento.val();
-            if(id!=''){
-                 var data = {
-                                id: id,
-                                
+        btn_imprimirMovimiento.click(function (e) {
+            var id = idMovimiento.val();
+            if (id != '') {
+                var data = {
+                    id: id,
                 };
-              $scope.loadMovimientoPDF('registerOrdenCompras/pdf', data);
+                $scope.loadOrdenCompraPDF('registerOrdenCompras/pdf', data);
             }
         });
 
@@ -366,9 +364,6 @@
                     btn_movimiento_detalle.prop('disabled',false);
                     btn_movimiento_detalle.trigger('change');
 
-                    console.log(data_p);
-                    console.log(mov_ar); 
-
                     cCodConsecutivo.val(data_p.cCodConsecutivo).trigger('change');;
                     nConsecutivo.val(data_p.nConsecutivo);
                     idMovimiento.val(data_p.id);
@@ -399,32 +394,6 @@
                     $('#desTotal').attr('data-total', addCommas(redondeodecimale(data_p.total).toFixed(2)));
                     $('#desTotal').val(addCommas(redondeodecimale(data_p.total).toFixed(2)));
                     $('#desTotal').attr('data-impuesto', addCommas(redondeodecimale(data_p.nImpuesto).toFixed(2)));
-
-                     // if(data_p.estado==0){
-                     //     btn_movimiento_aprobar.prop('disabled',false);
-                     //     btn_movimiento_cancelar.prop('disabled',true);
-                     //     btn_movimiento_cerrar.prop('disabled',true);
-                     //     btnguardarMovimiento.prop('disabled',false);
-                     //     btn_movimiento_detalle.prop('disabled',false);
-                     // }else if(data_p.estado==1){
-                     //     btn_movimiento_aprobar.prop('disabled',true);
-                     //     btn_movimiento_cancelar.prop('disabled',false);
-                     //     btn_movimiento_cerrar.prop('disabled',true);
-                     //     btnguardarMovimiento.prop('disabled',true);
-                     //     btn_movimiento_detalle.prop('disabled',true);
-                     // }else if(data_p.estado==2){
-                     //     btn_movimiento_aprobar.prop('disabled',true);
-                     //     btn_movimiento_cancelar.prop('disabled',true);
-                     //     btn_movimiento_cerrar.prop('disabled',false);
-                     //     btnguardarMovimiento.prop('disabled',true);
-                     //     btn_movimiento_detalle.prop('disabled',true);
-                     // }else{
-                     //    btn_movimiento_aprobar.prop('disabled',true);
-                     //     btn_movimiento_cancelar.prop('disabled',true);
-                     //     btn_movimiento_cerrar.prop('disabled',true);
-                     //     btnguardarMovimiento.prop('disabled',true);
-                     //     btn_movimiento_detalle.prop('disabled',true);
-                     // }
 
                     articulo_mov_det.html("");
                      mov_ar.map(function(index) {
@@ -1550,19 +1519,6 @@
                 });
                 impuesto_articulo = impuesto_articulo.join(',');
 
-                /* TODO: Campo no considerado en la pagina, pero esta en la base de datos
-                var idDescuenDeta=[];
-                $.each($('.descuentosSelect'), function (idx, item) {
-                  
-                    var valo= $(item).val();
-                    var arrayRe=valo.split("*");
-                    var coded=arrayRe[0];
-                    idDescuenDeta[idx] =coded
-                });
-                idDescuenDeta = idDescuenDeta.join(',');
-                */
-
-
                  var porDeta =[];
                 $.each($('.porcent'), function (idx, item) {
                    
@@ -1650,7 +1606,6 @@
                     'precioUnitario':idalpretEnv,
                     'precioTotal':idalPrtolEnv,
                     'nImpuestoDetalle':impuesto_articulo,
-                    //'nIdDsctoDetalle':idDescuenDeta, // TODO: Borrado de la vista, pero tiene espacio en la base de datos :|
                     'nDescuentoDetalle':montoDeta,
                     'nPorcDescuentoDetalle':porDeta,
                     'valorCompraDetalle':valorCompraDetalle,
