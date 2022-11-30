@@ -9737,6 +9737,7 @@ function create_pdf_movimientoEntrega(response) {
     // }
 
 }
+
 function create_pdf_movimiento(response) {
     var data_p = response.data;
     var operacion = response.operacion;
@@ -9772,7 +9773,6 @@ function create_pdf_movimiento(response) {
     header.push(column4);
 
     header.push(column5);
-
 
     var cont = 0;
     mov_ar.map(function (index) {
@@ -9836,6 +9836,136 @@ function create_pdf_movimiento(response) {
     // }
 
 }
+
+function create_pdf_ordenCompra(response) {
+    var orden = response.orden;
+    var detalleOrden = response.detalleOrden;
+    var ncolumns = 14;
+
+    // Filas para la informacion de la orden de compra
+    var partOrden = [
+        [
+            { text: 'ORDEN DE COMPRA '  + orden.cCodConsecutivo + orden.nConsecutivo, bold: true, colSpan: ncolumns, alignment: 'center', fontSize: 9 },
+            {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}
+        ],
+
+        [
+            { text: 'Consecutivo: '    + orden.cCodConsecutivo + orden.nConsecutivo, bold: true, fontSize: 9, colSpan: 5 },
+            {}, {}, {}, {},
+            { text: 'Fecha Registro: ' + orden.dFecRegistro,                         bold: true, fontSize: 9, colSpan: 4 },
+            {}, {}, {},
+            { text: 'Estado: '         + orden.iEstado,                              bold: true, fontSize: 9, colSpan: 5 },
+            {}, {}, {}, {},
+        ],
+
+        [
+            { text: 'Prioridad: '       + orden.prioridad,     bold: true, fontSize: 9, colSpan: 5 },
+            {}, {}, {}, {},
+            { text: 'Fecha Requerida: ' + orden.dFecRequerida, bold: true, fontSize: 9, colSpan: 4 },
+            {}, {}, {},
+            { text: 'Moneda: '          + orden.idMoneda,      bold: true, fontSize: 9, colSpan: 5 },
+            {}, {}, {}, {}
+        ],
+
+        [
+            { text: 'Proveedor: '          + orden.idProveedor,      bold: true, fontSize: 9, colSpan: 5 },
+            {}, {}, {}, {},
+            { text: 'Condición de pago: '  + orden.idcondicion_pago, bold: true, fontSize: 9, colSpan: 4 },
+            {}, {}, {},
+            { text: 'Fecha de impresión: ' + orden.fecha_impresion,  bold: true, fontSize: 9, colSpan: 5 },
+            {}, {}, {}, {}
+        ],
+
+        [
+            { text: 'Dirección de entrega: '  + orden.direccionEntrega, bold: true, colSpan: ncolumns, fontSize: 9 },
+            {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}
+        ],
+
+        [
+            { text: 'Comentarios ', bold: true, colSpan: ncolumns, alignment: 'center', fontSize: 9 },
+            {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}
+        ],
+
+        [
+            { text: orden.comentario, colSpan: ncolumns, fontSize: 9 },
+            {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}
+        ],
+
+        [
+            { text: 'Comentarios aprobación ', bold: true, colSpan: ncolumns, alignment: 'center', fontSize: 9 },
+            {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}
+        ],
+
+        [
+            { text: orden.comentarioAprobacion, colSpan: ncolumns, fontSize: 9 },
+            {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}
+        ],
+
+        [
+            { text: 'Impuesto: '  + orden.impuesto, bold: true, colSpan: ncolumns, fontSize: 9 },
+            {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}
+        ]
+    ];
+
+    var headerDetail = [
+        [
+            { text: 'Articulo',               bold: true, alignment: 'center', fontSize: 8 },
+            { text: 'Cantidad',               bold: true, alignment: 'center', fontSize: 8 },
+            { text: 'Cantidad Pendiente',     bold: true, alignment: 'center', fontSize: 8 },
+            { text: 'Cantidad Recibida',      bold: true, alignment: 'center', fontSize: 8 },
+            { text: 'Cantidad Devuelta',      bold: true, alignment: 'center', fontSize: 8 },
+            { text: 'Precio Unitario',        bold: true, alignment: 'center', fontSize: 8 },
+            { text: 'Precio Total',           bold: true, alignment: 'center', fontSize: 8 },
+            { text: 'Porcentaje Descuento',   bold: true, alignment: 'center', fontSize: 8 },
+            { text: 'Monto Descuento',        bold: true, alignment: 'center', fontSize: 8 },
+            { text: 'Valor Compra',           bold: true, alignment: 'center', fontSize: 8 },
+            { text: 'Valor Compra Descuento', bold: true, alignment: 'center', fontSize: 8 },
+            { text: 'Impuesto',               bold: true, alignment: 'center', fontSize: 8 },
+            { text: 'Sub Total',              bold: true, alignment: 'center', fontSize: 8 },
+            { text: 'Fecha',                  bold: true, alignment: 'center', fontSize: 8 },
+            //{ text: 'Estado',                 bold: true, alignment: 'center', fontSize: 8 }
+        ],
+    ];
+
+    var bodyDetail = detalleOrden.map((product) => {
+        return [
+            { text: product.productoDescripcion,                               bold: false, alignment: 'center', fontSize: 7 },
+            { text: Number(product.cantidad),                                  bold: false, alignment: 'center', fontSize: 7 },
+            { text: Number(product.cantidadPendiente),                         bold: false, alignment: 'center', fontSize: 7 },
+            { text: Number(product.cantidadRecibida),                          bold: false, alignment: 'center', fontSize: 7 },
+            { text: Number(product.cantidadDevuelta),                          bold: false, alignment: 'center', fontSize: 7 },
+            { text: Number(product.precioUnitario).toFixed(2),                 bold: false, alignment: 'center', fontSize: 7 },
+            { text: Number(product.precioTotal).toFixed(2),                    bold: false, alignment: 'center', fontSize: 7 },
+            { text: Number(product.nPorcDescuento).toFixed(2),                 bold: false, alignment: 'center', fontSize: 7 },
+            { text: Number(product.nDescuento).toFixed(2),                     bold: false, alignment: 'center', fontSize: 7 },
+            { text: Number(product.valorCompra).toFixed(2),                    bold: false, alignment: 'center', fontSize: 7 },
+            { text: Number(product.valorCompraDescuento).toFixed(2),           bold: false, alignment: 'center', fontSize: 7 },
+            { text: Number(product.nImpuesto).toFixed(2),                      bold: false, alignment: 'center', fontSize: 7 },
+            { text: Number(product.total).toFixed(2),                          bold: false, alignment: 'center', fontSize: 7 },
+            { text: (new Date(product.dFecRequerida)).toLocaleDateString(),    bold: false, alignment: 'center', fontSize: 7 }, // NOTE: Convertir desde el controlador?
+            //{ text: product.iEstado,                                           bold: false, alignment: 'center', fontSize: 7 }
+        ];
+    });
+
+    var detail = headerDetail.concat(bodyDetail);
+    var table = partOrden.concat(detail);
+
+    var docDefinition = {
+        pageSize: 'A3',
+        pageOrientation: 'portrait',
+        content: [
+            {
+                table: {
+                    body: table
+                }
+            }
+        ]
+    };
+
+    var win = window.open('', '_blank');
+    pdfMake.createPdf(docDefinition).open({}, win);
+}
+
 function create_receptionTransfer_pdf(response) {
     var data = [];
     var array_head = [];

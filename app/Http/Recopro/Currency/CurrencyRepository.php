@@ -72,4 +72,8 @@ class CurrencyRepository implements CurrencyInterface
      
     }
 
+    public function find($id)
+    {
+        return $this->model->find($id);
+    }
 }

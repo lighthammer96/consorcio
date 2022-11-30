@@ -17,6 +17,8 @@ use App\Http\Recopro\Operation\OperationInterface;
 use App\Http\Recopro\Product\ProductInterface;
 use App\Http\Recopro\Lot\LotInterface;
 use App\Http\Recopro\Localizacion\LocalizacionInterface;
+use App\Http\Recopro\PaymentCondition\PaymentConditionInterface;
+use App\Http\Recopro\Proveedor\ProveedorInterface;
 use App\Http\Requests\RegisterOrdenCompraRequest;
 use App\Http\Recopro\Serie\SerieInterface;
 use App\Http\Recopro\Solicitud_Asignacion\Solicitud_AsignacionInterface;
@@ -441,10 +443,6 @@ class RegisterOrdenCompraController extends Controller
             $nImpuestoDetalle = $data['nImpuestoDetalle'];
             $nImpuestoDetalle = explode(',', $nImpuestoDetalle);
 
-            // TODO: Campo no considerado en la pagina, pero esta en la base de datos
-            // $nIdDsctoDetalle = $data['nIdDsctoDetalle'];
-            // $nIdDsctoDetalle = explode(',', $nIdDsctoDetalle);
-
             $nDescuentoDetalle = $data['nDescuentoDetalle'];
             $nDescuentoDetalle = explode(',', $nDescuentoDetalle);
 
@@ -660,49 +658,37 @@ class RegisterOrdenCompraController extends Controller
     //         ]);
     //     }
     // }
-     public function pdf(Request $request, RegisterOrdenCompraInterface $repo,Solicitud_AsignacionInterface $repcom)
+    public function pdf(Request $request, RegisterOrdenCompraInterface $repo, CurrencyInterface $currencyRepo, ProveedorInterface $proveedorRepo, PaymentConditionInterface $paymentRepo)
     {
-            $id = $request->input('id');
-            $idtipoOpe = $request->input('idtipoOpe', '');
-            $data_movimientoEntrega=""; 
-            $data_movimientoEntregaArti=""; 
-            if($idtipoOpe==7){
-                 $data_movimientoEntrega=$repo->get_movimientoEntregaProf($id);
-                 $data_movimientoEntregaArti=$repo->get_movement_articulo_printProforma($id); 
-            }else{
-               $data_movimientoEntrega=$repo->get_movimientoEntrega($id); 
-               $data_movimientoEntregaArti=$repo->get_movement_articulo_printVenta($id);
-            }
-            $operacion = $repo->get_movimiento($id);
-            $data_compania=$repcom->get_compania(); 
-            
-            $data = $repo->find($id); 
-            $data_movimiento_Articulo=$repo->get_movement_articulo_print($id);
-            $data_movimiento_lote=$repo->get_movemen_lote($id);
-            $data_movimiento_serie=$repo->get_movemen_Serie($id);
-            if($data['fecha_proceso']){
-                $data['fecha_proceso']=date("d/m/Y", strtotime($data['fecha_proceso']));
-            }else{
-               $data['fecha_proceso']=''; 
-            };
-            $data['fecha_impresion']=date("d/m/Y");
-            $path = public_path('/'.$data_compania[0]->ruta_logo);
-            $type_image = pathinfo($path, PATHINFO_EXTENSION);
-            $image = file_get_contents($path);
-            $image = 'data:image/' . $type_image . ';base64,' . base64_encode($image);
-            return response()->json([
-                'status' => true,
-                'data_compania'=>$data_compania,
-                'data' => $data,
-                'operacion'=>$operacion,
-                'movimiento_Ar'=>$data_movimiento_Articulo,
-                'data_movimiento_lote'=>$data_movimiento_lote,
-                'data_movimiento_serie'=>$data_movimiento_serie,
-                'estado'=>$id,
-                'img'=>$image,
-                'data_movimientoEntrega'=>$data_movimientoEntrega,
-                'data_movimientoEntregaArti'=>$data_movimientoEntregaArti,
-            ]);
+        $id = $request->input('id');
+        $orden = $repo->find($id);
+        //$detalleOrden = $repo->getDetalleArticulos($id);
+        $moneda = $currencyRepo->find($orden['idMoneda']);
+        $proveedor = $proveedorRepo->find($orden['idProveedor']);
+        $condicionPago = $paymentRepo->find($orden['idcondicion_pago']);
+        $detalleOrden = $repo->get_movement_articulo($id);
+
+        // NOTE: Los siguientes campos no tiene su propia tabla en la base de datos - Vea registerOrdenCompra/base.html
+        $prioridad = $this->getPrioridad($orden['prioridad']);
+        $estado = $this->getEstado($orden['iEstado']);
+
+        // Modificamos los campos relacionados para presentarlos
+        $orden['dFecRegistro'] = date('d/m/y', strtotime($orden['dFecRegistro']));
+        $orden['dFecRequerida'] = date('d/m/y', strtotime($orden['dFecRequerida']));
+        $orden['fecha_impresion'] = date("d/m/Y");
+        $orden['idMoneda'] = $moneda['Descripcion'];
+        $orden['prioridad'] = $prioridad;
+        $orden['iEstado'] = $estado;
+        $orden['idProveedor'] = $proveedor[0]->razonsocial;
+        $orden['idcondicion_pago'] = $condicionPago['description'];
+        $orden['impuesto'] = ($orden['impuesto'] == '0' ? 'NO' : 'SI');
+
+        return response()->json([
+            'status' => true,
+            'orden' => $orden,
+            'detalleOrden' => $detalleOrden,
+            'estado' => $id
+        ]);
     }
 
     public function find($id, RegisterOrdenCompraInterface $repo)
@@ -712,15 +698,9 @@ class RegisterOrdenCompraController extends Controller
             $data = $repo->find($id);
             $data_movimiento_Articulo = $repo->get_movement_articulo($id);
             $dataDescuento=$repo->get_data_descuento($data['nIdDscto']);
-            // $data_movimiento_Articulo_entrega = $repo->get_movement_articulo_entrega($id);
-            // $data_movimiento_Articulo_entrega_venta = $repo->get_movimiento_Articulo_entrega_venta($id);
-            // $data_movimiento_lote=$repo->get_movemen_lote($id);
-            // $data_movimiento_serie=$repo->get_movemen_Serie($id);
-            // $data_movimiento_lote_entrega=$repo->get_movemen_lote_entrega($id);
-            // $data_movimiento_serie_entrega=$repo->get_movemen_Serie_entrega($id);
-            // $data_ventaMovimiento=$repo->get_movimientoVenta($id);
+
             $data['fecha_registro']=date("Y-m-d", strtotime($data['dFecRegistro']));
-             $data['fecha_requerida']=date("Y-m-d", strtotime($data['dFecRequerida']));
+            $data['fecha_requerida']=date("Y-m-d", strtotime($data['dFecRequerida']));
 
             return response()->json([
                    'operaciones'=>$operaciones,
@@ -728,13 +708,6 @@ class RegisterOrdenCompraController extends Controller
                     'data' => $data,
                     'movimiento_Ar'=>$data_movimiento_Articulo,
                     'dataDescuento'=>$dataDescuento,
-                 // 'data_movimiento_lote'=>$data_movimiento_lote,
-                 // 'data_movimiento_serie'=>$data_movimiento_serie,
-                 // 'data_movimiento_Articulo_entrega'=>$data_movimiento_Articulo_entrega,
-                 // 'data_movimiento_Articulo_entrega_venta'=>$data_movimiento_Articulo_entrega_venta,
-                 // 'data_ventaMovimiento'=>$data_ventaMovimiento,
-                 // 'data_movimiento_lote_entrega'=>$data_movimiento_lote_entrega,
-                 // 'data_movimiento_serie_entrega'=>$data_movimiento_serie_entrega,
             ]);
 
         } catch (\Exception $e) {
@@ -847,5 +820,29 @@ class RegisterOrdenCompraController extends Controller
             'idProveedor'=>$idProveedor,
         ]);
     }
-     
+
+    private function getPrioridad($id)
+    {
+        $data = [
+            'A' => 'ALTA',
+            'M' => 'MEDIA',
+            'B' => 'BAJA'
+        ];
+        return $data[$id];
+    }
+
+    private function getEstado($id)
+    {
+        $data = [
+            '1' => 'REGISTRADO',
+            '2' => 'POR APROBAR',
+            '3' => 'APROBADO',
+            '4' => 'RECIBIDO',
+            '5' => 'BACKORDEN',
+            '6' => 'CERRADO',
+            '7' => 'CANCELADO',
+            '8' => 'RECHAZADO'
+        ];
+        return $data[$id];
+    }
 }
