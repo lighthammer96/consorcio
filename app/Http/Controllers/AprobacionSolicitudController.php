@@ -124,7 +124,14 @@ class AprobacionSolicitudController extends Controller
                     if($days < 30) {
                         $mes = $mes + 1;
                         $fecha = $anio."-".$mes."-".$dia;
+                        
                     }
+
+                    if(!checkdate($mes, $dia, $anio)) {
+                        $fecha = date("Y-m-t", strtotime($fecha));
+                    }
+
+                    
                     
                 } 
 

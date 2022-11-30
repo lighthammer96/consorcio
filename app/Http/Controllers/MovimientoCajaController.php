@@ -2589,7 +2589,7 @@ class MovimientoCajaController extends Controller
     public function list_comprobantes(Request $request, VentasInterface $repo)
     {
         $s = $request->input('search', '');
-        $params = ['idventa', 'serie_comprobante', 'numero_comprobante', 'fecha_emision', 'tipo_documento', 'numero_documento', 'moneda', 'cliente', 't_monto_total', 'pagado', 'saldo', 'cCodConsecutivo_solicitud', 'nConsecutivo_solicitud', 'tipo_solicitud', "estado", 'IdTipoDocumento', 'anticipo', 'estado_cpe'];
+        $params = ['idventa', 'serie_comprobante', 'numero_comprobante', 'fecha_emision', 'tipo_documento', 'numero_documento', 'moneda', 'cliente', 't_monto_total', 'pagado', 'saldo', 'cCodConsecutivo_solicitud', 'nConsecutivo_solicitud', 'tipo_solicitud', "estado", 'IdTipoDocumento', 'anticipo', 'estado_cpe','comprobante', 'formapago', 'idcliente', 'anulado'];
         // print_r($repo->search($s)); exit;
         return parseList($repo->search($s), $request, 'idventa', $params);
     }

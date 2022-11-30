@@ -315,6 +315,10 @@ class RefinanciamientosController extends Controller
                     $mes = $mes + 1;
                     $fecha = $anio."-".$mes."-".$dia;
                 }
+
+                if(!checkdate($mes, $dia, $anio)) {
+                    $fecha = date("Y-m-t", strtotime($fecha));
+                }
                 
             } 
             // $valor_cuota = (float) $data["monto_refinanciamiento"] / (int) $data["nrocuotas_refinanciamiento"];
