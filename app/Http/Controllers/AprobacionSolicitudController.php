@@ -127,9 +127,11 @@ class AprobacionSolicitudController extends Controller
                         
                     }
 
+                    var_dump(checkdate($mes, $dia, $anio));
                     if(!checkdate($mes, $dia, $anio)) {
                         $fecha = date("Y-m-t", strtotime($fecha));
                     }
+                    var_dump($fecha);
 
                     
                     
