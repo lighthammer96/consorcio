@@ -346,10 +346,10 @@ class RefinanciamientosController extends Controller
                     $fecha = $this->sumar_restar_dias($fecha, "+", 30);
                 }
 
-                if(!checkdate($mes, $dia, $anio)) {
+                if(checkdate($mes, $dia, $anio)) {
                     $fecha = date("Y-m-t", strtotime($fecha));
                 }
-                
+
                 $data_cronograma = array();
                 $data_cronograma["cCodConsecutivo"] = $data_solicitud["cCodConsecutivo"];
                 $data_cronograma["nConsecutivo"] = $data_solicitud["nConsecutivo"];
