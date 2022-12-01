@@ -15,12 +15,11 @@ trait VentasTrait
     public function generateDataExcel($info)
     {
         // $columns[] = ['CAJA', 'TIENDA', 'USUARIO', 'ACTIVO', 'U.CREADO', 'F.CREADO', 'U.MODIFICADO', 'F.MODIFICADO'];
-        $columns[] = ['SERIE','NÚMERO','FECHA','TIPO DOC','N° DOCUMENTO','CLIENTE','MONEDA','MONTO', 'PAGADO', 'SALDO', 'ANULADO', 'ESTADO'];
+        $columns[] = ['COMPROBANTE','FECHA','TIPO DOC','N° DOCUMENTO','CLIENTE','MONEDA','MONTO', 'PAGADO', 'SALDO', 'ANULADO', 'ESTADO', 'FORMA PAGO'];
 
         foreach ($info as $i) {
             $columns[] = [
-                ['left', $i->serie_comprobante],
-                ['left', $i->numero_comprobante],
+                ['left', $i->comprobante],
                 ['left', $i->fecha_emision],
                 ['left', $i->tipo_documento],
                 ['left', $i->numero_documento],
@@ -30,7 +29,8 @@ trait VentasTrait
                 ['left', $i->pagado],
                 ['left', $i->saldo],
                 ['left', $i->anulado],
-                ['left', $i->estado_cpe]
+                ['left', $i->estado_cpe],
+                ['left', $i->formapago],
                 
             ];
         }

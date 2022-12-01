@@ -78,7 +78,7 @@ class ReporteDocumentosEmitidosRepository implements ReporteDocumentosEmitidosIn
             // $fin = str_replace("-", "/", $_REQUEST["FechaFinFiltro"]);
             $inicio = $_REQUEST["FechaInicioFiltro"];
             $fin = $_REQUEST["FechaFinFiltro"];
-           $model = $model->whereBetween('FechaEmision', [$inicio, $fin]);
+           $model = $model->whereBetween('FechaEmisionServer', [$inicio, $fin]);
         }
 
         if(!empty($_REQUEST["idClienteFiltro"])) {

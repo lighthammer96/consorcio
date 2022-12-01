@@ -39,9 +39,6 @@ class VentasController extends Controller
  
     public function all(Request $request, VentasInterface $repo) 
     {
-//         $date = "2022-02-31";
-// echo date("Y-m-t", strtotime($date)); exit;
-
         $s      = $request->input('search', '');
         $params = ['idventa','cliente','anulado','serie_comprobante', 'numero_comprobante', 'fecha_emision', 'tipo_documento', 'numero_documento', 'moneda', 't_monto_total', 'pagado', 'saldo', 'cCodConsecutivo_solicitud', 'nConsecutivo_solicitud', 'tipo_solicitud', "estado", 'IdTipoDocumento', 'anticipo', 'idventa_referencia', 'tipo_comprobante', 'estado_cpe', 'fecha_emision_server', 'dias_vencidos','comprobante', 'formapago'];
         // print_r($repo->search($s)); exit;
