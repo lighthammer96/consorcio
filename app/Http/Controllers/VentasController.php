@@ -39,7 +39,7 @@ class VentasController extends Controller
  
     public function all(Request $request, VentasInterface $repo) 
     {
-//         $date = "2022-02-28";
+//         $date = "2022-02-31";
 // echo date("Y-m-t", strtotime($date)); exit;
 
         $s      = $request->input('search', '');

@@ -340,7 +340,7 @@ class RefinanciamientosController extends Controller
                    
                     $fecha = $anio."-".$mes."-".$dia;
                     if(!checkdate($mes, $dia, $anio)) {
-                        $fecha = date("Y-m-t", strtotime($fecha));
+                        $fecha = date("Y-m-t", strtotime($anio."-".$mes."-01"));
                     }
                     $mes = $mes + 1;
                     
@@ -348,7 +348,7 @@ class RefinanciamientosController extends Controller
 
                     $fecha = $this->sumar_restar_dias($fecha, "+", 30);
                     if(!checkdate($mes, $dia, $anio)) {
-                        $fecha = date("Y-m-t", strtotime($fecha));
+                        $fecha = date("Y-m-t", strtotime($anio."-".$mes."-01"));
                     }
                 }
 
