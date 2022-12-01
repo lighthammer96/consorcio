@@ -148,16 +148,20 @@ class AprobacionSolicitudController extends Controller
                         // if($dias_del_mes < $dia) {
                         //     $fecha = $anio."-".$mes."-".$dias_del_mes;
                         // }
+                        if(checkdate($mes, $dia, $anio)) {
+                            $fecha = date("Y-m-t", strtotime($fecha));
+                        }
                       
                         $mes = $mes + 1;
                     } else {
                         $fecha = $this->sumar_restar_dias($fecha, "+", 30);
+                        if(checkdate($mes, $dia, $anio)) {
+                            $fecha = date("Y-m-t", strtotime($fecha));
+                        }
                     }
 
                 //    var_dump(checkdate($mes, $dia, $anio));
-                    if(checkdate($mes, $dia, $anio)) {
-                        $fecha = date("Y-m-t", strtotime($fecha));
-                    }
+                    
                     // var_dump($fecha);
                    
                     $data_cronograma = array();
