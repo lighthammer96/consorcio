@@ -148,6 +148,7 @@ class AprobacionSolicitudController extends Controller
                         // if($dias_del_mes < $dia) {
                         //     $fecha = $anio."-".$mes."-".$dias_del_mes;
                         // }
+                        echo $mes." ".$dia." ".$anio;
                         var_dump(checkdate($mes, $dia, $anio));
 
                         if(!checkdate($mes, $dia, $anio)) {
