@@ -347,9 +347,9 @@ class RefinanciamientosController extends Controller
                 } else {
 
                     $fecha = $this->sumar_restar_dias($fecha, "+", 30);
-                    if(!checkdate($mes, $dia, $anio)) {
-                        $fecha = date("Y-m-t", strtotime($anio."-".$mes."-01"));
-                    }
+                    // if(!checkdate($mes, $dia, $anio)) {
+                    //     $fecha = date("Y-m-t", strtotime($anio."-".$mes."-01"));
+                    // }
                 }
 
                 
