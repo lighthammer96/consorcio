@@ -154,11 +154,11 @@ class AprobacionSolicitudController extends Controller
                         $fecha = $this->sumar_restar_dias($fecha, "+", 30);
                     }
 
-                   
+                   var_dump(checkdate($mes, $dia, $anio));
                     if(!checkdate($mes, $dia, $anio)) {
                         $fecha = date("Y-m-t", strtotime($fecha));
                     }
-                  
+                    var_dump($fecha);
                    
                     $data_cronograma = array();
                     $data_cronograma["cCodConsecutivo"] = $conformidad[0]->cCodConsecutivo;
