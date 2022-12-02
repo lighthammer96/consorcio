@@ -44,9 +44,14 @@ class VentasRepository implements VentasInterface
             $model = $model->where("estado_cpe", $_REQUEST["estado_cpe"]);
         } 
 
+        if(!empty($_REQUEST["anulado"])) {
+            $model = $model->where("anulado", $_REQUEST["anulado"]);
+        } 
+
         return $model->where(function ($q) use ($s) {
-            $q->where('serie_comprobante', 'LIKE', '%' . $s . '%');
-            $q->orWhere('numero_comprobante', 'LIKE', '%' . $s . '%');
+            // $q->where('serie_comprobante', 'LIKE', '%' . $s . '%');
+            // $q->orWhere('numero_comprobante', 'LIKE', '%' . $s . '%');
+            $q->where('comprobante', 'LIKE', '%' . $s . '%');
             $q->orWhere('cliente', 'LIKE', '%' . $s . '%');
             $q->orWhere('fecha_emision', 'LIKE', '%' . $s . '%');
             $q->orWhere('numero_documento', 'LIKE', '%' . $s . '%');

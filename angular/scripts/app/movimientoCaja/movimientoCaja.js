@@ -3919,6 +3919,7 @@ generateSearchForm('frm-search-comprobantes', 'LoadRecordsButtonComprobantes', f
         idClienteFiltro: $('#idClienteFiltro').val(),
         id_tipo_doc: $('#id_tipo_doc').val(),
         estado_cpe: $('#estado_cpe').val(),
+        anulado: $('#anulado').val(),
     });
 }, true);
 
