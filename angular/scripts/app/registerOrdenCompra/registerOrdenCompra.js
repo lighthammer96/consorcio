@@ -416,6 +416,10 @@
                         addArticuloTable(index.idDetalle,index.idArticulo,index.productoDescripcion,Math.trunc(index.cantidad),ver,index.idDetalle,tipoArt,codl,datl,index.iEstado,index.dFecRequerida_add,"","",Math.trunc(index.cantidad),Math.trunc(index.cantidadRecibida),Math.trunc(index.cantidadDevuelta),Number(index.precioUnitario),Number(index.precioTotal),idDescuento,index.nImpuesto,Number(index.nPorcDescuento),Number(index.nDescuento),ident_impuesto,index.codSolicitud,Number(index.total),Number(index.valorCompra), Number(index.valorCompraDescuento));
                         // addArticuloTable(iddet,index.idArticulo,index.description,Math.trunc(index.cantidad),ver,index.consecutivo,tipo,codl,datl,index.estado,index.fecha_requerida_ad,index.unidaMedida,obser);                      
                       })
+                    // Los valores al pie de la tabla (Totales) no se actualizan al momento de editar una orden de compra
+                    // LLamar a esta función se encarga de actualizar
+                    ingresarTotalOrden();
+
                    activarbotones();
                     modalMovimieto.modal("show");
                     
