@@ -191,6 +191,11 @@
                     list: false,
 
                 },
+                formapago: {
+                    title: 'Forma de Pago',
+
+
+                },
                 edit: {
                     width: '1%',
                     sorting: false,

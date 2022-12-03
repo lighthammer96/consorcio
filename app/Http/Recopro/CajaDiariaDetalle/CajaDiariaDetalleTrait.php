@@ -50,13 +50,13 @@ trait CajaDiariaDetalleTrait
 
     public function generateDataComprobantesExcel($info)
     {
-        $columns[] = ['SERIE','NÚMERO','FECHA','TIPO DOC','N° DOCUMENTO','CLIENTE','MONEDA','MONTO', 'PAGADO', 'SALDO', 'ESTADO'];
+        $columns[] = ['COMPROBANTE','FECHA','TIPO DOC','N° DOCUMENTO','CLIENTE','MONEDA','MONTO', 'PAGADO', 'SALDO', 'ESTADO', 'FORMA PAGO'];
 
         foreach ($info as $i) {
             
             $columns[] = [
-                ['left', $i->serie_comprobante],
-                ['left', $i->numero_comprobante],
+                ['left', $i->comprobante],
+               
                 ['left', $i->fecha_emision],
                 ['left', $i->tipo_documento],
                 ['left', $i->numero_documento],
@@ -66,6 +66,7 @@ trait CajaDiariaDetalleTrait
                 ['left', $i->pagado],
                 ['left', $i->saldo],
                 ['left', $i->estado_cpe],
+                ['left', $i->formapago]
                
             ];
         }

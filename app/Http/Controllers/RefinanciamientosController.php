@@ -294,10 +294,18 @@ class RefinanciamientosController extends Controller
                 $arr_date = explode("-", $fecha);
                 $dia = $dia_vencimiento_cuota;
                 $mes = $arr_date[1] + 1;
+               
+                
+
                 // if($dia < $arr_date[2]) {
                 //     $mes = $arr_date[1] + 1;
                 // }
                 $anio = $arr_date[0];
+
+                if($mes > 12) {
+                    $mes = 1;
+                    $anio = $anio + 1;
+                }
 
                 $fecha_actual = date("Y-m-d");
                 $fecha = $anio."-".$mes."-".$dia;
@@ -315,6 +323,8 @@ class RefinanciamientosController extends Controller
                     $mes = $mes + 1;
                     $fecha = $anio."-".$mes."-".$dia;
                 }
+
+              
                 
             } 
             // $valor_cuota = (float) $data["monto_refinanciamiento"] / (int) $data["nrocuotas_refinanciamiento"];
@@ -337,12 +347,21 @@ class RefinanciamientosController extends Controller
 
                    
                     $fecha = $anio."-".$mes."-".$dia;
+                    if(!checkdate($mes, $dia, $anio)) {
+                        $fecha = date("Y-m-t", strtotime($anio."-".$mes."-01"));
+                    }
                     $mes = $mes + 1;
                     
                 } else {
 
                     $fecha = $this->sumar_restar_dias($fecha, "+", 30);
+                    // if(!checkdate($mes, $dia, $anio)) {
+                    //     $fecha = date("Y-m-t", strtotime($anio."-".$mes."-01"));
+                    // }
                 }
+
+                
+
                 $data_cronograma = array();
                 $data_cronograma["cCodConsecutivo"] = $data_solicitud["cCodConsecutivo"];
                 $data_cronograma["nConsecutivo"] = $data_solicitud["nConsecutivo"];

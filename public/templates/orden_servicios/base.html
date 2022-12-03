@@ -285,7 +285,7 @@ h5.linea span {
                                                     </div>
                                                     <label  class="col-sm-2  control-label">Tipo Doc. de Venta</label>
                                                     <div class="col-sm-2">
-                                                        <select id="id_tipoDoc_Venta_or" class="form-control input-sm"></select>
+                                                        <select id="id_tipoDoc_Venta_or" class="form-control input-sm" disabled="disabled"></select>
                                                     </div> 
                                                     <label  class="col-sm-1 control-label"></label>
                                                     <div class="col-sm-1">
@@ -367,8 +367,13 @@ h5.linea span {
                                                         
                                                     </div>
                                                     <div class="form-group">
-                                                       
-                                                        <label  class="col-sm-10 control-label"></label>
+                                                        <div class="col-sm-2">
+                                                            <button type="button" id="btn_buscar_multiple" class="btn btn-danger-admin btn-sm ">
+                                                                <span class="fa fa-save"></span>
+                                                                 Buscar Vehiculo
+                                                             </button>
+                                                       </div> 
+                                                        <label  class="col-sm-8 control-label"></label>
                                                         <div class="col-sm-2">
                                                              <button type="button" id="btn_editar_articulo" class="btn btn-danger-admin btn-sm ">
                                                                   <span class="fa fa-save"></span>
@@ -816,3 +821,41 @@ h5.linea span {
   </div>
 </div>
 
+
+
+<div class="modal " id="modal-vehiculos" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <input type="hidden" id="idenifcador_table_art" value="I">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title" id="">Vehiculos</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="table_container_Register_Articulo" class="table-responsive"></div>
+                    </div>
+                </div>
+                <br>
+                <!-- <div class="row">
+                    <div class="col-md-12">
+                        <input type="hidden" id="idArtSerie">
+                        <input type="hidden" id="cantArtSerie">
+                        <input type="hidden" id="desArtSerie">
+
+                    </div>
+                </div> -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger-admin btn-sm" ng-click="addArtLisSeri()">
+                    <span class="fa fa-plus"></span>
+                    Agregar
+                </button>
+                <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+
+    </div>
+</div>

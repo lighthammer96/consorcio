@@ -108,6 +108,11 @@ class AprobacionSolicitudController extends Controller
                     // }
                     $anio = $arr_date[0];
 
+                    if($mes > 12) {
+                        $mes = 1;
+                        $anio = $anio + 1;
+                    }
+
 
                     $fecha_actual = date("Y-m-d");
                     $fecha = $anio."-".$mes."-".$dia;
@@ -124,7 +129,12 @@ class AprobacionSolicitudController extends Controller
                     if($days < 30) {
                         $mes = $mes + 1;
                         $fecha = $anio."-".$mes."-".$dia;
+                        
                     }
+
+                   
+
+                    
                     
                 } 
 
@@ -143,11 +153,25 @@ class AprobacionSolicitudController extends Controller
                         // if($dias_del_mes < $dia) {
                         //     $fecha = $anio."-".$mes."-".$dias_del_mes;
                         // }
+                        // echo $mes." ".$dia." ".$anio;
+                        // var_dump(checkdate($mes, $dia, $anio));
+
+                        if(!checkdate($mes, $dia, $anio)) {
+                            $fecha = date("Y-m-t", strtotime($anio."-".$mes."-01"));
+                        }
+                        // var_dump($fecha);
                       
                         $mes = $mes + 1;
                     } else {
                         $fecha = $this->sumar_restar_dias($fecha, "+", 30);
+                        // if(!checkdate($mes, $dia, $anio)) {
+                        //     $fecha = date("Y-m-t", strtotime($anio."-".$mes."-01"));
+                        // }
                     }
+
+                //    var_dump(checkdate($mes, $dia, $anio));
+                    
+                    // var_dump($fecha);
                    
                     $data_cronograma = array();
                     $data_cronograma["cCodConsecutivo"] = $conformidad[0]->cCodConsecutivo;

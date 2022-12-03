@@ -3784,14 +3784,18 @@ table_container_comprobantes.jtable({
             list: false,
             
         },
-        serie_comprobante: {
-            title: 'Serie',
+        // serie_comprobante: {
+        //     title: 'Serie',
             
-        },
-        numero_comprobante: {
-            title: 'Número',
+        // },
+        // numero_comprobante: {
+        //     title: 'Número',
             
             
+        // },
+        comprobante: {
+            title: 'Comprobante',
+
         },
         fecha_emision: {
             title: 'Fecha',
@@ -3835,10 +3839,20 @@ table_container_comprobantes.jtable({
             
             
         },
+        anulado: {
+            title: 'Anulado',
+            values: { 'S': 'SI', 'N': 'NO', 'null': 'NO' },
+            type: 'checkbox',
+        },
         estado_cpe: {
             title: 'Estado',
             
             
+        },
+        formapago: {
+            title: 'Forma de Pago',
+
+
         },
         
         edit: {
@@ -3905,6 +3919,7 @@ generateSearchForm('frm-search-comprobantes', 'LoadRecordsButtonComprobantes', f
         idClienteFiltro: $('#idClienteFiltro').val(),
         id_tipo_doc: $('#id_tipo_doc').val(),
         estado_cpe: $('#estado_cpe').val(),
+        anulado: $('#anulado').val(),
     });
 }, true);
 

@@ -17,7 +17,7 @@ class Ventas extends Model
 
     protected $table = 'ERP_view_venta';
 
-    protected $fillable = ['idventa', 'serie_comprobante', 'numero_comprobante', 'fecha_emision', 'tipo_documento', 'numero_documento', 'cliente', 'moneda', 't_monto_total', 'pagado', 'saldo', 'cCodConsecutivo_solicitud', 'nConsecutivo_solicitud', 'tipo_solicitud', "estado", "IdTipoDocumento", "anticipo", 'idventa_referencia', 'tipo_comprobante','anulado', 'idcliente', 'estado_cpe', 'fecha_emision_server', 'dias_vencidos', 'comprobante'];
+    protected $fillable = ['idventa', 'serie_comprobante', 'numero_comprobante', 'fecha_emision', 'tipo_documento', 'numero_documento', 'cliente', 'moneda', 't_monto_total', 'pagado', 'saldo', 'cCodConsecutivo_solicitud', 'nConsecutivo_solicitud', 'tipo_solicitud', "estado", "IdTipoDocumento", "anticipo", 'idventa_referencia', 'tipo_comprobante','anulado', 'idcliente', 'estado_cpe', 'fecha_emision_server', 'dias_vencidos', 'comprobante', 'formapago'];
     protected $primaryKey = 'idventa';
     // protected $keyType = 'string';
     public $incrementing = false;
