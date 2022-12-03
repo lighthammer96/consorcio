@@ -108,6 +108,11 @@ class AprobacionSolicitudController extends Controller
                     // }
                     $anio = $arr_date[0];
 
+                    if($mes > 12) {
+                        $mes = 1;
+                        $anio = $anio + 1;
+                    }
+
 
                     $fecha_actual = date("Y-m-d");
                     $fecha = $anio."-".$mes."-".$dia;
