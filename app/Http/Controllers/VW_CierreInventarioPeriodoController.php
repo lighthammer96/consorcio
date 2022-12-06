@@ -78,7 +78,8 @@ class VW_CierreInventarioPeriodoController extends Controller
 
     public function excelPerido(VW_CierreInventarioPeriodoInterface $repo,Query_stockInterface $repoStoc,Request $request)
     {
-
+        ini_set('max_execution_time', '3000');
+        set_time_limit(3000);
         // return generateExcel($this->generateDataExcel($repo->all()), 'LISTA DE CATEGORÍAS', 'Categoría');
          date_default_timezone_set('America/Lima');
         $fechacA= date("d/m/Y");

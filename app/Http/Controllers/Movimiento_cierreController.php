@@ -31,6 +31,8 @@ class Movimiento_cierreController extends Controller
     } 
        public function pdf(Request $request, VW_CierreInventarioPeriodoInterface $repo, Query_stockInterface $repoStoc)
     {       
+        ini_set('max_execution_time', '3000');
+        set_time_limit(3000);
             date_default_timezone_set('America/Lima');
             $fechacA= date("d/m/Y");
             $s = "a";
