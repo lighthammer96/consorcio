@@ -3251,6 +3251,8 @@
         }
         getDataForOrdenServicio();
 
+     
+
         var search = getFormSearch('frm-search-Orden_Servicio', 'search_b', 'LoadRecordsButtonOrden_Servicio');
 
         var table_container_Orden_Servicio = $("#table_container_Orden_Servicio");
@@ -3388,6 +3390,92 @@
         generateSearchForm('frm-search-Orden_Servicio', 'LoadRecordsButtonOrden_Servicio', function () {
             table_container_Orden_Servicio.jtable('load', {
                 search: $('#search_b').val()
+            });
+        }, true);
+
+
+        $(document).on("click", "#btn_buscar_vehiculo", function (event) {
+            $("#modal-vehiculos").modal("show");
+        });
+
+        var search_SerieVehTer = getFormSearch('frm-search-SerieVehTer', 'search_SerieVehTer', 'LoadRecordsButtonSerieVehTer');
+
+        var table_container_SerieVehTer = $("#table_container_SerieVehTer");
+
+        table_container_SerieVehTer.jtable({
+            title: "Lista de Vehiculos",
+            paging: true,
+            sorting: true,
+            actions: {
+                listAction: base_url + '/orden_servicios/list_vehiculos',
+            },
+            toolbar: {
+                items: [{
+                    cssClass: 'buscador',
+                    text: search_SerieVehTer
+                }]
+            },
+            fields: {
+                serie: {
+                    title: 'Serie',
+                },
+                chasis: {
+                    title: 'Chasis',
+                },
+                motor: {
+                    title: 'Motor',
+                },
+                color: {
+                    title: 'Color',
+                },
+                aniofabriacion: {
+                    title: 'Año Fabricación',
+                },
+                placa: {
+                    title: 'Placa',
+                },
+                marca: {
+                    title: 'Marca',
+                },
+                modelo: {
+                    title: 'Modelo',
+                },
+                agregar: {
+                    width: '1%',
+                    sorting: false,
+                    edit: false,
+                    create: false,
+                    listClass: 'text-center',
+                    display: function (data) {
+                        return '<a href="javascript:void(0)" class="agregar-vehiculo" data-placa="' + data.record.placa
+                            +  '" title="Agregar"><i class="fa fa-plus fa-1-5x"></i></a>';
+                    }
+
+                }
+            },
+            recordsLoaded: function (event, data) {
+                $('.agregar-vehiculo').click(function (e) {
+                    var placa = $(this).attr('data-placa');
+                   
+                    $("#placa").val(placa);
+                    getPlaca();
+                    $("#modal-vehiculos").modal("hide");
+                    e.preventDefault();
+                });
+               
+            },
+
+            formCreated: function (event, data) {
+              
+            },
+            formSubmitting: function (event, data) {
+              
+            }
+        });
+
+        generateSearchForm('frm-search-SerieVehTer', 'LoadRecordsButtonSerieVehTer', function () {
+            table_container_SerieVehTer.jtable('load', {
+                search: $('#search_SerieVehTer').val()
             });
         }, true);
     }

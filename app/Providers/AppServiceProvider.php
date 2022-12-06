@@ -188,6 +188,10 @@ use App\Http\Recopro\VW_CierreInventarioPeriodo\VW_CierreInventarioPeriodo;
 use App\Http\Recopro\VW_CierreInventarioPeriodo\VW_CierreInventarioPeriodoInterface;
 use App\Http\Recopro\VW_CierreInventarioPeriodo\VW_CierreInventarioPeriodoRepository;
 
+use App\Http\Recopro\VW_SerieVehTer\VW_SerieVehTer; 
+use App\Http\Recopro\VW_SerieVehTer\VW_SerieVehTerInterface;
+use App\Http\Recopro\VW_SerieVehTer\VW_SerieVehTerRepository;
+
 use App\Http\Recopro\AprobacionTotal\AprobacionTotal; 
 use App\Http\Recopro\AprobacionTotal\AprobacionTotalInterface;
 use App\Http\Recopro\AprobacionTotal\AprobacionTotalRepository;
@@ -877,6 +881,7 @@ class AppServiceProvider extends ServiceProvider
         $this->registerSolicitud_Asignacion();
         $this->registerSolicitud_Asignacion_cierre();
         $this->registerVW_CierreInventarioPeriodo();
+        $this->registerVW_SerieVehTer();
         $this->registerAprobacionTotal();
         $this->registerCategoriaVehicular();
         $this->registerCompania();
@@ -1465,6 +1470,16 @@ class AppServiceProvider extends ServiceProvider
             return new VW_CierreInventarioPeriodoRepository(new VW_CierreInventarioPeriodo());
         });
     }
+
+    public function registerVW_SerieVehTer()
+    {
+        $app = $this->app;
+
+        $app->bind(VW_SerieVehTerInterface::class, function ($app) {
+            return new VW_SerieVehTerRepository(new VW_SerieVehTer());
+        });
+    }
+
      public function registerAprobacionTotal()
     {
         $app = $this->app;

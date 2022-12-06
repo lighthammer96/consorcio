@@ -7,6 +7,9 @@
  */
  
 Route::post('orden_servicios/list', ['as' => 'orden_servicios.list', 'uses' => 'Orden_servicioController@all']);
+
+Route::post('orden_servicios/list_vehiculos', ['as' => 'orden_servicios.list_vehiculos', 'uses' => 'Orden_servicioController@list_vehiculos']);
+
 Route::post('orden_servicios/create', ['as' => 'orden_servicios.create', 'uses' => 'Orden_servicioController@create']);
 
 Route::post('orden_servicios/update', ['as' => 'orden_servicios.update', 'uses' => 'Orden_servicioController@update']);

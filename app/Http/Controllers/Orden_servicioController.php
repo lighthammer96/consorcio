@@ -17,6 +17,7 @@ use App\Http\Requests\Orden_servicioRequest;
 use App\Http\Recopro\Customer\CustomerInterface;
 use App\Http\Recopro\Modelo\ModeloInterface;
 use App\Http\Recopro\View_OrdenServicio\View_OrdenServicioInterface;
+use App\Http\Recopro\VW_SerieVehTer\VW_SerieVehTerInterface;
 use App\Models\BaseModel;
 use DB;
 class Orden_servicioController extends Controller
@@ -595,6 +596,14 @@ class Orden_servicioController extends Controller
             $response["msg"] = $e->getMessage(); 
             return response()->json($response);
         }
+
+    }
+
+    public function list_vehiculos(Request $request, VW_SerieVehTerInterface $repo_SerieVehTer) {
+        $s = $request->input('search', '');
+        $params = ['serie','chasis','motor','color','aniofabriacion','placa','marca','modelo'];
+        // print_r($repo->search($s)); exit;
+        return parseList($repo_SerieVehTer->search($s), $request, 'serie', $params);
 
     }
 }
