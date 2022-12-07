@@ -142,7 +142,8 @@
                     estado.val("");
                     periodo.val("").trigger("change");
                     $("#LoadRecordsButtonMovimiento_cierre").click();
-                    $("#LoadRecordsButtonMovimiento_cierre2").click();
+                    // $("#LoadRecordsButtonMovimiento_cierre2").click();
+                    $('#LoadRecordsButtonSolicitud').click();
                 } else {
                     AlertFactory.textType({
                         title: '',
@@ -177,6 +178,7 @@
                         btnCierreInventario.prop('disabled', false);
                     }
                     // $("#LoadRecordsButtonMovimiento_cierre2").click();
+                    $('#LoadRecordsButtonSolicitud').click();
                     modalCierreCuentasCobrar.modal('show');
                 } else {
                     AlertFactory.textType({
@@ -214,7 +216,8 @@
                         btnReversar.prop('disabled', false);
                         btnCierreInventario.prop('disabled', false);
                         estado.val('P');
-                        $('#LoadRecordsButtonMovimiento_cierre2').click();
+                        // $('#LoadRecordsButtonMovimiento_cierre2').click();
+                        $('#LoadRecordsButtonSolicitud').click();
                         $('#LoadRecordsButtonMovimiento_cierre').click();
                     } else {
                         var msg_ = (_.isUndefined(response.message)) ?
@@ -254,7 +257,11 @@
                         // $('#LoadRecordsButtonMovimiento_cierre2').click();
                         // $('#LoadRecordsButtonMovimiento_cierre').click();
 
-                        $('#table_container_Cierre_cuentas_cobrar2').click();
+                        // $('#table_container_Cierre_cuentas_cobrar2').click();
+
+                        $('#LoadRecordsButtonSolicitud').click();
+
+                        $('#table_container_solicitud').click();
                         $('#table_container_Cierre_cuentas_cobrar').click();
                     } else {
                         var msg_ = (_.isUndefined(response.message)) ?
@@ -289,7 +296,8 @@
         function newCierreMovimiento() {
             titlemodalCierreCuentasCobrar.html('Nuevo Cierre');
             modalCierreCuentasCobrar.modal('show');
-            $('#LoadRecordsButtonMovimiento_cierre2').click();
+            // $('#LoadRecordsButtonMovimiento_cierre2').click();
+            $('#LoadRecordsButtonSolicitud').click();
         }
         periodo.change(function () {
             var periodos = periodo.val();
@@ -397,6 +405,231 @@
                 search: $('#search_b').val()
             });
         }, true);
+
+
+
+        var search_solicitud = getFormSearchCierreSolicitud('frm-search-solicitud', 'search_b_solicitud', 'LoadRecordsButtonSolicitud',$("#periodo").val(),$("#estado").val(),$("#idMovimiento").val());
+
+        var table_container_solicitud = $("#table_container_solicitud");
+
+        table_container_solicitud.jtable({
+            title: "Lista de Solicitudes",
+            paging: true,
+            sorting: true,
+            actions: {
+                listAction: base_url + '/cierre_cuentas_cobrar/list_solicitudes',
+                // createAction: base_url + '/solicitud/create',
+                // updateAction: base_url + '/solicitud/update',
+                // deleteAction: base_url + '/solicitud/delete',
+            },
+            messages: {
+                addNewRecord: 'Nueva Caja',
+                editRecord: 'Editar Caja'
+            },
+            toolbar: {
+                items: [{
+                    cssClass: 'buscador',
+                    text: search_solicitud
+                },
+                //  {
+                //     cssClass: 'btn-primary',
+                //     text: '<i class="fa fa-file-excel-o"></i> Exportar a Excel',
+                //     click: function () {
+                //         $scope.openDoc('solicitud/excel', {});
+                //     }
+                // }, {
+                //     cssClass: 'btn-danger-admin',
+                //     text: '<i class="fa fa-plus"></i> Nueva Solicitud',
+                //     click: function () {
+                //         newSolicitud();
+                //     }
+                // }
+            ]
+            },
+            fields: {
+                cCodConsecutivo: {
+                    key: true,
+                    create: false,
+                    edit: false,
+                    list: true,
+                    title: 'Código',
+                },
+                nConsecutivo: {
+                    title: 'Nro',
+                },
+
+                fecha_solicitud: {
+                    title: 'Fecha',
+                    display: function (data) {
+                        return moment(data.record.fecha_solicitud).format('DD/MM/YYYY');
+                    }
+
+                },
+                cliente: {
+                    title: 'Cliente',
+                },
+                tipo_solicitud: {
+                    title: 'Tipo Solicitud',
+                    options: { '1': 'Contado', '2': 'Crédito Directo', '3': 'Crédito Financiero', '4': "Crédito" },
+
+                },
+                tipo_documento: {
+                    title: 'Tipo Doc.',
+
+
+                },
+                numero_documento: {
+                    title: 'N° Documento',
+
+
+                },
+                moneda: {
+                    title: 'Moneda',
+
+
+                },
+                t_monto_total: {
+                    title: 'Monto',
+
+
+                },
+                pagado: {
+                    title: 'Pagado',
+
+
+                },
+                saldo: {
+                    title: 'Saldo',
+
+                },
+                facturado: {
+                    title: 'Facturado',
+                },
+                estado: {
+                    title: 'Estado',
+                    options: { '1': 'Registrado', '2': 'Vigente', '3': 'Por Aprobar', '4': 'Aprobado', '5': 'Rechazado', '6': 'Facturado', '7': 'Despachado', '8': 'Despachado Parcial', '9': 'Refinanciado', '10': 'Anulado' },
+                },
+                // edit: {
+                //     width: '1%',
+                //     sorting: false,
+                //     edit: false,
+                //     create: false,
+                //     listClass: 'text-center',
+                //     display: function (data) {
+                //         return '<a href="javascript:void(0)" class="edit-solicitud" data-estado="' + data.record.estado
+                //             + '" data-id="' + data.record.cCodConsecutivo
+                //             + '_' + data.record.nConsecutivo + '" title="Editar"><i class="fa fa-edit fa-1-5x"></i></a>';
+                //     }
+
+                // }, Eliminar: {
+                //     width: '1%',
+                //     sorting: false,
+                //     edit: false,
+                //     create: false,
+                //     listClass: 'text-center',
+                //     display: function (data) {
+                //         return '<a data-target="#"  data-cCodConsecutivo="' + data.record.cCodConsecutivo + '" data-nConsecutivo="' + data.record.nConsecutivo + '"  data-estado="' + data.record.estado
+                //             + '" data-id="' + data.record.cCodConsecutivo + '_' + data.record.nConsecutivo + '"   title="Eliminar" class="jtable-command-button eliminar-solicitud"><i class="fa fa-trash fa-1-5x fa-red"><span>Eliminar</span></i></a>';
+                //     }
+
+                // }
+
+            },
+            recordsLoaded: function (event, data) {
+                $('.edit-solicitud').click(function (e) {
+                    var id = $(this).attr('data-id');
+                    var estado = $(this).data('estado');
+
+                    // if (estado != "1" && estado != "4") {
+                    //     AlertFactory.textType({
+                    //         title: '',
+                    //         message: 'No se puede modificar, la solicitud ya no se encuentra en estado Registrado',
+                    //         type: 'info'
+                    //     });
+                    //     return false;
+                    // }
+
+
+                    find_solicitud(id);
+                    e.preventDefault();
+                });
+                $('.eliminar-solicitud').click(function (e) {
+                    var id = $(this).attr('data-id');
+                    var estado = $(this).data('estado');
+                    var ccodconsecutivo = $(this).data('ccodconsecutivo');
+                    var nconsecutivo = $(this).data('nconsecutivo');
+
+                    if (estado != "1") {
+                        AlertFactory.textType({
+                            title: '',
+                            message: 'No se puede eliminar, la solicitud ya no se encuentra en estado Registrado',
+                            type: 'info'
+                        });
+                        return false;
+                    }
+                    $.post("solicitud/eliminar_solicitud", { cCodConsecutivo: ccodconsecutivo, nConsecutivo: nconsecutivo },
+                        function (data, textStatus, jqXHR) {
+                            console.log(data);
+                            if (data.status == "e") {
+                                LoadRecordsButtonSolicitud.click();
+
+                                AlertFactory.textType({
+                                    title: '',
+                                    message: 'La solicitud se eliminó correctamente.',
+                                    type: 'success'
+                                });
+
+                            } else {
+                                AlertFactory.textType({
+                                    title: '',
+                                    message: data.msg,
+                                    type: 'info'
+                                });
+                            }
+                        },
+                        "json"
+                    );
+
+                    e.preventDefault();
+                });
+            },
+            formCreated: function (event, data) {
+
+                //data.form.find('input[name="convenio"]').attr('onkeypress','return soloLetras(event)');
+                $('#Edit-activo').parent().addClass('i-checks');
+
+                $('.i-checks').iCheck({
+                    checkboxClass: 'icheckbox_square-green'
+                }).on('ifChanged', function (e) {
+                    $(e.target).click();
+                    if (e.target.value == 'S') {
+                        $("#Edit-activo").val("N");
+                        $(".i-checks span").text("Inactivo");
+
+                    } else {
+                        $("#Edit-activo").val("S");
+                        $(".i-checks span").text("Activo");
+                    };
+                });
+            },
+            formSubmitting: function (event, data) {
+                var bval = true;
+                // bval = bval && data.form.find('input[name="codigo_formapago"]').required();
+                bval = bval && data.form.find('input[name="nombre_caja"]').required();
+                bval = bval && data.form.find('input[name="usuario"]').required();
+                bval = bval && data.form.find('input[name="activo"]').required();
+                return bval;
+            }
+        });
+
+        generateSearchForm('frm-search-solicitud', 'LoadRecordsButtonSolicitud', function () {
+            table_container_solicitud.jtable('load', {
+                search: $('#search_b_solicitud').val(),
+                periodo: $('#periodo').val()
+            });
+        }, true);
+
+    
 
         var search2 = getFormSearchCierre('frm-search-Movimiento_cierre2', 'search_b2', 'LoadRecordsButtonMovimiento_cierre2', $("#periodo").val(), $("#estado").val(), $("#idMovimiento").val());
 

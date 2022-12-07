@@ -1840,6 +1840,24 @@ function getFormSearchCierre(form_id, input_id, btn_id, val_busquedad, estado, i
         '</div>' +
         '</form>';
 }
+
+function getFormSearchCierreSolicitud(form_id, input_id, btn_id, val_busquedad, estado, idMovimiento) {
+    var estado = 'b';
+    
+    return '<form class="form-inline" id="' + form_id + '" style="margin-bottom:-3px">' +
+        '<div class="input-group input-group-sm">' +
+        '<input type="hidden"  value="' + val_busquedad + '" name="perido_busquedad" id="perido_busquedad"/>' +
+        '<input type="hidden"  value="' + estado + '" name="estado_busquedad" id="estado_busquedad"/>' +
+        '<input type="hidden"  value="' + idMovimiento + '" name="idMovimientoBusquedad" id="idMovimientoBusquedad"/>' +
+        '<input type="text" id="' + input_id + '" value="" name="search" class="form-control" autocomplete="off" placeholder="Buscar..." />' +
+        '<span class="input-group-btn">' +
+        '<button type="submit" id="' + btn_id + '" class="btn btn-danger-admin">' +
+        '<i class="fa fa-search"></i>' +
+        '</button>' +
+        '</span>' +
+        '</div>' +
+        '</form>';
+}
 function getFormSearch_MovimientoCaja(form_id, input_id, btn_id) {
     return '<form class="form-horizontal" id="' + form_id + '" style="margin-bottom:-3px">' +
         '<div class="form-group">' +

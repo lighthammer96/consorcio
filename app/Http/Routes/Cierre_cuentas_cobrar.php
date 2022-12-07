@@ -37,3 +37,5 @@ Route::get('cierre_cuentas_cobrar/pdf', ['as' => 'cierre_cuentas_cobrar.pdf', 'u
 Route::get('cierre_cuentas_cobrar/cuentasporcobrar_cierre', ['as' => 'cierre_cuentas_cobrar.cuentasporcobrar_cierre', 'uses' => 'AsignacioncobradorController@pdf_cuentasxcobrar_cierre']); 
 
 Route::get('cierre_cuentas_cobrar/excelCuentasxCobrar_cierre', ['as' => 'cierre_cuentas_cobrar.excelCuentasxCobrar_cierre', 'uses' => 'AsignacioncobradorController@excelCuentasxCobrar_cierre']);
+
+Route::post('cierre_cuentas_cobrar/list_solicitudes', ['as' => 'cierre_cuentas_cobrar.list_solicitudes', 'uses' => 'CierreCuentasCobrarController@list_solicitudes']);

@@ -25,7 +25,7 @@ class View_cierre_cuentas_cobrarRepository implements View_cierre_cuentas_cobrar
     }
      public function search($s)
     {
-        return $this->model->where(function($q) use ($s){
+        return $this->model->where(DB::raw("ISNULL(estado, '')"),"<>", "A")->where(function($q) use ($s){
             $q->where('periodo', 'LIKE', '%'.$s.'%');
          
         });

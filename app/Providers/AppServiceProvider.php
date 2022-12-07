@@ -308,6 +308,10 @@ use App\Http\Recopro\Solicitud\Solicitud;
 use App\Http\Recopro\Solicitud\SolicitudInterface;
 use App\Http\Recopro\Solicitud\SolicitudRepository;
 
+use App\Http\Recopro\Solicitud_cierre\Solicitud_cierre;
+use App\Http\Recopro\Solicitud_cierre\Solicitud_cierreInterface;
+use App\Http\Recopro\Solicitud_cierre\Solicitud_cierreRepository;
+
 use App\Http\Recopro\SolicitudCredito\SolicitudCredito;
 use App\Http\Recopro\SolicitudCredito\SolicitudCreditoInterface;
 use App\Http\Recopro\SolicitudCredito\SolicitudCreditoRepository;
@@ -908,6 +912,7 @@ class AppServiceProvider extends ServiceProvider
         $this->registerCajas();
         $this->registerVendedores();
         $this->registerSolicitud();
+        $this->registerSolicitud_cierre();
         $this->registerSolicitudCredito();
         $this->registerVentas();
         $this->registerVisitaCliente();
@@ -1732,6 +1737,15 @@ class AppServiceProvider extends ServiceProvider
 
         $app->bind(SolicitudInterface::class, function ($app) {
             return new SolicitudRepository(new Solicitud());
+        });
+    }
+
+    public function registerSolicitud_cierre()
+    {
+        $app = $this->app;
+
+        $app->bind(Solicitud_cierreInterface::class, function ($app) {
+            return new Solicitud_cierreRepository(new Solicitud_cierre());
         });
     }
 

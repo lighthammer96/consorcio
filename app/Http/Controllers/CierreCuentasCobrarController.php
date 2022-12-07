@@ -19,6 +19,7 @@ use App\Http\Recopro\View_cierre_cuentas_cobrar\View_cierre_cuentas_cobrarInterf
 use App\Http\Recopro\Movimiento_Articulo_cierre\Movimiento_Articulo_cierreInterface;
 use App\Http\Recopro\Movimiento_Detalle_cierre\Movimiento_Detalle_cierreInterface;
 use App\Http\Recopro\Query_stock\Query_stockInterface;
+use App\Http\Recopro\Solicitud_cierre\Solicitud_cierreInterface;
 use App\Http\Requests\Movimiento_cierreRequest;
 use DB;
 class CierreCuentasCobrarController extends Controller
@@ -302,5 +303,16 @@ class CierreCuentasCobrarController extends Controller
     public function excel(View_cierre_cuentas_cobrarInterface $repo)
     {
         return generateExcel($this->generateDataExcel($repo->all()), 'LISTA DE CIERRE DE INVENTARIO', 'Cierre');
+    }
+
+    public function list_solicitudes(Request $request, Solicitud_cierreInterface $repo)
+    {
+        $data = $request->all();
+        $s = $request->input('search', '');
+        $array = explode("*", $data["periodo"]);
+        $periodo = $array[0];
+        $params = ['cCodConsecutivo', 'nConsecutivo', 'fecha_solicitud', 'tipo_solicitud', 'idconvenio', 'tipo_documento', 'numero_documento', 'moneda', 't_monto_total', 'pagado', 'saldo', 'facturado', 'estado', 'cliente'];
+        // print_r($s); exit;
+        return parseList($repo->search($s, $periodo), $request, 'cCodConsecutivo', $params);
     }
 }
