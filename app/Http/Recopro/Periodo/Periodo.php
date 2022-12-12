@@ -21,7 +21,7 @@ class Periodo extends Model
 
     public $incrementing = false;
 
-    protected $fillable = ['periodo','fechaInicio','fechaFin','estado','user_created','user_updated'];
+    protected $fillable = ['periodo','fechaInicio','fechaFin','estado', 'estado_cc','user_created','user_updated'];
     
      public function user_c()
     {

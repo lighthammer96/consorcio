@@ -248,6 +248,13 @@
                     defaultValue: 'A',
                    
                 },
+                estado_cc: {
+                    title: 'Estado CC',
+                    values: { 'C': 'Cerrado', 'A': 'Abierto' ,'P':'Pre-Cerrado'},
+                    type: 'checkbox',
+                    defaultValue: 'A',
+                   
+                },
                 edit: {
                     width: '1%',
                     sorting: false,

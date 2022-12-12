@@ -26,7 +26,7 @@ class PeriodoController extends Controller
     public function all(Request $request, PeriodoInterface $repo)
     {
         $s = $request->input('search', '');
-        $params = ['periodo', 'estado'];
+        $params = ['periodo', 'estado', 'estado_cc'];
         return parseList($repo->search($s), $request, 'periodo', $params);
     }
 

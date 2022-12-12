@@ -54,6 +54,7 @@ class PeriodoRepository implements PeriodoInterface
         return $this->model->where(function($q) use ($s){
             $q->where('periodo', 'LIKE', '%'.$s.'%')->orderByRaw('created_at DESC');
             $q->orWhere('estado', 'LIKE', '%'.$s.'%');
+            $q->orWhere('estado_cc', 'LIKE', '%'.$s.'%');
         });
 
     }
