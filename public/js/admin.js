@@ -8750,13 +8750,15 @@ function create_pdf_QuerystockCierre(response) {
 
             },
             {
-                text: Number(index.Total),
+                // text: Number(index.Total),
+                text: Number(index.Transito),
                 fontSize: 7,
                 alignment: 'center'
 
             },
             {
-                text: Number(index.Transito),
+                // text: Number(index.Transito),
+                text: Number(index.Total),
                 fontSize: 7,
 
             },

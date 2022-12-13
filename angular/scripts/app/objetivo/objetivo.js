@@ -45,17 +45,18 @@
             idDetalle_Delete = [];
             id_objetivo.val("");
         }
+
         $scope.desaprobar_objetivo = function () {
-            // alert("hola");
-         
+
             var id = id_objetivo.val();
             RESTService.get('objetivos/desaprobarObjetivo', id, function (response) {
                 if (!_.isUndefined(response.status) && response.status) {
                     var data_p = response.data;
-                    if (data_p.iEstado == 1) {
-                        btn_aprobar.prop('disabled', true);
-                        btn_guardar_objetivo.prop('disabled', true);
-                        iEstado.val(1).trigger('change');
+                    if (data_p.iEstado == 0) {
+                        btn_aprobar.prop('disabled', false);
+                        btn_guardar_objetivo.prop('disabled', false);
+                        $("#btn_desaprobar").prop('disabled', true);
+                        iEstado.val(0).trigger('change');
                         AlertFactory.textType({
                             title: '',
                             message: 'El objetivo se desaprobo correctamente',
@@ -73,6 +74,7 @@
                 }
             });
         }
+
         $scope.Aprobar_objetivo = function () {
             var id = id_objetivo.val();
             RESTService.get('objetivos/aprobarObjetivo', id, function (response) {
@@ -159,10 +161,12 @@
                         btn_guardar_objetivo.prop('disabled', false);
                         btn_aprobar.prop('disabled', false);
                         iEstado.val(data_p.iEstado).trigger("change");
+                        $("#btn_desaprobar").attr("disabled", "disabled");
                     } else {
+                        $("#btn_desaprobar").removeAttr("disabled");
                         btn_guardar_objetivo.prop('disabled', true);
                     };
-                    $("#btn_desaprobar").removeAttr("disabled");
+                    
                     modalObjetivos.modal('show');
                 } else {
                     AlertFactory.textType({
