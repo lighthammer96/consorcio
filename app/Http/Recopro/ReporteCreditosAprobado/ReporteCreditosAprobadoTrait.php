@@ -14,13 +14,34 @@ trait ReporteCreditosAprobadoTrait
 {
     public function generateDataExcel($info)
     {
-        $columns[] = ['SOLICITUD','FECHA SOL','COD VEN','COD CLI','CLIENTE','TIPO CLIENTE', 'FECHA DOC', 'SERIE','NUMERO','MONEDA','PRECIO LISTA','INTERES','N° CUOTAS','INICIAL','CUOTA','TOTAL FINANCIADO','CRÉDITO','FINANCIADO'];
+        $columns[] = ['SOLICITUD','FECHA SOL','TIPO SOL', 'CONVENIO','CLIENTE','TIPO CLIENTE', 'FECHA DOC', 'SERIE','NUMERO','MONEDA','PRECIO LISTA','INTERES','N° CUOTAS','INICIAL','CUOTA','TOTAL FINANCIADO','CRÉDITO','FINANCIADO'];
+        $tipo_solicitud = "";
         foreach ($info as $i) {
+            switch($i->tipo_solicitud) {
+                case 1:
+                    $tipo_solicitud = "Contado";
+                    break;
+                case 2:
+                    $tipo_solicitud = "Crédito Directo";
+                    break;
+                case 3:
+                    $tipo_solicitud = "Crédito Financiero";
+                    break;
+                case 4:
+                    $tipo_solicitud = "Crédito";
+                    break;
+                default:
+                    $tipo_solicitud = "ninguno";
+                    break;
+            }
             $columns[] = [
                 ['left', $i->cCodConsecutivo.'-'.$i->nConsecutivo],
                 ['center', (Carbon::parse($i->fecha_solicitud)->format('d-m-Y'))],
-                ['left', $i->idvendedor],
-                ['left', $i->idcliente],
+                ['left', $tipo_solicitud],
+                ['left', $i->convenio],
+               
+                // ['left', $i->idvendedor],
+                // ['left', $i->idcliente],
                 ['left', $i->razonsocial_cliente],
                 ['left', $i->tipocliente],
                 ['center', (Carbon::parse($i->fecdoc)->format('d-m-Y'))],

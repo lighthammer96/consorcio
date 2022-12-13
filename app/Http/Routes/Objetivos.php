@@ -22,6 +22,8 @@ Route::get('objetivos/find/{id}', ['as' => 'objetivos.find', 'uses' => 'Objetivo
 
 Route::get('objetivos/aprobarObjetivo/{id}', ['as' => 'objetivos.aprobarObjetivo', 'uses' => 'ObjetivoController@aprobarObjetivo']);
 
+Route::get('objetivos/desaprobarObjetivo/{id}', ['as' => 'objetivos.desaprobarObjetivo', 'uses' => 'ObjetivoController@desaprobarObjetivo']);
+
 Route::get('objetivos/data_formRegis', ['as' => 'objetivos.data_formRegis', 'uses' => 'Register_movementController@data_form']);
 
 Route::post('objetivos/getTipoObjetivo', 'TypeObjetController@getAll');

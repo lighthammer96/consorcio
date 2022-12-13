@@ -80,6 +80,27 @@ class ObjetivoController extends Controller
         }
     }
 
+
+    public function desaprobarObjetivo($id, ObjetivoInterface $repo)
+    {
+        try {
+          
+            $data['iEstado']=0;
+            $repo->update($id, $data);
+            $data = $repo->find($id);
+            return response()->json([
+                'status' => true,
+                'data' => $data
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
+
  
     public function create(ObjetivoInterface $repo, Request $request)
     {

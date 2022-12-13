@@ -172,7 +172,7 @@ class CierreCuentasCobrarController extends Controller
                 cCodConsecutivoO, nConsecutivoO, intereses, saldo, facturado, pagado, idCobrador, nomora, tipo, condicion_pago, 
                 comentario_aprobacion, int_moratorio, pagado_mora, saldo_mora, comentario_facturacion, descripcion_adicional_clausula, 
                 fecha_calc_mora, '{$periodo}' AS periodo FROM dbo.ERP_Solicitud 
-                WHERE FORMAT(fecha_solicitud, 'yyyy')={$anio} AND FORMAT(fecha_solicitud, 'MM')={$mes};
+                /*WHERE FORMAT(fecha_solicitud, 'yyyy')={$anio} AND FORMAT(fecha_solicitud, 'MM')={$mes}*/;
                 
                 INSERT INTO dbo.ERP_SolicitudCredito_cierre 
                 SELECT sc.cCodConsecutivo, sc.nConsecutivo, sc.idconyugue, sc.idfiador, sc.idfiadorconyugue, sc.monto_venta, sc.intereses, sc.cuota_inicial, 
@@ -186,21 +186,21 @@ class CierreCuentasCobrarController extends Controller
                 sc.tiempo_laboral_independiente, sc.cargo_independiente_fiador, sc.tiempo_laboral_independiente_fiador, sc.dia_vencimiento_cuota, '{$periodo}' AS periodo
                 FROM dbo.ERP_SolicitudCredito AS sc
                 INNER JOIN dbo.ERP_Solicitud AS s ON(s.cCodConsecutivo=sc.cCodConsecutivo AND s.nConsecutivo=sc.nConsecutivo)
-                WHERE FORMAT(s.fecha_solicitud, 'yyyy')={$anio} AND FORMAT(s.fecha_solicitud, 'MM')={$mes};
+                /*WHERE FORMAT(s.fecha_solicitud, 'yyyy')={$anio} AND FORMAT(s.fecha_solicitud, 'MM')={$mes}*/;
                 
                 INSERT INTO dbo.ERP_SolicitudCronograma_cierre 
                 SELECT sc.cCodConsecutivo, sc.nConsecutivo, sc.nrocuota, sc.fecha_vencimiento, sc.valor_cuota, sc.int_moratorio, sc.saldo_cuota, sc.monto_pago, 
                 sc.user_created, sc.user_updated, sc.user_deleted, sc.created_at, sc.updated_at, sc.deleted_at, sc.dias_mora, sc.pagado_mora, sc.saldo_mora, '{$periodo}' AS periodo
                 FROM dbo.ERP_SolicitudCronograma AS sc
                 INNER JOIN dbo.ERP_Solicitud AS s ON(s.cCodConsecutivo=sc.cCodConsecutivo AND s.nConsecutivo=sc.nConsecutivo)
-                WHERE FORMAT(s.fecha_solicitud, 'yyyy')={$anio} AND FORMAT(s.fecha_solicitud, 'MM')={$mes};
+                /*WHERE FORMAT(s.fecha_solicitud, 'yyyy')={$anio} AND FORMAT(s.fecha_solicitud, 'MM')={$mes}*/;
                 
                 INSERT INTO dbo.ERP_SolicitudNegociaMora_cierre 
                 SELECT snm.idsolicitudmora, snm.cCodConsecutivo, snm.nConsecutivo, snm.nrocuota, snm.fechareg, snm.monto, snm.motivo, snm.user_created, 
                 snm.user_updated, snm.user_deleted, snm.created_at, snm.updated_at, snm.deleted_at, '{$periodo}' AS periodo
                 FROM dbo.ERP_SolicitudNegociaMora AS snm
                 INNER JOIN dbo.ERP_Solicitud AS s ON(s.cCodConsecutivo=snm.cCodConsecutivo AND s.nConsecutivo=snm.nConsecutivo)
-                WHERE FORMAT(s.fecha_solicitud, 'yyyy')={$anio} AND FORMAT(s.fecha_solicitud, 'MM')={$mes};
+                /*WHERE FORMAT(s.fecha_solicitud, 'yyyy')={$anio} AND FORMAT(s.fecha_solicitud, 'MM')={$mes}*/;
                 
                 UPDATE dbo.ERP_Periodo SET estado_cc='P' WHERE periodo='{$periodo}';";
                 DB::statement($sql_statement);

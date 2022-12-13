@@ -6563,8 +6563,8 @@ function createReporteCreditosAprobadosPDF(response) {
     var subtituloSolesEfec = [
         { fontSize: 8, text: "CÓDIGO", fillColor: '#eeeeee' },
         { fontSize: 8, text: "FEC SOL", fillColor: '#eeeeee' },
-        { fontSize: 8, text: "COD VEN", fillColor: '#eeeeee' },
-        { fontSize: 8, text: "COD CLI", fillColor: '#eeeeee' },
+        { fontSize: 8, text: "TIPO SOL", fillColor: '#eeeeee' },
+        { fontSize: 8, text: "CONVENIO", fillColor: '#eeeeee' },
         { fontSize: 8, text: "CLIENTE", fillColor: '#eeeeee' },
         // { fontSize: 8,text:"TIPCLI",fillColor: '#eeeeee'},
         { fontSize: 8, text: "FEC DOC", fillColor: '#eeeeee' },
@@ -6581,7 +6581,27 @@ function createReporteCreditosAprobadosPDF(response) {
         { fontSize: 8, text: "FINAN", fillColor: '#eeeeee' },
     ];
     dataBodyReportes.push(subtituloSolesEfec);
+    var tipo_solicitud = "";
     data.map(function (index) {
+       
+        switch(index.tipo_solicitud) {
+            case '1':
+                tipo_solicitud = "Contado";
+                break;
+            case '2':
+                tipo_solicitud = "Crédito Directo";
+                break;
+            case '3':
+                tipo_solicitud = "Crédito Financiero";
+                break;
+            case '4':
+                tipo_solicitud = "Crédito";
+                break;
+            default:
+                tipo_solicitud = "ninguno";
+                break;
+        }
+        
         contc = contc + 1;
         if (index.IdMoneda == 1) {
             conpls = conpls + Number(index.precio_lista);
@@ -6601,8 +6621,8 @@ function createReporteCreditosAprobadosPDF(response) {
         var subtituloSolesEfec = [
             { fontSize: 8, text: index.cCodConsecutivo + '-' + index.nConsecutivo },
             { fontSize: 8, text: moment(index.fecha_solicitud).format('DD/MM/YYYY'), },
-            { fontSize: 8, text: index.idvendedor },
-            { fontSize: 8, text: index.idcliente },
+            { fontSize: 8, text: tipo_solicitud },
+            { fontSize: 8, text: index.convenio },
             { fontSize: 8, text: index.razonsocial_cliente },
             // { fontSize: 8,text:index.tipocliente,},
             { fontSize: 8, text: moment(index.fecdoc).format('DD/MM/YYYY'), },
@@ -6711,7 +6731,7 @@ function createReporteCreditosAprobadosPDF(response) {
                 margin: [0, 0, 0, 0],
                 style: 'tableExample',
                 table: {
-                    widths: [40, 40, 30, 30, 70, 40, 20, 20, 20, 40, 40, 20, 40, 40, 40, 40, 40],
+                    widths: [45, 40, 35, 30, 70, 40, 20, 20, 15, 40, 40, 15, 40, 40, 40, 40, 40],
                     body:
                         dataBodyReportes,
                 },
