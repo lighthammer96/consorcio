@@ -75,7 +75,7 @@ CREATE TABLE ERP_Solicitud_cierre (
 	descripcion_adicional_clausula text COLLATE Modern_Spanish_CI_AS NULL,
 	fecha_calc_mora datetime NULL,
 	periodo varchar(7),
-	CONSTRAINT pk_solicitud_cierre PRIMARY KEY (cCodConsecutivo,nConsecutivo),
+	CONSTRAINT pk_solicitud_cierre PRIMARY KEY (cCodConsecutivo,nConsecutivo, periodo),
 	CONSTRAINT fk_cliente_solicitud_cierre FOREIGN KEY (idcliente) REFERENCES ERP_Clientes(id),
 	CONSTRAINT fk_moneda_solicitud_cierre FOREIGN KEY (idmoneda) REFERENCES ERP_Moneda(IdMoneda),
 	CONSTRAINT fk_vendedores_solicitud_cierre FOREIGN KEY (idvendedor) REFERENCES ERP_Vendedores(idvendedor),
@@ -142,7 +142,7 @@ CREATE TABLE ERP_SolicitudCredito_cierre (
 	tiempo_laboral_independiente_fiador varchar(100) COLLATE Modern_Spanish_CI_AS NULL,
 	dia_vencimiento_cuota int NULL,
 	periodo varchar(7),
-	CONSTRAINT pk_SolicitudCredito_cierre PRIMARY KEY (cCodConsecutivo, nConsecutivo),
+	CONSTRAINT pk_SolicitudCredito_cierre PRIMARY KEY (cCodConsecutivo, nConsecutivo, periodo),
 	CONSTRAINT fk_periodo_solicitud_credito_cierre FOREIGN KEY(periodo) REFERENCES ERP_Periodo(periodo)
 );
 
@@ -168,7 +168,7 @@ CREATE TABLE ERP_SolicitudCronograma_cierre (
 	pagado_mora decimal(18,5) NULL,
 	saldo_mora decimal(18,5) NULL,
 	periodo varchar(7),
-	CONSTRAINT pk_SolicitudCronograma_cierre PRIMARY KEY (cCodConsecutivo,nConsecutivo,nrocuota),
+	CONSTRAINT pk_SolicitudCronograma_cierre PRIMARY KEY (cCodConsecutivo,nConsecutivo,nrocuota, periodo),
 	CONSTRAINT fk_periodo_solicitud_cronograma_cierre FOREIGN KEY(periodo) REFERENCES ERP_Periodo(periodo)
 );
 
@@ -189,7 +189,7 @@ CREATE TABLE ERP_SolicitudNegociaMora_cierre (
 	updated_at datetime NULL,
 	deleted_at datetime NULL,
 	periodo varchar(7),
-	CONSTRAINT pk_solicitud_negocia_mora_cierre PRIMARY KEY (idsolicitudmora),
+	CONSTRAINT pk_solicitud_negocia_mora_cierre PRIMARY KEY (idsolicitudmora, periodo),
 	CONSTRAINT fk_periodo_solicitud_negocia_mora_cierre FOREIGN KEY(periodo) REFERENCES ERP_Periodo(periodo),
 	CONSTRAINT fk_solicitud_cronograma_solicitud_negocia_mora_cierre FOREIGN KEY (cCodConsecutivo,nConsecutivo,nrocuota) 
 	REFERENCES Consorcio_Pruebas.dbo.ERP_SolicitudCronograma(cCodConsecutivo,nConsecutivo,nrocuota)
