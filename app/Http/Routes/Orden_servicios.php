@@ -19,6 +19,8 @@ Route::get('orden_servicios/get_cliente/{id}', ['as' => 'orden_servicios.get_cli
 
 Route::get('orden_servicios/get_Placa/{id}', ['as' => 'orden_servicios.get_Placa', 'uses' => 'Vehiculos_terceroController@get_Placa_documento']);
 
+Route::get('orden_servicios/get_vehiculo/{id}', ['as' => 'orden_servicios.get_vehiculo', 'uses' => 'Vehiculos_terceroController@get_vehiculo']);
+
 Route::get('orden_servicios/get_Modelo/{id}', ['as' => 'orden_servicios.get_Modelo', 'uses' => 'Vehiculos_terceroController@get_Modelo_documento']);
 Route::put('orden_servicios/createOrden/{id}', ['as' => 'orden_servicios.createOrden', 'uses' => 'Orden_servicioController@createUpdate']);
 

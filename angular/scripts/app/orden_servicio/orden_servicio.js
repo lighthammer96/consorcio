@@ -863,6 +863,70 @@
                 });
             }
         }
+
+        function getVehiculo() {
+            var bval = true;
+            // bval = bval && placa.required();
+            if (bval) {
+                var id = $("#id_").val();
+                id = id + "|" + $("#tipo_articulo").val();
+
+                RESTService.get('orden_servicios/get_vehiculo', id, function (response) {
+                    if (!_.isUndefined(response.status) && response.status) {
+                        var datos = response.data;
+
+
+                        idMarca_add.html("");
+                        idMarca_add.append('<option value="" selected>Seleccionar</option>');
+                        _.each(response.marca, function (item) {
+                            idMarca_add.append('<option value="' + item.id + '" >' + item.description + '</option>');
+                        });
+                        if (datos.length == 0) {
+                            titleModalVehiculosTerceros.html('Nuevo Vehiculo');
+                            modaVehiculosTerceros.modal('show');
+                            placa.val("");
+                            marca.val("");
+                            modelo.val("");
+                            chasis.val("");
+                            anio_fabricacion.val("");
+                            color.val("");
+                            motor.val("");
+                            tipo_vehi.val("");
+                            $("#tipo_articulo").val("");
+                            $("#idmarca").val("").trigger("change");
+                            $("#idmodelo").val("").trigger("change");
+                            $("#id_").val("");
+                            $("#idproducto").val("");
+                        } else {
+                            $("#idmarca").val(datos[0].idMarca).trigger('change');
+                            getModelo(datos[0].idModelo, datos[0].idMarca);
+                            $("#tipo_articulo").val(datos[0].tipo);
+                            $("#id_").val(datos[0].id);
+                            $("#idproducto").val(datos[0].idproducto);
+                            placa.val(datos[0].placa);
+                            marca.val(datos[0].marca);
+                            modelo.val(datos[0].modelo);
+                            chasis.val(datos[0].n_chasis);
+                            anio_fabricacion.val(datos[0].anio_fabricacion);
+                            color.val(datos[0].color);
+                            motor.val(datos[0].motor);
+                            tipo_vehi.val(datos[0].tipo_vehiculo);
+                            if (nConsecutivo.val() == "") {
+                                nKilometraje.focus();
+                            }
+
+                        }
+                    } else {
+                        AlertFactory.textType({
+                            title: '',
+                            message: 'Hubo un error . Intente nuevamente.',
+                            type: 'info'
+                        });
+                    }
+
+                });
+            }
+        }
         //  $scope.chkState = function () {
         //     var checkOpera= (pOper.prop('checked')) ? '1' : '2';
         //     console.log("entro");
@@ -3447,18 +3511,30 @@
                     create: false,
                     listClass: 'text-center',
                     display: function (data) {
-                        return '<a href="javascript:void(0)" class="agregar-vehiculo" data-placa="' + data.record.placa
-                            +  '" title="Agregar"><i class="fa fa-plus fa-1-5x"></i></a>';
+                        return '<a href="javascript:void(0)" class="agregar-vehiculo" data-placa="' + data.record.placa +  '" data-id="' + data.record.ID  +  '"  data-Tabla="' + data.record.Tabla  +  '" title="Agregar"><i class="fa fa-plus fa-1-5x"></i></a>';
                     }
 
                 }
             },
             recordsLoaded: function (event, data) {
                 $('.agregar-vehiculo').click(function (e) {
-                    var placa = $(this).attr('data-placa');
+                    // var placa = $(this).attr('data-placa');
                    
-                    $("#placa").val(placa);
-                    getPlaca();
+                    // $("#placa").val(placa);
+                    // getPlaca();
+
+                    var id = $(this).attr('data-id');
+                    var tabla = $(this).attr('data-tabla');
+                    if(tabla = "ERP_VehTerceros") {
+                        $("#tipo_articulo").val("terceros");
+                    }
+                    if(tabla = "ERP_Serie") {
+                        $("#tipo_articulo").val("series");
+                    }
+                    // alert(id);
+                    $("#id_").val(id);
+                    getVehiculo();
+
                     $("#modal-vehiculos").modal("hide");
                     e.preventDefault();
                 });

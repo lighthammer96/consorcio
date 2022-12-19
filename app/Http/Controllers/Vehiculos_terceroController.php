@@ -118,6 +118,43 @@ class Vehiculos_terceroController extends Controller
             ]);
         }
     }
+
+    public function get_vehiculo($id, Vehiculos_terceroInterface $repo)
+    {
+        try {
+            $array = explode("|", $id);
+            $id = $array[0];
+            $tipo_articulo = $array[1];
+
+            if($tipo_articulo == "terceros") {
+
+                $data = $repo->get_vehiculo_document($id);
+            }
+
+            if($tipo_articulo == "series") {
+
+                $data = $repo->get_vehiculo_document_empresa($id);
+            }
+            // if(empty($data)){
+            //       $data = $repo->get_vehiculo_document_empresa($id);
+            // }
+            $marca=$repo->get_Marca_or();
+            $tipo_vehi=$repo->get_TipoVehi_or();
+            return response()->json([
+                'status' => true,
+                'data' => $data,
+                'marca'=>$marca,
+                'tipo_ve'=>$tipo_vehi,
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
+
      public function get_Modelo_documento($id, Vehiculos_terceroInterface $repo)
     {
         try {

@@ -21,7 +21,7 @@ class VW_SerieVehTer extends Model
 
     public $incrementing = false;
 
-    protected $fillable = ['serie','chasis','motor','color','aniofabriacion','placa','marca','modelo'];
+    protected $fillable = ['serie','chasis','motor','color','aniofabriacion','placa','marca','modelo', 'Tabla', 'ID'];
     
      
 

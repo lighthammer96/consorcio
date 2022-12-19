@@ -571,7 +571,7 @@ class Orden_servicioController extends Controller
             if($data["tipo_articulo"] == "series") {
                 $update_serie = array();
                 $update_serie["idSerie"] = $data["id_"];
-                $update_serie["placa"] = $data["placa"];
+                $update_serie["cPlacaVeh"] = $data["placa"];
                
                 $update_serie["chasis"] = $data["chasis"];
                 $update_serie["anio_fabricacion"] = $data["anio_fabricacion"];
@@ -601,7 +601,7 @@ class Orden_servicioController extends Controller
 
     public function list_vehiculos(Request $request, VW_SerieVehTerInterface $repo_SerieVehTer) {
         $s = $request->input('search', '');
-        $params = ['serie','chasis','motor','color','aniofabriacion','placa','marca','modelo'];
+        $params = ['serie','chasis','motor','color','aniofabriacion','placa','marca','modelo', 'ID', 'Tabla'];
         // print_r($repo->search($s)); exit;
         return parseList($repo_SerieVehTer->search($s), $request, 'serie', $params);
 
