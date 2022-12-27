@@ -25,3 +25,6 @@ Route::put('series/createserie/{id}', ['as' => 'series.createserie', 'uses' => '
 Route::put('series/createserie_varios/{id}', ['as' => 'series.createserie_varios', 'uses' => 'SerieController@createUpdateVarios']);
 
 Route::get('series/find/{id}', ['as' => 'series.find', 'uses' => 'SerieController@find']);
+
+
+Route::post('series/validar_registro', ['as' => 'series.validar_registro', 'uses' => 'SerieController@validar_registro']);

@@ -43,12 +43,15 @@
         $("#btnExcel").click(function (e) {
             if (periodo.val() != '') {
                 if (estado.val() != '') {
-                    var data_excel = {
-                        periodo: periodo.val(),
-                        estado: $("#estado option:selected").text(),
-                    }
+                    // var data_excel = {
+                    //     periodo: periodo.val(),
+                    //     estado: $("#estado option:selected").text(),
+                    // }
                     // $scope.openDoc('cierre_cuentas_cobrar/excelPerido', data_excel);
-                    $scope.openDoc('cierre_cuentas_cobrar/excelCuentasxCobrar_cierre', data_excel);
+                    //$scope.openDoc('cierre_cuentas_cobrar/excelCuentasxCobrar_cierre', data_excel);
+
+                    var data_excel = periodo.val()+"|"+$("#estado option:selected").text();
+                    window.open('cierre_cuentas_cobrar/excelCuentasxCobrar_cierre/'+ data_excel);
                 };
             }
 

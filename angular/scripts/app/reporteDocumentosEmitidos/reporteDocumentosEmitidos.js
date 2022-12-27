@@ -105,13 +105,13 @@
                 },
                 FechaEmisionRef: {
                     title: 'Fecha Emision Ref.',
-                    display: function (data) {
-                        var fecha = moment(data.record.FechaEmisionRef);
-                        if (fecha.isValid())
-                            return moment(data.record.FechaEmisionRef).format('YYYY/MM/DD');
-                        else
-                            return '';
-                    }
+                    // display: function (data) {
+                    //     var fecha = moment(data.record.FechaEmisionRef);
+                    //     if (fecha.isValid())
+                    //         return moment(data.record.FechaEmisionRef).format('YYYY/MM/DD');
+                    //     else
+                    //         return '';
+                    // }
                 }
             }
         });
