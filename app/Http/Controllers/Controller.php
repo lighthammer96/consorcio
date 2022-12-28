@@ -380,11 +380,27 @@ class Controller extends BaseController
         // exit;
 
         //ACTUALIZAR SALDOS EN LA SEGUNDA VENTA POR EL SALDO
-        $update_venta                    = array();
-        $update_venta["cCodConsecutivo"] = $data["cCodConsecutivo"];
-        $update_venta["nConsecutivo"]    = $data["nConsecutivo"];
-        $update_venta["monto"]           = $data["monto"];
-        $Repo->update_saldos_venta($update_venta);
+        // $update_venta                    = array();
+        // $update_venta["cCodConsecutivo"] = $data["cCodConsecutivo"];
+        // $update_venta["nConsecutivo"]    = $data["nConsecutivo"];
+        // $update_venta["monto"]           = $data["monto"];
+        // $Repo->update_saldos_venta($update_venta);
+      
+        $sql = "
+            DECLARE	@return_value int,
+            @sMensaje varchar(250)
+            SELECT	@sMensaje = N''''''
+            DECLARE @cSerie varchar(10)
+            DECLARE @nNro int
+
+            SET NOCOUNT ON; EXEC @return_value = [dbo].[VT_Notas_Credito] 
+            @cSerie = N'{$data["serie_comprobante"]}'
+            ,@nNro = {$data["numero_comprobante"]}
+
+            SELECT	@return_value AS 'return_value', @sMensaje as 'msg'";
+
+        // echo $sql; exit;
+        DB::select($sql);
 
 
         if ($tipo == "N") {

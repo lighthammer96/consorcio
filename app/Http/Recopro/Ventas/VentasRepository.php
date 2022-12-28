@@ -435,6 +435,16 @@ select pr.kit as kit,lot.Lote  as cod_lote,sa.idLote as idLote, pr.serie,pr.lote
         return DB::select($sql);
 
     }
+
+    public function validar_nota($idventa) {
+        $sql = "SELECT v.*, c.*, c.razonsocial_cliente AS cliente, m.Simbolo AS simbolo_moneda
+        FROM ERP_Venta AS v
+        INNER JOIN ERP_Clientes AS c ON(c.id=v.idcliente)
+        LEFT JOIN ERP_Moneda AS m ON(m.IdMoneda=v.idmoneda)
+        WHERE v.idventa_referencia={$idventa} AND ISNULL(v.anulado, 'N')='N'";
+
+        return DB::select($sql);
+    }
    
 
 }

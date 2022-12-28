@@ -123,6 +123,7 @@
         
         //Ventas
         'sys.app.solicitud',
+        'sys.app.reasignacion_vendedor',
         'sys.app.ventas',
         'sys.app.movimientoCajas',
 

@@ -67,7 +67,7 @@
         $scope.openCC = function (type) {
             $scope.type_cc = type;
 
-            $.post("series/validar_registro", { producto_id: $("#p_product_id").val() },
+            $.post("series/validar_registro", { producto_id: $("#p_product_id").val(), serie_id: $("#serie_id").val() },
                 function (data, textStatus, jqXHR) {
                     // console.log(data);
 
@@ -100,7 +100,7 @@
 
         };
         $scope.clearCC = function (type) {
-            $.post("series/validar_registro", { producto_id: $("#p_product_id").val() },
+            $.post("series/validar_registro", { producto_id: $("#p_product_id").val(), serie_id: $("#serie_id").val() },
                 function (data, textStatus, jqXHR) {
                     // console.log(data);
 

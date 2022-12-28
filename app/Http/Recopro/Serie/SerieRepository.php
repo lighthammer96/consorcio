@@ -96,16 +96,16 @@ class SerieRepository implements SerieInterface
         return $mostra;
     }
 
-    public function validar_registro($producto_id) {
+    public function validar_registro($producto_id, $serie_id) {
         $array = array();
 
         $array["TransaccionDetalle"] = array();
 
         $array["MovimientoDetalle"] = array();
         if(!empty($producto_id)) {
-            $array["TransaccionDetalle"] = DB::select("select idArticulo, idSerie from ERP_Transacciones_Detalle WHERE idArticulo={$producto_id}");
+            $array["TransaccionDetalle"] = DB::select("select idArticulo, idSerie from ERP_Transacciones_Detalle WHERE idArticulo={$producto_id} AND idSerie={$serie_id}");
 
-            $array["MovimientoDetalle"] = DB::select("select idArticulo, serie from ERP_Movimiento_Detalle WHERE idArticulo={$producto_id}");
+            $array["MovimientoDetalle"] = DB::select("select idArticulo, serie from ERP_Movimiento_Detalle WHERE idArticulo={$producto_id} AND serie={$serie_id}");
         }
        
 
