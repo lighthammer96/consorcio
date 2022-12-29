@@ -226,7 +226,7 @@
                     create: false,
                     listClass: 'text-center',
                     display: function (data) {
-                        return '<a href="javascript:void(0)" class="reimprimir-comprobante" data-estado="' + data.record.estado + '"  data-tipo_solicitud="' + data.record.tipo_solicitud + '" data-idtipodocumento="' + data.record.IdTipoDocumento + '"  data-anticipo="' + data.record.anticipo + '" data-id="' + data.record.cCodConsecutivo_solicitud + '|' + data.record.nConsecutivo_solicitud + '|' + data.record.idventa + '"   title="Reimprimir Comprobante"><i class="fa fa-print fa-1-5x"></i></a>';
+                        return '<a href="javascript:void(0)" class="reimprimir-comprobante" data-anulado="' + data.record.anulado + '" data-estado="' + data.record.estado + '"  data-tipo_solicitud="' + data.record.tipo_solicitud + '" data-idtipodocumento="' + data.record.IdTipoDocumento + '"  data-anticipo="' + data.record.anticipo + '" data-id="' + data.record.cCodConsecutivo_solicitud + '|' + data.record.nConsecutivo_solicitud + '|' + data.record.idventa + '"   title="Reimprimir Comprobante"><i class="fa fa-print fa-1-5x"></i></a>';
                     }
 
                 }

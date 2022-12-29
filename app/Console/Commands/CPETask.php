@@ -73,7 +73,7 @@ class CPETask extends Command
     }
 
 
-    public function convertir($xcifra)
+    public function convertir($xcifra, $moneda)
     {
         $xarray = array(
             0 => "CERO",
@@ -193,13 +193,13 @@ class CPETask extends Command
                         break;
                     case 2:
                         if ($xcifra < 1) {
-                            $xcadena = "$xdecimales/100 SOLES";
+                            $xcadena = "$xdecimales/100 ".$moneda;
                         }
                         if ($xcifra >= 1 && $xcifra < 2) {
-                            $xcadena = "UNO Y $xdecimales/100 SOLES ";
+                            $xcadena = "UNO Y $xdecimales/100 ".$moneda;
                         }
                         if ($xcifra >= 2) {
-                            $xcadena .= " Y $xdecimales/100 SOLES "; //
+                            $xcadena .= " Y $xdecimales/100 ".$moneda; //
                         }
                         break;
                 } // endswitch ($xz)
