@@ -42,5 +42,7 @@ Route::get('ventas/imprimir_comprobante/{id}', 'MovimientoCajaController@imprimi
 
 Route::post('ventas/get_caja_diaria', 'MovimientoCajaController@get_caja_diaria');
 
+Route::post('ventas/validar_nota', 'VentasController@validar_nota');
+
 
 
