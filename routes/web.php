@@ -231,6 +231,8 @@ Route::group(['middleware' => ['auth', 'permission']], function () {
 
     require app_path() . '\Http\Routes\Solicitud.php';
 
+    require app_path() . '\Http\Routes\ReasignacionVendedor.php';
+
     require app_path() . '\Http\Routes\Asignacioncobradors.php';
 
     require app_path() . '\Http\Routes\Ventas.php';

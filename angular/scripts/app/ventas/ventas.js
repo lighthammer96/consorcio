@@ -293,10 +293,20 @@
                     var tipo_comprobante = $(this).attr('data-tipo_comprobante');
                     var saldo = parseFloat($(this).attr('data-saldo'));
                     // alert(idventa_referencia);
+                    var anulado = $(this).attr('data-anulado');
+                   
+                    if(anulado == "S") {
+                        AlertFactory.textType({
+                            title: '',
+                            message: "Este comprobante se encuentra anulado!",
+                            type: 'info'
+                        });
+                        return false
+                    }
+
                     if (idtipodocumento == "07") {
                         return false;
                     }
-
 
                     // if (idventa_referencia != "null" && idventa_referencia != "" && condicion_pago != 1 && saldo <= 0) {
                     //     AlertFactory.textType({
@@ -306,34 +316,32 @@
                     //     });
                     //     return false;
                     // }
-
+                    
                     $.post("ventas/get_caja_diaria", {},
                         function (data, textStatus, jqXHR) {
                             // console.log();
                             if (data.length > 0) {
-                                if (tipo_comprobante == 1) { // solo para anticipos la validacion
-                                    // $.post("ventas/validar_venta_anticipo", { cCodConsecutivo: cCodConsecutivo, nConsecutivo: nConsecutivo },
-                                    //     function (data, textStatus, jqXHR) {
+                               
+                                $.post("ventas/validar_nota", { idventa: idventa },
+                                    function (data, textStatus, jqXHR) {
+                                        if(data.length > 0) {
+                                            AlertFactory.textType({
+                                                title: '',
+                                                message: 'Ya se emitio una nota de crédito!',
+                                                type: 'info'
+                                            });
+                                            return false;
+                                           
+                                        } else {
+                                            find_documento(idventa);
+                                        }
+                                    },
+                                    "json"
+                                );
+                        
 
-                                    //         if (data.length == 0) {
-
-                                                find_documento(idventa);
-                                    //         } else {
-                                    //             AlertFactory.textType({
-                                    //                 title: '',
-                                    //                 message: 'Este documento por anticipo ya tiene una venta por el saldo',
-                                    //                 type: 'info'
-                                    //             });
-                                    //             return false;
-                                    //         }
-                                    //     },
-                                    //     "json"
-                                    // );
-                                } else {
-                                    find_documento(idventa);
-                                }
-
-
+                                   
+                                
 
                             } else {
                                 AlertFactory.textType({

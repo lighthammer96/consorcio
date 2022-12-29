@@ -3525,10 +3525,11 @@
 
                     var id = $(this).attr('data-id');
                     var tabla = $(this).attr('data-tabla');
-                    if(tabla = "ERP_VehTerceros") {
+                    
+                    if(tabla == "ERP_VehTerceros") {
                         $("#tipo_articulo").val("terceros");
                     }
-                    if(tabla = "ERP_Serie") {
+                    if(tabla == "ERP_Serie") {
                         $("#tipo_articulo").val("series");
                     }
                     // alert(id);

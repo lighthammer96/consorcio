@@ -308,6 +308,10 @@ use App\Http\Recopro\Solicitud\Solicitud;
 use App\Http\Recopro\Solicitud\SolicitudInterface;
 use App\Http\Recopro\Solicitud\SolicitudRepository;
 
+use App\Http\Recopro\ReasignacionVendedor\ReasignacionVendedor;
+use App\Http\Recopro\ReasignacionVendedor\ReasignacionVendedorInterface;
+use App\Http\Recopro\ReasignacionVendedor\ReasignacionVendedorRepository;
+
 use App\Http\Recopro\Solicitud_cierre\Solicitud_cierre;
 use App\Http\Recopro\Solicitud_cierre\Solicitud_cierreInterface;
 use App\Http\Recopro\Solicitud_cierre\Solicitud_cierreRepository;
@@ -912,6 +916,7 @@ class AppServiceProvider extends ServiceProvider
         $this->registerCajas();
         $this->registerVendedores();
         $this->registerSolicitud();
+        $this->registerReasignacionVendedor();
         $this->registerSolicitud_cierre();
         $this->registerSolicitudCredito();
         $this->registerVentas();
@@ -1737,6 +1742,15 @@ class AppServiceProvider extends ServiceProvider
 
         $app->bind(SolicitudInterface::class, function ($app) {
             return new SolicitudRepository(new Solicitud());
+        });
+    }
+
+    public function registerReasignacionVendedor()
+    {
+        $app = $this->app;
+
+        $app->bind(ReasignacionVendedorInterface::class, function ($app) {
+            return new ReasignacionVendedorRepository(new ReasignacionVendedor());
         });
     }
 

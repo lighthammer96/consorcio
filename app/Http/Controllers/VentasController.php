@@ -745,5 +745,12 @@ class VentasController extends Controller
         $ticket_pago_cuota = $repo->obtener_ticket_pago_cuota($idventa, $parametro_cuota[0]->value);
         return response()->json($ticket_pago_cuota);
     }
+
+    public function validar_nota(Request $request, VentasInterface $repo) {
+        $data = $request->all();
+
+        $validar = $repo->validar_nota($data["idventa"]);
+        return response()->json($validar);
+    }
   
 }

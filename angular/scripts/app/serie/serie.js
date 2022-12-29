@@ -1,7 +1,7 @@
 /**
  * Created by JAIR on 4/5/2017.
- */ 
-  
+ */
+
 (function () {
     'use strict';
     angular.module('sys.app.series')
@@ -9,33 +9,32 @@
         .controller('SerieCtrl', SerieCtrl);
 
     Config.$inject = ['$stateProvider', '$urlRouterProvider'];
-    SerieCtrl.$inject = ['$scope', '_', 'RESTService','AlertFactory'];
+    SerieCtrl.$inject = ['$scope', '_', 'RESTService', 'AlertFactory'];
 
-    function SerieCtrl($scope, _, RESTService,AlertFactory)
-    {
+    function SerieCtrl($scope, _, RESTService, AlertFactory) {
         var modalSerie = $('#modalSerie');
         var producto = $('#p_product_id');
         var p_product_name = $('#p_product_name');
         var msg_cont = $('#msg_cont');
-        var serie_id=$('#serie_id');
-        var titleModalSerie=$("#titleModalSerie");
+        var serie_id = $('#serie_id');
+        var titleModalSerie = $("#titleModalSerie");
 
         var serie = $('#serie');
         var chasis = $('#chasis');
         var motor = $('#motor');
         var color = $('#color');
-        var tipoCompra=$("#tipoCompra");
-        var nrPoliza=$("#nrPoliza");
-        var nrLote=$("#nrLote");
-        var cPlacaVeh=$("#cPlacaVeh");
+        var tipoCompra = $("#tipoCompra");
+        var nrPoliza = $("#nrPoliza");
+        var nrLote = $("#nrLote");
+        var cPlacaVeh = $("#cPlacaVeh");
         var anio_fabricacion = $('#anio_fabricacion');
         var anio_modelo = $('#anio_modelo');
 
         var modalCC = $('#modalArticulo');
-    
-     
 
-        function cleanserie () {
+
+
+        function cleanserie() {
             cleanRequired();
             titleModalSerie.html('');
             cPlacaVeh.val('');
@@ -54,35 +53,89 @@
             anio_modelo.val('');
         };
         modalSerie.on('hidden.bs.modal', function (e) {
-              cleanserie();
+            cleanserie();
         });
 
-        function newSerie()
-        {
+        function newSerie() {
             titleModalSerie.html('Nueva Serie');
-            $('#anio_fabricacion').attr('onkeypress','return soloNumeros(event)');
-            $('#anio_modelo').attr('onkeypress','return soloNumeros(event)');
+            $('#anio_fabricacion').attr('onkeypress', 'return soloNumeros(event)');
+            $('#anio_modelo').attr('onkeypress', 'return soloNumeros(event)');
             modalSerie.modal('show');
         }
 
         $scope.type_cc = '';
-        $scope.openCC = function(type) {
+        $scope.openCC = function (type) {
             $scope.type_cc = type;
-            modalCC.modal('show');
-            $('#search_cc2').val('');
-            $('#LoadRecordsButtonCC2').click();
-        }; 
-         $scope.clearCC = function(type) {
-                producto.val('');
-                p_product_name.val('');
+
+            $.post("series/validar_registro", { producto_id: $("#p_product_id").val(), serie_id: $("#serie_id").val() },
+                function (data, textStatus, jqXHR) {
+                    // console.log(data);
+
+                    if (data.data.TransaccionDetalle.length > 0 || data.data.MovimientoDetalle.length > 0) {
+                        if (data.data.TransaccionDetalle.length > 0) {
+                            AlertFactory.textType({
+                                title: '',
+                                message: "Ya se encuentra registrado en TransaccionDetalle",
+                                type: 'info'
+                            });
+                        }
+
+                        if (data.data.MovimientoDetalle.length > 0) {
+                            AlertFactory.textType({
+                                title: '',
+                                message: "Ya se encuentra registrado en MovimientoDetalle",
+                                type: 'info'
+                            });
+                        }
+
+                    } else {
+                        modalCC.modal('show');
+                        $('#search_cc2').val('');
+                        $('#LoadRecordsButtonCC2').click();
+                    }
+                },
+                "json"
+            );
+
+
         };
-        $scope.saveserie = function()
-        {
+        $scope.clearCC = function (type) {
+            $.post("series/validar_registro", { producto_id: $("#p_product_id").val(), serie_id: $("#serie_id").val() },
+                function (data, textStatus, jqXHR) {
+                    // console.log(data);
+
+                    if (data.data.TransaccionDetalle.length > 0 || data.data.MovimientoDetalle.length > 0) {
+                        if (data.data.TransaccionDetalle.length > 0) {
+                            AlertFactory.textType({
+                                title: '',
+                                message: "Ya se encuentra registrado en TransaccionDetalle",
+                                type: 'info'
+                            });
+                        }
+
+                        if (data.data.MovimientoDetalle.length > 0) {
+                            AlertFactory.textType({
+                                title: '',
+                                message: "Ya se encuentra registrado en MovimientoDetalle",
+                                type: 'info'
+                            });
+                        }
+
+                    } else {
+                        producto.val('');
+                        p_product_name.val('');
+                    }
+                },
+                "json"
+            );
+
+        };
+        $scope.saveserie = function () {
             msg_cont.addClass('hide');
             var bval = true;
             bval = bval && producto.required();
             if (!bval) {
-              msg_cont.removeClass('hide');
+                msg_cont.removeClass('hide');
                 return false;
             }
             bval = bval && serie.required();
@@ -91,8 +144,8 @@
             // bval = bval && color.required();
             // bval = bval && anio_fabricacion.required();
             // bval = bval && anio_modelo.required();
-            if(bval){
-                 var params = {
+            if (bval) {
+                var params = {
                     'idArticulo': producto.val(),
                     'nombreSerie': serie.val(),
                     'chasis': chasis.val(),
@@ -100,14 +153,14 @@
                     'color': color.val(),
                     'anio_modelo': anio_modelo.val(),
                     'anio_fabricacion': anio_fabricacion.val(),
-                    'idTipoCompraVenta':tipoCompra.val(),
-                    'nPoliza':nrPoliza.val(),
-                    'nLoteCompra':nrLote.val(),
-                    'cPlacaVeh':cPlacaVeh.val(),
-                 };
+                    'idTipoCompraVenta': tipoCompra.val(),
+                    'nPoliza': nrPoliza.val(),
+                    'nLoteCompra': nrLote.val(),
+                    'cPlacaVeh': cPlacaVeh.val(),
+                };
                 var serieIde_id = (serie_id.val() === '') ? 0 : serie_id.val();
 
-                  RESTService.updated('series/createserie', serieIde_id, params, function(response) {
+                RESTService.updated('series/createserie', serieIde_id, params, function (response) {
                     if (!_.isUndefined(response.status) && response.status) {
                         // AlertFactory.textType({
                         //     title: '',
@@ -125,15 +178,14 @@
                             type: 'info'
                         });
                     }
-                }); 
+                });
             }
 
         };
-        
-         function findserie(id)
-        {
+
+        function findserie(id) {
             titleModalSerie.html('Editar serie');
-            RESTService.get('series/find', id, function(response) {
+            RESTService.get('series/find', id, function (response) {
                 if (!_.isUndefined(response.status) && response.status) {
                     var data_p = response.data;
                     console.log(data_p);
@@ -149,7 +201,7 @@
                     tipoCompra.val(data_p[0].idTipoCompraVenta).trigger('change');;
                     nrPoliza.val(data_p[0].nPoliza);
                     nrLote.val(data_p[0].nLoteCompra)
-                     cPlacaVeh.val(data_p[0].cPlacaVeh)
+                    cPlacaVeh.val(data_p[0].cPlacaVeh)
                     modalSerie.modal('show');
                 } else {
                     AlertFactory.textType({
@@ -162,21 +214,21 @@
         }
 
         var search = getFormSearch('frm-search-Serie', 'search_Serie', 'LoadRecordsButtonSerie');
-       
+
         var table_container_Serie = $("#table_container_Serie");
-        
-         function getDataFormSerie () {
-            RESTService.all('series/data_form', '', function(response) {
+
+        function getDataFormSerie() {
+            RESTService.all('series/data_form', '', function (response) {
                 console.log("ddd");
                 if (!_.isUndefined(response.status) && response.status) {
                     tipoCompra.append('<option value="" selected>Seleccionar</option>');
                     console.log(response.tipoCompra);
                     console.log("eee");
-                     _.each(response.tipoCompra, function(item) {
-                        tipoCompra.append('<option value="'+item.idTipoCompraVenta+'">'+item.descripcion+'</option>');
+                    _.each(response.tipoCompra, function (item) {
+                        tipoCompra.append('<option value="' + item.idTipoCompraVenta + '">' + item.descripcion + '</option>');
                     });
                 }
-            }, function() {
+            }, function () {
                 getDataFormSerie();
             });
         }
@@ -186,7 +238,7 @@
             title: "Lista de Series",
             paging: true,
             sorting: true,
-            actions: { 
+            actions: {
                 listAction: base_url + '/series/list',
                 deleteAction: base_url + '/series/delete',
             },
@@ -194,7 +246,7 @@
                 items: [{
                     cssClass: 'buscador',
                     text: search
-                },{
+                }, {
                     cssClass: 'btn-primary',
                     text: '<i class="fa fa-file-excel-o"></i> Exportar a Excel',
                     click: function () {
@@ -218,35 +270,35 @@
                     edit: false,
                     list: false
                 },
-                 cPlacaVeh: {
+                cPlacaVeh: {
                     title: 'Placa',
                 },
-                 serie: {
+                serie: {
                     title: 'Serie',
-                     
+
 
                 },
                 idArticulo: {
                     title: 'Artículo',
-                
-                    options: base_url + '/series/getArticulos' 
+
+                    options: base_url + '/series/getArticulos'
                 },
-               
-                  chasis: {
+
+                chasis: {
                     title: 'Chasis',
                 },
-                
+
                 motor: {
                     title: 'Motor',
                 },
 
-                  anio_fabricacion: {
+                anio_fabricacion: {
                     title: 'Año de Fabricación',
                 },
-                
+
                 anio_modelo: {
                     title: 'Año del Modelo',
-                }, 
+                },
                 edit: {
                     width: '1%',
                     sorting: false,
@@ -254,25 +306,25 @@
                     create: false,
                     listClass: 'text-center',
                     display: function (data) {
-                        return '<a href="javascript:void(0)" class="edit-serie" data-id="'+data.record.idSerie
-                            +'" title="Editar"><i class="fa fa-edit fa-1-5x"></i></a>';
+                        return '<a href="javascript:void(0)" class="edit-serie" data-id="' + data.record.idSerie
+                            + '" title="Editar"><i class="fa fa-edit fa-1-5x"></i></a>';
                     }
                 }
-              
+
 
             },
 
-            recordsLoaded: function(event, data) {
-                $('.edit-serie').click(function(e){
+            recordsLoaded: function (event, data) {
+                $('.edit-serie').click(function (e) {
                     var id = $(this).attr('data-id');
                     findserie(id);
                     e.preventDefault();
                 });
-           } 
-           
+            }
+
         });
 
-        generateSearchForm('frm-search-Serie', 'LoadRecordsButtonSerie', function(){
+        generateSearchForm('frm-search-Serie', 'LoadRecordsButtonSerie', function () {
             table_container_Serie.jtable('load', {
                 search: $('#search_Serie').val()
             });
@@ -284,7 +336,7 @@
         modalCC.on('show.bs.modal', function (e) {
             modalSerie.attr('style', 'display:block; z-index:2030 !important');
         });
-         var search_cc2 = getFormSearch('frm-search-cc2', 'search_cc2', 'LoadRecordsButtonCC2');
+        var search_cc2 = getFormSearch('frm-search-cc2', 'search_cc2', 'LoadRecordsButtonCC2');
         var table_container_cc2 = $("#table_container_cc2");
         table_container_cc2.jtable({
             title: "Lista de Articulos",
@@ -317,14 +369,14 @@
                     create: false,
                     listClass: 'text-center',
                     display: function (data) {
-                        return '<a href="javascript:void(0)" title="Seleccionar" class="select_cc" data-name="'+
-                            data.record.description+'" data-code="'+data.record.id+'"><i class="fa fa-'+
-                            icon_select+' fa-1-5x"></i></a>';
-                   }
+                        return '<a href="javascript:void(0)" title="Seleccionar" class="select_cc" data-name="' +
+                            data.record.description + '" data-code="' + data.record.id + '"><i class="fa fa-' +
+                            icon_select + ' fa-1-5x"></i></a>';
+                    }
                 }
             },
-            recordsLoaded: function(event, data) {
-                $('.select_cc').click(function(e){
+            recordsLoaded: function (event, data) {
+                $('.select_cc').click(function (e) {
                     var code = $(this).attr('data-code');
                     var name_cc = $(this).attr('data-name');
                     producto.val(code);
@@ -335,7 +387,7 @@
             }
         });
 
-        generateSearchForm('frm-search-cc2', 'LoadRecordsButtonCC2', function(){
+        generateSearchForm('frm-search-cc2', 'LoadRecordsButtonCC2', function () {
             table_container_cc2.jtable('load', {
                 search: $('#search_cc2').val()
             });
@@ -355,4 +407,4 @@
         $urlRouterProvider.otherwise('/');
     }
 })
-();
+    ();

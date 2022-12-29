@@ -240,4 +240,13 @@ class SerieController extends Controller
             ]);
         }
     } 
+
+    public function validar_registro(SerieInterface $repo, Request $request) {
+        $data = $request->all();
+        $response = $repo->validar_registro($data["producto_id"], $data["serie_id"]);
+        return response()->json([
+            'status' => true,
+            'data' => $response
+        ]);
+    }
 }

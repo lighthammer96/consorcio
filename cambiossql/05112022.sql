@@ -192,7 +192,7 @@ CREATE TABLE ERP_SolicitudNegociaMora_cierre (
 	CONSTRAINT pk_solicitud_negocia_mora_cierre PRIMARY KEY (idsolicitudmora, periodo),
 	CONSTRAINT fk_periodo_solicitud_negocia_mora_cierre FOREIGN KEY(periodo) REFERENCES ERP_Periodo(periodo),
 	CONSTRAINT fk_solicitud_cronograma_solicitud_negocia_mora_cierre FOREIGN KEY (cCodConsecutivo,nConsecutivo,nrocuota) 
-	REFERENCES Consorcio_Pruebas.dbo.ERP_SolicitudCronograma(cCodConsecutivo,nConsecutivo,nrocuota)
+	REFERENCES ERP_SolicitudCronograma(cCodConsecutivo,nConsecutivo,nrocuota)
 );
 
 
