@@ -840,7 +840,7 @@ class CPETask extends Command
         $json_array["leyen"][0]["leyen_cod"] = "1000";
         
        
-        $json_array["leyen"][0]["leyen_descrip"] = $this->convertir($venta[0]->t_monto_total);
+        $json_array["leyen"][0]["leyen_descrip"] = $this->convertir($venta[0]->t_monto_total, $venta[0]->moneda);
        
         if ($venta[0]->comprobante_x_saldo == "S" && $venta[0]->tipo_comprobante == "0") { // por el saldo, segunda boleta
             $json_array["leyen"][1]["leyen_cod"] = "2002";
