@@ -403,14 +403,14 @@ class Controller extends BaseController
         DB::select($sql);
 
 
-        if ($tipo == "N") {
-            // ANULAMOS LA SOLICITUD
-            $update_solicitud = array();
-            $update_solicitud["cCodConsecutivo"] = $data["cCodConsecutivo"];
-            $update_solicitud["nConsecutivo"]    = $data["nConsecutivo"];
-            $update_solicitud["estado"] = 10;
-            $this->base_model->modificar($this->preparar_datos("dbo.ERP_Solicitud", $update_solicitud));
-        }
+        // if ($tipo == "N") {
+        //     // ANULAMOS LA SOLICITUD
+        //     $update_solicitud = array();
+        //     $update_solicitud["cCodConsecutivo"] = $data["cCodConsecutivo"];
+        //     $update_solicitud["nConsecutivo"]    = $data["nConsecutivo"];
+        //     $update_solicitud["estado"] = 10;
+        //     $this->base_model->modificar($this->preparar_datos("dbo.ERP_Solicitud", $update_solicitud));
+        // }
 
 
 
