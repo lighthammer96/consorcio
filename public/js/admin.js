@@ -3541,14 +3541,14 @@ function create_pdf_ordenServicio(response) {
             {
                 //Fecha inferiror
                 text: fechEntrega,
-                absolutePosition: { x: 520, y: 800 }, 
+                absolutePosition: { x: 490, y: 750 }, 
                 bold: true,
                 fontSize: 10,
             },
             {
                 //Hora inferior
                 text: "" + horaEnt + "",
-                absolutePosition: { x: 540, y: 800 },
+                absolutePosition: { x: 520, y: 750 },
                 bold: true,
                 fontSize: 10,
             },
