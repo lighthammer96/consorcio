@@ -3285,13 +3285,13 @@ function create_pdf_ordenServicio(response) {
             },
             {
                 text: telefono,
-                absolutePosition: { x: 81, y: 275 },
+                absolutePosition: { x: 81, y: 278 },
                 bold: true,
                 fontSize: 10,
             },
             {
                 text: celular,
-                absolutePosition: { x: 172, y: 275 },
+                absolutePosition: { x: 172, y: 278 },
                 bold: true,
                 fontSize: 10,
             },
@@ -3341,7 +3341,7 @@ function create_pdf_ordenServicio(response) {
             },
             {
                 text: nKilometraje,
-                absolutePosition: { x: 473, y: 275 },
+                absolutePosition: { x: 473, y: 278 },
                 bold: true,
                 fontSize: 10,
             },
@@ -3542,14 +3542,14 @@ function create_pdf_ordenServicio(response) {
             {
                 //Fecha inferiror
                 text: fechEntrega,
-                absolutePosition: { x: 490, y: 785 }, 
+                absolutePosition: { x: 490, y: 775 }, 
                 bold: true,
                 fontSize: 10,
             },
             {
                 //Hora inferior
                 text: "" + horaEnt + "",
-                absolutePosition: { x: 520, y: 785 },
+                absolutePosition: { x: 520, y: 775 },
                 bold: true,
                 fontSize: 10,
             },
