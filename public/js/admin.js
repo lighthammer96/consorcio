@@ -3106,7 +3106,7 @@ function create_pdf_ordenServicio(response) {
         tipoSer = 219;
         valorSer = 'X';
     } else {
-        tipoSer = 179;
+        tipoSer = 183;
     }
     var mantenimiento_X = "";
     var cambioAciete_X = "";
@@ -3243,7 +3243,7 @@ function create_pdf_ordenServicio(response) {
             }, */
             {
                 text: razonsocial_cliente,
-                absolutePosition: { x: 117, y: 157 },
+                absolutePosition: { x: 117, y: 155 },
                 bold: true,
                 fontSize: 10,
             },
@@ -3267,7 +3267,7 @@ function create_pdf_ordenServicio(response) {
             },
             {
                 text: razonsocial_cliente,
-                absolutePosition: { x: 107, y: 235 },
+                absolutePosition: { x: 100, y: 235 },
                 bold: true,
                 fontSize: 10,
             },
@@ -3305,7 +3305,7 @@ function create_pdf_ordenServicio(response) {
             {
                 // La otra columna
                 text: modelo,
-                absolutePosition: { x: 458, y: 157 },
+                absolutePosition: { x: 458, y: 155 },
                 bold: true,
                 fontSize: 10,
             },
@@ -3542,14 +3542,14 @@ function create_pdf_ordenServicio(response) {
             {
                 //Fecha inferiror
                 text: fechEntrega,
-                absolutePosition: { x: 490, y: 790 }, 
+                absolutePosition: { x: 490, y: 785 }, 
                 bold: true,
                 fontSize: 10,
             },
             {
                 //Hora inferior
                 text: "" + horaEnt + "",
-                absolutePosition: { x: 520, y: 790 },
+                absolutePosition: { x: 520, y: 785 },
                 bold: true,
                 fontSize: 10,
             },
