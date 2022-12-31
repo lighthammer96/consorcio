@@ -3443,8 +3443,8 @@ function create_pdf_ordenServicio(response) {
                 fontSize: 14,
             }, */
 
-
-            {
+            //Se oculta por el formato
+           /* {
                 //Montos de la orden
                 text: mo_revision,
                 absolutePosition: { x: 512, y: 269 },
@@ -3512,7 +3512,7 @@ function create_pdf_ordenServicio(response) {
                 absolutePosition: { x: 512, y: 445 },
                 bold: true,
                 fontSize: 10,
-            },
+            },*/
             {
                 text: cObservaciones,
                 absolutePosition: { x: 100, y: 535 },
