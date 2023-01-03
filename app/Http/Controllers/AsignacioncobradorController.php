@@ -129,7 +129,7 @@ class AsignacioncobradorController extends Controller
         header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
         header("Cache-Control: private",false);
         
-        print_r($id); exit;
+        // print_r($id); exit;
         $data = $request->all();
         $array = explode("*", $data["periodo"]);
       
