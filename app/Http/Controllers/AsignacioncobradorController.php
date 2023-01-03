@@ -130,8 +130,8 @@ class AsignacioncobradorController extends Controller
         header("Cache-Control: private",false);
         
         // print_r($id); exit;
-        $data = $request->all();
-        $array = explode("*", $data["periodo"]);
+        // $data = $request->all();
+        // $array = explode("*", $data["periodo"]);
       
         $array = explode("|", $id);
         $periodo_variable = $array[0];
