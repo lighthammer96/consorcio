@@ -3090,9 +3090,9 @@ function create_pdf_ordenServicio(response) {
 
     var mcondicionPago = '';
     if (data[0].idcCondicionPago == '1') {
-        mcondicionPago = 409;
+        mcondicionPago = 429; //409
     } else {
-        mcondicionPago = 489;
+        mcondicionPago = 509; //489
     };
 
     var tipoSer = '';
@@ -3106,7 +3106,7 @@ function create_pdf_ordenServicio(response) {
         tipoSer = 219;
         valorSer = 'X';
     } else {
-        tipoSer = 179;
+        tipoSer = 183;
     }
     var mantenimiento_X = "";
     var cambioAciete_X = "";
@@ -3197,19 +3197,19 @@ function create_pdf_ordenServicio(response) {
                 text: 'X',
                 fontSize: 12,
                 bold: true,
-                absolutePosition: { x: mcondicionPago, y: 72 }
+                absolutePosition: { x: mcondicionPago, y: 75 }
             },
             {
                 // Fecha superior
                 text: fechRecep,
                 bold: true,
                 fontSize: 10,
-                absolutePosition: { x: 364, y: 82 }
+                absolutePosition: { x: 424, y: 91 } //364,82
             },
             {
                 //Fecha superior
                 text: fechEntrega,
-                absolutePosition: { x: 364, y: 93 },
+                absolutePosition: { x: 424, y: 107 }, //364,93 
                 bold: true,
                 fontSize: 10,
             },
@@ -3243,55 +3243,55 @@ function create_pdf_ordenServicio(response) {
             }, */
             {
                 text: razonsocial_cliente,
-                absolutePosition: { x: 117, y: 130 },
+                absolutePosition: { x: 117, y: 155 },
                 bold: true,
                 fontSize: 10,
             },
             {
                 text: ruc,
-                absolutePosition: { x: 107, y: 149 },
+                absolutePosition: { x: 107, y: 179 },
                 bold: true,
                 fontSize: 10,
             },
             {
                 text: direccion,
-                absolutePosition: { x: 107, y: 164 },
+                absolutePosition: { x: 107, y: 194 },
                 bold: true,
                 fontSize: 10,
             },
             {
                 text: distrito,
-                absolutePosition: { x: 107, y: 187 },
+                absolutePosition: { x: 107, y: 217 },
                 bold: true,
                 fontSize: 10,
             },
             {
                 text: razonsocial_cliente,
-                absolutePosition: { x: 107, y: 205 },
+                absolutePosition: { x: 100, y: 235 },
                 bold: true,
                 fontSize: 10,
             },
             {
                 text: dni,
-                absolutePosition: { x: 100, y: 222 },
+                absolutePosition: { x: 100, y: 256 },
                 bold: true,
                 fontSize: 10,
             },
             {
                 text: correo_electronico,
-                absolutePosition: { x: 175, y: 222 },
+                absolutePosition: { x: 175, y: 256 },
                 bold: true,
                 fontSize: 10,
             },
             {
                 text: telefono,
-                absolutePosition: { x: 81, y: 240 },
+                absolutePosition: { x: 81, y: 278 },
                 bold: true,
                 fontSize: 10,
             },
             {
                 text: celular,
-                absolutePosition: { x: 172, y: 240 },
+                absolutePosition: { x: 172, y: 278 },
                 bold: true,
                 fontSize: 10,
             },
@@ -3303,44 +3303,45 @@ function create_pdf_ordenServicio(response) {
                 fontSize: 14, //
             },
             {
+                // La otra columna
                 text: modelo,
-                absolutePosition: { x: 458, y: 130 },
+                absolutePosition: { x: 458, y: 155 },
                 bold: true,
                 fontSize: 10,
             },
             {
                 text: cMotor,
-                absolutePosition: { x: 473, y: 149 },
+                absolutePosition: { x: 473, y: 179 },
                 bold: true,
                 fontSize: 10,
             },
             {
                 text: cChasis,
-                absolutePosition: { x: 473, y: 169 },
+                absolutePosition: { x: 473, y: 199 },
                 bold: true,
                 fontSize: 10,
             },
             {
                 text: iAnioFab,
-                absolutePosition: { x: 473, y: 187 },
+                absolutePosition: { x: 473, y: 217 },
                 bold: true,
                 fontSize: 10,
             },
             {
                 text: cColor,
-                absolutePosition: { x: 443, y: 205 },
+                absolutePosition: { x: 443, y: 235 },
                 bold: true,
                 fontSize: 10,
             },
             {
                 text: cPlacaVeh,
-                absolutePosition: { x: 443, y: 222 },
+                absolutePosition: { x: 443, y: 256 },
                 bold: true,
                 fontSize: 10,
             },
             {
                 text: nKilometraje,
-                absolutePosition: { x: 473, y: 240 },
+                absolutePosition: { x: 473, y: 278 },
                 bold: true,
                 fontSize: 10,
             },
@@ -3443,8 +3444,8 @@ function create_pdf_ordenServicio(response) {
                 fontSize: 14,
             }, */
 
-
-            {
+            //Se oculta por el formato
+           /* {
                 //Montos de la orden
                 text: mo_revision,
                 absolutePosition: { x: 512, y: 269 },
@@ -3512,14 +3513,15 @@ function create_pdf_ordenServicio(response) {
                 absolutePosition: { x: 512, y: 445 },
                 bold: true,
                 fontSize: 10,
-            },
+            },*/
             {
                 text: cObservaciones,
-                absolutePosition: { x: 100, y: 535 },
+                absolutePosition: { x: 100, y: 324 },
                 bold: true,
                 fontSize: 10,
             },
-            {
+             //Se oculta por el formato
+            /*{
                 text: modelo,
                 absolutePosition: { x: 361, y: 580 },
                 bold: true,
@@ -3534,6 +3536,20 @@ function create_pdf_ordenServicio(response) {
             {
                 text: razonsocial_cliente,
                 absolutePosition: { x: 361, y: 560 },
+                bold: true,
+                fontSize: 10,
+            },*/
+            {
+                //Fecha inferiror
+                text: fechEntrega,
+                absolutePosition: { x: 490, y: 775 }, 
+                bold: true,
+                fontSize: 10,
+            },
+            {
+                //Hora inferior
+                text: "" + horaEnt + "",
+                absolutePosition: { x: 520, y: 775 },
                 bold: true,
                 fontSize: 10,
             },
