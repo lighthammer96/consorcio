@@ -177,9 +177,9 @@ class AsignacioncobradorController extends Controller
                 $fecul = date("d/m/Y",strtotime($value->fecultpago));
             }
 
-            if($value->documento_cliente != "44492608" && $value->documento_cliente != "43522997") {
-                continue;
-            }
+            // if($value->documento_cliente != "44492608" && $value->documento_cliente != "43522997") {
+            //     continue;
+            // }
 
             if(!in_array($value->cliente, $array)) {
 
