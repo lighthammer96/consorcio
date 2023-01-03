@@ -52,7 +52,8 @@ left join ERP_Cobrador as cob on (cob.id=so.idCobrador)
 INNER JOIN ERP_Clientes AS cli ON(so.idcliente=cli.id)
 left join ERP_Ubigeo as ub on (cli.ubigeo=ub.cCodUbigeo)
 left join ERP_Vendedores as vend on(vend.idvendedor=so.idvendedor)
-where C.saldo_cuota>0 and  v.idventa IN ($solitud)";
+where C.saldo_cuota>0 and  v.idventa IN ($solitud)
+ORDER BY cli.id ASC, concat(v.serie_comprobante,'-',RIGHT('00000' + CAST(FLOOR(v.numero_comprobante) AS VARCHAR), 5),'-',RIGHT('00000' + CAST(FLOOR(c.nrocuota) AS VARCHAR), 5) ) ASC";
 // echo $sql; exit;
         $mostrar=DB::select($sql);
         return $mostrar;
