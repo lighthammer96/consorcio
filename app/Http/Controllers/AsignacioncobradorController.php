@@ -129,9 +129,9 @@ class AsignacioncobradorController extends Controller
         header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
         header("Cache-Control: private",false);
         
-        // print_r($id); exit;
-        // $data = $request->all();
-        // $array = explode("*", $data["periodo"]);
+        print_r($id); exit;
+        $data = $request->all();
+        $array = explode("*", $data["periodo"]);
       
         $array = explode("|", $id);
         $periodo_variable = $array[0];
@@ -175,6 +175,10 @@ class AsignacioncobradorController extends Controller
             $fecul = '';
             if($value->fecultpago != null){
                 $fecul = date("d/m/Y",strtotime($value->fecultpago));
+            }
+
+            if($value->documento_cliente != "44492608" && $value->documento_cliente != "43522997") {
+                continue;
             }
 
             if(!in_array($value->cliente, $array)) {
@@ -299,7 +303,7 @@ class AsignacioncobradorController extends Controller
 
         // echo count($data_envio);
         // exit;
-        return view("excel.viewCuentasxCobrar")->with("data_envio", $data_envio); 
+        return view("excel.viewCuentasxCobrar_xls")->with("data_envio", $data_envio); 
         // return generateExcelCuentasxCobrar($data_cabe, $simboloMoneda, $cambio, 'CUENTAS POR COBRAR POR CLIENTE', 'Cuentas');
         // return generateExcelCuentasxCobrar($data_envio, $simboloMoneda, $cambio, 'CUENTAS POR COBRAR POR CLIENTE', 'Cuentas');
     }
