@@ -51,6 +51,11 @@ class VendedoresController extends Controller
         $data = $request->all();
         // print_r($data);
         $idvendedor = $data['idvendedor'];
+        $estado='A';
+        if(!isset($data['estado'])){
+            $estado='I';
+        };
+        $data['estado'] =  $estado;
         // $data['descripcion'] = $data['banco'];
         $repo->update($idvendedor, $data);
 

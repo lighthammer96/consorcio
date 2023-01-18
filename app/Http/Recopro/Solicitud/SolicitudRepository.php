@@ -165,7 +165,7 @@ class SolicitudRepository implements SolicitudInterface
     public function obtener_vendedores()
     {
 
-        $mostrar3 = DB::select("select * from ERP_Vendedores");
+        $mostrar3 = DB::select("select * from ERP_Vendedores WHERE estado='A'");
         return $mostrar3;
     }
 
