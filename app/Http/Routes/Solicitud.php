@@ -73,3 +73,5 @@ Route::post('solicitud/guardar_separaciones', ['as' => 'solicitud.guardar_separa
 Route::post('solicitud/obtener_separaciones', ['as' => 'solicitud.obtener_separaciones', 'uses' => 'SolicitudController@obtener_separaciones']);
 
 Route::post('solicitud/obtener_series', ['as' => 'solicitud.obtener_series', 'uses' => 'SolicitudController@obtener_series']);
+
+Route::post('solicitud/validar_cliente', 'CustomerController@validar_cliente'); 

@@ -31,3 +31,5 @@ Route::get('customers/traerSectorli/{id}', ['as' => 'customers.traerSectorli', '
 
 
 Route::post('customers/getDistritoCli', 'UbigeoController@getDistrito'); 
+
+Route::post('customers/validar_cliente', 'CustomerController@validar_cliente'); 

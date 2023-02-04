@@ -120,4 +120,9 @@ where IdTipoDocumento in ('01','03')");
         return $mostra;
     }
 
+    public function validar_cliente($id_cliente) {
+        $sql = "SELECT * FROM ERP_Venta WHERE idcliente={$id_cliente}";
+
+        return DB::select($sql);
+    }
 }

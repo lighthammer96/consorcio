@@ -67,3 +67,5 @@ Route::get('orden_servicios/traerSectorOrd/{id}', ['as' => 'orden_servicios.trae
 Route::post('orden_servicios/update_articulo', ['as' => 'orden_servicios.update_articulo', 'uses' => 'Orden_servicioController@update_articulo']);
 
 Route::get('orden_servicios/TraerModelos/{id}', ['as' => 'orden_servicios.TraerModelos', 'uses' => 'ModeloController@TraerModelos']);
+
+Route::post('orden_servicios/validar_cliente', 'CustomerController@validar_cliente');

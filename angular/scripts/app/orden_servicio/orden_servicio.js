@@ -203,9 +203,25 @@
                         getDistrito(data_p[0].cCodUbigeo, data_p[0].cProvincia);
 
                         getSector(data_p[0].idsector, data_p[0].cCodUbigeo);
-
                         modaClientes.modal('show');
                         console.log(data_p);
+
+                        $.post("orden_servicios/validar_cliente", { id_cliente: id },
+                            function (data, textStatus, jqXHR) {
+                              
+                                if(data.length > 0) {
+                                    $("#tipodoc").prop("disabled", true);
+                                    $("#documento").prop("readonly", true);
+                                    $("#razonsocial_cliente").prop("readonly", true);
+                                } else {
+                                    $("#tipodoc").prop("disabled", false);
+                                    $("#documento").prop("readonly", false);
+                                    $("#razonsocial_cliente").prop("readonly", false);
+                                }
+                            },
+                            "json"
+                        );
+                    
                     } else {
                         AlertFactory.textType({
                             title: '',
@@ -3209,6 +3225,9 @@
             });
         }
         getDataFormOrden();
+
+        var tipos_doc_venta = [];
+
         function getDataForOrdenServicio() {
             RESTService.all('orden_servicios/data_form', '', function (response) {
                 if (!_.isUndefined(response.status) && response.status) {
@@ -3307,7 +3326,7 @@
                     // totalDescuento.append('<option value="">Seleccionar</option>');
                     descuentosTotales = response.descuentos;
 
-
+                    tipos_doc_venta = response.tipo_document_venta;
                 }
             }, function () {
                 getDataForOrdenServicio();
@@ -3315,7 +3334,24 @@
         }
         getDataForOrdenServicio();
 
-     
+        $(document).on("change", "#tipodoc", function (e) {
+            e.preventDefault();
+            var valor = $(this).val();
+            id_tipoDoc_Venta.html("");
+            id_tipoDoc_Venta.append('<option value="">Seleccionar</option>');
+            // console.log(tipos_doc_venta);
+            if(valor == '06') {
+                tipos_doc_venta.map(function (index) {
+                    if(index.IdTipoDocumento == "01") {
+                        id_tipoDoc_Venta.append('<option value="' + index.IdTipoDocumento + '">' + index.Descripcion + '</option>');
+                    }
+                });
+            } else {
+                tipos_doc_venta.map(function (index) {
+                    id_tipoDoc_Venta.append('<option value="' + index.IdTipoDocumento + '">' + index.Descripcion + '</option>');
+                });
+            }
+        });
 
         var search = getFormSearch('frm-search-Orden_Servicio', 'search_b', 'LoadRecordsButtonOrden_Servicio');
 
