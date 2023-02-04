@@ -55,7 +55,7 @@ class Query_movementsController extends Controller
         $cod_serie=$request->input('cod_serie');
         $fecha_inicio=$request->input('fecha_inicio');
         $fecha_fin=$request->input('fecha_fin');
-
+        // print_R($filtro_art);
         return generateExcel($this->generateDataExcel($repo->allFiltro($s,$filtro_art,$filtro_idAlm,$filtro_idLoc,$filtro_cate,$filtro_nat,$filtro_oper,$n_movimiento,$cod_lote,$cod_serie,$fecha_inicio,$fecha_fin)), 'LISTA DE MOVIMIENTOS POR ARTICULOS', 'Articulo');
     }
      public function getDataFiltro(Query_movementsInterface $repo)

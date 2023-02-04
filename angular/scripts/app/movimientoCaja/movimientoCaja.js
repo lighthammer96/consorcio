@@ -569,6 +569,10 @@
             cargarCuentasBancarias();
         });
 
+        $("#banco_fp").change(function (e) {
+            cargarCuentasBancarias_fp();
+        });
+
         idMonedaAdd.change(function (e) {
             var simbolo = $(this).find("option[value=" + $(this).val() + "]").data("simbolo");
             $(".simbolo-moneda-mov").text(simbolo);
@@ -577,6 +581,23 @@
             // alert(simbolo);
             cargarCuentasBancarias();
         });
+
+        function cargarCuentasBancarias_fp() {
+            var bval = true;
+            $("#cuentaBancaria_fp").html("");
+            $("#cuentaBancaria_fp").append('<option value="">Seleccionar</option>');
+            bval = bval && $("#moneda").required();
+            bval = bval && $("#banco_fp").required();
+            if (bval) {
+                _.each(cuentas_bancarias, function (item) {
+                    if (item.idbanco == $("#banco_fp").val() && item.IdMoneda == $("#moneda").val()) {
+                        $("#cuentaBancaria_fp").append('<option value="' + item.id_cuentabancaria + '*' + item.numero_cuenta + '">' + item.numero_cuenta + ' ' + item.descripcion_cuenta + '</option>');
+                    }
+                    
+                });
+            }
+        }
+
         function cargarCuentasBancarias() {
             var bval = true;
             cuentaBancaria.html("");
@@ -599,6 +620,10 @@
                     banco.append('<option value="">Seleccionar</option>');
                     _.each(response.bancos, function (item) {
                         banco.append('<option value="' + item.idbanco + '">' + item.descripcion + '</option>');
+                    });
+                    $("#banco_fp").append('<option value="">Seleccionar</option>');
+                    _.each(response.bancos, function (item) {
+                        $("#banco_fp").append('<option value="' + item.idbanco + '">' + item.descripcion + '</option>');
                     });
                     cuentas_bancarias = response.cuenta_bancarias;
                 }
@@ -2290,7 +2315,11 @@ $(document).on("change", "#forma_pago", function (event) {
     $(".venta").hide();
     $("#idventa").html("");
     $("#idventa").removeAttr("tipo");
-    
+    $(".deposito").hide();
+    if(forma_pago == "DEP") {
+        $(".deposito").show();
+    }
+
     if(forma_pago == "SEP") {
         $.post("ventas/get_venta_separacion", { idcliente: idcliente },
         function (data, textStatus, jqXHR) {
@@ -2441,9 +2470,15 @@ $scope.guardar_forma_pago = function () {
     var bval = true;
     var vuelto_real = parseFloat($("#vuelto_real").val());
     bval = bval && $("#forma_pago").required();
+    
     if ($("#forma_pago").val() == "TCR" || $("#forma_pago").val() == "TDE") {
         bval = bval && $("#noperacion").required();
         bval = bval && $("#tarjeta").required();
+    }
+
+    if($("#forma_pago").val() == "DEP" ) {
+        bval = bval && $("#banco_fp").required();
+        bval = bval && $("#cuentaBancaria_fp").required();
     }
     
     if ($("#forma_pago").val() == "DEP" || $("#forma_pago").val() == "ELE" || $("#forma_pago").val() == "TRA") {
@@ -2463,8 +2498,6 @@ $scope.guardar_forma_pago = function () {
         return false;
     }
     
-    
-    
     if (!bval) {
         return false;
     }
@@ -2483,6 +2516,11 @@ $scope.guardar_forma_pago = function () {
     var monto_aplicar = (!isNaN(parseFloat($("#monto_aplicar").val()))) ? parseFloat($("#monto_aplicar").val()) : 0;
     var monto_vuelto = (!isNaN(parseFloat($("#monto_vuelto").val()))) ? parseFloat($("#monto_vuelto").val()) : 0;
 
+    var banco = $("#banco_fp").val();
+    var cuentaBancaria = $("#cuentaBancaria_fp").val();
+    var array_cuenta_bancaria = cuentaBancaria.split("*");
+    var numero_cuenta = array_cuenta_bancaria[0];
+
     var html = "<tr>";
 
     if ($('#modalMovimientoCaja').is(':visible')) {
@@ -2496,6 +2534,9 @@ $scope.guardar_forma_pago = function () {
         html += '   <input type="hidden" name="monto_aplicado_moneda_documento_mov[]" value="' + monto_aplicar + '" />';
         html += '   <input type="hidden" name="monto_tipo_cambio_soles_mov[]" value="' + tipo_cambio + '" />';
         html += '   <input type="hidden" name="vuelto_mov[]" value="' + monto_vuelto + '" />';
+        html += '   <input type="hidden" name="banco_mov[]" value="' + banco + '" />';
+        html += '   <input type="hidden" name="numero_cuenta_mov[]" value="' + numero_cuenta + '" />';
+
         html += '   <td>' + moneda_text + '</td>';
         html += '   <td>' + forma_pago_text + '</td>';
         html += '   <td>' + noperacion + '</td>';
@@ -2521,6 +2562,9 @@ $scope.guardar_forma_pago = function () {
         html += '   <input type="hidden" name="monto_aplicado_moneda_documento[]" value="' + monto_aplicar + '" />';
         html += '   <input type="hidden" name="monto_tipo_cambio_soles[]" value="' + tipo_cambio + '" />';
         html += '   <input type="hidden" name="vuelto[]" value="' + monto_vuelto + '" />';
+
+        html += '   <input type="hidden" name="banco[]" value="' + banco + '" />';
+        html += '   <input type="hidden" name="numero_cuenta[]" value="' + numero_cuenta + '" />';
         html += '   <td>' + moneda_text + '</td>';
         html += '   <td>' + forma_pago_text + '</td>';
         html += '   <td>' + noperacion + '</td>';

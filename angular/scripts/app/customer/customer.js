@@ -30,6 +30,9 @@
         var cliente_id = $("#cliente_id");
         var cEstadoCivil = $("#cEstadoCivil");
         var idsector = $("#idsector");
+
+        
+
         $scope.chkState = function () {
             var txt_state2 = (w_state.prop('checked')) ? 'Activo' : 'Inactivo';
             state_state.html(txt_state2);
@@ -81,7 +84,6 @@
                             getSector("xxxxxx", dataPersona[0].cCodUbigeo);
                         }
 
-
                     } else {
                         AlertFactory.textType({
                             title: '',
@@ -115,7 +117,7 @@
                         var direc = data.direccion;
                         razonsocial_cliente.val(razon);
                         direccion.val(direc);
-                       
+
                     } else {
                         razonsocial_cliente.val('');
                         direccion.val('');
@@ -173,6 +175,7 @@
             titleModalClientes.html('Editar Cliente');
             RESTService.get('customers/find', id, function (response) {
                 if (!_.isUndefined(response.status) && response.status) {
+
                     var data_p = response.data;
                     tipodoc.val(data_p[0].tipodoc).trigger('change');
                     razonsocial_cliente.val(data_p[0].razonsocial_cliente);
@@ -194,7 +197,22 @@
                     // console.log(data_p[0].dFechanacimiento);
                     $("#dFechanacimiento").val(data_p[0].dFechanacimiento_server);
                     modaClientes.modal('show');
-                    console.log(data_p);
+
+                    $.post("customers/validar_cliente", { id_cliente: id },
+                        function (data, textStatus, jqXHR) {
+                            if(data.length > 0) {
+                                $("#tipodoc").prop("disabled", true);
+                                $("#documento").prop("readonly", true);
+                                $("#razonsocial_cliente").prop("readonly", true);
+                            } else {
+                                $("#tipodoc").prop("disabled", false);
+                                $("#documento").prop("readonly", false);
+                                $("#razonsocial_cliente").prop("readonly", false);
+                            }
+                        },
+                        "json"
+                    );
+                    // console.log(data_p);
                 } else {
                     AlertFactory.textType({
                         title: '',
@@ -432,6 +450,8 @@
             }
 
         };
+
+        var tipos_doc_venta = [];
         function getDataFormCustomer() {
             RESTService.all('customers/data_form', '', function (response) {
                 if (!_.isUndefined(response.status) && response.status) {
@@ -450,6 +470,8 @@
                         id_tipoDoc_Venta.append('<option value="' + index.IdTipoDocumento + '">' + index.Descripcion + '</option>');
                     });
 
+                    tipos_doc_venta = tipoc_doc_venta;
+
                     //  _.each(response.operaciones, function(item) {
                     //    
                     // });
@@ -460,6 +482,25 @@
             });
         }
         getDataFormCustomer();
+
+        $(document).on("change", "#tipodoc", function (e) {
+            e.preventDefault();
+            var valor = $(this).val();
+            id_tipoDoc_Venta.html("");
+            id_tipoDoc_Venta.append('<option value="">Seleccionar</option>');
+            // console.log(tipos_doc_venta);
+            if(valor == '06') {
+                tipos_doc_venta.map(function (index) {
+                    if(index.IdTipoDocumento == "01") {
+                        id_tipoDoc_Venta.append('<option value="' + index.IdTipoDocumento + '">' + index.Descripcion + '</option>');
+                    }
+                });
+            } else {
+                tipos_doc_venta.map(function (index) {
+                    id_tipoDoc_Venta.append('<option value="' + index.IdTipoDocumento + '">' + index.Descripcion + '</option>');
+                });
+            }
+        });
 
         table_container_Customer.jtable({
             title: "Lista de Clientes",
