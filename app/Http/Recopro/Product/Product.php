@@ -1,6 +1,7 @@
 <?php namespace App\Http\Recopro\Product;
 
 use App\Http\Recopro\Level\Level;
+use App\Http\Recopro\Measure\Measure;
 use App\Http\Recopro\PlanAccount\PlanAccount;
 use App\Http\Recopro\ProductBrand\ProductBrand;
 use App\Http\Recopro\ProjectConsolidated\ProjectConsolidated;
@@ -19,6 +20,7 @@ use App\Http\Recopro\Family\Family;
 use App\Http\Recopro\SubFamily\SubFamily;
 use App\Http\Recopro\HeadAccountan\HeadAccountan;
 use App\Http\Recopro\Articulo_Kit\Articulo_Kit;
+
 /**
  * Created by PhpStorm.
  * User: Ever
@@ -27,21 +29,19 @@ use App\Http\Recopro\Articulo_Kit\Articulo_Kit;
  */
 class Product extends Model
 {
-    
-
     protected $table = 'ERP_Productos';
 
     protected $fillable = ['description', 'description_detail', 'state', 'type_id', 'um_id', 'um_quantity', 'model',
         'year_enter', 'cc_debe_id', 'cc_haber_id', 'retention_id', 'sale_blocked', 'serie', 'lote', 'kit', 'code_matrix',
         'price_service_reference', 'commission_sale', 'sale', 'sale_description', 'maker', 'image', 'matrix', 'code_article',
         'average_cost',
-        'user_created', 'user_updated', 'user_deleted','idModelo','idCategoria','idFamilia','idSubFamilia','idGrupoContableCabecera','impuesto','motor','chasis','anio_modelo','anio_fabricacion','idMarca','color','disponible_venta','costo','idCatVeh', 'idcarroceria'];
-
- 
+        'user_created', 'user_updated', 'user_deleted', 'idModelo', 'idCategoria', 'idFamilia', 'idSubFamilia',
+        'idGrupoContableCabecera', 'impuesto', 'motor', 'chasis', 'anio_modelo', 'anio_fabricacion', 'idMarca', 'color',
+        'disponible_venta', 'costo', 'idCatVeh', 'idcarroceria'];
 
     public function modelo()
     {
-        return $this->belongsTo(Modelo::class,'idModelo');
+        return $this->belongsTo(Modelo::class, 'idModelo');
     }
 
     public function categoria()
@@ -51,17 +51,17 @@ class Product extends Model
 
     public function familia()
     {
-        return $this->belongsTo(Family::class,'idFamilia');
+        return $this->belongsTo(Family::class, 'idFamilia');
     }
 
     public function subfamilia()
     {
         return $this->belongsTo(SubFamily::class, 'idSubFamilia');
-    } 
+    }
 
     public function marca()
     {
-        return $this->belongsTo(Brand::class,'idMarca');
+        return $this->belongsTo(Brand::class, 'idMarca');
     }
 
 
@@ -69,12 +69,6 @@ class Product extends Model
     {
         return $this->belongsTo(HeadAccountan::class, 'idGrupoContableCabecera');
     }
-
-
-
-
-
-
 
 
     public function user_c()
@@ -94,7 +88,7 @@ class Product extends Model
 
     public function unity()
     {
-        return $this->belongsTo(Unity::class, 'um_id', 'IdUnidadMedida');
+        return $this->belongsTo(Measure::class, 'um_id', 'IdUnidadMedida');
     }
 
     public function retention()
@@ -127,9 +121,9 @@ class Product extends Model
         return $this->hasOne(Stock::class);
     }
 
-     public function Articulo_Kit()
+    public function Articulo_Kit()
     {
-        return $this->hasMany(Articulo_Kit::class,'idArticulo', 'id');
+        return $this->hasMany(Articulo_Kit::class, 'idArticulo', 'id');
     }
 
     public function projectConsolidated()

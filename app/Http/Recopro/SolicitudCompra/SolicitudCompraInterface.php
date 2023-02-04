@@ -8,10 +8,20 @@
 
 namespace App\Http\Recopro\SolicitudCompra;
 
-
 interface SolicitudCompraInterface
 {
+    public function search($s);
+
     public function all();
+
+    public function find($id);
+
     public function create(array $attributes);
+
+    public function update($id, array $attributes);
+
+    public function getIDByLast();
+
+    public function getIDByConsecutive($type);
 
 }

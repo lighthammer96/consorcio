@@ -31,7 +31,7 @@ use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
- 
+
 class ProductController extends Controller
 {
     use ProductTrait;
@@ -44,27 +44,27 @@ class ProductController extends Controller
     public function all(Request $request, ProductInterface $repo)
     {
         $s = $request->input('search', '');
-        $params = ['id', 'sale','state', 'description', 'matrix', 'code_article', 'code_matrix'];
+        $params = ['id', 'sale', 'state', 'description', 'matrix', 'code_article', 'code_matrix'];
 
         return parseList($repo->search($s), $request, 'id', $params);
 
     }
+
     public function data_form_dd(Precios_productoInterface $repo)
     {
-      
-        $userid=auth()->id();
-        return response()->json([ 
+
+        $userid = auth()->id();
+        return response()->json([
             'status' => true,
             'userid' => $userid,
-            
+
         ]);
     }
 
 
-
-    public function createUpdate($id, ProductInterface $repo, ProductRequest $request, ProductBrandInterface $pbRepo,Articulo_KitInterface $kitrepo)
+    public function createUpdate($id, ProductInterface $repo, ProductRequest $request, ProductBrandInterface $pbRepo, Articulo_KitInterface $kitrepo)
     {
-       
+
         try {
             $data = $request->all();
             // print_r($data); exit;
@@ -92,24 +92,23 @@ class ProductController extends Controller
                 $ide = $product->id;
                 $code = $product->code_article;
             }
-           
-            if ($data['cantidadKit']!='N') {
-                    $kitrepo->destroy($id);
-                    $idArticuloKitT=$data['idArticuloKit'];
-                    $idArticuloKit=explode(',', $idArticuloKitT);
-                    $cantidadKitT=$data['cantidadKit'];
-                    $cantidadKit=explode(',', $cantidadKitT);
-                    for ($i=0; $i < count($idArticuloKit) ; $i++) { 
-                        $datKit=[];
-                        $datKit['idArticuloKit'] =$ide;
-                        $datKit['idArticulo'] = $idArticuloKit[$i] ;
-                        $datKit['cantidad'] =$cantidadKit[$i];
-                        $kitrepo->create($datKit);
+
+            if ($data['cantidadKit'] != 'N') {
+                $kitrepo->destroy($id);
+                $idArticuloKitT = $data['idArticuloKit'];
+                $idArticuloKit = explode(',', $idArticuloKitT);
+                $cantidadKitT = $data['cantidadKit'];
+                $cantidadKit = explode(',', $cantidadKitT);
+                for ($i = 0; $i < count($idArticuloKit); $i++) {
+                    $datKit = [];
+                    $datKit['idArticuloKit'] = $ide;
+                    $datKit['idArticulo'] = $idArticuloKit[$i];
+                    $datKit['cantidad'] = $cantidadKit[$i];
+                    $kitrepo->create($datKit);
 
                 }
 
             }
-          
 
 
             DB::commit();
@@ -124,86 +123,113 @@ class ProductController extends Controller
                 'message' => $e->getMessage()
             ]);
         }
-    } 
+    }
 
-     public function getAll(ProductInterface $repo)
+    public function getAll(ProductInterface $repo)
     {
         return parseSelect($repo->all(), 'id', 'description');
     }
+
     public function traeAllTrans(Request $request, ProductInterface $repo)
     {
         $s = $request->input('search', '');
-        $params = ['id', 'description','code_article','type_id','serie','lote','costo'];
+        $params = ['id', 'description', 'code_article', 'type_id', 'serie', 'lote', 'costo'];
         return parseList($repo->searchTrans($s), $request, 'id', $params);
     }
+
     public function getProductoPrecios(Request $request, Precios_productoInterface $repo)
     {
         $s = $request->input('search', '');
-        $params = ['idProducto', 'Producto','Codigo_Articulo','Precio','Cliente','Moneda'];
+        $params = ['idProducto', 'Producto', 'Codigo_Articulo', 'Precio', 'Cliente', 'Moneda'];
         return parseList($repo->search($s), $request, 'idProducto', $params);
     }
-     public function traeAll(Request $request, ProductInterface $repo)
+
+    public function traeAll(Request $request, ProductInterface $repo)
     {
         $s = $request->input('search', '');
-        $params = ['id', 'description','code_article','type_id','serie','lote','costo', 'impuesto', 'um_id'];
+        $params = ['id', 'description', 'code_article', 'type_id', 'serie', 'lote', 'costo', 'impuesto', 'um_id'];
         return parseList($repo->search2($s), $request, 'id', $params);
     }
-     public function traeAllMinKit(Request $request, ProductInterface $repo)
+
+    public function traeAllMinKit(Request $request, ProductInterface $repo)
     {
-        $s = $request->input('search', '');
-        $params = ['id', 'description','code_article','type_id','serie','lote','costo'];
-        return parseList($repo->searchMinKit($s), $request, 'id', $params);
+        try {
+            $s = $request->input('search', '');
+            $params = ['id', 'description', 'code_article', 'type_id', 'serie', 'lote', 'costo', 'um_id'];
+            $info = parseDataList($repo->searchMinKit($s), $request, 'id', $params);
+
+            $data = $info[1];
+
+            foreach ($data as $d) {
+                $u = $d->unity;
+                $d->und = (is_null($u->symbol)) ? $u->Descripcion : $u->symbol;
+                unset($d->um_id, $d->unity);
+            }
+            return response()->json([
+                'Result' => 'OK',
+                'TotalRecordCount' => $info[0],
+                'Records' => $data
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'Result' => 'ERROR',
+                'Message' => [$e->getMessage()]
+            ]);
+        }
     }
 
-     public function traeAllSerie(Request $request, ProductInterface $repo)
+    public function traeAllSerie(Request $request, ProductInterface $repo)
     {
         $s = $request->input('search', '');
-        $params = ['id', 'description','code_article','type_id','serie','lote'];
+        $params = ['id', 'description', 'code_article', 'type_id', 'serie', 'lote'];
         return parseList($repo->searchSerie($s), $request, 'id', $params);
     }
-      public function traeAll_Servicios(Request $request, ProductInterface $repo)
+
+    public function traeAll_Servicios(Request $request, ProductInterface $repo)
     {
         $s = $request->input('search', '');
-        $params = ['id', 'description','code_article','type_id','serie','lote'];
+        $params = ['id', 'description', 'code_article', 'type_id', 'serie', 'lote'];
         return parseList($repo->searchServicio($s), $request, 'id', $params);
     }
-     public function traeAllLote(Request $request, ProductInterface $repo)
+
+    public function traeAllLote(Request $request, ProductInterface $repo)
     {
         $s = $request->input('search', '');
-        $params = ['id', 'description','code_article','type_id','serie','lote'];
+        $params = ['id', 'description', 'code_article', 'type_id', 'serie', 'lote'];
         return parseList($repo->searchLote($s), $request, 'id', $params);
     }
-     public function traeAll_kit(Request $request, ProductInterface $repo)
+
+    public function traeAll_kit(Request $request, ProductInterface $repo)
     {
         $s = $request->input('search', '');
-        $params = ['id', 'description','code_article','type_id','serie','lote'];
+        $params = ['id', 'description', 'code_article', 'type_id', 'serie', 'lote'];
         return parseList($repo->search3($s), $request, 'id', $params);
     }
-    
+
     public function find($id, ProductInterface $repo)
     {
         try {
 
             $data = $repo->find($id);
-            $precios_producto=$repo->get_precios($id);
-            if($data['type_id']==3){
-                    $datosKit=$repo->getDetalleKit($id);
-                    $grupoKit = [];
-                    foreach ($datosKit as $bp) {
-                             $grupoKit[] = [
-                            'idArticuloKit' => $bp->idArticuloKit,
-                            'idArticulo_kit' => $bp->idArticulo,
-                            'code_kit' => $bp->code_article,
-                            'idArticulo_kit_description' => $bp->description,
-                            'cantidadkit' => $bp->cantidad,
-                        ];
-                    }
-                    $data['GrupoKit'] = $grupoKit;
+            $precios_producto = $repo->get_precios($id);
+            if ($data['type_id'] == 3) {
+                $datosKit = $repo->getDetalleKit($id);
+                $grupoKit = [];
+                foreach ($datosKit as $bp) {
+                    $grupoKit[] = [
+                        'idArticuloKit' => $bp->idArticuloKit,
+                        'idArticulo_kit' => $bp->idArticulo,
+                        'code_kit' => $bp->code_article,
+                        'idArticulo_kit_description' => $bp->description,
+                        'cantidadkit' => $bp->cantidad,
+                    ];
+                }
+                $data['GrupoKit'] = $grupoKit;
             }
             return response()->json([
                 'status' => true,
                 'data' => $data,
-                'precios_producto'=>$precios_producto,
+                'precios_producto' => $precios_producto,
             ]);
 
         } catch (\Exception $e) {
@@ -254,43 +280,43 @@ class ProductController extends Controller
         }
     }
 
-    public function destroy(ProductInterface $repo, Articulo_KitInterface $kitrepo,Request $request)
+    public function destroy(ProductInterface $repo, Articulo_KitInterface $kitrepo, Request $request)
     {
         $id = $request->input('id');
         $data = $repo->find($id);
-        if($data['type_id']==3){
-            $info=$repo->getidArticuloKit($id);
-            $idkit=$info[0]->idArticuloKit;
+        if ($data['type_id'] == 3) {
+            $info = $repo->getidArticuloKit($id);
+            $idkit = $info[0]->idArticuloKit;
             $kitrepo->destroy($idkit);
         }
         $repo->destroy($id);
         return response()->json(['Result' => 'OK']);
     }
- 
-    public function data_form(TypeInterface $typeRepo,ModeloInterface $modeloRepo, CategoryInterface $categoriaRepo, BrandInterface $brandRepo, FamilyInterface $familyRepo,SubFamilyInterface $subfamilyRepo ,HeadAccountanInterface $headRepo,MeasureInterface $unidad,ProductInterface $repo, CarroceriaInterface $car_repo)
+
+    public function data_form(TypeInterface $typeRepo, ModeloInterface $modeloRepo, CategoryInterface $categoriaRepo, BrandInterface $brandRepo, FamilyInterface $familyRepo, SubFamilyInterface $subfamilyRepo, HeadAccountanInterface $headRepo, MeasureInterface $unidad, ProductInterface $repo, CarroceriaInterface $car_repo)
     {
         $modelo = parseSelectOnly($modeloRepo->allActive(), 'idModelo', 'descripcion');
         $categoria = parseSelectOnly($categoriaRepo->allActive(), 'idCategoria', 'descripcion');
         $familia = parseSelectOnly($familyRepo->allActive(), 'idFamilia', 'descripcion');
         $subfamilia = parseSelectOnly($subfamilyRepo->allActive(), 'idSubFamilia', 'descripcion');
         $marca = parseSelectOnly($brandRepo->all(), 'id', 'description');
-        $grupoContable = parseSelectOnly($headRepo->allActive(), 'idGrupoContableCabecera', 'descripcion'); 
-        $unidadMedida = parseSelectOnly($unidad->allActive(), 'IdUnidadMedida', 'Descripcion'); 
-        $types = parseSelectOnly($typeRepo->all(), 'id', 'description'); 
-        $cateVehicular=$repo->getCategoriaVehicular();
-        $carrocerias=$car_repo->getCarrocerias();
-        return response()->json([ 
+        $grupoContable = parseSelectOnly($headRepo->allActive(), 'idGrupoContableCabecera', 'descripcion');
+        $unidadMedida = parseSelectOnly($unidad->allActive(), 'IdUnidadMedida', 'Descripcion');
+        $types = parseSelectOnly($typeRepo->all(), 'id', 'description');
+        $cateVehicular = $repo->getCategoriaVehicular();
+        $carrocerias = $car_repo->getCarrocerias();
+        return response()->json([
             'status' => true,
             'modelo' => $modelo,
             'categoria' => $categoria,
             'familia' => $familia,
             'subfamilia' => $subfamilia,
             'marca' => $marca,
-            'grupocontable' => $grupoContable, 
+            'grupocontable' => $grupoContable,
             'types' => $types,
-            'unidadMedida'=>$unidadMedida,
-            'cateVehicular'=>$cateVehicular,
-            'carrocerias'=>$carrocerias,
+            'unidadMedida' => $unidadMedida,
+            'cateVehicular' => $cateVehicular,
+            'carrocerias' => $carrocerias,
         ]);
     }
 
@@ -367,7 +393,7 @@ class ProductController extends Controller
         ]);
     }
 
-    public function getArticlesWithWithoutProject(Request $request, ProductInterface $repo,
+    public function getArticlesWithWithoutProject(Request        $request, ProductInterface $repo,
                                                   StockInterface $stockRepo)
     {
         $inputs = $request->all();
@@ -403,7 +429,8 @@ class ProductController extends Controller
 
     }
 
-    public function obtener_precio(Request $request, ProductInterface $repo) {
+    public function obtener_precio(Request $request, ProductInterface $repo)
+    {
         $precio = $repo->obtener_precio($request);
         return response()->json($precio);
     }

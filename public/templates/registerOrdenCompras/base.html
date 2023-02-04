@@ -1,543 +1,469 @@
- 
 <style>
-   .table-wrapper {
-
-  max-height: 200px !important;
-  width: auto !important;
-  overflow: auto !important;
-  display:inline-block !important;
-}
-.table-earnings {
-  background: #F3F5F6 !important;
-}
-.modal2 {
-  text-align: center;
-  padding: 0!important;
-}
-.danger_admin  th{
-        background-color: #ec1415 !important;
-        color:#fff;
+    .modal2 {
+        text-align: center;
+        padding: 0 !important;
     }
 
-.modal2:before {
-  content: '';
-  display: inline-block;
-  height: 100%;
-  vertical-align: middle;
-  margin-right: -4px;
-}
+    .danger_admin th {
+        background-color: #ec1415 !important;
+        color: #fff;
+    }
 
-.modal-dialog2 {
-  display: inline-block;
-  text-align: left;
-  vertical-align: middle;
-}
+    .modal2:before {
+        content: '';
+        display: inline-block;
+        height: 100%;
+        vertical-align: middle;
+        margin-right: -4px;
+    }
+
+    .modal-dialog2 {
+        display: inline-block;
+        text-align: left;
+        vertical-align: middle;
+    }
 </style>
 <div class="panel  panel-danger-admin">
     <div class="panel-heading">
         Gestión de Orden de Compra
     </div>
     <div class="panel-body">
-        <div class="row"> 
+        <div class="row">
             <div class="col-md-12">
-                <div id="table_container_RegisterOrdenCompra" class="table-responsive"></div>
+                <div id="table_container_oc" class="table-responsive"></div>
             </div>
         </div>
-       
-        
-        <div ng-include src="'/templates/partials/crop.html'"></div>
     </div>
-</div> 
-<div class="modal" id="modalMovimieto" role="dialog" style="overflow-y: scroll;">
-            <div class="modal-dialog  modal-lg" style="width:100%;" role="document">
-                <div class="modal-content"> 
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+</div>
+<div ng-include src="'/templates/partials/crop.html'"></div>
+<div class="modal" id="modalOC" role="dialog" style="overflow-y: scroll;">
+    <div class="modal-dialog  modal-lg" style="width:90%;" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="titleOC"></h4>
+            </div>
+            <div class="modal-body">
+                <div class="tab-content">
+
+                    <div style="float:left">
+                        <button type="button" id="" class="btn btn-primary btn-sm btn_verAprobacio">
+                            <span class="fa fa-eye"></span>
+                            Ver aprobaciones
                         </button>
-                        <h4 class="modal-title" id="titlemodalMovimieto"></h4>
                     </div>
-                    <div class="modal-body">
-                        <div class="tab-content">
-                      
-                            <div style="float:left">
-                                <button type="button" id=""  class="btn btn-primary btn-sm btn_verAprobacio">
-                                    <span class="fa fa-eye"></span>
-                                    Ver aprobaciones
-                                </button>
-                            </div>
-                          <br>
-                          <br>
-                          <br>
-                        </div>
-                        <div class="form-horizontal">
-                            <div class="row">
-                              <form id="id_formulario">
-                                <div class="col-md-12">
-                                    <input type="hidden" id="idMovimiento" >
-                                    <input type="hidden" id="idNaturaleza" >
-                                    <div class="form-group">
-                                        <label class="col-sm-1 control-label">Consecutivo</label>
-                                        <div class="col-sm-2">
-                                            <select id="cCodConsecutivo" name="cCodConsecutivo"
-                                                class="form-control input-sm"></select>
-                                        </div>
-                                        <div class="col-sm-2">
-                                            <input type="text" class="form-control input-sm" id="nConsecutivo"
-                                                name="nConsecutivo" readonly />
-                                        </div>
-                                        <label class="col-sm-2 control-label">Fecha registro</label>
-                                        <div class="col-sm-2">
-                                            <input type="date" class="form-control input-sm" id="fecha_registro">
-                                        </div>
-                                        <label class="col-sm-1  control-label">Estado</label>
-                                        <div class="col-sm-2">
-                                           <select id="estado" name="estado" disabled="disabled" style="width: 100%;"
-                                                class="form-control input-sm js-example-responsive">
-                                                <option value="" selected> </option>
-                                                <option value="1">Registrado</option>
-                                                <option value="2">Por Aprobar</option>
-                                                <option value="3">Aprobado</option>
-                                                <option value="4">Recibido</option>
-                                                <option value="5">Backorder</option>
-                                                <option value="6">Cerrado</option>
-                                                <option value="7">Cancelado</option>
-                                                <option value="8">Rechazado</option>
-                                            </select>
-                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-1 control-label">Prioridad</label>
-                                        <div class="col-sm-2">
-                                           <select id="prioridad" class="form-control input-sm">
-                                             <option value="" selected>Seleccionar</option>
-                                             <option value="A">Alta</option>
-                                             <option value="M">Media</option>
-                                             <option value="B">Baja</option>
-                                           </select>
-                                        </div>
-                                        <label class="col-sm-2 col-sm-offset-2 control-label">Fecha requerida</label>
-                                        <div class="col-sm-2">
-                                            <input type="date" class="form-control input-sm" id="fecha_requerida">
-                                        </div>
-                                        <label class="col-sm-1  control-label">Moneda</label>
-                                        <div class="col-sm-2">
-                                            <select id="idMoneda" name="idMoneda"  style="width: 100%;"
-                                                    class="form-control input-sm js-example-responsive">
-                                                    <option value="" selected> </option>
-                                                    <option value="0">Registrado</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-1  control-label">Proveedor</label>
-                                        <div class="col-sm-4">
-                                            <select id="idProveedor" name="idProveedor"  style="width: 100%;"
-                                                    class="form-control input-sm js-example-responsive">
-                                            </select>
-                                        </div>
-                                        <label class="col-sm-2  control-label">Condición de Pago</label>
-                                        <div class="col-sm-2" >
-                                            <select id="idcondicion_pago" name="idcondicion_pago"  style="width: 100%;"
-                                                    class="form-control input-sm js-example-responsive">
-                                                    <option value="" selected> </option>
-                                                    <option value="0">Registrado</option>
-                                            </select>
-                                        </div>
-                                        
-                                    </div> 
-                                    <div class="form-group">
-                                      <label class="col-sm-1 control-label">Dirección de Entrega</label>
-                                        <div class="col-sm-11">
-                                            <input type="text" class="form-control input-sm" id="direccionEntrega">
-                                        </div>
-                                    </div> 
-                                    <div class="form-group">
-                                      <label class="col-sm-1 control-label">Comentarios</label>
-                                        <div class="col-sm-11">
-                                             <textarea name="comentario" id="comentario" cols="30" rows="3"
-                                                class="form-control input-sm"></textarea>
-                                        </div>
-                                    </div> 
-                                    <div class="form-group">
-                                      <label class="col-sm-1 control-label">Comentarios Aprobación</label>
-                                        <div class="col-sm-11">
-                                             <textarea name="comentarioAprobacion" id="comentarioAprobacion" cols="30" rows="3"
-                                                class="form-control input-sm" disabled></textarea>
-                                        </div>
-                                    </div>  
-                                    <div class="form-group">
-                                      <label class="col-sm-1 control-label">Impuesto</label>
-                                      <div class="col-sm-2">
-                                          <label class="checkbox-inline">
-                                              <input type="checkbox" id="p_state" >
-                                          </label>
-                                      </div>
-                                    </div>  
-                                    <div class="form-group">
-                                        <label class="col-sm-5 control-label">&nbsp;</label>
-                                        <div class="col-sm-5">
-                                             
-                                             <!--  <button type="button" id="btn-guardarMovimiento" class="btn btn-danger-admin btn-sm" >
-                                                <span class="fa fa-save"></span>
-                                                Guardar
-                                             </button> -->
-                                             <button type="button" class="btn btn-success btn-sm" id="btn_imprimirMovimiento">
-                                                <span class="fa fa-file-pdf-o"></span>
-                                                Imprimir
-                                             </button>
-                                            
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <div class="form-group">
-                                       <input type="hidden" id="ident_detalle">
-                                        <div class="col-sm-2">
-                                              <button type="button" class="btn btn-danger-admin btn-sm" ng-click="addArticulo()">
-                                                <span class="fa fa-plus"></span>
-                                                Agregar Artículo
-                                             </button>
-                                        </div>
-                                         <div class="col-sm-2">
-                                              <button type="button" class="btn btn-danger-admin btn-sm" ng-click="addArticuloSolicitud()">
-                                                <span class="fa fa-plus"></span>
-                                                Agregar Artículo Solicitud
-                                             </button>
-                                        </div>
-                                    </div>
-                                    <div class="table-responsive">
-                                            <table class="table table-bordered table-striped table-hover" id="tabla_articulo_movi" >
-                                                <thead>
-                                                    <tr>
-                                                      <th width="150px" height="20px" >Artículo</th>
-                                                      <th width="90px" height="20px">Cantidad</th>
-                                                      <th width="90px" height="20px">Cantidad Pendiente</th>
-                                                      <th width="90px" height="20px">Cantidad Recibida</th>
-                                                      <th width="90px" height="20px">Cantidad Devuelta</th>
-                                                      <th width="150px" height="20px">Precio Unitario</th>
-                                                      <th width="100px" height="20px">Precio Total</th>
-                                                      <th width="90px" height="20px">Porcentaje Descuento</th>
-                                                      <th width="90px" height="20px">Monto Descuento</th>
-                                                      <th width="90px" height="20px">Valor Compra</th>
-                                                      <th width="90px" height="20px">Valor Compra Descuento</th>
-                                                      <th width="90px" height="20px">Impuesto</th>
-                                                      <th width="90px" height="20px">Sub Total</th>
-                                                      <th width="130px">Fecha</th>
-                                                      <th width="160px">Estado</th>
-                                                      <th width="50px"></th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="articulo_mov_det"></tbody>
-                                                <tfoot>
-                                                  <tr>
-                                                    <th width="150px" height="20px"> </th> <!-- Articulo -->
-                                                    <th width="90px" height="20px" id="cantidadFinal"> </th>  <!-- Cantidad -->
-                                                    <th width="90px" height="20px">  </th> <!-- Cantidad Pendiente -->
-                                                    <th width="90px" height="20px">  </th> <!-- Cantidad Recibida -->
-                                                    <th width="90px" height="20px">  </th> <!-- Cantidad Devuelta -->
-                                                    <th width="150px" height="20px"> </th> <!-- Precio Unitario -->
-                                                    <th width="100px" height="20px" id="precioTotalFinal"> </th> <!-- Precio Total -->
-                                                    <th width="90px" height="20px"> </th>  <!-- Porcentaje Descuento -->
-                                                    <th width="90px" height="20px"> </th>  <!-- Monto Descuento -->
-                                                    <th width="90px" height="20px" id="valorCompraFinal"> </th>  <!-- Valor Compra -->
-                                                    <th width="90px" height="20px" id="valCompDescuentoFinal"> </th>  <!-- Valor Compra Descuento -->
-                                                    <th width="90px" height="20px" id="impuestoFinal"> </th>  <!-- Impuesto -->
-                                                    <th width="90px" height="20px" id="subTotalFinal"> </th>  <!-- Sub Total -->
-                                                    <th width="130px"></th>           <!-- Fecha -->
-                                                    <th width="160px"></th>          <!-- Estado -->
-                                                    <th width="50px"></th>                 <!-- -->
-                                                  </tr>
-                                                </tfoot>
-                                            </table>
-                                    </div> 
-                                    <br>
-                                    <div class="col-md-12">
-                                      <p> <strong>  NOTA: Estos descuentos afectarán directamente al "Valor Compra" de cada artículo </strong></p>
-                                    </div>
-                                    <div class="col-md-12 ">
-                                      <div class="form-group">
-
-                                        <label class="col-sm-1  control-label">
-                                          Porcentaje descuento global
-                                        </label>
-                                        <div class="col-sm-2">
-                                          <input id="porcentajeTotal" class="form-control input-sm" type="number" step="0.01" value="0"  />
-                                        </div>
-
-                                        <label class="col-sm-2  control-label">
-                                          Monto descuento global
-                                        </label>
-                                        <div class="col-sm-2">
-                                          <input id="montoTotal" class="form-control input-sm" type="number" value="0" step="0.01" />
-                                        </div>
-
-                                        <label class="col-sm-2 control-label">Total</label>
-                                        <div class="col-sm-2">
-                                          <input data-total="0" data-impuesto="0" id="desTotal" class="form-control input-sm" readonly  value="0" />
-                                        </div>
-                                      </div>
-                                    </div>
-                                   
+                    <br>
+                    <br>
+                    <br>
+                </div>
+                <div class="form-horizontal">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label">Consecutivo</label>
+                                <div class="col-sm-2">
+                                    <select id="oc_consecutive" class="form-control input-sm"></select>
                                 </div>
-                            </div>   
-                        </div>  
-                    </div>
-                    </form>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger-admin btn-sm"  id="btn_movimiento_detalle"  ng-click="saveMovimientoCab()">
-                            <span class="fa fa-save"></span>
-                            Guardar
-                        </button>
-                        <button type="button" class="btn btn-success btn-sm"  id="btn_movimiento_Por_aprobar"  >
-                            <span class="fa fa-check"></span>
-                            Por Aprobar
-                        </button>
-                      
-                        <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">
-                            <span class="fa fa-times"></span> Cerrar 
-                        </button>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control input-sm" id="oc_nro_consecutive" readonly />
+                                </div>
+                                <label class="col-sm-2 control-label">Fecha registro</label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control input-sm" id="oc_date_register" readonly />
+                                </div>
+                                <label class="col-sm-1  control-label">Estado</label>
+                                <div class="col-sm-2">
+                                    <select id="oc_state" disabled class="form-control input-sm">
+                                        <option value="1" selected>Registrado</option>
+                                        <option value="2">Por Aprobar</option>
+                                        <option value="3">Aprobado</option>
+                                        <option value="4">Recibido</option>
+                                        <option value="5">Backorder</option>
+                                        <option value="6">Cerrado</option>
+                                        <option value="7">Cancelado</option>
+                                        <option value="8">Rechazado</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label">Prioridad</label>
+                                <div class="col-sm-2">
+                                    <select id="oc_priority" class="form-control input-sm">
+                                        <option value="">--Seleccionar--</option>
+                                        <option value="A">Alta</option>
+                                        <option value="M">Media</option>
+                                        <option value="B">Baja</option>
+                                    </select>
+                                </div>
+                                <label class="col-sm-2 col-sm-offset-2 control-label">Fecha requerida</label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control input-sm" id="oc_date_required" readonly />
+                                </div>
+                                <label class="col-sm-1  control-label">Moneda</label>
+                                <div class="col-sm-2">
+                                    <select id="oc_currency" class="form-control input-sm"></select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-1  control-label">Proveedor</label>
+                                <div class="col-sm-4">
+                                    <select id="oc_provider" class="form-control input-sm" style="width:100%"></select>
+                                </div>
+                                <label class="col-sm-2  control-label">Condición de Pago</label>
+                                <div class="col-sm-2">
+                                    <select id="oc_payment_condition" class="form-control input-sm"></select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label">Dirección de Entrega</label>
+                                <div class="col-sm-11">
+                                    <input type="text" class="form-control input-sm" id="oc_address">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label">Comentarios</label>
+                                <div class="col-sm-11">
+                                     <textarea id="oc_comment" rows="3" class="form-control input-sm"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label">Comentarios Aprobación</label>
+                                <div class="col-sm-11">
+                                     <textarea id="oc_comment_approval" rows="3" class="form-control input-sm"
+                                               disabled></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-2">
+                                    <button type="button" class="btn btn-danger-admin btn-sm" ng-click="addArticulo()">
+                                        <span class="fa fa-plus"></span>
+                                        Agregar Artículo
+                                    </button>
+                                    <button type="button" class="btn btn-danger-admin btn-sm"
+                                            ng-click="addArticuloSolicitud()">
+                                        <span class="fa fa-plus"></span>
+                                        Agregar Artículo Solicitud
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-hover"
+                                       id="tabla_articulo_movi">
+                                    <thead>
+                                    <tr>
+                                        <th width="150px" height="20px">Artículo</th>
+                                        <th width="90px" height="20px">Cantidad</th>
+                                        <th width="90px" height="20px">Cantidad Pendiente</th>
+                                        <th width="90px" height="20px">Cantidad Recibida</th>
+                                        <th width="90px" height="20px">Cantidad Devuelta</th>
+                                        <th width="150px" height="20px">Precio Unitario</th>
+                                        <th width="100px" height="20px">Precio Total</th>
+                                        <th width="90px" height="20px">Porcentaje Descuento</th>
+                                        <th width="90px" height="20px">Monto Descuento</th>
+                                        <th width="90px" height="20px">Valor Compra</th>
+                                        <th width="90px" height="20px">Valor Compra Descuento</th>
+                                        <th width="90px" height="20px">Impuesto</th>
+                                        <th width="90px" height="20px">Sub Total</th>
+                                        <th width="130px">Fecha</th>
+                                        <th width="160px">Estado</th>
+                                        <th width="50px"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="oc_detail"></tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <th width="150px" height="20px"></th> <!-- Articulo -->
+                                        <th width="90px" height="20px" id="cantidadFinal"></th>  <!-- Cantidad -->
+                                        <th width="90px" height="20px"></th> <!-- Cantidad Pendiente -->
+                                        <th width="90px" height="20px"></th> <!-- Cantidad Recibida -->
+                                        <th width="90px" height="20px"></th> <!-- Cantidad Devuelta -->
+                                        <th width="150px" height="20px"></th> <!-- Precio Unitario -->
+                                        <th width="100px" height="20px" id="precioTotalFinal"></th>
+                                        <!-- Precio Total -->
+                                        <th width="90px" height="20px"></th>  <!-- Porcentaje Descuento -->
+                                        <th width="90px" height="20px"></th>  <!-- Monto Descuento -->
+                                        <th width="90px" height="20px" id="valorCompraFinal"></th>
+                                        <!-- Valor Compra -->
+                                        <th width="90px" height="20px" id="valCompDescuentoFinal"></th>
+                                        <!-- Valor Compra Descuento -->
+                                        <th width="90px" height="20px" id="impuestoFinal"></th>  <!-- Impuesto -->
+                                        <th width="90px" height="20px" id="subTotalFinal"></th>  <!-- Sub Total -->
+                                        <th width="130px"></th>           <!-- Fecha -->
+                                        <th width="160px"></th>          <!-- Estado -->
+                                        <th width="50px"></th>                 <!-- -->
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <br>
+                            <div class="col-md-12">
+                                <p><strong> NOTA: Estos descuentos afectarán directamente al "Valor Compra" de cada
+                                    artículo </strong></p>
+                            </div>
+                            <div class="col-md-12 ">
+                                <div class="form-group">
+                                    <label class="col-sm-1 control-label">Impuesto</label>
+                                    <div class="col-sm-2">
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" id="p_state">
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-1  control-label">
+                                        Porcentaje descuento global
+                                    </label>
+                                    <div class="col-sm-2">
+                                        <input id="porcentajeTotal" class="form-control input-sm" type="number"
+                                               step="0.01" value="0"/>
+                                    </div>
+
+                                    <label class="col-sm-2  control-label">
+                                        Monto descuento global
+                                    </label>
+                                    <div class="col-sm-2">
+                                        <input id="montoTotal" class="form-control input-sm" type="number" value="0"
+                                               step="0.01"/>
+                                    </div>
+
+                                    <label class="col-sm-2 control-label">Total</label>
+                                    <div class="col-sm-2">
+                                        <input data-total="0" data-impuesto="0" id="desTotal"
+                                               class="form-control input-sm" readonly value="0"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
             </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-sm" id="btn_imprimirMovimiento">
+                    <span class="fa fa-file-pdf-o"></span>
+                    Imprimir
+                </button>
+                <button type="button" class="btn btn-success btn-sm" id="oc_btn_send_approval" ng-click="saveOC(2)">
+                    <span class="fa fa-check"></span>
+                    Por Aprobar
+                </button>
+                <button type="button" class="btn btn-danger-admin btn-sm" id="oc_btn_save" ng-click="saveOC(1)">
+                    <span class="fa fa-save"></span>
+                    Guardar
+                </button>
+                <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">
+                    <span class="fa fa-times"></span> Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="modal modal2 fade" id="modalProcesarTransferencia" role="dialog">
     <div class="modal-dialog  modal-dialog2 modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">¿Esta seguro ?</h4>
-          <input type="hidden" id="idTransferenciaProcesar">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">¿Esta seguro ?</h4>
+                <input type="hidden" id="idTransferenciaProcesar">
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-danger hide" role="alert" id="msg_cont_ProcesarTransferencia">
+                    <span class="fa fa-warning"></span>
+                    <p></p>
+                </div>
+                <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span> El registro será
+                    Procesado. ¿Está seguro?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger-admin btn-sm" ng-click="ProcesarTransferencia()">
+                    Procesar
+                </button>
+                <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">
+                    Cerrar
+                </button>
+            </div>
         </div>
-        <div class="modal-body">
-          <div class="alert alert-danger hide" role="alert" id="msg_cont_ProcesarTransferencia">
-              <span class="fa fa-warning"></span>
-              <p></p>            
-          </div> 
-          <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span> El registro será Procesado. ¿Está seguro?</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger-admin btn-sm"   ng-click="ProcesarTransferencia()">
-              Procesar 
-          </button>
-          <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">
-             Cerrar
-          </button>
-        </div>
-      </div>
     </div>
-  </div>
 </div>
-
-
-<div class="modal modal2 fade" id="modalDeleteMovimiento" role="dialog">
-    <div class="modal-dialog  modal-dialog2 modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">¿Esta seguro ?</h4>
-          <input type="hidden" id="idMovimientoDelete">
-          <input type="hidden" id="estadoDelete">
-        </div>
-        <div class="modal-body">
-          <div class="alert alert-danger hide" role="alert" id="msg_cont_EliminarMovimiento">
-              <span class="fa fa-warning"></span>
-              <p></p>            
-          </div> 
-          <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span> El registro será eliminado. ¿Está seguro?</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger-admin btn-sm" ng-click="EliminarMovimiento()">
-              Eliminar 
-          </button>
-          <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">
-             Cerrar
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal " id="modalMovimietoArticulo" tabindex="-1" role="dialog">
+<div class="modal " id="modalOCArticulo" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <input type="hidden" id="idenifcador_table_art" value="I">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title" id="titlemodalMovimietoArticulo">Artículos</h4>
-        </div>
-        <div class="modal-body">
-             <div class="row">
-                <div class="col-md-12">
-                    <div id="table_container_Register_Articulo" class="table-responsive"></div>
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <input type="hidden" id="idenifcador_table_art" value="I">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title" id="titleOCArticulo">Artículos</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="table_container_Register_Articulo" class="table-responsive"></div>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <input type="hidden" id="idArtSerie">
+                        <input type="hidden" id="cantArtSerie">
+                        <input type="hidden" id="desArtSerie">
+
+                    </div>
                 </div>
             </div>
-            <br>
-            <div class="row">
-                <div class="col-md-12">
-                    <input type="hidden" id="idArtSerie">
-                    <input type="hidden" id="cantArtSerie">
-                     <input type="hidden" id="desArtSerie">
-                    
-                </div> 
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger-admin btn-sm" ng-click="addArtLisSeri()">
+                    <span class="fa fa-plus"></span>
+                    Agregar
+                </button>
+                <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
-        <div class="modal-footer">
-        <button type="button" class="btn btn-danger-admin btn-sm" ng-click="addArtLisSeri()">
-            <span class="fa fa-plus"></span>
-                            Agregar
-        </button>   
-        <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">Cerrar</button>
-        </div>
-      </div>
-      
+
     </div>
-</div> 
-
-
+</div>
 <div class="modal" id="modalKit" role="dialog">
     <div class="modal-dialog" role="document">
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title" id="titleModalLote">Kit</h4>
-        </div>
-        <div class="modal-body">
-              <div class="form-horizontal">
-                 <div class="row">
-                    <div class="col-md-12">
-                        <div class="alert alert-danger hide" role="alert" id="msg_cont">
-                            <span class="fa fa-warning"></span>
-                            Debe seleccionar un Artículo
-                        </div> 
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Artículo</label>
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title" id="titleModalLote">Kit</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="alert alert-danger hide" role="alert" id="msg_cont">
+                                <span class="fa fa-warning"></span>
+                                Debe seleccionar un Artículo
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Artículo</label>
                                 <div class="col-sm-6">
-                                        <input type="hidden" id="idProductoMK" readonly class="form-control input-sm">
-                                        <input type="hidden" id="costoMK" readonly class="form-control input-sm">
-                                        <input type="text" id="desProductoMK" readonly class="form-control input-sm">
+                                    <input type="hidden" id="idProductoMK" readonly class="form-control input-sm">
+                                    <input type="hidden" id="costoMK" readonly class="form-control input-sm">
+                                    <input type="text" id="desProductoMK" readonly class="form-control input-sm">
                                 </div>
-                            <label class="col-sm-2 control-label">Cantidad</label>
-                            <div class="col-sm-2">
-                                <input type="text" class="form-control input-sm" id="cantProductoMK">
-                            </div>   
+                                <label class="col-sm-2 control-label">Cantidad</label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control input-sm" id="cantProductoMK">
+                                </div>
+                            </div>
                         </div>
                     </div>
-                 </div>   
-              </div>  
+                </div>
+            </div>
+            <div class="modal-footer">
+                <!-- <button type="button" class="btn btn-danger-admin btn-sm" ng-click="addArtkit()" >Agregar</button>   -->
+                <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">Cerrar</button>
+            </div>
         </div>
-        <div class="modal-footer">
-        <!-- <button type="button" class="btn btn-danger-admin btn-sm" ng-click="addArtkit()" >Agregar</button>   -->
-        <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">Cerrar</button>
-        </div>
-      </div>
-      
+
     </div>
 </div>
 <div class="modal" id="modalNada" role="dialog">
     <div class="modal-dialog" role="document">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title" id="titleModalLote">Artículo</h4>
-        </div>
-        <div class="modal-body">
-              <div class="form-horizontal">
-                 <div class="row">
-                    <div class="col-md-12">
-                        <div class="alert alert-danger hide" role="alert" id="msg_cont">
-                            <span class="fa fa-warning"></span>
-                            Debe seleccionar un Artículo
-                        </div> 
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Artículo</label>
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title" id="titleModalLote">Artículo</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="alert alert-danger hide" role="alert" id="msg_cont">
+                                <span class="fa fa-warning"></span>
+                                Debe seleccionar un Artículo
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Artículo</label>
                                 <div class="col-sm-6">
-                                        <input type="hidden" id="idProductoMN" readonly class="form-control input-sm">
-                                        <input type="hidden" id="costoNa" readonly class="form-control input-sm">
-                                        <input type="text" id="desProductoMN" readonly class="form-control input-sm">
+                                    <input type="hidden" id="idProductoMN" readonly class="form-control input-sm">
+                                    <input type="hidden" id="costoNa" readonly class="form-control input-sm">
+                                    <input type="text" id="desProductoMN" readonly class="form-control input-sm">
                                 </div>
-                            <label class="col-sm-2 control-label">Cantidad</label>
-                            <div class="col-sm-2">
-                                <input type="text" class="form-control input-sm" id="cantProductoMN">
-                            </div>   
+                                <label class="col-sm-2 control-label">Cantidad</label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control input-sm" id="cantProductoMN">
+                                </div>
+                            </div>
                         </div>
                     </div>
-                 </div>   
-              </div>  
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger-admin btn-sm" ng-click="addArtNada()">
+                    <span class="fa fa-plus"></span>
+                    Agregar
+                </button>
+                <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">Cerrar</button>
+            </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger-admin btn-sm" ng-click="addArtNada()">
-            <span class="fa fa-plus"></span>
-            Agregar
-          </button>
-          <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">Cerrar</button>
-        </div>
-      </div>
-      
+
     </div>
 </div>
 <div class="modal " id="modalAlmacenArticulo" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title" id="titlemodalAlmacenArticulo">Stock en Almacén</h4>
-        </div>
 
-        <div class="modal-body">
-             <div class="row">
-                <div class="col-md-12">
-                    <div id="table_container_Almacen_Articulo" class="table-responsive"></div>
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title" id="titlemodalAlmacenArticulo">Stock en Almacén</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="table_container_Almacen_Articulo" class="table-responsive"></div>
+                    </div>
                 </div>
             </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger-admin btn-sm" ng-click="addArtLisSeri()">
+                    <span class="fa fa-plus"></span>
+                    Agregar
+                </button>
+                <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">Cerrar</button>
+            </div>
         </div>
-        <div class="modal-footer">
-        <button type="button" class="btn btn-danger-admin btn-sm" ng-click="addArtLisSeri()">
-            <span class="fa fa-plus"></span>
-                            Agregar
-        </button>   
-        <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">Cerrar</button>
-        </div>
-      </div>
-      
+
     </div>
 </div>
 
 
-
 <div class="modal " id="modalSolicitudArticulo" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-           <input type="hidden" id="identificador_solicitud_compra" value="I">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title" id="titlemodalSolicitudArticulo">Artículos Solicitud Compra</h4>
-        </div>
-        <div class="modal-body">
-             <div class="row">
-                <div class="col-md-12">
-                    <div id="table_container_solicitudCompra" class="table-responsive"></div>
-                </div>
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <input type="hidden" id="identificador_solicitud_compra" value="I">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title" id="titlemodalSolicitudArticulo">Artículos Solicitud Compra</h4>
             </div>
-            <br>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="table_container_solicitudCompra" class="table-responsive"></div>
+                    </div>
+                </div>
+                <br>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger-admin btn-sm" ng-click="addArtsolicitud()">
+                    <span class="fa fa-plus"></span>
+                    Agregar
+                </button>
+                <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">Cerrar</button>
+            </div>
         </div>
-        <div class="modal-footer">
-        <button type="button" class="btn btn-danger-admin btn-sm" ng-click="addArtsolicitud()">
-            <span class="fa fa-plus"></span>
-                            Agregar
-        </button>   
-        <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">Cerrar</button>
-        </div>
-      </div>
-      
+
     </div>
 </div>
 <div class="modal" id="modalVerAproba" role="dialog">
@@ -551,25 +477,25 @@
             <div class="modal-body">
                 <div class="form-horizontal">
                     <div class="row">
-                       <div class="form-horizontal">
-                                        <br> 
-                                     
-                                            <div class="table-responsive">
-                                            <table class="table table-bordered table-striped table-hover" id="tabla_articulo_movi" >
-                                                <thead >
-                                                    <tr class="danger_admin" >
-                                                        <th>Aprobadores</th>
-                                                        <th>Comentarios</th>
-                                                        <th>Fecha registro</th>
-                                                        <th>Fecha modificación</th>
-                                                        <th>Estado</th> 
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="aprobadores_table"></tbody>
-                                            </table>
-                                            </div> 
-                                      
-                        </div> 
+                        <div class="form-horizontal">
+                            <br>
+
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-hover" id="tabla_articulo_movi">
+                                    <thead>
+                                    <tr class="danger_admin">
+                                        <th>Aprobadores</th>
+                                        <th>Comentarios</th>
+                                        <th>Fecha registro</th>
+                                        <th>Fecha modificación</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="aprobadores_table"></tbody>
+                                </table>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
             </div>

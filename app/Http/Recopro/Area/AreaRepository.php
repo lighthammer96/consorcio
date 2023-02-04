@@ -31,6 +31,7 @@ class AreaRepository implements AreaInterface
         });
 
     }
+
     public function allActive()
     {
        return $this->model->where('estado', self::$_ACTIVE)->get();

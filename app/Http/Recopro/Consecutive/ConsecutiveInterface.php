@@ -8,10 +8,18 @@
 
 namespace App\Http\Recopro\Consecutive;
 
-
 interface ConsecutiveInterface
 {
     public function all();
+
+    public function find($id);
+
     public function create(array $attributes);
+
+    public function update($id, array $attributes);
+
+    public function getByType($type);
+
+    public function getIDByConsecutive($code);
 
 }

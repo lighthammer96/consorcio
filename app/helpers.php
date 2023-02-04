@@ -73,7 +73,7 @@ function validatePermission($url)
     $module = new ModuleRepository(new Module());
     $permission = $module->getByProfileUrl($profile_id, $url);
 
-    return (count($permission) > 0);
+    return (isset($permission));
 }
 
 function parseDataList($data, $request, $sort_default, $data_select)

@@ -42,10 +42,10 @@ class ProductRepository implements ProductInterface
     }
       public function searchMinKit($s)
     {
-        return $this->model->where(function($q) use ($s){
-            $q->where('description', 'LIKE', '%'.$s.'%')->where('type_id','!=',3);
-            $q->orWhere('code_article', 'LIKE', '%' . $s . '%')->where('type_id','!=',3);
-        });
+        return $this->model->where(function($q) use ($s) {
+            $q->where('description', 'LIKE', '%'.$s.'%');
+            $q->orWhere('code_article', 'LIKE', '%' . $s . '%');
+        })->where('type_id','!=',3);
     }
     public function search3($s)
     {

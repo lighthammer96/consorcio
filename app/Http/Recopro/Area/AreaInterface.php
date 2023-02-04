@@ -8,10 +8,11 @@
 
 namespace App\Http\Recopro\Area;
 
-
 interface AreaInterface
 {
     public function all();
+
     public function create(array $attributes);
 
+    public function allActive();
 }

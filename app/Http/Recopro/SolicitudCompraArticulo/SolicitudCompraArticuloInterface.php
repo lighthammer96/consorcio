@@ -8,10 +8,16 @@
 
 namespace App\Http\Recopro\SolicitudCompraArticulo;
 
-
 interface SolicitudCompraArticuloInterface
 {
     public function all();
+
     public function create(array $attributes);
+
+    public function deleteBySol($sol_id);
+
+    public function getIDByLast();
+
+    public function updateBySol($sol_id, $attributes);
 
 }

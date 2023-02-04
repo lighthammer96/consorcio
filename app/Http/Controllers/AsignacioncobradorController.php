@@ -177,10 +177,6 @@ class AsignacioncobradorController extends Controller
                 $fecul = date("d/m/Y",strtotime($value->fecultpago));
             }
 
-            // if($value->documento_cliente != "44492608" && $value->documento_cliente != "43522997") {
-            //     continue;
-            // }
-
             if(!in_array($value->cliente, $array)) {
 
                 if($conc > 1) {
@@ -303,7 +299,7 @@ class AsignacioncobradorController extends Controller
 
         // echo count($data_envio);
         // exit;
-        return view("excel.viewCuentasxCobrar_xls")->with("data_envio", $data_envio); 
+        return view("excel.viewCuentasxCobrar")->with("data_envio", $data_envio); 
         // return generateExcelCuentasxCobrar($data_cabe, $simboloMoneda, $cambio, 'CUENTAS POR COBRAR POR CLIENTE', 'Cuentas');
         // return generateExcelCuentasxCobrar($data_envio, $simboloMoneda, $cambio, 'CUENTAS POR COBRAR POR CLIENTE', 'Cuentas');
     }

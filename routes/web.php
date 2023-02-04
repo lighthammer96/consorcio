@@ -24,6 +24,10 @@ Route::post('change_password', 'Auth\SecurityController@change_password_post')->
 
 Route::get('validate', 'HomeController@validateURL')->name('admin.validate');
 
+Route::get('php_version', function () {
+    echo phpinfo();
+});
+
 Route::group(['middleware' => ['auth', 'permission']], function () {
 
     // Routes Security
