@@ -927,6 +927,10 @@
             }
             if (tipoMovimientoAdd.val() != 'BCO') {
                 bval = bval && conceptoAdd.required();
+                if($("#idcliente_m").val() == "") {
+                    bval = bval && $("#documento_cliente").required();
+                    bval = bval && $("#razonsocial_cliente_m").required();
+                }
             }
             
             if ((tipoMovimientoAdd.val() == 'SEP' || tipoMovimientoAdd.val() == 'TPL' || tipoMovimientoAdd.val() == 'ALQ') && emitir_comprobante == "S") {
@@ -2196,8 +2200,20 @@ $scope.agregar_formas_pago = function () {
     // $("#idconyugue").focus();
     // alert($("#desTotal").val());
     var total_pagar = parseFloat($("#total_pagar").val());
+
     if ($('#modalMovimientoCaja').is(':visible')) {
         total_pagar = parseFloat(montoAdd.val());
+
+        $("#forma_pago").html("");
+        $("#forma_pago").append('<option value="">Seleccionar</option>');
+        _.each(data_formas_pago, function (item) {
+            if(item.codigo_formapago != "ACR" ) {
+                $("#forma_pago").append('<option value="' + item.codigo_formapago + '">' + item.descripcion_subtipo + '</option>');
+            } else {
+
+            }
+        });
+
     }
 
     var subtotal_montos_pago = sumar_montos_formas_pago();
@@ -2515,12 +2531,17 @@ $scope.guardar_forma_pago = function () {
     var monto_local = (!isNaN(parseFloat($("#monto_local").val()))) ? parseFloat($("#monto_local").val()) : 0;
     var monto_aplicar = (!isNaN(parseFloat($("#monto_aplicar").val()))) ? parseFloat($("#monto_aplicar").val()) : 0;
     var monto_vuelto = (!isNaN(parseFloat($("#monto_vuelto").val()))) ? parseFloat($("#monto_vuelto").val()) : 0;
-
+  
     var banco = $("#banco_fp").val();
     var cuentaBancaria = $("#cuentaBancaria_fp").val();
-    var array_cuenta_bancaria = cuentaBancaria.split("*");
-    var numero_cuenta = array_cuenta_bancaria[0];
+    var numero_cuenta = "";
+    var array_cuenta_bancaria = [];
 
+    if(cuentaBancaria != "" && cuentaBancaria != null) {
+        array_cuenta_bancaria = cuentaBancaria.split("*");
+        numero_cuenta = array_cuenta_bancaria[0];
+    }
+ 
     var html = "<tr>";
 
     if ($('#modalMovimientoCaja').is(':visible')) {

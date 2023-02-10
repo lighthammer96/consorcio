@@ -525,9 +525,10 @@
             bval = bval && $("#monto").required();
 
             if (bval) {
+                $(".btn_guardarOrden").prop("disabled", true);
                 $.post("ventas/guardar_venta", $("#formulario-ventas").serialize(),
                     function (data, textStatus, jqXHR) {
-
+                        $(".btn_guardarOrden").prop("disabled", false);
                         if (data.status == "i") {
 
 
