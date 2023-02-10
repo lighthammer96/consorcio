@@ -111,6 +111,8 @@ class MovimientoCajaController extends Controller
                     $data_caja_detalle["descripcion"] = "Ingreso por Movimiento de Caja";
                     $data_caja_detalle["nroTarjeta"] = $data["nrotarjeta"][$i];
                     $data_caja_detalle["nroOperacion"] = $data["nrooperacion"][$i];
+                    $data_caja_detalle["banco"] = (isset($data["banco"][$i])) ? $data["banco"][$i] : "";
+                    $data_caja_detalle["numero_cuenta"] = (isset($data["numero_cuenta"][$i])) ? $data["numero_cuenta"][$i] : "";
                     $data_caja_detalle["naturaleza"] = "E";
 
                     $data_formas_pago["consecutivo_caja_diaria_detalle"][$i] = $data_caja_detalle["consecutivo"];
@@ -1678,6 +1680,9 @@ class MovimientoCajaController extends Controller
                     $data_caja_detalle["nroOperacion"] = $data["nrooperacion"][$i];
                     $data_caja_detalle["naturaleza"] = "E";
 
+                    $data_caja_detalle["banco"] = (isset($data["banco"][$i])) ? $data["banco"][$i] : "";
+                    $data_caja_detalle["numero_cuenta"] = (isset($data["numero_cuenta"][$i])) ? $data["numero_cuenta"][$i] : "";
+
                     $data_formas_pago["consecutivo_caja_diaria_detalle"][$i] = $data_caja_detalle["consecutivo"];
 
                     $this->base_model->insertar($this->preparar_datos("dbo.ERP_CajaDiariaDetalle", $data_caja_detalle));
@@ -1963,6 +1968,9 @@ class MovimientoCajaController extends Controller
                 $data_caja_detalle["nroOperacion"] = $data["nrooperacion"][$fp];
                 $data_caja_detalle["naturaleza"] = "E";
 
+                $data_caja_detalle["banco"] = (isset($data["banco"][$fp])) ? $data["banco"][$fp] : "";
+                $data_caja_detalle["numero_cuenta"] = (isset($data["numero_cuenta"][$fp])) ? $data["numero_cuenta"][$fp] : "";
+
                 $data_formas_pago["consecutivo_caja_diaria_detalle"][$fp] = $data_caja_detalle["consecutivo"];
 
                 $this->base_model->insertar($this->preparar_datos("dbo.ERP_CajaDiariaDetalle", $data_caja_detalle));
@@ -2189,6 +2197,9 @@ class MovimientoCajaController extends Controller
                 $data_caja_detalle["nroTarjeta"] = $data["nrotarjeta"][$fp];
                 $data_caja_detalle["nroOperacion"] = $data["nrooperacion"][$fp];
                 $data_caja_detalle["naturaleza"] = "E";
+
+                $data_caja_detalle["banco"] = (isset($data["banco"][$fp])) ? $data["banco"][$fp] : "";
+                $data_caja_detalle["numero_cuenta"] = (isset($data["numero_cuenta"][$fp])) ? $data["numero_cuenta"][$fp] : "";
 
                 $data_formas_pago["consecutivo_caja_diaria_detalle"][$fp] = $data_caja_detalle["consecutivo"];
                

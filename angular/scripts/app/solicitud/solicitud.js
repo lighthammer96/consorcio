@@ -2513,16 +2513,23 @@
 
 
         $(document).on("blur", "input[name='precio_unitario[]']", function () {
-            console.log($(this).val());
+            // console.log($(this).val());
+            var precio_unitario = parseFloat($(this).val());
 
-            if(parseFloat($(this).val()) <= 0) {
+            if(isNaN(precio_unitario)) {
+                precio_unitario = 0;
+            }
+            // console.log(precio_unitario);
+            if(precio_unitario <= 0) {
                 AlertFactory.textType({
                     title: '',
                     message: 'El precio unitario debe ser mayor a cero, si no se va a cobrar al cliente marcar el check de Operación Gratuita.',
                     type: 'info'
                 });
                 $(this).val("");
-            }   
+                return false;
+            }
+
             var type_id = $(this).parent("td").parent("tr").attr("type_id");
             var idCategoria = $(this).parent("td").parent("tr").attr("idCategoria");
             // alert(type_id +" "+idCategoria);
