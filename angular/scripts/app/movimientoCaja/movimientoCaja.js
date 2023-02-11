@@ -2275,6 +2275,8 @@ $scope.agregar_formas_pago = function () {
         $(".clean-monto").val(0);
         $("#noperacion").val("");
         $("#tarjeta").val("");
+        $("#banco_fp").val("");
+        $("#cuentaBancaria_fp").val("");
         $("#monto_aplicar").val(saldo.toFixed(2));
         $("#modal-formas-pago").modal("show");           
     }

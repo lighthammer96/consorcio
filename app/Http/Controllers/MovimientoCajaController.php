@@ -259,8 +259,12 @@ class MovimientoCajaController extends Controller
 
                 if($data['tipoMovimientoAdd']=='BCO'){
                     $datoDet['nroOperacion'] = (isset($data['nrOperacion'])) ? $data['nrOperacion'] : "";
-                    $datoDet['banco'] = (isset($data['idBanco'])) ? $data['idBanco'] : "";
-                    $datoDet['numero_cuenta'] = (isset($data['idCuenta'])) ? $data['idCuenta'] : "";
+                    // $datoDet['banco'] = (isset($data['idBanco'])) ? $data['idBanco'] : "";
+                    // $datoDet['numero_cuenta'] = (isset($data['idCuenta'])) ? $data['idCuenta'] : "";
+
+                    $datoDet['banco'] = (isset($data['banco'])) ? $data['banco'] : "";
+                    $datoDet['numero_cuenta'] = (isset($data['numero_cuenta'])) ? $data['numero_cuenta'] : "";
+
                     $bancoText = (isset($data['bancoText'])) ? $data['bancoText'] : "";
                     $numero_cuenta = (isset($data['numero_cuenta'])) ? $data['numero_cuenta'] : "";
                     $datoDet['descripcion'] =$bancoText.','.$numero_cuenta; 
