@@ -263,7 +263,7 @@ class MovimientoCajaController extends Controller
                     // $datoDet['numero_cuenta'] = (isset($data['idCuenta'])) ? $data['idCuenta'] : "";
 
                     $datoDet['banco'] = (isset($data['banco'])) ? $data['banco'] : "";
-                    $datoDet['numero_cuenta'] = (isset($data['numero_cuenta'])) ? $data['numero_cuenta'] : "";
+                    $datoDet['numero_cuenta'] = (isset($data['cuentaBancaria'])) ? $data['cuentaBancaria'] : "";
 
                     $bancoText = (isset($data['bancoText'])) ? $data['bancoText'] : "";
                     $numero_cuenta = (isset($data['numero_cuenta'])) ? $data['numero_cuenta'] : "";
@@ -1748,8 +1748,6 @@ class MovimientoCajaController extends Controller
                 $this->base_model->insertar($this->preparar_datos("dbo.ERP_VentaFormaPago", $data_formas_pago));
             }
 
-
-          
 
             //  PARA TICKET
             if(isset($data["codigo_formapago"])) {
