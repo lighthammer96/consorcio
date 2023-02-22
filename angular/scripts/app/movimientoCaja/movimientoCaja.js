@@ -1029,6 +1029,7 @@
                             // };
                             
                             // idcajaMC.val(cajaGuar[0].idCajaDiaria);
+
                             modalMovimientoCaja.modal('hide');
                             
                         } else {
@@ -1040,6 +1041,8 @@
                                 type: 'info'
                             });
                         }
+
+                        $("#idcliente_m").val("");
                     },
                     "json"
                 );

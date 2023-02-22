@@ -43,6 +43,9 @@
         var table_container_Customer = $("#table_container_Customer");
 
         function newCliente() {
+            $("#tipodoc").prop("disabled", false);
+            $("#documento").prop("readonly", false);
+            $("#razonsocial_cliente").prop("readonly", false);
             titleModalClientes.html('Nuevo Cliente');
             modaClientes.modal('show');
             var bandera = 'xxxxx';
