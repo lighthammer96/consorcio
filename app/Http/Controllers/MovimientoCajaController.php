@@ -111,7 +111,11 @@ class MovimientoCajaController extends Controller
                     $data_caja_detalle["descripcion"] = "Ingreso por Movimiento de Caja";
                     $data_caja_detalle["nroTarjeta"] = $data["nrotarjeta"][$i];
                     $data_caja_detalle["nroOperacion"] = $data["nrooperacion"][$i];
+                    $data_caja_detalle["banco"] = (isset($data["banco"][$i])) ? $data["banco"][$i] : "";
+                    $data_caja_detalle["numero_cuenta"] = (isset($data["numero_cuenta"][$i])) ? $data["numero_cuenta"][$i] : "";
                     $data_caja_detalle["naturaleza"] = "E";
+
+                    $data_formas_pago["consecutivo_caja_diaria_detalle"][$i] = $data_caja_detalle["consecutivo"];
 
                     $this->base_model->insertar($this->preparar_datos("dbo.ERP_CajaDiariaDetalle", $data_caja_detalle));
 
@@ -138,6 +142,8 @@ class MovimientoCajaController extends Controller
                             $efectivo_dolares -= $data["vuelto"][$i];
                         }
                     }
+
+                   
                 }
 
                 if($data["IdMoneda"][$i] == "1") {
@@ -155,6 +161,8 @@ class MovimientoCajaController extends Controller
                         $no_efectivo_dolares += (float)$data["monto_pago"][$i];
                     }
                 }
+
+               
             }
 
             if(!$totales_actualizados) {
@@ -251,8 +259,12 @@ class MovimientoCajaController extends Controller
 
                 if($data['tipoMovimientoAdd']=='BCO'){
                     $datoDet['nroOperacion'] = (isset($data['nrOperacion'])) ? $data['nrOperacion'] : "";
-                    $datoDet['banco'] = (isset($data['idBanco'])) ? $data['idBanco'] : "";
-                    $datoDet['numero_cuenta'] = (isset($data['idCuenta'])) ? $data['idCuenta'] : "";
+                    // $datoDet['banco'] = (isset($data['idBanco'])) ? $data['idBanco'] : "";
+                    // $datoDet['numero_cuenta'] = (isset($data['idCuenta'])) ? $data['idCuenta'] : "";
+                    $array = explode("*", $data['cuentaBancaria']);
+                    $datoDet['banco'] = (isset($data['banco'])) ? $data['banco'] : "";
+                    $datoDet['numero_cuenta'] = (isset($array[0])) ? $array[0] : "";
+
                     $bancoText = (isset($data['bancoText'])) ? $data['bancoText'] : "";
                     $numero_cuenta = (isset($data['numero_cuenta'])) ? $data['numero_cuenta'] : "";
                     $datoDet['descripcion'] =$bancoText.','.$numero_cuenta; 
@@ -1671,7 +1683,12 @@ class MovimientoCajaController extends Controller
                     $data_caja_detalle["nroTarjeta"] = $data["nrotarjeta"][$i];
                     $data_caja_detalle["nroOperacion"] = $data["nrooperacion"][$i];
                     $data_caja_detalle["naturaleza"] = "E";
-    
+
+                    $data_caja_detalle["banco"] = (isset($data["banco"][$i])) ? $data["banco"][$i] : "";
+                    $data_caja_detalle["numero_cuenta"] = (isset($data["numero_cuenta"][$i])) ? $data["numero_cuenta"][$i] : "";
+
+                    $data_formas_pago["consecutivo_caja_diaria_detalle"][$i] = $data_caja_detalle["consecutivo"];
+
                     $this->base_model->insertar($this->preparar_datos("dbo.ERP_CajaDiariaDetalle", $data_caja_detalle));
     
                     if($data["vuelto"][$i] > 0) {
@@ -1727,12 +1744,10 @@ class MovimientoCajaController extends Controller
                 
                 $caja_diaria_repositorio->update_totales($update_caja_diaria);
                 // $this->base_model->modificar($this->preparar_datos("dbo.ERP_CajaDiaria", $update_caja_diaria));
-            
+                // print_r($data_formas_pago);
                 $this->base_model->insertar($this->preparar_datos("dbo.ERP_VentaFormaPago", $data_formas_pago));
             }
 
-
-          
 
             //  PARA TICKET
             if(isset($data["codigo_formapago"])) {
@@ -1954,7 +1969,12 @@ class MovimientoCajaController extends Controller
                 $data_caja_detalle["nroTarjeta"] = $data["nrotarjeta"][$fp];
                 $data_caja_detalle["nroOperacion"] = $data["nrooperacion"][$fp];
                 $data_caja_detalle["naturaleza"] = "E";
-               
+
+                $data_caja_detalle["banco"] = (isset($data["banco"][$fp])) ? $data["banco"][$fp] : "";
+                $data_caja_detalle["numero_cuenta"] = (isset($data["numero_cuenta"][$fp])) ? $data["numero_cuenta"][$fp] : "";
+
+                $data_formas_pago["consecutivo_caja_diaria_detalle"][$fp] = $data_caja_detalle["consecutivo"];
+
                 $this->base_model->insertar($this->preparar_datos("dbo.ERP_CajaDiariaDetalle", $data_caja_detalle));
                 if($data["vuelto"][$fp] > 0) {
                     $data_caja_detalle = array();
@@ -2179,6 +2199,11 @@ class MovimientoCajaController extends Controller
                 $data_caja_detalle["nroTarjeta"] = $data["nrotarjeta"][$fp];
                 $data_caja_detalle["nroOperacion"] = $data["nrooperacion"][$fp];
                 $data_caja_detalle["naturaleza"] = "E";
+
+                $data_caja_detalle["banco"] = (isset($data["banco"][$fp])) ? $data["banco"][$fp] : "";
+                $data_caja_detalle["numero_cuenta"] = (isset($data["numero_cuenta"][$fp])) ? $data["numero_cuenta"][$fp] : "";
+
+                $data_formas_pago["consecutivo_caja_diaria_detalle"][$fp] = $data_caja_detalle["consecutivo"];
                
                 $this->base_model->insertar($this->preparar_datos("dbo.ERP_CajaDiariaDetalle", $data_caja_detalle));
                 if($data["vuelto"][$fp] > 0) {

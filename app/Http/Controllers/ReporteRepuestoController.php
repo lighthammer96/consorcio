@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: JAIR
@@ -14,17 +15,18 @@ use App\Http\Recopro\ReporteRepuesto\ReporteRepuestoInterface;
 use App\Http\Recopro\Solicitud_Asignacion\Solicitud_AsignacionInterface;
 use App\Http\Recopro\Query_movements\Query_movementsInterface;
 use App\Http\Requests\ReporteRepuestoRequest;
+
 class ReporteRepuestoController extends Controller
 {
-     use ReporteRepuestoTrait;
+    use ReporteRepuestoTrait;
 
     public function __construct()
     {
-//        $this->middleware('json');
+        //        $this->middleware('json');
     }
 
     public function all(Request $request, ReporteRepuestoInterface $repo)
-    {   
+    {
         ini_set('max_execution_time', '3000');
         set_time_limit(3000);
         $s = $request->input('search', '');
@@ -34,21 +36,21 @@ class ReporteRepuestoController extends Controller
         $idVendedorFiltro = $request->input('idVendedorFiltro', '');
         $FechaInicioFiltro = $request->input('FechaInicioFiltro', '');
         $FechaFinFiltro = $request->input('FechaFinFiltro', '');
-      
-        $params =['origen', 'idventa_ca','monto_total','estado','documento_ven','cCodConsecutivo','nConsecutivo','serie_comprobante','numero_comprobante','razonsocial_cliente','vendedor','REPUESTO','ACEITE','SERVICIO','TERCEROS','fecha'];
-        return parseList($repo->search($s,$filtro_tienda,$idClienteFiltro,$idVendedorFiltro,$FechaInicioFiltro,$FechaFinFiltro), $request, 'idtienda', $params);
+
+        $params = ['origen', 'idventa_ca', 'monto_total', 'estado', 'documento_ven', 'cCodConsecutivo', 'nConsecutivo', 'serie_comprobante', 'numero_comprobante', 'razonsocial_cliente', 'vendedor', 'REPUESTO', 'ACEITE', 'SERVICIO', 'TERCEROS', 'fecha'];
+        return parseList($repo->search($s, $filtro_tienda, $idClienteFiltro, $idVendedorFiltro, $FechaInicioFiltro, $FechaFinFiltro), $request, 'idtienda', $params);
     }
 
     public function create(ReporteRepuestoInterface $repo, ReporteRepuestoRequest $request)
     {
         $data = $request->all();
-        $table="ERP_Categoria";
-        $id='idCategoria';
-        $data['idCategoria'] = $repo->get_consecutivo($table,$id);
+        $table = "ERP_Categoria";
+        $id = 'idCategoria';
+        $data['idCategoria'] = $repo->get_consecutivo($table, $id);
         $data['descripcion'] = strtoupper($data['Categoria']);
-        $estado='A';
-        if(!isset($data['estado'])){
-            $estado='I';
+        $estado = 'A';
+        if (!isset($data['estado'])) {
+            $estado = 'I';
         };
         $data['estado'] =  $estado;
         $repo->create($data);
@@ -64,9 +66,9 @@ class ReporteRepuestoController extends Controller
         $data = $request->all();
         $id = $data['idCategoria'];
         $data['descripcion'] = strtoupper($data['Categoria']);
-        $estado='A';
-        if(!isset($data['estado'])){
-            $estado='I';
+        $estado = 'A';
+        if (!isset($data['estado'])) {
+            $estado = 'I';
         };
         $data['estado'] =  $estado;
         $repo->update($id, $data);
@@ -86,55 +88,53 @@ class ReporteRepuestoController extends Controller
     // //     return parseSelect($repo->all(), 'id', 'description');
     // // }
 
-    public function excel(ReporteRepuestoInterface $repo,Request $request)
+    public function excel(ReporteRepuestoInterface $repo, Request $request)
     {
         ini_set('max_execution_time', '3000');
         set_time_limit(3000);
 
-         $s = $request->input('search', '');
+        $s = $request->input('search', '');
         $filtro_tienda = $request->input('filtro_tienda', '');
         $idClienteFiltro = $request->input('idClienteFiltro', '');
         $idVendedorFiltro = $request->input('idVendedorFiltro', '');
         $FechaInicioFiltro = $request->input('FechaInicioFiltro', '');
         $FechaFinFiltro = $request->input('FechaFinFiltro', '');
 
-        return generateExcel($this->generateDataExcel($repo->allFiltro($s,$filtro_tienda,$idClienteFiltro,$idVendedorFiltro,$FechaInicioFiltro,$FechaFinFiltro)), 'LISTA DE REPORTE DE REPUESTOS', 'Repuestos');
+        return generateExcel($this->generateDataExcel($repo->allFiltro($s, $filtro_tienda, $idClienteFiltro, $idVendedorFiltro, $FechaInicioFiltro, $FechaFinFiltro)), 'LISTA DE REPORTE DE REPUESTOS', 'Repuestos');
     }
-    public function pdf(ReporteRepuestoInterface $repo,Request $request,Query_movementsInterface $repom,Solicitud_AsignacionInterface $repcom)
+    public function pdf(ReporteRepuestoInterface $repo, Request $request, Query_movementsInterface $repom, Solicitud_AsignacionInterface $repcom)
     {
         ini_set('max_execution_time', '3000');
         set_time_limit(3000);
-        
-            $s = $request->input('search', '');
-            $filtro_tienda = $request->input('filtro_tienda', '');
-            $idClienteFiltro = $request->input('idClienteFiltro', '');
-            $idVendedorFiltro = $request->input('idVendedorFiltro', '');
-            $FechaInicioFiltro = $request->input('FechaInicioFiltro', '');
-            $FechaFinFiltro = $request->input('FechaFinFiltro', '');
 
-          
-            $data =$repo->allFiltro($s,$filtro_tienda,$idClienteFiltro,$idVendedorFiltro,$FechaInicioFiltro,$FechaFinFiltro);
-
-            
-            $simboloMoneda = $repom->getSimboloMoneda();
-            $data_compania=$repcom->get_compania(); 
-
-            $path = public_path('/'.$data_compania[0]->ruta_logo);
-            if(!file_exists($path)){
-                $path = public_path('/img/a1.jpg');
-            }
-            $type_image = pathinfo($path, PATHINFO_EXTENSION);
-            $image = file_get_contents($path);
-            $image = 'data:image/' . $type_image . ';base64,' . base64_encode($image);
-            return response()->json([
-                'status' => true,
-                 'img'=>$image,
-                 'simboloMoneda'=>$simboloMoneda,
-                 'data'=>$data,
-               
-            ]);
+        $s = $request->input('search', '');
+        $filtro_tienda = $request->input('filtro_tienda', '');
+        $idClienteFiltro = $request->input('idClienteFiltro', '');
+        $idVendedorFiltro = $request->input('idVendedorFiltro', '');
+        $FechaInicioFiltro = $request->input('FechaInicioFiltro', '');
+        $FechaFinFiltro = $request->input('FechaFinFiltro', '');
 
 
+        $data = $repo->allFiltro($s, $filtro_tienda, $idClienteFiltro, $idVendedorFiltro, $FechaInicioFiltro, $FechaFinFiltro);
+
+
+        $simboloMoneda = $repom->getSimboloMoneda();
+        $data_compania = $repcom->get_compania();
+
+        $path = public_path('/' . $data_compania[0]->ruta_logo);
+        if (!file_exists($path)) {
+            $path = public_path('/img/a1.jpg');
+        }
+        $type_image = pathinfo($path, PATHINFO_EXTENSION);
+        $image = file_get_contents($path);
+        $image = 'data:image/' . $type_image . ';base64,' . base64_encode($image);
+        return response()->json([
+            'status' => true,
+            'img' => $image,
+            'simboloMoneda' => $simboloMoneda,
+            'data' => $data,
+
+        ]);
     }
     //  public function pdf(Request $request, Query_movementsInterface $repo)
     // {       
@@ -192,7 +192,7 @@ class ReporteRepuestoController extends Controller
     //             'fechacA'=>$fechacA,
     //             'simboloMoneda'=>$simboloMoneda,
     //              'img'=>$image,
-               
+
     //         ]);
     // }
 }

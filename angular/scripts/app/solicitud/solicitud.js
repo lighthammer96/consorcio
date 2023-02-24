@@ -202,6 +202,7 @@
             $("#tipo_sol").val("N");
         }
 
+        var tipos_doc_venta = [];
         function obtener_data_for_solicitud() {
             RESTService.all('solicitud/data_form', '', function (response) {
                 if (!_.isUndefined(response.status) && response.status) {
@@ -261,6 +262,7 @@
                     _.each(response.tipo_document_venta, function (item) {
                         id_tipoDoc_Venta_solicitud.append('<option value="' + item.IdTipoDocumento + '">' + item.Descripcion + '</option>');
                     });
+                    tipos_doc_venta = response.tipo_document_venta;
                     // gru_revisiones.append('<option value="" selected>Seleccionar </option>');
                     // _.each(response.revisiones, function (item) {
                     //     gru_revisiones.append('<option value="' + item.id + '*' + item.nombre + '*' + item.mo_revision + '*' + item.mo_mecanica + '*' + item.terceros + '*' + item.otros_mo + '*' + item.repuestos + '*' + item.accesorios + '*' + item.lubricantes + '*' + item.otros_rep + '">' + item.nombre + '</option>');
@@ -327,7 +329,25 @@
         }
 
         obtener_data_for_solicitud();
-
+        
+        $(document).on("change", "#tipodoc", function (e) {
+            e.preventDefault();
+            var valor = $(this).val();
+            id_tipoDoc_Venta_solicitud.html("");
+            id_tipoDoc_Venta_solicitud.append('<option value="">Seleccionar</option>');
+            // console.log(tipos_doc_venta);
+            if(valor == '06') {
+                tipos_doc_venta.map(function (index) {
+                    if(index.IdTipoDocumento == "01") {
+                        id_tipoDoc_Venta_solicitud.append('<option value="' + index.IdTipoDocumento + '">' + index.Descripcion + '</option>');
+                    }
+                });
+            } else {
+                tipos_doc_venta.map(function (index) {
+                    id_tipoDoc_Venta_solicitud.append('<option value="' + index.IdTipoDocumento + '">' + index.Descripcion + '</option>');
+                });
+            }
+        });
        
 
         // CLIENTES
@@ -365,6 +385,21 @@
                          getSector(data_p[0].idsector,data_p[0].cCodUbigeo);
                         modaClientes.modal('show');
                         console.log(data_p);
+
+                        $.post("solicitud/validar_cliente", { id_cliente: id },
+                            function (data, textStatus, jqXHR) {
+                                if(data.length > 0) {
+                                    $("#tipodoc").prop("disabled", true);
+                                    $("#documento").prop("readonly", true);
+                                    $("#razonsocial_cliente").prop("readonly", true);
+                                } else {
+                                    $("#tipodoc").prop("disabled", false);
+                                    $("#documento").prop("readonly", false);
+                                    $("#razonsocial_cliente").prop("readonly", false);
+                                }
+                            },
+                            "json"
+                        );
                     } else {
                         AlertFactory.textType({
                             title: '',
@@ -2478,7 +2513,23 @@
 
 
         $(document).on("blur", "input[name='precio_unitario[]']", function () {
-            // console.log();
+            // console.log($(this).val());
+            var precio_unitario = parseFloat($(this).val());
+
+            if(isNaN(precio_unitario)) {
+                precio_unitario = 0;
+            }
+            // console.log(precio_unitario);
+            if(precio_unitario <= 0) {
+                AlertFactory.textType({
+                    title: '',
+                    message: 'El precio unitario debe ser mayor a cero, si no se va a cobrar al cliente marcar el check de Operación Gratuita.',
+                    type: 'info'
+                });
+                $(this).val("");
+                return false;
+            }
+
             var type_id = $(this).parent("td").parent("tr").attr("type_id");
             var idCategoria = $(this).parent("td").parent("tr").attr("idCategoria");
             // alert(type_id +" "+idCategoria);

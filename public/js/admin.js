@@ -9012,6 +9012,7 @@ function create_pdf_QuerystockCierre(response) {
 
 }
 function create_pdf_Querymovimiento(response) {
+    // console.log(response);
     var filtro_art = response.filtro_art;
     var filtro_idAlm = response.filtro_idAlm;
     var filtro_idLoc = response.filtro_idLoc;
@@ -9433,6 +9434,11 @@ function create_pdf_Querymovimiento(response) {
             },
             {
                 text: index.Serie,
+                fontSize: 7,
+
+            },
+            {
+                text: index.Obs,
                 fontSize: 7,
 
             },

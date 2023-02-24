@@ -267,4 +267,10 @@ class CustomerController extends Controller
             ]);
         }
     } 
+
+    public function validar_cliente(Request $request, CustomerInterface $repo) {
+        $data = $request->all();
+        $result = $repo->validar_cliente($data["id_cliente"]);
+        return response()->json($result);
+    }
 }
