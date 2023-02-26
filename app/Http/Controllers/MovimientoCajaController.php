@@ -1301,7 +1301,7 @@ class MovimientoCajaController extends Controller
                         $data_venta["t_monto_exonerado"] = $data_venta["t_monto_subtotal"];
                     }
 
-                    $data_venta["t_monto_total"] = $data_venta["t_monto_exonerado"] + $data_venta["t_monto_afecto"] + $data_venta["t_impuestos"];
+                    $data_venta["t_monto_total"] = $data_venta["t_monto_exonerado"] + floatval($data_venta["t_monto_afecto"]) + floatval($data_venta["t_impuestos"]);
 
                    
                     $update_solicitud["cCodConsecutivo"] = $data["cCodConsecutivo"];
