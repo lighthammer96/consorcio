@@ -29,7 +29,7 @@ class PermissionMiddleware
 
         $permission = $this->module->getByProfileUrl($profile_id, $url);
 
-        if (count($permission) == 0)
+        if (!isset($permission))
         {
             if ($request->ajax())
             {

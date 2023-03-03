@@ -73,7 +73,7 @@ function validatePermission($url)
     $module = new ModuleRepository(new Module());
     $permission = $module->getByProfileUrl($profile_id, $url);
 
-    return (count($permission) > 0);
+    return (isset($permission));
 }
 
 function parseDataList($data, $request, $sort_default, $data_select)
@@ -201,6 +201,13 @@ function parseSelectAndSerialOnly($data, $key_id, $key_number, $key_serial)
         ];
     }
     return $rows;
+}
+
+function setIdTableByMax($max, $attributes)
+{
+    $id = ($max) ? (int)$max + 1 : 1;
+    $attributes['id'] = $id;
+    return $attributes;
 }
  
 function generateExcelCuentasxCobrar($data_cabe,$simboloMoneda,$cambio,$file_name, $sheet_name)

@@ -63,6 +63,7 @@ class Handler extends ExceptionHandler
         }
 
         if ($exception instanceof \ErrorException) {
+            dd($exception);
             return response()->view('errors.500', ['error' => $exception->getMessage()]);
         }
 
