@@ -544,6 +544,11 @@
             bval = bval && razonsocial_cliente.required();
             bval = bval && celular.required();
             bval = bval && distrito.required();
+            if (tipodoc.val() == '01') {
+                $("#cApepat_c").required();   
+                $("#cApemat_c").required();   
+                $("#cNombres_c").required();   
+            }
 
             if (tipodoc.val() == '01' && documento.val().length != 8) {
                 AlertFactory.textType({

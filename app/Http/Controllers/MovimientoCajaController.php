@@ -53,7 +53,7 @@ class MovimientoCajaController extends Controller
         ]);
     }
 
-    public function guardar_detalle_forma_pago($data, $data_venta, $repo, $caja_diaria_repositorio, $idMonedaAdd, $totales_actualizados) {
+    public function guardar_detalle_forma_pago($data, $data_venta, $repo, $caja_diaria_repositorio, $idMonedaAdd, $totales_actualizados, $consecutivo_caja_diaria_detalle) {
         // print_r($data);
         foreach ($data as $key => $value) {
             // echo $key."<br>";
@@ -97,7 +97,7 @@ class MovimientoCajaController extends Controller
                 } else {
                     $data_formas_pago["consecutivo"][$i] = $data_formas_pago["consecutivo"][$i-1] + 1;
                 }
-
+                // var_dump($consecutivo_caja_diaria_detalle);
                 if(!$totales_actualizados && $data["tipoMovimientoAdd"] != "ING" && $data["tipoMovimientoAdd"] != "EGR") {
 
                     $data_caja_detalle = array();
@@ -122,7 +122,7 @@ class MovimientoCajaController extends Controller
 
                     $data_formas_pago["consecutivo_caja_diaria_detalle"][$i] = $data_caja_detalle["consecutivo"];
 
-                    $data_caja_detalle = $data["idconcepto"];
+                    $data_caja_detalle["idconcepto"] = (isset($data["idconcepto"])) ? $data["idconcepto"] : "";
 
                     $this->base_model->insertar($this->preparar_datos("dbo.ERP_CajaDiariaDetalle", $data_caja_detalle));
 
@@ -151,6 +151,8 @@ class MovimientoCajaController extends Controller
                     }
 
                    
+                } else {
+                    $data_formas_pago["consecutivo_caja_diaria_detalle"][$i] = $consecutivo_caja_diaria_detalle;
                 }
 
                 if($data["IdMoneda"][$i] == "1") {
@@ -203,6 +205,7 @@ class MovimientoCajaController extends Controller
           
             $idventa_ticket = "";
             $data = $request->all();
+            $consecutivo_caja_diaria_detalle = "";
             $id = $data["id"];
             // print_r($data); exit;
             $dataCaja = $recaj->find($id);
@@ -278,8 +281,9 @@ class MovimientoCajaController extends Controller
                     $datoDet['descripcion'] =$bancoText.','.$numero_cuenta; 
                 }
                 
-                $datoDet["idconcepto"] = $data["idconcepto"];
+                $datoDet["idconcepto"] = (isset($data["idconcepto"])) ? $data["idconcepto"] : "";
                 // print_r($datoDet); exit;
+                $consecutivo_caja_diaria_detalle = $datoDet['consecutivo'];
                 $repo->create($datoDet);
             }
             
@@ -372,8 +376,9 @@ class MovimientoCajaController extends Controller
         
                  
                     $this->base_model->insertar($this->preparar_datos("dbo.ERP_VentaDetalle", $data_venta_detalle));
-                      
-                    $this->guardar_detalle_forma_pago($data, $data_venta, $repo, $recaj, $data['idMonedaAdd'], $totales_actualizados);
+                    // var_dump($consecutivo_caja_diaria_detalle);
+                    // exit;
+                    $this->guardar_detalle_forma_pago($data, $data_venta, $repo, $recaj, $data['idMonedaAdd'], $totales_actualizados, "");
                     $totales_actualizados = true;
                    
                     // $this->generar_json_cpe($data_venta["idventa"], $repo, $compania_repo, $solicitud_repositorio);
@@ -453,7 +458,7 @@ class MovimientoCajaController extends Controller
                 $this->base_model->insertar($this->preparar_datos("dbo.ERP_VentaDetalle", $data_ticket_detalle));
               
                 
-                $this->guardar_detalle_forma_pago($data, $data_ticket, $repo, $recaj, $data['idMonedaAdd'], $totales_actualizados);
+                $this->guardar_detalle_forma_pago($data, $data_ticket, $repo, $recaj, $data['idMonedaAdd'], $totales_actualizados, "");
                 $totales_actualizados = true;
                 
               
@@ -537,11 +542,11 @@ class MovimientoCajaController extends Controller
                     $data["vuelto"][0] = "0";
                     $data["banco"][0] = "";
                     $data["numero_cuenta"][0] = "";
-                    $data["idconcepto"][0] = $data["idconcepto"];
+                    $data["idconcepto"][0] = (isset($data["idconcepto"])) ? $data["idconcepto"] : "";
                 }
 
                 
-                $this->guardar_detalle_forma_pago($data, $data_venta, $repo, $recaj, $data['idMonedaAdd'], $totales_actualizados);
+                $this->guardar_detalle_forma_pago($data, $data_venta, $repo, $recaj, $data['idMonedaAdd'], $totales_actualizados,  $consecutivo_caja_diaria_detalle);
                 $totales_actualizados = true;
                 $repoCC->actualizar_correlativo($serie_ticket, $consecutivo_ticket);
             }
