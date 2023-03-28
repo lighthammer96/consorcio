@@ -79,11 +79,12 @@
                 
                 if (data.length > 0) {
                     $(".separacion").hide();
-                    $("")
+                   
                     $(".formas-pago-detalle").hide();
                     $("#tipoMovimientoAdd").val("ING").trigger("change");
                     $("#detalle-formas-pago-mov").html("");
                     $("#formMovimientoCaja").trigger("reset");
+                    $("#idconcepto").prop("disabled", true);
                     modalMovimientoCaja.modal('show');
                 } else {
                     AlertFactory.textType({
@@ -393,6 +394,11 @@
             if (tipoMovimientoAdd.val() == 'ING' || tipoMovimientoAdd.val() == 'EGR') {
                 
                 $(".ingresos_egresos").show();
+                $("#idconcepto").prop("disabled", false);
+            } else {
+             
+                $("#idconcepto").prop("disabled", true);
+                $("#idconcepto").val("");
             }
         });
         $('#btn_Mcierra').click(function (e) {
@@ -666,7 +672,6 @@
                             type: 'info'
                         });
                     }
-                    cuentaBancaria
                     $("#idClienteFiltro").append('<option value="">Seleccionar</option>');
                     _.each(response.clientes, function (item) {
                         $("#idClienteFiltro").append('<option value="' + item.id + '">' + item.razonsocial_cliente + '</option>');
@@ -937,6 +942,11 @@
                 bval = bval && $("#documento_cliente").required();
                 bval = bval && $("#tipo_doc_venta").required();
                 bval = bval && $("#serie_comprobante_m").required();
+            }
+
+            if (tipoMovimientoAdd.val() == 'ING' || tipoMovimientoAdd.val() == 'EGR') {
+                bval = bval && $("#idconcepto").required();
+               
             }
 
             var monto_mov = parseFloat($("#monto_mov").val());
@@ -1444,7 +1454,7 @@
                     var total_compro=response.data_comproTotal;
                     var totsolCom=0;
                     var totDolCom=0;
-                    console.log(total_compro);
+                    // console.log(total_compro);
                     total_compro.map(function (index) {
                         if(index.idmoneda=='1'){
                             totsolCom=totsolCom+Number(index.monto);
@@ -1468,16 +1478,16 @@
                     var dataCajaDetEfeDolAper = response.dataCajaDetEfeDolAper;
                     
                     
-                    console.log(dataCajaDetEfeSolAper);
-                    console.log(dataCajaDetEfeDolAper);
-                    console.log("esta es la fecha");
-                    console.log(fecha_caja);
+                    // console.log(dataCajaDetEfeSolAper);
+                    // console.log(dataCajaDetEfeDolAper);
+                    // console.log("esta es la fecha");
+                    // console.log(fecha_caja);
                     var tip = response.data;
                     var dataCaja = response.dataMc;
                     var dataCajaAbir = response.dataCA;
                     var dataCaDet = response.dataCaDet;
-                    console.log("aaaaa");
-                    console.log(dataCaDet);
+                    // console.log("aaaaa");
+                    // console.log(dataCaDet);
                     caja_sin.html("");
                     var fechaCajaAbir = response.fechacA;
                     if (dataCajaAbir.length != 0) {
@@ -1501,8 +1511,8 @@
                         var montoApe = Number(dataCajaDetEfeSolAper[0].monto);
                         var tiposumApe = 'SE';
                         addTableEfecSol(cotipoApe, tipoTexApe, montoApe, tiposumApe);
-                        console.log(dataCajaDetEfeSol);
-                        console.log("totaldetalle");
+                        // console.log(dataCajaDetEfeSol);
+                        // console.log("totaldetalle");
                         dataCajaDetEfeSol.map(function (index) {
                             var codigoTipo = index.codigoTipo;
                             var tipotext = index.descripcion_tipo;
@@ -1593,8 +1603,8 @@
                             btn_Mcierra.prop('disabled', true);
                         };
                     }
-                    console.log(response.data_tipo);
-                    console.log("response tipo");
+                    // console.log(response.data_tipo);
+                    // console.log("response tipo");
                     $("#filtro_tipoMovi").html("");
                     $("#filtro_tipoMovi").append('<option value="">Tipo</option>');
                     // tipoMovimientoAdd.append('<option value="">Tipo</option>');
@@ -1623,6 +1633,14 @@
                     // tipo_persona.map(function(index) {
                     //    cTipopersona.append('<option value="'+index.cCodigo+'">'+index.cDescripcion+'</option>');
                     // });
+
+                    $("#idconcepto").html("");
+                    $("#idconcepto").append('<option value="">Seleccionar</option>');
+                    // idMonedaAdd.append('<option value="">Moneda</option>');
+                    _.each(response.data_conceptos, function (item) {
+                        $("#idconcepto").append('<option value="' + item.idconcepto + '">' + item.descripcion + '</option>');
+                        // idMonedaAdd.append('<option value="' + item.IdMoneda + '">'+ item.Descripcion + '</option>');
+                    });
                 }
             }, function () {
                 getDataFormMovementCaja();
@@ -2337,7 +2355,8 @@ $(document).on("change", "#forma_pago", function (event) {
     $("#idventa").html("");
     $("#idventa").removeAttr("tipo");
     $(".deposito").hide();
-    if(forma_pago == "DEP") {
+    // alert(forma_pago);
+    if(forma_pago == "DEP" || forma_pago == "TRA") {
         $(".deposito").show();
     }
 

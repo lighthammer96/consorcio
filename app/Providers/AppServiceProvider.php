@@ -500,6 +500,10 @@ use App\Http\Recopro\Category\Category;
 use App\Http\Recopro\Category\CategoryInterface;
 use App\Http\Recopro\Category\CategoryRepository;
 
+use App\Http\Recopro\Conceptos\Conceptos;
+use App\Http\Recopro\Conceptos\ConceptosInterface;
+use App\Http\Recopro\Conceptos\ConceptosRepository;
+
 use App\Http\Recopro\HeadAccountan\HeadAccountan;
 use App\Http\Recopro\HeadAccountan\HeadAccountanInterface;
 use App\Http\Recopro\HeadAccountan\HeadAccountanRepository;
@@ -986,6 +990,7 @@ class AppServiceProvider extends ServiceProvider
         $this->registerRevision_ca();
         $this->registerMaintenance();
         $this->registerCategory();
+        $this->registerConceptos();
         $this->registerConsecutive();
         $this->registerHeadAccountan();
         $this->registerOperation();
@@ -2308,6 +2313,15 @@ class AppServiceProvider extends ServiceProvider
 
         $app->bind(CategoryInterface::class, function ($app) {
             return new CategoryRepository(new Category());
+        });
+    }
+
+    public function registerConceptos()
+    {
+        $app = $this->app;
+
+        $app->bind(ConceptosInterface::class, function ($app) {
+            return new ConceptosRepository(new Conceptos());
         });
     }
     public function registerConsecutive()

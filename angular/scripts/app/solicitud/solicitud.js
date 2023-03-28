@@ -198,6 +198,7 @@
             $("#formulario-solicitud").trigger("reset");
             $("#formulario-creditos").trigger("reset");
             $("#formulario-persona").trigger("reset");
+            
             $("#comentario_facturacion").attr("readonly", "readonly");
             $("#tipo_sol").val("N");
         }
@@ -332,6 +333,9 @@
         
         $(document).on("change", "#tipodoc", function (e) {
             e.preventDefault();
+            $("#cNombres_c").val("");
+            $("#cApepat_c").val("");
+            $("#cApemat_c").val("");
             var valor = $(this).val();
             id_tipoDoc_Venta_solicitud.html("");
             id_tipoDoc_Venta_solicitud.append('<option value="">Seleccionar</option>');
@@ -346,6 +350,12 @@
                 tipos_doc_venta.map(function (index) {
                     id_tipoDoc_Venta_solicitud.append('<option value="' + index.IdTipoDocumento + '">' + index.Descripcion + '</option>');
                 });
+            }
+            if(valor != '06') {
+                $(".persona_natural").show();
+
+            } else {
+                $(".persona_natural").hide();
             }
         });
        
@@ -392,10 +402,17 @@
                                     $("#tipodoc").prop("disabled", true);
                                     $("#documento").prop("readonly", true);
                                     $("#razonsocial_cliente").prop("readonly", true);
+                                    $("#cNombres_c").prop("readonly", true);
+                                    $("#cApepat_c").prop("readonly", true);
+                                    $("#cApemat_c").prop("readonly", true);
                                 } else {
                                     $("#tipodoc").prop("disabled", false);
                                     $("#documento").prop("readonly", false);
                                     $("#razonsocial_cliente").prop("readonly", false);
+
+                                    $("#cNombres_c").prop("readonly", false);
+                                    $("#cApepat_c").prop("readonly", false);
+                                    $("#cApemat_c").prop("readonly", false);
                                 }
                             },
                             "json"
@@ -779,7 +796,7 @@
                 } else {
                     AlertFactory.textType({
                         title: '',
-                        message: 'Hubo un error al obtener el Artículo. Intente nuevamente.',
+                        message: 'Hubo un error al obtener departamentos de persona. Intente nuevamente.',
                         type: 'error'
                     });
                 }
@@ -831,7 +848,7 @@
                 } else {
                     AlertFactory.textType({
                         title: '',
-                        message: 'Hubo un error al obtener el Artículo. Intente nuevamente.',
+                        message: 'Hubo un error al obtener distritos de persona. Intente nuevamente.',
                         type: 'error'
                     });
                 }
@@ -1049,7 +1066,7 @@
                 } else {
                     AlertFactory.textType({
                         title: '',
-                        message: 'Hubo un error al obtener el Artículo. Intente nuevamente.',
+                        message: 'Hubo un error al obtener departamentos. Intente nuevamente.',
                         type: 'error'
                     });
                 }
@@ -1114,7 +1131,7 @@
                  }else {
                     AlertFactory.textType({
                         title: '',
-                        message: 'Hubo un error al obtener el Artículo. Intente nuevamente.',
+                        message: 'Hubo un error al obtener sectores. Intente nuevamente.',
                         type: 'error'
                     });
                 }
@@ -1140,7 +1157,7 @@
                 } else {
                     AlertFactory.textType({
                         title: '',
-                        message: 'Hubo un error al obtener el Artículo. Intente nuevamente.',
+                        message: 'Hubo un error al obtener distritos. Intente nuevamente.',
                         type: 'error'
                     });
                 }
@@ -1182,6 +1199,10 @@
                             getProvincia(dataPersona[0].cProvincia, dataPersona[0].cDepartamento);
                             getDistrito(dataPersona[0].cCodUbigeo, dataPersona[0].cProvincia);
                             getSector("xxxxxx",dataPersona[0].cCodUbigeo);
+
+                            $("#cNombres_c").val(dataPersona[0].cNombres);
+                            $("#cApepat_c").val(dataPersona[0].cApepat);
+                            $("#cApemat_c").val(dataPersona[0].cApemat);
 
                         }
 
@@ -3833,6 +3854,8 @@
         $(document).on("change", "#tipo_solicitud", function () {
             var tipo_solicitud = $(this).val();
             var fecha_actual = Helpers.ObtenerFechaActual("server");
+
+            $("#idconvenio").val("");
            
             $(".condicion_pago").hide();
             // alert(fecha_actual);
@@ -3893,7 +3916,9 @@
         });
 
         function find_solicitud(id) {
-
+            $("#formulario-solicitud").trigger("reset");
+            $("#formulario-creditos").trigger("reset");
+            $("#formulario-persona").trigger("reset");
             $.post("solicitud/find", { id: id },
                 function (data, textStatus, jqXHR) {
                     // console.log(data);

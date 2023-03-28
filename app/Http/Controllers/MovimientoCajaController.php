@@ -98,7 +98,7 @@ class MovimientoCajaController extends Controller
                     $data_formas_pago["consecutivo"][$i] = $data_formas_pago["consecutivo"][$i-1] + 1;
                 }
 
-                if(!$totales_actualizados) {
+                if(!$totales_actualizados && $data["tipoMovimientoAdd"] != "ING" && $data["tipoMovimientoAdd"] != "EGR") {
 
                     $data_caja_detalle = array();
                     $data_caja_detalle["idCajaDiaria"] = $repo->get_caja_diaria()[0]->idCajaDiaria; 
@@ -108,7 +108,12 @@ class MovimientoCajaController extends Controller
                     $data_caja_detalle["codigoFormaPago"] = $data["codigo_formapago"][$i];
                     $data_caja_detalle["idMoneda"] = $data["IdMoneda"][$i];
                     $data_caja_detalle["monto"] = $data["monto_pago"][$i];
-                    $data_caja_detalle["descripcion"] = "Ingreso por Movimiento de Caja";
+
+                    $descripcion = "Ingreso por Movimiento de Caja";
+                    if($data["tipoMovimientoAdd"] == "EGR") {
+                        $descripcion = "Egreso por Movimiento de Caja";
+                    } 
+                    $data_caja_detalle["descripcion"] = $descripcion;
                     $data_caja_detalle["nroTarjeta"] = $data["nrotarjeta"][$i];
                     $data_caja_detalle["nroOperacion"] = $data["nrooperacion"][$i];
                     $data_caja_detalle["banco"] = (isset($data["banco"][$i])) ? $data["banco"][$i] : "";
@@ -116,6 +121,8 @@ class MovimientoCajaController extends Controller
                     $data_caja_detalle["naturaleza"] = "E";
 
                     $data_formas_pago["consecutivo_caja_diaria_detalle"][$i] = $data_caja_detalle["consecutivo"];
+
+                    $data_caja_detalle = $data["idconcepto"];
 
                     $this->base_model->insertar($this->preparar_datos("dbo.ERP_CajaDiariaDetalle", $data_caja_detalle));
 
@@ -165,7 +172,7 @@ class MovimientoCajaController extends Controller
                
             }
 
-            if(!$totales_actualizados) {
+            if(!$totales_actualizados && $data["tipoMovimientoAdd"] != "ING" && $data["tipoMovimientoAdd"] != "EGR") {
                 //ACTUALIZAMOS MONTOS EN CAJA DIARIA
                 $update_caja_diaria = array();
                 $update_caja_diaria["idCajaDiaria"] = $repo->get_caja_diaria()[0]->idCajaDiaria; 
@@ -181,6 +188,7 @@ class MovimientoCajaController extends Controller
             // exit;
             // $this->base_model->modificar($this->preparar_datos("dbo.ERP_CajaDiaria", $update_caja_diaria));
             // print_r($data_formas_pago);
+            // print_r($this->preparar_datos("dbo.ERP_VentaFormaPago", $data_formas_pago)); exit;
             $this->base_model->insertar($this->preparar_datos("dbo.ERP_VentaFormaPago", $data_formas_pago));
             // print_R($r);
         }
@@ -269,6 +277,9 @@ class MovimientoCajaController extends Controller
                     $numero_cuenta = (isset($data['numero_cuenta'])) ? $data['numero_cuenta'] : "";
                     $datoDet['descripcion'] =$bancoText.','.$numero_cuenta; 
                 }
+                
+                $datoDet["idconcepto"] = $data["idconcepto"];
+                // print_r($datoDet); exit;
                 $repo->create($datoDet);
             }
             
@@ -511,6 +522,24 @@ class MovimientoCajaController extends Controller
                 $data_venta_detalle['descripcion_articulo'] =strtoupper($data['conceptoAdd']); 
     
                 $this->base_model->insertar($this->preparar_datos("dbo.ERP_VentaDetalle", $data_venta_detalle));
+
+                if($data["tipoMovimientoAdd"] == "ING" || $data["tipoMovimientoAdd"] == "EGR") {
+
+                   
+                    $data["codigo_formapago"][0] = "EFE";
+                    $data["IdMoneda"][0] = $data['idMonedaAdd'];
+                    $data["nrotarjeta"][0] = "";
+                    $data["nrooperacion"][0] = "";
+                    $data["monto_pago"][0] = $data["montoAdd"];;
+                    $data["monto_moneda_documento"][0] = "0";
+                    $data["monto_aplicado_moneda_documento"][0] = $data["montoAdd"];
+                    $data["monto_tipo_cambio_soles"][0] = "0";
+                    $data["vuelto"][0] = "0";
+                    $data["banco"][0] = "";
+                    $data["numero_cuenta"][0] = "";
+                    $data["idconcepto"][0] = $data["idconcepto"];
+                }
+
                 
                 $this->guardar_detalle_forma_pago($data, $data_venta, $repo, $recaj, $data['idMonedaAdd'], $totales_actualizados);
                 $totales_actualizados = true;
@@ -994,9 +1023,10 @@ class MovimientoCajaController extends Controller
         $dataCajaDetForSol = $recaj->getCajaDetForSol($date,$usuario);
         $dataCajaDetEfeSol = $recaj->getCajaDetEfeSol($date,$usuario);
         $dataCajaDetEfeSolAper = $recaj->getCajaDetEfeSolAper($date,$usuario);
-            $dataCajaDetForDol = $recaj->getCajaDetForDol($date,$usuario);
-            $dataCajaDetEfeDol = $recaj->getCajaDetEfeDol($date,$usuario);
+        $dataCajaDetForDol = $recaj->getCajaDetForDol($date,$usuario);
+        $dataCajaDetEfeDol = $recaj->getCajaDetEfeDol($date,$usuario);
         $dataCajaDetEfeDolAper = $recaj->getCajaDetEfeDolAper($date,$usuario);
+        $data_conceptos=$recaj->getDataConceptos();
 
         $fechacA= date("Y-m-d H:i:s");
 
@@ -1009,13 +1039,14 @@ class MovimientoCajaController extends Controller
             'fechacA'=>$fechacA,
             'data_tipo'=>$data_tipo,
             'data_moneda'=>$data_moneda,
-             'dataCajaDetForSol'=>$dataCajaDetForSol,
-                'dataCajaDetEfeSol'=>$dataCajaDetEfeSol,
-                'dataCajaDetForDol'=>$dataCajaDetForDol,
-                'dataCajaDetEfeDol'=>$dataCajaDetEfeDol,
-                'dataCajaDetEfeSolAper'=>$dataCajaDetEfeSolAper,
-                'dataCajaDetEfeDolAper'=>$dataCajaDetEfeDolAper,
-                'data_comproTotal'=>$data_comproTotal,
+            'dataCajaDetForSol'=>$dataCajaDetForSol,
+            'dataCajaDetEfeSol'=>$dataCajaDetEfeSol,
+            'dataCajaDetForDol'=>$dataCajaDetForDol,
+            'dataCajaDetEfeDol'=>$dataCajaDetEfeDol,
+            'dataCajaDetEfeSolAper'=>$dataCajaDetEfeSolAper,
+            'dataCajaDetEfeDolAper'=>$dataCajaDetEfeDolAper,
+            'data_comproTotal'=>$data_comproTotal,
+            'data_conceptos'=>$data_conceptos,
         ]);
     }
 

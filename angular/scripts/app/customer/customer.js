@@ -63,8 +63,9 @@
                             console.log("no hay en persona");
                             getDatosCliente();
                         } else {
-                            console.log(dataPersona);
-                            console.log("si hay ");
+                            // console.log(dataPersona);
+                            // console.log("si hay ");
+                           
                             tipodoc.val(dataPersona[0].cTipodocumento).trigger('change');
                             var nclie = dataPersona[0].cRazonsocial;
                             if (nclie.length == 0) {
@@ -85,6 +86,10 @@
                             getProvincia(dataPersona[0].cProvincia, dataPersona[0].cDepartamento);
                             getDistrito(dataPersona[0].cCodUbigeo, dataPersona[0].cProvincia);
                             getSector("xxxxxx", dataPersona[0].cCodUbigeo);
+                            // alert("holaw");
+                            $("#cNombres_c").val(dataPersona[0].cNombres);
+                            $("#cApepat_c").val(dataPersona[0].cApepat);
+                            $("#cApemat_c").val(dataPersona[0].cApemat);
                         }
 
                     } else {
@@ -115,6 +120,7 @@
                         $("#cNombres_c").val(data.nombres);
                         $("#cApepat_c").val(data.apellidoPaterno);
                         $("#cApemat_c").val(data.apellidoMaterno);
+                       
                     } else if (data.razonSocial != null) {
                         var razon = data.razonSocial;
                         var direc = data.direccion;
@@ -174,6 +180,14 @@
 
         }
 
+        $(document).on( "keyup", "#cNombres_c, #cApepat_c, #cApemat_c", function () {
+            var cNombres = $("#cNombres_c").val();
+            var cApepat = $("#cApepat_c").val();
+            var cApemat = $("#cApemat_c").val();
+            $("#razonsocial_cliente").val(cApepat.toString().trim()+" "+cApemat.toString().trim()+" "+cNombres.toString().trim());
+            // alert();
+        });
+
         function findCliente(id) {
             titleModalClientes.html('Editar Cliente');
             RESTService.get('customers/find', id, function (response) {
@@ -182,6 +196,9 @@
                     var data_p = response.data;
                     tipodoc.val(data_p[0].tipodoc).trigger('change');
                     razonsocial_cliente.val(data_p[0].razonsocial_cliente);
+                    $("#cNombres_c").val(data_p[0].cNombres);
+                    $("#cApepat_c").val(data_p[0].cApepat);
+                    $("#cApemat_c").val(data_p[0].cApemat);
                     documento.val(data_p[0].documento);
                     contacto.val(data_p[0].contacto);
                     direccion.val(data_p[0].direccion);
@@ -206,11 +223,18 @@
                             if(data.length > 0) {
                                 $("#tipodoc").prop("disabled", true);
                                 $("#documento").prop("readonly", true);
+                                $("#cNombres_c").prop("readonly", true);
+                                $("#cApepat_c").prop("readonly", true);
+                                $("#cApemat_c").prop("readonly", true);
+
                                 $("#razonsocial_cliente").prop("readonly", true);
                             } else {
                                 $("#tipodoc").prop("disabled", false);
                                 $("#documento").prop("readonly", false);
                                 $("#razonsocial_cliente").prop("readonly", false);
+                                $("#cNombres_c").prop("readonly", false);
+                                $("#cApepat_c").prop("readonly", false);
+                                $("#cApemat_c").prop("readonly", false);
                             }
                         },
                         "json"
@@ -245,7 +269,7 @@
                 } else {
                     AlertFactory.textType({
                         title: '',
-                        message: 'Hubo un error al obtener el Artículo. Intente nuevamente.',
+                        message: 'Hubo un error al obtener departamentos. Intente nuevamente.',
                         type: 'error'
                     });
                 }
@@ -297,7 +321,7 @@
                 } else {
                     AlertFactory.textType({
                         title: '',
-                        message: 'Hubo un error al obtener el Artículo. Intente nuevamente.',
+                        message: 'Hubo un error al obtener distritos. Intente nuevamente.',
                         type: 'error'
                     });
                 }
@@ -323,7 +347,7 @@
                 } else {
                     AlertFactory.textType({
                         title: '',
-                        message: 'Hubo un error al obtener el Artículo. Intente nuevamente.',
+                        message: 'Hubo un error al obtener sectores. Intente nuevamente.',
                         type: 'error'
                     });
                 }
@@ -488,6 +512,9 @@
 
         $(document).on("change", "#tipodoc", function (e) {
             e.preventDefault();
+            $("#cNombres_c").val("");
+            $("#cApepat_c").val("");
+            $("#cApemat_c").val("");
             var valor = $(this).val();
             id_tipoDoc_Venta.html("");
             id_tipoDoc_Venta.append('<option value="">Seleccionar</option>');
@@ -502,6 +529,13 @@
                 tipos_doc_venta.map(function (index) {
                     id_tipoDoc_Venta.append('<option value="' + index.IdTipoDocumento + '">' + index.Descripcion + '</option>');
                 });
+            }
+
+            if(valor != '06') {
+                $(".persona_natural").show();
+
+            } else {
+                $(".persona_natural").hide();
             }
         });
 

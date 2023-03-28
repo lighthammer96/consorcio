@@ -257,5 +257,9 @@ select sum(vd.monto_total) as total ,v.idmoneda from ERP_VentaDetalle as vd INNE
     //     $mostrar=DB::select("select * from ERP_CajaDiariaDenominaciones as cd INNER JOIN ERP_Denominaciones as de on cd.idDenominacion=de.id_denominacion where cd.idCajaDiaria='$id'");
     //     return $mostrar; 
     // }
-
+    
+    public function getDataConceptos() {
+        $mostrar=DB::select("select * from ERP_Conceptos WHERE estado='A'");
+        return $mostrar; 
+    }
 }

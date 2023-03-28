@@ -24,7 +24,7 @@ class CajaDiariaDetalle extends Model
 
     public $incrementing = false;
 
-    protected $fillable = ['idCajaDiaria','banco','numero_cuenta', 'consecutivo','codigoTipo','codigoFormaPago','idMoneda','monto','descripcion','nroTarjeta','nroOperacion','user_created','user_updated','created_at','naturaleza'];
+    protected $fillable = ['idCajaDiaria','banco','numero_cuenta', 'consecutivo','codigoTipo','codigoFormaPago','idMoneda','monto','descripcion','nroTarjeta','nroOperacion','user_created','user_updated','created_at','naturaleza', 'idconcepto'];
     
      public function user_c()
     {

@@ -60,6 +60,7 @@
         'sys.app.reporteOrdenDiarios',
         'sys.app.payment_condition',
         'sys.app.categories',
+        'sys.app.conceptos',
         'sys.app.operations',
         'sys.app.head_accountans',
         'sys.app.families',

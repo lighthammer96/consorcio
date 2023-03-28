@@ -213,10 +213,16 @@
                                     $("#tipodoc").prop("disabled", true);
                                     $("#documento").prop("readonly", true);
                                     $("#razonsocial_cliente").prop("readonly", true);
+                                    $("#cNombres_c").prop("readonly", true);
+                                    $("#cApepat_c").prop("readonly", true);
+                                    $("#cApemat_c").prop("readonly", true);
                                 } else {
                                     $("#tipodoc").prop("disabled", false);
                                     $("#documento").prop("readonly", false);
                                     $("#razonsocial_cliente").prop("readonly", false);
+                                    $("#cNombres_c").prop("readonly", false);
+                                    $("#cApepat_c").prop("readonly", false);
+                                    $("#cApemat_c").prop("readonly", false);
                                 }
                             },
                             "json"
@@ -2916,6 +2922,11 @@
                             getProvincia(dataPersona[0].cProvincia, dataPersona[0].cDepartamento);
                             getDistrito(dataPersona[0].cCodUbigeo, dataPersona[0].cProvincia);
                             getSector("xxxxxx", dataPersona[0].cCodUbigeo);
+
+                            
+                            $("#cNombres_c").val(dataPersona[0].cNombres);
+                            $("#cApepat_c").val(dataPersona[0].cApepat);
+                            $("#cApemat_c").val(dataPersona[0].cApemat);
                         }
 
 
@@ -3336,6 +3347,9 @@
 
         $(document).on("change", "#tipodoc", function (e) {
             e.preventDefault();
+            $("#cNombres_c").val("");
+            $("#cApepat_c").val("");
+            $("#cApemat_c").val("");
             var valor = $(this).val();
             id_tipoDoc_Venta.html("");
             id_tipoDoc_Venta.append('<option value="">Seleccionar</option>');
@@ -3350,6 +3364,12 @@
                 tipos_doc_venta.map(function (index) {
                     id_tipoDoc_Venta.append('<option value="' + index.IdTipoDocumento + '">' + index.Descripcion + '</option>');
                 });
+            }
+            if(valor != '06') {
+                $(".persona_natural").show();
+
+            } else {
+                $(".persona_natural").hide();
             }
         });
 
