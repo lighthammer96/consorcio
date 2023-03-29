@@ -545,9 +545,9 @@
             bval = bval && celular.required();
             bval = bval && distrito.required();
             if (tipodoc.val() == '01') {
-                $("#cApepat_c").required();   
-                $("#cApemat_c").required();   
-                $("#cNombres_c").required();   
+                bval = bval && $("#cApepat_c").required();   
+                bval = bval && $("#cApemat_c").required();   
+                bval = bval && $("#cNombres_c").required();   
             }
 
             if (tipodoc.val() == '01' && documento.val().length != 8) {

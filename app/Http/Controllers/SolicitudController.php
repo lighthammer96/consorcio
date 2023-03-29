@@ -144,7 +144,13 @@ class SolicitudController extends Controller
             } else {
                 $result = $this->base_model->modificar($this->preparar_datos("dbo.ERP_Solicitud", $data));
                 if($data["tipo_solicitud"] != "1") {
-                    $this->base_model->modificar($this->preparar_datos("dbo.ERP_SolicitudCredito", $data));
+                    $credito = $repo->get_solicitud_credito($data["cCodConsecutivo"], $data["nConsecutivo"]);
+                    if(count($credito) > 0) {
+
+                        $this->base_model->modificar($this->preparar_datos("dbo.ERP_SolicitudCredito", $data));
+                    } else {
+                        $this->base_model->insertar($this->preparar_datos("dbo.ERP_SolicitudCredito", $data));
+                    }
                 }
                
             }   
