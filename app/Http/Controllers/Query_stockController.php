@@ -41,7 +41,10 @@ class Query_stockController extends Controller
     // }
 
     public function excel(Query_stockInterface $repo, Request $request)
-    {   $s = $request->input('search', '');
+    {   
+        ini_set('max_execution_time', '3000');
+        set_time_limit(3000);
+        $s = $request->input('search', '');
         $filtro_art =  $request->input('filtro_art');
         $filtro_idAlm =  $request->input('filtro_idAlm');
         $filtro_idLoc =  $request->input('filtro_idLoc');
