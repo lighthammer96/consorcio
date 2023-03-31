@@ -1176,6 +1176,7 @@ class MovimientoCajaController extends Controller
            
 
             $data_venta = (array)$solicitud[0];
+            $data_venta["numero_operacion"] = $data["numero_operacion"];
             $data_venta["documento_cpe"] = $name_cpe;
             $data_venta["enviado_cpe"] = "0";
             $data_venta["descuento_id"] = explode("*", $solicitud[0]->descuento_id)[0];
@@ -1399,6 +1400,7 @@ class MovimientoCajaController extends Controller
             $result = $this->base_model->insertar($this->preparar_datos("dbo.ERP_Venta", $data_venta));
             // PARA TICKET
             $data_ticket = $data_venta;
+            $data_ticket["numero_operacion"] = $data["numero_operacion"];
             $data_ticket["idventa_comprobante"] = $data_venta["idventa"];
             $data_ticket["documento_cpe"] = "";
             $data_ticket["enviado_cpe"] = "";
@@ -1859,7 +1861,7 @@ class MovimientoCajaController extends Controller
 
 
             $data_venta = array();
-           
+            $data_venta["numero_operacion"] = $data["numero_operacion"];
             $data_venta["idventa"] = $repo->get_consecutivo("ERP_Venta", "idventa");
             $data_venta["serie_comprobante"] = $data["serie_comprobante"];
             $data_venta["numero_comprobante"] = $data["numero_comprobante"];
@@ -2126,7 +2128,7 @@ class MovimientoCajaController extends Controller
 
 
             $data_venta = array();
-           
+            $data_venta["numero_operacion"] = $data["numero_operacion"];
             $data_venta["idventa"] = $repo->get_consecutivo("ERP_Venta", "idventa");
             $data_venta["serie_comprobante"] = $data["serie_comprobante"];
             $data_venta["numero_comprobante"] = $data["numero_comprobante"];
