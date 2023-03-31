@@ -634,6 +634,8 @@ class AsignacioncobradorController extends Controller
 
     public function excel(CobradorInterface $repo)
     {
+        ini_set('max_execution_time', '3000');
+        set_time_limit(3000);
         return generateExcel($this->generateDataExcel($repo->all()), 'LISTA DE CATEGORÍAS', 'Categoría');
     }
 }

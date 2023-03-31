@@ -4399,6 +4399,7 @@ $(document).on("keyup", "#monto_pagar_credito", function () {
     
     // ahora si empezamos a descontar cuota por cuota
     while(resto > 0) {
+        // alert(resto);
         pagado_mora = 0;
         saldo_mora = 0;
         nuevo_saldo_mora = 0;
@@ -4412,7 +4413,7 @@ $(document).on("keyup", "#monto_pagar_credito", function () {
         saldo_mora = parseFloat($(".check-cuota").eq(cont).attr("saldo_mora"));
         
         
-        if(resto > 0) {
+        if(resto >= 0) {
             
             $(".check-cuota").eq(cont).prop("checked", true); 
             $(".monto-pagar-cuota").eq(cont).text(saldo_pagar.toFixed(2));

@@ -112,7 +112,7 @@
     <div class="row">
            
         <div class="col" style="width: 100%; line-height: 20px; margin-top: 5px;">
-            <label for="">NUMERO OPERACION: {{ $venta[0]->numero_operacion }}</label><br>
+            <label for="">NUMERO OPERACION RECIBO: {{ $venta[0]->numero_operacion }}</label><br>
             <label for="">SOL. VENTA REF: {{ $solicitud[0]->cCodConsecutivo }}-{{ $solicitud[0]->nConsecutivo }}</label><br>
             <label for="">CLIENTE: {{ $cliente[0]->razonsocial_cliente }} </label><br>
             <label for="">RECIBO N°: {{ $venta[0]->serie_comprobante }}-{{ $venta[0]->numero_comprobante }}</label><br>
