@@ -52,7 +52,7 @@ left join ERP_Cobrador as cob on (cob.id=so.idCobrador)
 INNER JOIN ERP_Clientes AS cli ON(so.idcliente=cli.id)
 left join ERP_Ubigeo as ub on (cli.ubigeo=ub.cCodUbigeo)
 left join ERP_Vendedores as vend on(vend.idvendedor=so.idvendedor)
-where C.saldo_cuota>0 and  v.idventa IN ($solitud) AND c.periodo='{$periodo}'";
+where C.saldo_cuota>0 and  v.idventa IN ($solitud) AND c.periodo='{$periodo}' ORDER BY cli.razonsocial_cliente ASC";
 // echo $sql; exit;
         $mostrar=DB::select($sql);
         return $mostrar;

@@ -215,7 +215,7 @@ class AsignacioncobradorController extends Controller
                             <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 260px;" colspan="2"  > </td>';
                             
                     $html .= '</tr>';
-                    // array_push($data_envio, $html);
+                    array_push($data_envio, $html);
                     $consol = 0;
                     $condol = 0;
                     $contfi = 0;
@@ -225,7 +225,7 @@ class AsignacioncobradorController extends Controller
                 $html .= '  <td style="width: 50px;"></td>';
                 $html .= '  <td style="border: 1px solid #000000; text-align: center; width: 1325px;"  colspan="11">'.$conc.'.'.' Cliente'." - ".$value->cliente." - ". $value->documento_cliente ." - "." "." "." ".$value->direccion.' '.$value->cDepartamento.' '.$value->cProvincia.' '.$value->cDistrito.'</td>';
                 $html .= '</tr>';
-                // array_push($data_envio, $html);
+                array_push($data_envio, $html);
                 $array = array();
                 $conc ++;
                
@@ -246,7 +246,7 @@ class AsignacioncobradorController extends Controller
             $html .= '  <td style="border: 1px solid #000000; text-align: center; width: 130px;">'.$value->vendedor.'</td>';
             $html .= '  <td style="border: 1px solid #000000; text-align: center; width: 130px;">'.$value->cobrador.'</td>';
             $html .= '</tr>';
-            // array_push($data_envio, $html);
+            array_push($data_envio, $html);
            
             if($value->idmoneda==1) {
                 $consol = $consol + floatval($value->monto_pendiente);
@@ -283,7 +283,7 @@ class AsignacioncobradorController extends Controller
                         <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 260px;" colspan="2"  > </td>';
                         
                 $html .= '</tr>';
-                // array_push($data_envio, $html);
+                array_push($data_envio, $html);
             }
           
             $contfi ++;
