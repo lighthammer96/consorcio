@@ -34,7 +34,7 @@ class Solicitud_Asignacion_cierreRepository implements Solicitud_Asignacion_cier
         $mostrar=DB::select("select * from ERP_Compania where Estado='1'");
         return $mostrar;
     }
-    public function get_cuentas_caber($solitud)
+    public function get_cuentas_caber($solitud,$periodo)
     {   
         $sql = "select cob.descripcion as cobrador,cli.direccion,v.idventa as idventa, ub.cDepartamento,ub.cProvincia,ub.cDistrito,cli.documento as documento_cliente,cli.razonsocial_cliente as cliente ,vend.descripcion as vendedor,C.valor_cuota as monto_total,C.saldo_cuota as monto_pendiente ,m.Descripcion as moneda,m.Simbolo,v.idmoneda,v.serie_comprobante,v.numero_comprobante,concat(v.serie_comprobante,'-',RIGHT('00000' + CAST(FLOOR(v.numero_comprobante) AS VARCHAR), 5),'-',RIGHT('00000' + CAST(FLOOR(c.nrocuota) AS VARCHAR), 5) ) as documento_ven,v.fecha_emision,c.cCodConsecutivo,c.nConsecutivo,c.nrocuota,c.fecha_vencimiento,
         (select max(VTA.fecha_emision) Fecha
@@ -52,7 +52,7 @@ left join ERP_Cobrador as cob on (cob.id=so.idCobrador)
 INNER JOIN ERP_Clientes AS cli ON(so.idcliente=cli.id)
 left join ERP_Ubigeo as ub on (cli.ubigeo=ub.cCodUbigeo)
 left join ERP_Vendedores as vend on(vend.idvendedor=so.idvendedor)
-where C.saldo_cuota>0 and  v.idventa IN ($solitud)";
+where C.saldo_cuota>0 and  v.idventa IN ($solitud) AND c.periodo='{$periodo}'";
 // echo $sql; exit;
         $mostrar=DB::select($sql);
         return $mostrar;

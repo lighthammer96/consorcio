@@ -159,7 +159,7 @@ class AsignacioncobradorController extends Controller
         $solitud = implode(",", $solitud);
         $simboloMoneda = $repomo->getSimboloMonedaTotal();
         $data_compania = $repo->get_compania();
-        $data_cabe = $repo->get_cuentas_caber($solitud);
+        $data_cabe = $repo->get_cuentas_caber($solitud, $periodo);
        
         $html = "";
         $array = array();
