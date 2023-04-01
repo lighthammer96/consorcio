@@ -193,7 +193,7 @@ class AsignacioncobradorController extends Controller
                 $fecul = date("d/m/Y",strtotime($value->fecultpago));
             }
 
-            if(!in_array($value->cliente, $array)) {
+            if(!in_array(trim($value->cliente), $array)) {
 
                 if($conc > 1) {
                     $html = '<tr>';
@@ -259,7 +259,7 @@ class AsignacioncobradorController extends Controller
            
             
 
-            array_push($array, $value->cliente);
+            array_push($array, trim($value->cliente));
 
             // para el ultimo registro
             if(count($data_cabe) == $contador) {
