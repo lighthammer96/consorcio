@@ -198,6 +198,9 @@
             $("#formulario-solicitud").trigger("reset");
             $("#formulario-creditos").trigger("reset");
             $("#formulario-persona").trigger("reset");
+            document.getElementById("formulario-solicitud").reset();
+            document.getElementById("formulario-creditos").reset();
+            document.getElementById("formulario-persona").reset();
             
             $("#comentario_facturacion").attr("readonly", "readonly");
             $("#tipo_sol").val("N");
