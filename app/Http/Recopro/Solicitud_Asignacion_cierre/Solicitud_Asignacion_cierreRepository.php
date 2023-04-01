@@ -47,7 +47,7 @@ from ERP_SolicitudCronograma_cierre C
 INNER JOIN ERP_Venta AS v on(v.cCodConsecutivo_solicitud=c.cCodConsecutivo and v.nConsecutivo_solicitud=c.nConsecutivo and v.tipo_comprobante = 0 and v.IdTipoDocumento in ('03','01')  and v.saldo > 0 and isnull(v.anulado,'N') = 'N')
 
 INNER JOIN ERP_Moneda AS m ON(m.IdMoneda=v.idmoneda)
-left join ERP_Solicitud_cierre as so on(so.cCodConsecutivo=c.cCodConsecutivo and so.nConsecutivo=c.nConsecutivo)
+left join ERP_Solicitud_cierre as so on(so.cCodConsecutivo=c.cCodConsecutivo and so.nConsecutivo=c.nConsecutivo AND c.periodo=so.periodo)
 left join ERP_Cobrador as cob on (cob.id=so.idCobrador)
 INNER JOIN ERP_Clientes AS cli ON(so.idcliente=cli.id)
 left join ERP_Ubigeo as ub on (cli.ubigeo=ub.cCodUbigeo)
