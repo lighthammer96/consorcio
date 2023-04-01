@@ -142,6 +142,7 @@ class SolicitudController extends Controller
                 }
                 $repo->actualizar_correlativo($data["cCodConsecutivo"], $data["nConsecutivo"]);
             } else {
+                
                 $result = $this->base_model->modificar($this->preparar_datos("dbo.ERP_Solicitud", $data));
                 if($data["tipo_solicitud"] != "1") {
                     $credito = $repo->get_solicitud_credito($data["cCodConsecutivo"], $data["nConsecutivo"]);

@@ -121,13 +121,7 @@ class AsignacioncobradorController extends Controller
         // ini_set("display_errors", 1);
         // error_reporting(E_ALL);
       
-        ini_set('max_execution_time', '300000');
-        set_time_limit(300000);
-        header("Content-Type:   application/vnd.ms-excel; charset=utf-8");
-        header("Content-Disposition: attachment; filename=archivo.xls");
-        header("Expires: 0");
-        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-        header("Cache-Control: private",false);
+      
         
         // print_r($id); exit;
         // $data = $request->all();
@@ -146,10 +140,18 @@ class AsignacioncobradorController extends Controller
 
 
         $solitud = array();
+
+        if(count($datafilcab) <= 0) {
+            echo '<script>alert("NO HAY DATOS!"); window.close();</script>';
+            exit;
+        }
+
+       
         
         foreach ($datafilcab as $row) {
             array_push($solitud, $row->idventa);
         }
+
 
         $fecha_actual = date("Y-m-d");
         $cambio = $repOs->cambio_tipo(2, $fecha_actual);
@@ -170,6 +172,20 @@ class AsignacioncobradorController extends Controller
         $contfi = 0;
         $contador = 1;
         $data_envio = array();
+
+        if(count($data_cabe) <= 0) {
+            echo '<script>alert("NO HAY DATOS!"); window.close();</script>';
+            exit;
+        }
+
+
+        ini_set('max_execution_time', '300000');
+        set_time_limit(300000);
+        header("Content-Type:   application/vnd.ms-excel; charset=utf-8");
+        header("Content-Disposition: attachment; filename=archivo.xls");
+        header("Expires: 0");
+        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+        header("Cache-Control: private",false);
       
         foreach ($data_cabe as $key => $value) {
             $fecul = '';
@@ -299,7 +315,7 @@ class AsignacioncobradorController extends Controller
 
         // echo count($data_envio);
         // exit;
-        return view("excel.viewCuentasxCobrar")->with("data_envio", $data_envio); 
+        return view("excel.viewCuentasxCobrar_xls")->with("data_envio", $data_envio); 
         // return generateExcelCuentasxCobrar($data_cabe, $simboloMoneda, $cambio, 'CUENTAS POR COBRAR POR CLIENTE', 'Cuentas');
         // return generateExcelCuentasxCobrar($data_envio, $simboloMoneda, $cambio, 'CUENTAS POR COBRAR POR CLIENTE', 'Cuentas');
     }

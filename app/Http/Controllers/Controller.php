@@ -85,15 +85,18 @@ class Controller extends BaseController
 
         $parametros = array();
 
-
         $fields = $this->listar_campos($table);
         $primary_key = array();
         $foreign_key = array();
-
-        $datos = array();
+      
+        foreach ($data as $key => $value) {
+            if(is_null($value)) {
+                $data[$key] = "null";
+            }
+        }
 
         for ($i = 0; $i < count($fields["campos"]); $i++) {
-
+       
             if (isset($data[$fields["campos"][$i]])) {
 
                 $datos[$fields["campos"][$i]] = $data[$fields["campos"][$i]];
@@ -120,7 +123,7 @@ class Controller extends BaseController
                 }
             }
         }
-
+      
         $contador = 0;
         foreach ($datos as $key => $value) {
             if (in_array($key, $fields["campos"])) {
@@ -135,6 +138,8 @@ class Controller extends BaseController
                     }
                 } elseif ($value != "" && $value != "null") {
                     $parametros["datos"][0][$key] = $value;
+                } else {
+                    $parametros["datos"][0][$key] = NULL;
                 }
             }
         }
