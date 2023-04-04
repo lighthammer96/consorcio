@@ -205,6 +205,7 @@
             
             $("#comentario_facturacion").attr("readonly", "readonly");
             $("#tipo_sol").val("N");
+            $("#idconvenio").attr("idconvenio", "");
         }
 
         var tipos_doc_venta = [];
