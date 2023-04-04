@@ -3864,8 +3864,10 @@
             var tipo_solicitud = $(this).val();
             var fecha_actual = Helpers.ObtenerFechaActual("server");
 
-            $("#idconvenio").val("");
-           
+            if($("#idconvenio").attr("idconvenio") == "") {
+                $("#idconvenio").val("");
+            }
+
             $(".condicion_pago").hide();
             // alert(fecha_actual);
             // alert("change " + tipo_solicitud);   
@@ -3881,9 +3883,7 @@
 
             if (tipo_solicitud == "1" || tipo_solicitud == "3") {
                 $(".credito").hide();
-
             } else {
-
                 $(".credito").show();
             }
         
@@ -3971,6 +3971,7 @@
                    
 
                     Helpers.set_datos_formulario("formulario-solicitud", data.solicitud[0]);
+                    $("#idconvenio").attr("idconvenio", data.solicitud[0].idconvenio);
                     $("#tipo_sol").val(data.solicitud[0].tipo);
                     if (data.solicitud_credito.length > 0) {
                         Helpers.set_datos_formulario("formulario-creditos", data.solicitud_credito[0]);
