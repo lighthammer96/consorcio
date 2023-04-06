@@ -168,6 +168,11 @@ use App\Http\Recopro\View_cierre_cuentas_cobrar\View_cierre_cuentas_cobrar;
 use App\Http\Recopro\View_cierre_cuentas_cobrar\View_cierre_cuentas_cobrarInterface;
 use App\Http\Recopro\View_cierre_cuentas_cobrar\View_cierre_cuentas_cobrarRepository;
 
+
+use App\Http\Recopro\View_AL_Entega_ST_Cliente\View_AL_Entega_ST_Cliente; 
+use App\Http\Recopro\View_AL_Entega_ST_Cliente\View_AL_Entega_ST_ClienteInterface;
+use App\Http\Recopro\View_AL_Entega_ST_Cliente\View_AL_Entega_ST_ClienteRepository;
+
 use App\Http\Recopro\Movimiento_Detalle_cierre\Movimiento_Detalle_cierre; 
 use App\Http\Recopro\Movimiento_Detalle_cierre\Movimiento_Detalle_cierreInterface;
 use App\Http\Recopro\Movimiento_Detalle_cierre\Movimiento_Detalle_cierreRepository;
@@ -887,6 +892,7 @@ class AppServiceProvider extends ServiceProvider
         $this->registerMovimiento_Detalle_cierre();
         $this->registerView_movimiento_cierre();
         $this->registerView_cierre_cuentas_cobrar();
+        $this->registerView_AL_Entega_ST_Cliente();
 
         $this->registerPeriodo();
         $this->registerAprobacionSolicitud();
@@ -1475,6 +1481,15 @@ class AppServiceProvider extends ServiceProvider
 
         $app->bind(View_cierre_cuentas_cobrarInterface::class, function ($app) {
             return new View_cierre_cuentas_cobrarRepository(new View_cierre_cuentas_cobrar());
+        });
+    }
+
+    public function registerView_AL_Entega_ST_Cliente()
+    {
+        $app = $this->app;
+
+        $app->bind(View_AL_Entega_ST_ClienteInterface::class, function ($app) {
+            return new View_AL_Entega_ST_ClienteRepository(new View_AL_Entega_ST_Cliente());
         });
     }
      public function registerVW_CierreInventarioPeriodo()

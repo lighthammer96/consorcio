@@ -68,6 +68,10 @@
                 $totalfin  = 0;
                 $contfi = 0;
                 $contador = 1;
+                $total_monto = 0;
+                $total_monto_dolares = 0;
+                $total_monto_final = 0;
+                $total_monto_dolares_final = 0;
                 foreach ($data_cabe as $key => $value) {
                     $fecul = '';
                     if($value->fecultpago != null){
@@ -83,9 +87,9 @@
                         if($conc > 1) {
                             echo '<tr>';
                             echo '  <td></td>';
-                            echo '  <td style="border: 1px solid #000000; text-align: center;color:#000000;     background-color:#ffff00" colspan="6"  >Total por Cobrar en Moneda Base</td>
+                            echo '  <td style="border: 1px solid #000000; text-align: center;color:#000000;     background-color:#ffff00" colspan="5"  >Total por Cobrar en Moneda Base</td>
                                     <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00" colspan="2" >Soles:</td>
-                                
+                                    <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00" >'.$simboloMoneda[0]->Simbolo.' '.number_format($total_monto,2).'</td>
                                     <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00" >'.$simboloMoneda[0]->Simbolo.' '.number_format($consol,2).'</td>
                                     <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00" colspan="2"  >Nro. Registros Total: '.$contfi .'</td>';
                                 
@@ -93,9 +97,9 @@
 
                             echo '<tr>';
                             echo '  <td></td>';
-                            echo '  <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00" colspan="6"  ></td>
+                            echo '  <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00" colspan="5"  ></td>
                                     <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00" colspan="2" >Dolares:</td>
-                                        
+                                    <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00" >'.$simboloMoneda[0]->Simbolo.' '.number_format($total_monto_dolares,2).'</td>
                                     <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00" >'.$simboloMoneda[1]->Simbolo.' '.number_format($condol,2).'</td>
                                     <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00" colspan="2"  > </td>';
                                     
@@ -103,6 +107,8 @@
                             $consol = 0;
                             $condol = 0;
                             $contfi = 0;
+                            $total_monto = 0;
+                            $total_monto_dolares = 0;
                         }
                         // cliente
                         echo '<tr>';
@@ -133,9 +139,13 @@
                     if($value->idmoneda==1) {
                         $consol = $consol + floatval($value->monto_pendiente);
                         $totalsole = $totalsole + floatval($value->monto_pendiente);
+                        $total_monto = $total_monto + floatval($value->monto_total);
+                        $total_monto_final = $total_monto_final + floatval($value->monto_total);
                     } else {
                         $condol = $condol + floatval($value->monto_pendiente);
                         $totaldola = $totaldola + floatval($value->monto_pendiente);
+                        $total_monto_dolares = $total_monto_dolares_final + floatval($value->monto_total);
+                        $total_monto_dolares_final = $total_monto_dolares_final + floatval($value->monto_total);
                     }
 
                    
@@ -148,9 +158,9 @@
                         $contfi ++;
                         echo '<tr>';
                         echo '  <td></td>';
-                        echo '  <td style="border: 1px solid #000000; text-align: center;color:#000000;     background-color:#ffff00" colspan="6"  >Total por Cobrar en Moneda Base</td>
+                        echo '  <td style="border: 1px solid #000000; text-align: center;color:#000000;     background-color:#ffff00" colspan="5"  >Total por Cobrar en Moneda Base</td>
                                 <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00" colspan="2" >Soles:</td>
-                            
+                                <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00" >'.$simboloMoneda[0]->Simbolo.' '.number_format($total_monto,2).'</td>
                                 <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00" >'.$simboloMoneda[0]->Simbolo.' '.number_format($consol,2).'</td>
                                 <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00" colspan="2"  >Nro. Registros Total: '.$contfi.'</td>';
                             
@@ -158,9 +168,9 @@
 
                         echo '<tr>';
                         echo '  <td></td>';
-                        echo '  <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00" colspan="6"  ></td>
+                        echo '  <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00" colspan="5"  ></td>
                                 <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00" colspan="2" >Dolares:</td>
-                                    
+                                <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00" >'.$simboloMoneda[0]->Simbolo.' '.number_format($total_monto_dolares,2).'</td>
                                 <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00" >'.$simboloMoneda[1]->Simbolo.' '.number_format($condol,2).'</td>
                                 <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00" colspan="2"  > </td>';
                                 
@@ -173,9 +183,9 @@
                 $totalfin=floatval($totaldola)+(floatval($totalsole)/floatval($cambio[0]->Mensaje));
                 echo '<tr>';
                 echo '  <td></td>';
-                echo '  <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00" colspan="6"  >Total por Cobrar a T.C: '.$cambio[0]->Mensaje.'</td>
+                echo '  <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00" colspan="5"  >Total por Cobrar a T.C: '.$cambio[0]->Mensaje.'</td>
                         <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00" colspan="2" ></td>
-
+                        <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00">'.$simboloMoneda[0]->Simbolo.' '.number_format($total_monto_final,2).'</td>
                         <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00">'.$simboloMoneda[0]->Simbolo.' '.number_format($totalsole,2).'</td>
                         <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00" colspan="2" ></td>';
                 echo '</tr>';
@@ -183,9 +193,9 @@
     
                 echo '<tr>';
                 echo '  <td></td>';
-                echo '  <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00" colspan="6"  ></td>
+                echo '  <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00" colspan="5"  ></td>
                         <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00" colspan="2" >Dolares:</td>
-                        
+                        <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00" >'.$simboloMoneda[0]->Simbolo.' '.number_format($total_monto_dolares_final,2).'</td>
                         <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00" >'.$simboloMoneda[0]->Simbolo.' '.number_format($totalfin,2).'</td>
                         <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00" colspan="2"  ></td>';
                        

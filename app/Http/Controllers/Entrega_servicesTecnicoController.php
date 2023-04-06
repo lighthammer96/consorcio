@@ -22,6 +22,7 @@ use App\Http\Recopro\Register_Transfer_Articulo\Register_Transfer_ArticuloInterf
 use App\Http\Recopro\Serie\SerieInterface;
 use App\Http\Recopro\Operation\OperationInterface;
 use App\Http\Recopro\Ventas\VentasInterface;
+use App\Http\Recopro\View_AL_Entega_ST_Cliente\View_AL_Entega_ST_ClienteInterface;
 use App\Http\Recopro\Warehouse\WarehouseInterface;
 use App\Http\Requests\ProformaRequest;
 use DB;
@@ -92,11 +93,14 @@ class Entrega_servicesTecnicoController extends Controller
         ]);
     }
 
-    public function all(Request $request, Register_movementInterface $repo)
+    // public function all(Request $request, Register_movementInterface $repo)
+    public function all(Request $request, View_AL_Entega_ST_ClienteInterface $repo)
     {
         $s = $request->input('search', '');
-        $params = ['idTipoOperacion', 'idUsuario', 'estado', 'idMovimiento'];
-        return parseList($repo->search_entrega($s), $request, '', $params);
+        // $params = ['idTipoOperacion', 'idUsuario', 'estado', 'idMovimiento'];
+        $params = ['nro', 'fecha', 'tipooperacion', 'Usuario', 'estado', 'documento', 'cliente'];
+        // return parseList($repo->search_entrega($s), $request, '', $params);
+        return parseList($repo->search($s), $request, '', $params);
     }
 
     public function excel(Register_movementInterface $repo)
