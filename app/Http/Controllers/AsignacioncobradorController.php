@@ -302,6 +302,7 @@ class AsignacioncobradorController extends Controller
         }
        
         $totalfin=floatval($totaldola)+(floatval($totalsole)/floatval($cambio[0]->Mensaje));
+        $totalfin2=floatval($total_monto_dolares_final)+(floatval($total_monto_final)/floatval($cambio[0]->Mensaje));
         $html = '<tr>';
         $html .= '  <td style="width: 50px;"></td>';
         $html .= '  <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 580px;" colspan="5"  >Total por Cobrar a T.C: '.$cambio[0]->Mensaje.'</td>
@@ -316,7 +317,7 @@ class AsignacioncobradorController extends Controller
         $html .= '  <td style="width: 50px;"></td>';
         $html .= '  <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 580px;" colspan="5"  ></td>
                 <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 235px;" colspan="2" >Dolares:</td>
-                <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 125px;" >'.$simboloMoneda[0]->Simbolo.' '.number_format($total_monto_dolares_final,2).'</td>
+                <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 125px;" >'.$simboloMoneda[0]->Simbolo.' '.number_format($totalfin2,2).'</td>
                 <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 125px;" >'.$simboloMoneda[0]->Simbolo.' '.number_format($totalfin,2).'</td>
                 <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 260px;" colspan="2"  ></td>';
                
@@ -409,7 +410,7 @@ class AsignacioncobradorController extends Controller
         $solitud = implode(",", $solitud);
         $simboloMoneda = $repomo->getSimboloMonedaTotal();
         $data_compania = $repo->get_compania();
-        $data_cabe = $repo->get_cuentas_caber($solitud);
+        $data_cabe = $repo->get_cuentas_caber($solitud,$periodo);
         $data_compania = $repo->get_compania();
 
         $path = public_path('/' . $data_compania[0]->ruta_logo);

@@ -181,6 +181,7 @@
                 }
 
                 $totalfin=floatval($totaldola)+(floatval($totalsole)/floatval($cambio[0]->Mensaje));
+                $totalfin2=floatval($total_monto_dolares_final)+(floatval($total_monto_final)/floatval($cambio[0]->Mensaje));
                 echo '<tr>';
                 echo '  <td></td>';
                 echo '  <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00" colspan="5"  >Total por Cobrar a T.C: '.$cambio[0]->Mensaje.'</td>
@@ -195,7 +196,7 @@
                 echo '  <td></td>';
                 echo '  <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00" colspan="5"  ></td>
                         <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00" colspan="2" >Dolares:</td>
-                        <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00" >'.$simboloMoneda[0]->Simbolo.' '.number_format($total_monto_dolares_final,2).'</td>
+                        <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00" >'.$simboloMoneda[0]->Simbolo.' '.number_format($totalfin2,2).'</td>
                         <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00" >'.$simboloMoneda[0]->Simbolo.' '.number_format($totalfin,2).'</td>
                         <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00" colspan="2"  ></td>';
                        
