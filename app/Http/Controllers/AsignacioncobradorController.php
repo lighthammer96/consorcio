@@ -317,8 +317,8 @@ class AsignacioncobradorController extends Controller
         $html .= '  <td style="width: 50px;"></td>';
         $html .= '  <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 580px;" colspan="5"  ></td>
                 <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 235px;" colspan="2" >Dolares:</td>
-                <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 125px;" >'.$simboloMoneda[0]->Simbolo.' '.number_format($totalfin2,2).'</td>
-                <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 125px;" >'.$simboloMoneda[0]->Simbolo.' '.number_format($totalfin,2).'</td>
+                <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 125px;" >'.$simboloMoneda[1]->Simbolo.' '.number_format($totalfin2,2).'</td>
+                <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 125px;" >'.$simboloMoneda[1]->Simbolo.' '.number_format($totalfin,2).'</td>
                 <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 260px;" colspan="2"  ></td>';
                
         $html .= '</tr>'; 

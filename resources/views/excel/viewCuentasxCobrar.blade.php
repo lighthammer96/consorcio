@@ -196,8 +196,8 @@
                 echo '  <td></td>';
                 echo '  <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00" colspan="5"  ></td>
                         <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00" colspan="2" >Dolares:</td>
-                        <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00" >'.$simboloMoneda[0]->Simbolo.' '.number_format($totalfin2,2).'</td>
-                        <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00" >'.$simboloMoneda[0]->Simbolo.' '.number_format($totalfin,2).'</td>
+                        <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00" >'.$simboloMoneda[1]->Simbolo.' '.number_format($totalfin2,2).'</td>
+                        <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00" >'.$simboloMoneda[1]->Simbolo.' '.number_format($totalfin,2).'</td>
                         <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00" colspan="2"  ></td>';
                        
                 echo '</tr>'; 
