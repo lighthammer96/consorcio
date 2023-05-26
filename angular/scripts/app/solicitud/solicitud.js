@@ -212,6 +212,14 @@
         function obtener_data_for_solicitud() {
             RESTService.all('solicitud/data_form', '', function (response) {
                 if (!_.isUndefined(response.status) && response.status) {
+                   
+                    if(response.parametro_dia_vencimiento == "S") {
+                        $(".dia_vencimiento_cuota").show();
+                    } else {
+                        $(".dia_vencimiento_cuota").hide();
+                    }
+                    
+                    
                     if (response.parametro_igv.length > 0) {
                         // alert(response.parametro_igv[0].value);
                         $("#valor_igv").val(response.parametro_igv[0].value);

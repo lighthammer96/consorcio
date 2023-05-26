@@ -192,6 +192,16 @@ class SolicitudRepository implements SolicitudInterface
         }
     }
 
+    public function get_parametro_dia_vencimiento()
+    {
+        $param = DB::select("select * from ERP_Parametros WHERE id=29");
+        if (count($param) > 0) {
+            return $param[0]->value;
+        } else {
+            return 0;
+        }
+    }
+
 
     public function get_factor_credito($nro_cuotas, $param_nro_cuotas)
     {

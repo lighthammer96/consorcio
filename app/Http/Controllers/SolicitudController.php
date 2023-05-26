@@ -300,6 +300,7 @@ class SolicitudController extends Controller
         $vendedores = $Repo->obtener_vendedores($usuario);
         $personas = $Repo->obtener_personas($usuario);
         $parametro_igv =  $Repo->get_parametro_igv();
+        $parametro_dia_vencimiento =  $Repo->get_parametro_dia_vencimiento();
         $dataredondeo = $repo_orden->get_redondeo();
         $decimales_redondeo = $repo_orden->get_decimales_redondeo();
         
@@ -330,6 +331,7 @@ class SolicitudController extends Controller
             'vendedores'=>$vendedores,
             'personas'=>$personas,
             'parametro_igv'=>$parametro_igv,
+            'parametro_dia_vencimiento'=>$parametro_dia_vencimiento,
             // 'separaciones'=>$separaciones,
           
             'dataredondeo'=>(isset($dataredondeo[0]->value)) ? $dataredondeo[0]->value : 0,
