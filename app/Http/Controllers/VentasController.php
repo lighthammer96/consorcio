@@ -365,8 +365,8 @@ class VentasController extends Controller
 
     public function imprimir_lista_cobraza_cuotas(Request $request, CajaDiariaDetalleInterface $repo_caja, SolicitudInterface $solicitud_repositorio) {
 
-        ini_set('max_execution_time', '3000000000');
-        set_time_limit(3000000000);
+        ini_set('max_execution_time', '300000000');
+        set_time_limit(300000000);
         $data = $request->all();    
         
         $datos = array();
