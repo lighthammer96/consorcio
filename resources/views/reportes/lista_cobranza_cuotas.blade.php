@@ -156,6 +156,9 @@
 
             $total_general = 0;
             $mora_general = 0;
+            // echo "<pre>";
+            // print_r($cobradores); exit;
+            // ini_set("display_errors", 1);
             foreach ($cobradores as $key => $value) {
                 $total_grupo = 0;
                 $mora_grupo = 0;
@@ -163,13 +166,16 @@
                 echo $value->idCobrador." ".$value->cobrador;
                 echo '<hr>';
                 echo '<table style="width: 100%; font-size: 11px !important; ">';
-                   
+                    // if(count()) {
+
+                    // }
                     foreach ($value->pagos as $kp => $vp) {
                         $total_cte_soles =  (float) $vp->valor_cuota_pagada + (float) $vp->int_moratorio_pagado;
                         $total_grupo += $total_cte_soles;
                         $total_general += $total_cte_soles;
                         $mora_grupo += (float) $vp->int_moratorio_pagado;
                         $mora_general += (float) $vp->int_moratorio_pagado;
+                        // echo   "olaa ".$kp."\n";
                         echo '<tr>';   
                         echo '  <td style="width: 80px !important;">'.$vp->fecha_emision.'</td>';
                         echo '  <td style="width: 205px !important;">'.$vp->razonsocial_cliente.'</td>';
