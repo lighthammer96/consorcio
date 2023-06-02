@@ -367,6 +367,7 @@ class VentasController extends Controller
 
         ini_set('max_execution_time', '300000000');
         set_time_limit(300000000);
+        ini_set('memory_limit', '512M');
         $data = $request->all();    
         
         $datos = array();
