@@ -448,9 +448,9 @@ class VentasController extends Controller
 
       
         $datos["cobradores"] = $cobradores;
-        // echo "<pre>";
-        // print_r($datos);
-        // exit;
+        echo "<pre>";
+        var_dump($datos);
+        exit;
 
         if($vacios > 0) {
             echo '<script>alert("No hay Datos"); window.close(); </script>';
