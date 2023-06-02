@@ -364,6 +364,9 @@ class VentasController extends Controller
 
 
     public function imprimir_lista_cobraza_cuotas(Request $request, CajaDiariaDetalleInterface $repo_caja, SolicitudInterface $solicitud_repositorio) {
+
+        ini_set('max_execution_time', '300000');
+        set_time_limit(300000);
         $data = $request->all();    
         
         $datos = array();
@@ -410,7 +413,7 @@ class VentasController extends Controller
         INNER JOIN ERP_SolicitudCronograma AS sc ON(sc.cCodConsecutivo=s.cCodConsecutivo AND sc.nConsecutivo=s.nConsecutivo AND vd.nrocuota=sc.nrocuota)
         WHERE FORMAT(v.fecha_emision, 'yyyy-MM-dd') BETWEEN '{$data["fecha_inicio"]}' AND '{$data["fecha_fin"]}' AND s.idCobrador IS NOT NULL {$where} AND ISNULL(v.anulado, 'N')<>'S'
         GROUP BY s.idCobrador, c.descripcion";
-
+        // die($sql_cobradores);
         $cobradores = DB::select($sql_cobradores);
         $vacios = 0;
         foreach ($cobradores as $key => $value) {
@@ -423,21 +426,27 @@ class VentasController extends Controller
             INNER JOIN ERP_SolicitudCronograma AS sc ON(sc.cCodConsecutivo=s.cCodConsecutivo AND sc.nConsecutivo=s.nConsecutivo AND vd.nrocuota=sc.nrocuota)
             INNER JOIN ERP_Moneda AS m ON(m.IdMoneda=v.idmoneda)
             WHERE FORMAT(v.fecha_emision, 'yyyy-MM-dd') BETWEEN '{$data["fecha_inicio"]}' AND '{$data["fecha_fin"]}' AND s.idCobrador={$value->idCobrador} AND ISNULL(v.anulado, 'N')<>'S'";
-           
+            // echo $sql."\n";
             $pagos = DB::select($sql);
             
             if(count($pagos) <= 0) {
                 $vacios ++;
             }
 
+           
             foreach ($pagos as $kp => $vp) {
+               
+
                 $cuotas = $solicitud_repositorio->get_solicitud_cronograma($vp->cCodConsecutivo, $vp->nConsecutivo);
                 $pagos[$kp]->nrocuotas = count($cuotas);
             }
             $cobradores[$key]->pagos = $pagos;
         
+
         }
 
+
+      
         $datos["cobradores"] = $cobradores;
         // echo "<pre>";
         // print_r($datos);
