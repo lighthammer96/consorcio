@@ -158,7 +158,7 @@
             $mora_general = 0;
             // echo "<pre>";
             // print_r($cobradores); exit;
-            // ini_set("display_errors", 1);
+            ini_set("display_errors", 1);
             foreach ($cobradores as $key => $value) {
                 $total_grupo = 0;
                 $mora_grupo = 0;
