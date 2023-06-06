@@ -3594,18 +3594,18 @@ $(document).on("change", "#moneda", function () {
                 }
                 $("#monto_local").val(monto_convertido.toFixed(2));
                 // console.log(monto_p.toFixed(2));
-                $("#monto_aplicar").val(monto_p.toFixed(2));
+                // $("#monto_aplicar").val(monto_p.toFixed(2));
 
-                // $("#monto_vuelto").val(vuelto.toFixed(2));
+                $("#monto_vuelto").val(vuelto.toFixed(2));
                 
                 
-                // if(tipo_cambio > 0) {
+                if(tipo_cambio > 0) {
                 
-                // } else {
-                //     $("#monto_local").val(monto.toFixed(2));
-                //     $("#monto_aplicar").val(monto.toFixed(2));
-                //     $("#monto_vuelto").val(0);
-                // }
+                } else {
+                    $("#monto_local").val(monto.toFixed(2));
+                    $("#monto_aplicar").val(monto.toFixed(2));
+                    $("#monto_vuelto").val(0);
+                }
             }
         },
         "json"
