@@ -3587,11 +3587,16 @@ $(document).on("change", "#moneda", function () {
                 var vuelto = 0;
                 
                 monto_convertido = monto_p * tipo_cambio;
-                vuelto = monto_convertido - monto;
+
+                if($("#forma_pago").val()  == "EFE") {
+                    vuelto = monto_convertido - monto;
+                }
+
                 $("#vuelto_real").val(vuelto.toFixed(2));
                 if (vuelto < 0) {
                     vuelto = 0;
                 }
+                
                 $("#monto_local").val(monto_convertido.toFixed(2));
                 // console.log(monto_p.toFixed(2));
                 // $("#monto_aplicar").val(monto_p.toFixed(2));
