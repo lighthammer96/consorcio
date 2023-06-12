@@ -2510,6 +2510,15 @@ $scope.guardar_forma_pago = function () {
     var bval = true;
     var vuelto_real = parseFloat($("#vuelto_real").val());
     bval = bval && $("#forma_pago").required();
+    // alert($("#forma_pago").val()+" "+$("#monto_vuelto").val());
+    if($("#forma_pago").val() != "EFE" && $("#monto_vuelto").val() > 0) {
+        alert("TIENE UN EXCENDENTE DE "+$("#monto_vuelto").val()+", EL VUELTO SOLO SE PUEDE EFECTUAR EN LA FORMA DE PAGO <<EFECTIVO>>");
+
+       $("#monto_vuelto").val(0);
+       $("#monto_local").val(0);
+       $("#monto_p").val($("#monto_aplicar").val());
+       return false;
+    }
     
     if ($("#forma_pago").val() == "TCR" || $("#forma_pago").val() == "TDE") {
         bval = bval && $("#noperacion").required();
@@ -2810,6 +2819,8 @@ $scope.emitir = function () {
         });
         return false;
     }
+
+    
    
     if (bval) {
         if ($('#modalSolicitud').is(':visible')) {
@@ -3588,10 +3599,7 @@ $(document).on("change", "#moneda", function () {
                 
                 monto_convertido = monto_p * tipo_cambio;
                 vuelto = monto_convertido - monto;
-                if($("#forma_pago").val() != "EFE" && vuelto > 0) {
-                    alert("TIENE UN EXCENDENTE DE "+vuelto+", EL VUELTO SOLO SE PUEDE EFECTUAR EN LA FORMA DE PAGO <<EFECTIVO>>");
-                   vuelto = 0;
-                }
+               
 
                 $("#vuelto_real").val(vuelto.toFixed(2));
                 if (vuelto < 0) {
