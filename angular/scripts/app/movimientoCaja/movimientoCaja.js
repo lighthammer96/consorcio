@@ -3587,9 +3587,10 @@ $(document).on("change", "#moneda", function () {
                 var vuelto = 0;
                 
                 monto_convertido = monto_p * tipo_cambio;
-
-                if($("#forma_pago").val()  == "EFE") {
-                    vuelto = monto_convertido - monto;
+                vuelto = monto_convertido - monto;
+                if($("#forma_pago").val() != "EFE" && vuelto > 0) {
+                    alert("TIENE UN EXCENDENTE DE "+vuelto+", EL VUELTO SOLO SE PUEDE EFECTUAR EN LA FORMA DE PAGO <<EFECTIVO>>");
+                   vuelto = 0;
                 }
 
                 $("#vuelto_real").val(vuelto.toFixed(2));
