@@ -2642,7 +2642,9 @@ $scope.guardar_forma_pago = function () {
     }
     var subtotal_montos_pago = sumar_montos_formas_pago();
     var saldo = total_pagar - subtotal_montos_pago;
-
+    // alert("subtotal_montos_pago: "+subtotal_montos_pago);
+    // alert("total_pagar: "+total_pagar);
+    // alert("saldo: "+saldo);
     if ($('#modalMovimientoCaja').is(':visible')) {
         $("#monto_mov").val(saldo);
     } else {
@@ -2874,10 +2876,24 @@ $(document).on("click", ".eliminar-forma-pago", function () {
     // console.log($(this).parent("button").parent("td").parent("tr"));
     $(this).parent("td").parent("tr").remove();
     var total_pagar = parseFloat($("#total_pagar").val());
+
+    if ($('#modalMovimientoCaja').is(':visible')) {
+        total_pagar = parseFloat(montoAdd.val());
+    }
+
     var subtotal_montos_pago = sumar_montos_formas_pago();
     var saldo = total_pagar - subtotal_montos_pago;
+
+    // alert(subtotal_montos_pago);
+    // alert(total_pagar);
     // alert(saldo);
-    $("#monto").val(saldo);
+
+    if ($('#modalMovimientoCaja').is(':visible')) {
+        $("#monto_mov").val(saldo);
+    } else {
+        $("#monto").val(saldo);
+    }
+    
 })
 
 $(document).on("change", "#tipo_solicitud", function () {
@@ -3591,34 +3607,48 @@ $(document).on("change", "#moneda", function () {
                     
                     $("#tipo_cambio").val(tipo_cambio);
                 }
+
+                var monto = parseFloat($("#monto").val());
+                if ($('#modalMovimientoCaja').is(':visible')) {
+                    monto = parseFloat($("#monto_mov").val());
+                }
                 
                 var monto_p = parseFloat($("#monto_p").val()); // monto pagar  x forma de pago
-                var monto = parseFloat($("#monto_aplicar").val()); // monto aplicar que se debe pagar
+                var monto_aplicar = parseFloat($("#monto_aplicar").val()); // monto aplicar que se debe pagar
                 var monto_convertido = 0;
                 var vuelto = 0;
                 
                 monto_convertido = monto_p * tipo_cambio;
-                vuelto = monto_convertido - monto;
+                vuelto = monto_convertido - monto_aplicar;
                
 
-                $("#vuelto_real").val(vuelto.toFixed(2));
+              
                 if (vuelto < 0) {
                     vuelto = 0;
                 }
-                
+          
                 $("#monto_local").val(monto_convertido.toFixed(2));
-                // console.log(monto_p.toFixed(2));
-                // $("#monto_aplicar").val(monto_p.toFixed(2));
 
+                //alert(monto_convertido +"<"+ monto);
+
+                if(monto_convertido < monto) {
+                    $("#monto_aplicar").val(monto_convertido.toFixed(2));
+                } else {
+                    $("#monto_aplicar").val(monto.toFixed(2));
+                }
+                
+                $("#vuelto_real").val(vuelto.toFixed(2));
                 $("#monto_vuelto").val(vuelto.toFixed(2));
                 
                 
                 if(tipo_cambio > 0) {
                 
                 } else {
-                    $("#monto_local").val(monto.toFixed(2));
-                    $("#monto_aplicar").val(monto.toFixed(2));
+                  
+                    $("#monto_local").val(monto_aplicar.toFixed(2));
+                    $("#monto_aplicar").val(monto_aplicar.toFixed(2));
                     $("#monto_vuelto").val(0);
+                    $("#vuelto_real").val(0);
                 }
             }
         },

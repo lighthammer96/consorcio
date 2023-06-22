@@ -434,26 +434,31 @@
         });
 
         $("#btn_expExcel").click(function (e) {
-            var data_excel = {
-                search: '',
-                filtro_tienda: $('#filtro_tienda').val(),
-                idInicio: $('#idInicio').val(),
-                idFin: $('#idFin').val(),
-                idClienteFiltro: $('#idClienteFiltro').val(),
-                idCobradorFiltro: $('#idCobradorFiltro').val(),
-                FechaInicioFiltro: $('#FechaInicioFiltro').val(),
-                FechaFinFiltro: $('#FechaFinFiltro').val(),
-                idTipoSolicitud: $('#idTipoSolicitud').val(),
-                idConvenio: $("#idConvenio").val(),
-                Departamento: $("#Departamento").val(),
-                provincia: $("#provincia").val(),
-                iddistrito: $("#distrito").val(),
-                distrito: $("#distrito option:selected").text(),
-                idsector: $('#idsector').val(),
-                search_cuentas_cobrar: $("#search_cuentas_cobrar").val(),
-            };
+            // var data_excel = {
+            //     search: '',
+            //     filtro_tienda: $('#filtro_tienda').val(),
+            //     idInicio: $('#idInicio').val(),
+            //     idFin: $('#idFin').val(),
+            //     idClienteFiltro: $('#idClienteFiltro').val(),
+            //     idCobradorFiltro: $('#idCobradorFiltro').val(),
+            //     FechaInicioFiltro: $('#FechaInicioFiltro').val(),
+            //     FechaFinFiltro: $('#FechaFinFiltro').val(),
+            //     idTipoSolicitud: $('#idTipoSolicitud').val(),
+            //     idConvenio: $("#idConvenio").val(),
+            //     Departamento: $("#Departamento").val(),
+            //     provincia: $("#provincia").val(),
+            //     iddistrito: $("#distrito").val(),
+            //     distrito: $("#distrito option:selected").text(),
+            //     idsector: $('#idsector').val(),
+            //     search_cuentas_cobrar: $("#search_cuentas_cobrar").val(),
+            // };
             //             $scope.openDoc('projects/excel', data_excel);
-            $scope.openDoc('cuentasxcobrars/excelCuentasxCobrar', data_excel);
+            // $scope.openDoc('cuentasxcobrars/excelCuentasxCobrar', data_excel);
+
+            var data_excel = $('#filtro_tienda').val()+"|"+$('#idInicio').val()+"|"+$('#idFin').val()+"|"+ $('#idClienteFiltro').val()+"|"+$('#idCobradorFiltro').val()+"|"+$('#FechaInicioFiltro').val()+"|"+$('#FechaFinFiltro').val()+"|"+$('#idTipoSolicitud').val()+"|"+$("#idConvenio").val()+"|"+$("#Departamento").val()+"|"+$("#provincia").val()+"|"+$("#distrito").val()+"|"+$("#distrito option:selected").text()+"|"+$('#idsector').val()+"|"+$("#search_cuentas_cobrar").val();
+
+            window.open('cuentasxcobrars/excelCuentasxCobrar/'+ data_excel);
+
         });
 
 

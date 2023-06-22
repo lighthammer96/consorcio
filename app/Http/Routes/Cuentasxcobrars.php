@@ -15,7 +15,9 @@ Route::post('cuentasxcobrars/delete', ['as' => 'cuentasxcobrars.delete', 'uses' 
 Route::post('cuentasxcobrars/update', ['as' => 'cuentasxcobrars.update', 'uses' => 'AsignacioncobradorController@update']);
 Route::get('cuentasxcobrars/excel', ['as' => 'cuentasxcobrars.excel', 'uses' => 'AsignacioncobradorController@excel']);
 
-Route::get('cuentasxcobrars/excelCuentasxCobrar', ['as' => 'cuentasxcobrars.excelCuentasxCobrar', 'uses' => 'AsignacioncobradorController@excelCuentasxCobrar']);
+// Route::get('cuentasxcobrars/excelCuentasxCobrar', ['as' => 'cuentasxcobrars.excelCuentasxCobrar', 'uses' => 'AsignacioncobradorController@excelCuentasxCobrar']);
+
+Route::get('cuentasxcobrars/excelCuentasxCobrar/{id}', ['as' => 'cuentasxcobrars.excelCuentasxCobrar', 'uses' => 'AsignacioncobradorController@excelCuentasxCobrar']);
 
 Route::post('cuentasxcobrars/listCronogramaCuentasxCobrar', ['as' => 'cuentasxcobrars.listCronogramaCuentasxCobrar', 'uses' => 'AsignacioncobradorController@listCronogramaCuentasxCobrar']);
 
