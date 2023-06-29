@@ -3600,6 +3600,8 @@ $(document).on("keyup", "#monto_aplicar", function () {
 
 $(document).on("change", "#moneda", function () {
     var idmoneda = $(this).val();
+    var moneda_id = $("#IdMoneda").val();
+    // console.log(idmoneda +" <=> "+moneda_id);
     if (idmoneda != "") {
         
         var simbolo = $(this).find("option[value=" + idmoneda + "]").data("simbolo");
@@ -3610,7 +3612,8 @@ $(document).on("change", "#moneda", function () {
         function (data, textStatus, jqXHR) {
             if (data.length > 0) {
                 var tipo_cambio = 1;
-                if (data[0].tipo_cambio_venta != null) {
+                
+                if (data[0].tipo_cambio_venta != null && idmoneda != "" && moneda_id != "" && idmoneda != moneda_id) {
                     tipo_cambio = data[0].tipo_cambio_venta;
                     
                 }
