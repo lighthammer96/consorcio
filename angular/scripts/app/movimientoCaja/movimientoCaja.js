@@ -919,20 +919,23 @@
         $scope.saveAddMovimientoCaja = function () {
 
             var emitir_comprobante = (($("#emitir_comprobante").prop('checked')) ? 'S' : 'N');
-            var monto_mov = $("#monto_mov").val();
-            if(monto_mov != "") {
-
-                if(monto_mov != 0) {
-                    AlertFactory.textType({
-                        title: '',
-                        message: 'Las formas de pago no suman el monto total a pagar',
-                        type: 'info'
-                    });
-                    return false;
+            if (tipoMovimientoAdd.val() == 'SEP' || tipoMovimientoAdd.val() == 'TPL' || tipoMovimientoAdd.val() == 'ALQ') {
+                var monto_mov = $("#monto_mov").val();
+                if(monto_mov != "") {
+    
+                    if(monto_mov != 0) {
+                        AlertFactory.textType({
+                            title: '',
+                            message: 'Las formas de pago no suman el monto total a pagar',
+                            type: 'info'
+                        });
+                        return false;
+                    }
+    
+                 
                 }
-
-             
             }
+           
             var bval = true;
             bval = bval && tipoMovimientoAdd.required();
             bval = bval && idMonedaAdd.required();
