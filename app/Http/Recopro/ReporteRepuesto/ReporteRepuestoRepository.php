@@ -40,7 +40,7 @@ class ReporteRepuestoRepository implements ReporteRepuestoInterface
         if ($idClienteFiltro != '') {
             $dato = $dato->where('idcliente', $idClienteFiltro);
         }
-      
+
         return $dato->orderBy('fecha', 'ASC')->orderBy('nConsecutivo', 'ASC')->get();
     }
     public function search($s, $filtro_tienda, $idClienteFiltro, $idVendedorFiltro, $FechaInicioFiltro, $FechaFinFiltro)

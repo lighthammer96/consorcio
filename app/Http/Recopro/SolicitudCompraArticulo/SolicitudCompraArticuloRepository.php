@@ -8,6 +8,7 @@
 
 namespace App\Http\Recopro\SolicitudCompraArticulo;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class SolicitudCompraArticuloRepository implements SolicitudCompraArticuloInterface
@@ -26,12 +27,57 @@ class SolicitudCompraArticuloRepository implements SolicitudCompraArticuloInterf
         return $this->model->get();
     }
 
-    public function search($s)
+    public function search(array $filter)
     {
+        $s = (isset($filter['search'])) ? $filter['search'] : '';
         return $this->model->where(function ($q) use ($s) {
-            $q->where('descripcion', 'LIKE', '%' . $s . '%');
-            $q->orWhere('estado', 'LIKE', '%' . $s . '%');
-        })->orderByRaw('created_at DESC');
+            $q->whereHas('article', function ($art) use ($s) {
+                $art->where('description', 'LIKE', '%' . $s . '%');
+            });
+//            $q->orWhere('estado', 'LIKE', '%' . $s . '%');
+        })->where(function ($q) use ($filter) {
+            $cons = (isset($filter['consecutive'])) ? $filter['consecutive'] : '';
+            $date_req = (isset($filter['date_required'])) ? $filter['date_required'] : '';
+            if ($cons != '' || $date_req != '') {
+                $q->whereHas('movement', function ($mov) use ($cons, $date_req) {
+                    if ($cons != '') {
+                        $mov->where('nConsecutivo', $cons);
+                    }
+                    if ($date_req != '') {
+                        $date_req = Carbon::createFromFormat('d/m/Y', $date_req)->toDateString();
+                        $mov->whereDate('fecha_requerida', $date_req);
+                    }
+                });
+            }
+            if (isset($filter['is_process'])) {
+                $q->where('estado', 1);
+//                $q->whereHas('movement', function ($m) {
+//                    $m->where('estado', 1);
+//                });
+            }
+        });
+    }
+
+    public function max()
+    {
+        return $this->model->max('id');
+    }
+
+    public function createUpdate(array $attributes)
+    {
+        $model = $this->model->where('idArticulo', $attributes['idArticulo'])
+            ->where('idMovimiento', $attributes['idMovimiento'])
+            ->first();
+
+        $attributes['user_updated'] = auth()->id();
+        if ($model) {
+            $this->model->where('id', $model->id)->update($attributes);
+        } else {
+            $attributes['user_created'] = auth()->id();
+            $attributes = setIdTableByMax($this->max(), $attributes);
+            $model = $this->model->create($attributes);
+        }
+        return $this->model->find($model->id);
     }
 
     public function create(array $attributes)
@@ -46,11 +92,20 @@ class SolicitudCompraArticuloRepository implements SolicitudCompraArticuloInterf
         $attributes['user_updated'] = auth()->id();
         $model = $this->model->findOrFail($id);
         $model->update($attributes);
+
+        return $this->model->find($id);
     }
 
     public function deleteBySol($sol_id)
     {
         return $this->model->where('idMovimiento', $sol_id)->delete();
+    }
+
+    public function deleteByExcept($sol_id, array $ids)
+    {
+        return $this->model->where('idMovimiento', $sol_id)
+            ->whereNotIn('id', $ids)
+            ->delete();
     }
 
     public function getIDByLast()

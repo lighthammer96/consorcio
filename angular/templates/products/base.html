@@ -1,9 +1,9 @@
-<div class="panel panel-success">
+<div class="panel  panel-danger-admin">
     <div class="panel-heading">
         Gestión de Artículos
     </div>
     <div class="panel-body">
-        <div class="row">
+        <div class="row"> 
             <div class="col-md-12">
                 <div id="table_container_product" class="table-responsive"></div>
             </div>
@@ -25,15 +25,16 @@
                                     <a data-target="#general" aria-controls="general" role="tab" data-toggle="tab">General</a>
                                 </li>
                                 <li role="presentation">
-                                    <a data-target="#contable" aria-controls="contable" role="tab" data-toggle="tab">Contabilidad</a>
-                                </li>
-                                <li role="presentation">
                                     <a data-target="#sales" aria-controls="sales" role="tab"
                                        data-toggle="tab">Ventas</a>
                                 </li>
                                 <li role="presentation">
                                     <a data-target="#image" aria-controls="image" role="tab"
                                        data-toggle="tab">Imagen</a>
+                                </li>
+                                 <li role="presentation">
+                                    <a data-target="#kit" aria-controls="kit" role="tab"
+                                       data-toggle="tab">Kit</a>
                                 </li>
                             </ul>
 
@@ -43,21 +44,26 @@
                                     <div class="form-horizontal">
                                         <br>
                                         <div class="row">
-                                            <div class="col-md-7">
+                                            <div class="col-md-8">
                                                 <div class="form-group">
                                                     <label class="col-sm-3 control-label">Código Artículo</label>
-                                                    <div class="col-sm-3">
-                                                        <input type="text" class="form-control input-sm" readonly
+                                                    <div class="col-sm-4">
+                                                        <input type="text" class="form-control input-sm" 
                                                                id="code_article">
                                                     </div>
-                                                    <label class="col-sm-3 control-label">Código Matriz</label>
+                                                    <label class="col-sm-2 control-label">Código Matriz</label>
                                                     <div class="col-sm-3">
-                                                        <input type="text" class="form-control input-sm" readonly
+                                                        <input type="text" class="form-control input-sm" 
                                                                id="code_matrix">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="col-sm-3 control-label">Estado</label>
+                                                    <label class="col-sm-3 control-label">Color</label>
+                                                    <div class="col-sm-4">
+                                                        <input type="text" class="form-control input-sm" 
+                                                               id="color">
+                                                    </div>
+                                                    <label class="col-sm-2 control-label">Estado</label>
                                                     <div class="col-sm-3">
                                                         <label class="checkbox-inline i-checks">
                                                             <input type="checkbox" id="p_state" checked>
@@ -84,197 +90,110 @@
                                                 <div class="form-group">
                                                     <div class="col-md-offset-3 col-md-9">
                                                         <label class="checkbox-inline i-checks">
-                                                            <input type="checkbox" id="p_serie">
+                                                            <input type="checkbox" name="identi" id="p_serie"  >
                                                             Serie
                                                         </label>
+                                                        
                                                         <label class="checkbox-inline i-checks">
-                                                            <input type="checkbox" id="p_lote">
+                                                            <input type="checkbox" name="identi" id="p_lote" >
                                                             Lote
                                                         </label>
                                                         <label class="checkbox-inline i-checks">
-                                                            <input type="checkbox" id="p_kit">
-                                                            Kit
+                                                            <input type="checkbox" id="p_impuesto">
+                                                            Impuesto
+                                                        </label>
+                                                        <label class="checkbox-inline i-checks">
+                                                            <input type="checkbox" id="p_disponible_venta">
+                                                            Disponible para venta
                                                         </label>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-md-5">
+                                                <br>
                                                 <div class="form-group">
+                                                     <label class="col-sm-3 control-label">Unidad de Medida</label>
+                                                     <div class="col-sm-3">
+                                                        <select id="p_id_unidad_medidad" class="form-control input-sm"></select>
+                                                    </div>
+                                                      <label class="col-sm-1 control-label">Costo</label>
+                                                      <div class="col-sm-2">
+                                                        <input type="text" id="p_costo" readonly="" class="form-control input-sm" >
+                                                      </div>
+                                                    
+                                                </div>
+                                               <div class="form-group">
+                                                  <label class="col-sm-3 control-label">Categoría Vehícular</label>
+                                                     <div class="col-sm-6">
+                                                        <select id="idCatVeh"  style="width: 100%;" class="form-control input-sm"></select>
+                                                    </div>
+                                               </div>   
+                                               <div class="form-group">
+                                                <label class="col-sm-3 control-label">Carroseria</label>
+                                                   <div class="col-sm-6">
+                                                      <select id="idcarroceria"  style="width: 100%;" class="form-control input-sm"></select>
+                                                  </div>
+                                             </div>  
+                                               
+ 
+                                                <br>
+                                            </div>
+                                            <div class="col-md-4">
+                                                 <div class="form-group">
                                                     <label class="col-sm-4 control-label">Tipo</label>
                                                     <div class="col-sm-8">
-                                                        <select id="p_type_id" class="form-control input-sm"></select>
+                                                        <select   style="width: 100%;" id="p_id_tipo" class="form-control input-sm"></select>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="col-sm-4 control-label">Tipo Unidad</label>
+                                                    <label class="col-sm-4 control-label">Marca </label>
                                                     <div class="col-sm-8">
-                                                        <select id="p_unity_id" class="form-control input-sm"></select>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-sm-4 control-label">Cant. por Unid.</label>
-                                                    <div class="col-sm-4">
-                                                        <input type="text" id="p_q_unity" class="form-control input-sm"
-                                                               onkeypress="return soloNumeros(event)">
+                                                        <select id="p_id_marca"  style="width: 100%;" class="form-control input-sm"></select>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="col-sm-4 control-label">Modelo</label>
                                                     <div class="col-sm-8">
-                                                        <input type="text" id="p_model" class="form-control input-sm">
+                                                        <select id="p_id_modelo"  style="width: 100%;" class="form-control input-sm"></select>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="col-sm-4 control-label">Año Ingreso</label>
-                                                    <div class="col-sm-6">
-                                                        <input type="text" id="p_year_enter" readonly
-                                                               class="form-control input-sm">
+                                                    <label class="col-sm-4 control-label">Categoría </label>
+                                                    <div class="col-sm-8">
+                                                        <select id="p_id_categoria" class="form-control input-sm"  style="width: 100%;"></select>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-md-12">
+                                                 
                                                 <div class="form-group">
-                                                    <div class="col-md-12">
-                                                        <div class="panel panel-default">
-                                                            <div class="panel-heading">
-                                                                Marca
-                                                                <button class="btn btn-success btn-xs pull-right"
-                                                                        type="button"
-                                                                        ng-click="openBrand()">
-                                                                    <span class="fa fa-plus"></span>
-                                                                    Agregar
-                                                                </button>
-                                                            </div>
-                                                            <div class="panel-body">
-                                                                <table class="table table-bordered table-stripped table-hover">
-                                                                    <thead>
-                                                                    <tr>
-                                                                        <th>Descripción</th>
-                                                                        <th style="width:50px"></th>
-                                                                    </tr>
-                                                                    </thead>
-                                                                    <tbody id="p_brand_body"></tbody>
-                                                                </table>
-                                                            </div>
-                                                        </div>
+                                                    <label class="col-sm-4 control-label">Familia </label>
+                                                    <div class="col-sm-8">
+                                                       <select id="p_id_familia" class="form-control input-sm"  style="width: 100%;"></select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-4 control-label">Sub Familia </label>
+                                                    <div class="col-sm-8">
+                                                       <select id="p_id_subfamilia" class="form-control input-sm"  style="width: 100%;"></select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-4 control-label">Grupo Contable </label>
+                                                    <div class="col-sm-8">
+                                                        <select id="p_id_grupocontable" class="form-control input-sm"  style="width: 100%;"></select>
                                                     </div>
                                                 </div>
                                             </div>
+                                           
                                         </div>
                                     </div>
                                 </div>
-                                <div role="tabpanel" class="tab-pane" id="contable">
-                                    <br>
+                                <div role="tabpanel" class="tab-pane " id="sales">
                                     <div class="form-horizontal">
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">Retención</label>
-                                            <div class="col-sm-6">
-                                                <select id="p_retention_id" class="form-control input-sm"
-                                                        style="width: 100%"></select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">Debe</label>
-                                            <div class="col-sm-8">
-                                                <div class="input-group">
-                                                    <input type="text" id="p_cc_debe" readonly
-                                                           class="form-control input-sm"
-                                                           style="width: 25%">
-                                                    <input type="text" id="p_cc_debe_txt" readonly
-                                                           class="form-control input-sm"
-                                                           style="width: 75%">
-                                                    <div class="input-group-btn">
-                                                        <button class="btn btn-success btn-sm btn-group_sm"
-                                                                type="button"
-                                                                ng-click="openCC(1)">
-                                                            <span class="fa fa-search-plus"></span>
-                                                        </button>
-                                                        <button class="btn btn-warning btn-sm btn-group_sm"
-                                                                type="button"
-                                                                ng-click="clearCC(1)">
-                                                            <span class="fa fa-eraser"></span>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">Haber</label>
-                                            <div class="col-sm-8">
-                                                <div class="input-group">
-                                                    <input type="text" id="p_cc_haber" readonly
-                                                           class="form-control input-sm"
-                                                           style="width: 25%">
-                                                    <input type="text" id="p_cc_haber_txt" readonly
-                                                           class="form-control input-sm"
-                                                           style="width: 75%">
-                                                    <div class="input-group-btn">
-                                                        <button class="btn btn-success btn-sm btn-group_sm"
-                                                                type="button"
-                                                                ng-click="openCC(2)">
-                                                            <span class="fa fa-search-plus"></span>
-                                                        </button>
-                                                        <button class="btn btn-warning btn-sm btn-group_sm"
-                                                                type="button"
-                                                                ng-click="clearCC(2)">
-                                                            <span class="fa fa-eraser"></span>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                <div class="separator"></div>
-                                                <div class="alert alert-danger hide" role="alert" id="msg_cont">
-                                                    <span class="fa fa-warning"></span>
-                                                    Debe seleccionar Debe o Haber
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div role="tabpanel" class="tab-pane" id="sales">
-                                    <div class="form-horizontal">
-                                        <br>
-                                        <div class="row">
+                                        <div class="row"> 
                                             <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label class="col-sm-3 control-label">Costo Servicio
-                                                        Referencial</label>
-                                                    <div class="col-sm-3">
-                                                        <div class="input-group">
-                                                            <input type="text" class="form-control input-sm" id="p_csr"
-                                                                   readonly>
-                                                            <span class="input-group-addon input-group_sm">US$</span>
-                                                        </div>
-                                                    </div>
-                                                    <label class="col-sm-2 control-label">Comisión Venta</label>
-                                                    <div class="col-sm-2">
-                                                        <div class="input-group">
-                                                            <input type="text" class="form-control input-sm"
-                                                                   id="p_commission_sale"
-                                                                   onkeypress="return validDecimals(event, this, 3)"
-                                                                   onblur="roundDecimals(this, 3)">
-                                                            <span class="input-group-addon input-group_sm">%</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-sm-3 control-label">Código Venta</label>
-                                                    <div class="col-sm-9">
-                                                        <input type="text" id="p_sale" class="form-control input-sm">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-sm-3 control-label">Descripción</label>
-                                                    <div class="col-sm-9">
-                                                        <input type="text" id="p_sale_description"
-                                                               class="form-control input-sm">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-sm-3 control-label">Fabricante</label>
-                                                    <div class="col-sm-9">
-                                                        <input type="text" id="p_maker" class="form-control input-sm">
-                                                    </div>
-                                                </div>
+                                                <br>
+                                                <table class="table table-bordered table-striped table-hover" id="table_precios_producto">
+                                                   
+                                                  
+                                                 </table>
                                             </div>
                                         </div>
                                     </div>
@@ -294,70 +213,74 @@
                                         </div>
                                     </div>
                                 </div>
+                                 <div role="tabpanel" class="tab-pane" id="kit">
+                                    <div class="form-horizontal">
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <div class="form-group">
+                                                    <div class="col-sm-4">
+                                                        <button id="btn-kit" type="button" class="btn btn-danger-admin btn-sm" ng-click="addAritculoKit()" disabled>Agregar Artículo</button> 
+                                                    </div>
+                                                </div>
+                                                <div class="table-responsive">
+                                                    <input type="hidden"  id='idKit'>
+                                                            <table class="table table-bordered table-striped table-hover" id="tabla_articulo_kit">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Código</th>
+                                                                        <th>Artículo</th>
+                                                                        <th width="60px">Cantidad</th>
+                                                                        <th width="50px"></th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody id="articulo_kit_det"></tbody>
+                                                            </table>
+                                                </div> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-success" ng-click="saveProduct()">
+                        <button type="button" class="btn btn-danger-admin btn-sm" ng-click="saveProduct()">
                             <span class="fa fa-save"></span>
                             Guardar
                         </button>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">
+                        <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">
                             <span class="fa fa-times"></span> Cerrar
                         </button>
                     </div>
                 </div>
             </div>
         </div>
-
-
-        <div class="modal" id="modalCC" tabindex="-1" role="dialog">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <h4 class="modal-title">Cuentas Contables</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div id="table_container_cc" class="table-responsive"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-success" data-dismiss="modal">Cerrar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="modal" id="modalBrand" tabindex="-1" role="dialog">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <h4 class="modal-title">Seleccione Marca</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div id="table_container_brand" class="table-responsive"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-success" data-dismiss="modal">Cerrar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <div ng-include src="'/templates/partials/crop.html'"></div>
     </div>
 </div>
+
+<div class="modal " id="modalArticulo" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title" id="title">Articulos</h4>
+        </div>
+        <div class="modal-body">
+             <div class="row">
+                <div class="col-md-12">
+                    <div id="table_container_cc2" class="table-responsive"></div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+      
+    </div>
+  </div> 

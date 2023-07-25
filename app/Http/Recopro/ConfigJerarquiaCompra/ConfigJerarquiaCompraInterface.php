@@ -8,10 +8,11 @@
 
 namespace App\Http\Recopro\ConfigJerarquiaCompra;
 
-
 interface ConfigJerarquiaCompraInterface
 {
     public function all();
+
     public function create(array $attributes);
 
+    public function findBy(array $attributes);
 }

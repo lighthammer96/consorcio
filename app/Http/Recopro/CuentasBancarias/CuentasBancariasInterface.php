@@ -22,4 +22,6 @@ interface CuentasBancariasInterface
     public function find($id);
 
     public function destroy($id);
+
+    public function findByBank($id);
 }

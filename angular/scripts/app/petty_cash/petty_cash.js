@@ -10,7 +10,8 @@
     Config.$inject = ['$stateProvider', '$urlRouterProvider'];
     PettyCashCtrl.$inject = ['$scope', '_', 'RESTService', 'AlertFactory'];
 
-    function PettyCashCtrl($scope, _, RESTService, AlertFactory) {
+    function PettyCashCtrl($scope, _, RESTService, AlertFactory)
+    {
         var modalPC;
         var modalUser;
         var titlePca;
@@ -21,7 +22,13 @@
         var pc_liable_id;
         var pc_liable_name;
         var pc_liable_username;
+        var pc_is_vale;
+        var pc_vale_text;
 
+        function chkVale() {
+            var txt = (pc_is_vale.prop('checked')) ? 'SI' : 'NO';
+            pc_vale_text.html(txt);
+        }
 
         function overModals() {
             if (!call_m) {
@@ -36,7 +43,12 @@
                 pc_liable_id = $("#pc_liable_id");
                 pc_liable_name = $("#pc_liable_name");
                 pc_liable_username = $("#pc_liable_username");
-
+                pc_is_vale = $('#pc_is_vale');
+                pc_is_vale.click(function () {
+                    chkVale();
+                });
+                generateCheckBox(pc_is_vale);
+                pc_vale_text = $('#pc_vale_text');
 
                 modalUser.on('hidden.bs.modal', function (e) {
                     modalPC.attr('style', 'display:block;');
@@ -54,14 +66,16 @@
 
         function cleanPettyCash() {
             cleanRequired();
-            titlePca.html('');
+            titlePca.empty();
             pc_id.val('');
             pc_description.val('');
             pc_code.val('');
             pc_liable_id.val('');
             pc_liable_name.val('');
             pc_liable_username.val('');
-            pc_user_body.html('');
+            pc_user_body.empty();
+            pc_is_vale.prop('checked', false).iCheck('update');
+            pc_vale_text.html('NO');
             activeTab('general');
         }
 
@@ -97,16 +111,15 @@
                     pc_liable_id.val(data_p.liable_id);
                     pc_liable_username.val(data_p.liable_username);
                     pc_liable_name.val(data_p.liable_name);
+                    var chk_vale = (parseInt(data_p.is_vale) === 1);
+                    pc_is_vale.prop('checked', chk_vale).iCheck('update');
+                    chkVale();
                     modalPC.modal('show');
                     _.each(data_p.users, function (b) {
                         addToPettyCash(b.id, b.username, b.name);
                     });
                 } else {
-                    AlertFactory.textType({
-                        title: '',
-                        message: 'Hubo un error al obtener una caja chica. Intente nuevamente.',
-                        type: 'error'
-                    });
+                    $scope.showAlert('', response.message, 'warning');
                 }
             });
         }
@@ -137,9 +150,9 @@
                     'code': pc_code.val(),
                     'liable_id': pc_liable_id.val(),
                     'description': pc_description.val(),
-                    'users': users
+                    'users': users,
+                    'is_vale': (pc_is_vale.prop('checked')) ? 1 : 0,
                 };
-
                 var id = (pc_id.val() === '') ? 0 : pc_id.val();
 
                 RESTService.updated('petty_cash/savePettyCash', id, params, function (response) {
@@ -215,13 +228,7 @@
                     cssClass: 'buscador',
                     text: search
                 }, {
-                    cssClass: 'btn-primary',
-                    text: '<i class="fa fa-file-excel-o"></i> Exportar a Excel',
-                    click: function () {
-                        $scope.openDoc('petty_cash/excel', {});
-                    }
-                }, {
-                    cssClass: 'btn-success',
+                    cssClass: 'btn-danger-admin',
                     text: '<i class="fa fa-plus"></i> Nueva Caja Chica',
                     click: function () {
                         newPettyCash();
@@ -241,11 +248,17 @@
                 code: {
                     title: 'Código'
                 },
-
                 liable_name: {
                     title: 'Responsable'
                 },
-
+                total: {
+                    title: 'Total',
+                    listClass: 'text-right',
+                },
+                is_vale: {
+                    title: 'Tiene Vale',
+                    listClass: 'text-center',
+                },
                 edit: {
                     width: '1%',
                     sorting: false,

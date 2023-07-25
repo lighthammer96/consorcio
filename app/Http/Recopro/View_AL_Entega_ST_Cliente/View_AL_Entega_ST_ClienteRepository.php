@@ -12,18 +12,18 @@ use Illuminate\Support\Facades\DB;
 class View_AL_Entega_ST_ClienteRepository implements View_AL_Entega_ST_ClienteInterface
 {
     protected $model;
- private static $_ACTIVE = 'A';
+    private static $_ACTIVE = 'A';
     public function __construct(View_AL_Entega_ST_Cliente $model)
     {
-        $this->model = $model; 
-       
+        $this->model = $model;
+
     }
 
     public function all()
     {
         return $this->model->get();
     }
-     public function search($s)
+    public function search($s)
     {
         return $this->model->where(function($q) use ($s){
             $q->orWhere('nro', 'LIKE', '%'.$s.'%');
@@ -33,15 +33,15 @@ class View_AL_Entega_ST_ClienteRepository implements View_AL_Entega_ST_ClienteIn
             $q->orWhere('estado', 'LIKE', '%'.$s.'%');
             $q->orWhere('documento', 'LIKE', '%'.$s.'%');
             $q->orWhere('cliente', 'LIKE', '%'.$s.'%');
-         
+
         });
 
     }
     public function allActive()
     {
-       return $this->model->where('estado', self::$_ACTIVE)->get();
+        return $this->model->where('estado', self::$_ACTIVE)->get();
     }
-     public function create(array $attributes)
+    public function create(array $attributes)
     {
         $attributes['user_created'] = auth()->id();
         $attributes['user_updated'] = auth()->id();
@@ -49,14 +49,14 @@ class View_AL_Entega_ST_ClienteRepository implements View_AL_Entega_ST_ClienteIn
     }
     public function get_consecutivo($table,$id)
     {     $mostrar=DB::select("select top 1 * from $table order by CONVERT(INT, $id) DESC");
-         $actu=0;
-         if(!$mostrar){
+        $actu=0;
+        if(!$mostrar){
             $actu=0;
-         }else{
+        }else{
             $actu=intval($mostrar[0]->$id);
-         };
+        };
         $new=$actu+1;
-        return $new; 
+        return $new;
     }
     public function update($id, array $attributes)
     {
@@ -70,9 +70,9 @@ class View_AL_Entega_ST_ClienteRepository implements View_AL_Entega_ST_ClienteIn
         $model = $this->model->findOrFail($id);
         $model->update($attributes);
         $model->delete();
-     
+
     }
-     public function findByCode($code)
+    public function findByCode($code)
     {
         return $this->model->where('periodo', $code)->where("estado", "P")->first();
     }

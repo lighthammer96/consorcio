@@ -27,7 +27,7 @@ use PDF;
 use Illuminate\Http\Request;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
-class VentasController extends Controller 
+class VentasController extends Controller
 {
     use VentasTrait;
 
@@ -36,8 +36,8 @@ class VentasController extends Controller
         $this->base_model = new BaseModel();
 //        $this->middleware('json');
     }
- 
-    public function all(Request $request, VentasInterface $repo) 
+
+    public function all(Request $request, VentasInterface $repo)
     {
         $s      = $request->input('search', '');
         $params = ['idventa','cliente','anulado','serie_comprobante', 'numero_comprobante', 'fecha_emision', 'tipo_documento', 'numero_documento', 'moneda', 't_monto_total', 'pagado', 'saldo', 'cCodConsecutivo_solicitud', 'nConsecutivo_solicitud', 'tipo_solicitud', "estado", 'IdTipoDocumento', 'anticipo', 'idventa_referencia', 'tipo_comprobante', 'estado_cpe', 'fecha_emision_server', 'dias_vencidos','comprobante', 'formapago'];
@@ -93,9 +93,9 @@ class VentasController extends Controller
 
     public function excel_lista_cobranza_cuotas(VentasInterface $repo, Request $request, SolicitudInterface $solicitud_repositorio)
     {
-       
+
         // echo "<pre>";
-        $data = $request->all();    
+        $data = $request->all();
         // print_r($data);
         // // print_r($repo->all()); 
         // exit;
@@ -140,9 +140,9 @@ class VentasController extends Controller
 
         // $cobradores = DB::select($sql_cobradores);
         $vacios = 0;
-       
+
         // foreach ($cobradores as $key => $value) {
-            $sql = "SELECT c.descripcion AS cobrador, c.id AS idcobrador, FORMAT(v.fecha_emision, 'dd/MM/yyyy') AS fecha_emision, cl.razonsocial_cliente, v.serie_comprobante, v.numero_comprobante, FORMAT(sc.fecha_vencimiento, 'dd/MM/yyyy') AS fecha_vencimiento, m.Descripcion AS moneda, v.t_monto_total,DATEDIFF(DAY, sc.fecha_vencimiento, GETDATE())  AS dias_mora, CASE WHEN sc.saldo_cuota=0 THEN 'Cobrado' ELSE 'Pendiente' END AS estado, vd.int_moratorio_pagado, ISNULL(vd.nrocuota, 0) AS nrocuota, vd.valor_cuota_pagada, s.cCodConsecutivo, s.nConsecutivo
+        $sql = "SELECT c.descripcion AS cobrador, c.id AS idcobrador, FORMAT(v.fecha_emision, 'dd/MM/yyyy') AS fecha_emision, cl.razonsocial_cliente, v.serie_comprobante, v.numero_comprobante, FORMAT(sc.fecha_vencimiento, 'dd/MM/yyyy') AS fecha_vencimiento, m.Descripcion AS moneda, v.t_monto_total,DATEDIFF(DAY, sc.fecha_vencimiento, GETDATE())  AS dias_mora, CASE WHEN sc.saldo_cuota=0 THEN 'Cobrado' ELSE 'Pendiente' END AS estado, vd.int_moratorio_pagado, ISNULL(vd.nrocuota, 0) AS nrocuota, vd.valor_cuota_pagada, s.cCodConsecutivo, s.nConsecutivo
             FROM ERP_Venta AS v
             INNER JOIN ERP_VentaDetalle AS vd ON(vd.idventa=v.idventa)
             INNER JOIN ERP_Solicitud AS s ON(v.cCodConsecutivo_solicitud=s.cCodConsecutivo AND v.nConsecutivo_solicitud=s.nConsecutivo)
@@ -152,19 +152,19 @@ class VentasController extends Controller
             INNER JOIN ERP_Moneda AS m ON(m.IdMoneda=v.idmoneda)
             WHERE  FORMAT(v.fecha_emision, 'yyyy-MM-dd') BETWEEN '{$data["fecha_inicio"]}' AND '{$data["fecha_fin"]}' AND ISNULL(v.anulado, 'N')<>'S' {$where}
             ORDER BY c.descripcion ASC";
-           
-            $pagos = DB::select($sql);
-            
-            if(count($pagos) <= 0) {
-                $vacios ++;
-            }
 
-            foreach ($pagos as $kp => $vp) {
-                $cuotas = $solicitud_repositorio->get_solicitud_cronograma($vp->cCodConsecutivo, $vp->nConsecutivo);
-                $pagos[$kp]->nrocuotas = count($cuotas);
-            }
-           
-        
+        $pagos = DB::select($sql);
+
+        if(count($pagos) <= 0) {
+            $vacios ++;
+        }
+
+        foreach ($pagos as $kp => $vp) {
+            $cuotas = $solicitud_repositorio->get_solicitud_cronograma($vp->cCodConsecutivo, $vp->nConsecutivo);
+            $pagos[$kp]->nrocuotas = count($cuotas);
+        }
+
+
         // }
 
 
@@ -206,7 +206,7 @@ class VentasController extends Controller
 
     public function devolver_dinero($caja_diaria_detalle_repo, $caja_diaria_repositorio, $data) {
         $data_caja_detalle = array();
-        $data_caja_detalle["idCajaDiaria"] = $caja_diaria_detalle_repo->get_caja_diaria()[0]->idCajaDiaria; 
+        $data_caja_detalle["idCajaDiaria"] = $caja_diaria_detalle_repo->get_caja_diaria()[0]->idCajaDiaria;
         $data_caja_detalle["consecutivo"] = $caja_diaria_detalle_repo->get_consecutivo("ERP_CajaDiariaDetalle", "consecutivo");
         $data_caja_detalle["codigoTipo"] = "VTA";
         $data_caja_detalle["codigoFormaPago"] = "EFE";
@@ -216,7 +216,7 @@ class VentasController extends Controller
         $data_caja_detalle["nroTarjeta"] = "";
         $data_caja_detalle["nroOperacion"] = "";
         $data_caja_detalle["naturaleza"] = "S";
-        
+
         $this->base_model->insertar($this->preparar_datos("dbo.ERP_CajaDiariaDetalle", $data_caja_detalle));
 
         //ACTUALIZAMOS MONTOS EN CAJA DIARIA
@@ -242,7 +242,7 @@ class VentasController extends Controller
         $caja_diaria_repositorio->update_totales($update_caja_diaria);
     }
 
-    
+
 
     public function guardar_venta(VentasInterface $Repo, Request $request, CajaDiariaDetalleInterface $caja_diaria_detalle_repo, CajaDiariaInterface $caja_diaria_repositorio, ConsecutivosComprobantesInterface $repoCC, CustomerInterface $repo_cliente, CompaniaInterface $compania_repo)
     {
@@ -259,14 +259,14 @@ class VentasController extends Controller
             // $venta = $caja_diaria_detalle_repo->get_venta();
             $cliente = $repo_cliente->find($data["idcliente"]);
             $empresa = $compania_repo->find("00000");
-            
+
             $name_cpe = $empresa->Ruc . "-07-" . $data["serie_comprobante"] . "-" . str_pad($data["numero_comprobante"], 8, "0", STR_PAD_LEFT);
 
             $data["name_cpe"] = $name_cpe;
             $result = $this->emitir_nota($data, $caja_diaria_detalle_repo, $caja_diaria_repositorio, $Repo, $repoCC);
 
-            
-            
+
+
 
             $total_qr = str_replace(",", "", number_format($data["monto"], 2));
 
@@ -329,7 +329,7 @@ class VentasController extends Controller
     public function anularventa($id, VentasInterface $repo, Request $request, CajaDiariaDetalleRepository $caja_repo)
     {
         try {
-           $response = $repo->anular_venta($id, $caja_repo);
+            $response = $repo->anular_venta($id, $caja_repo);
             return response()->json([
                 'status' => true,
             ]);
@@ -345,31 +345,35 @@ class VentasController extends Controller
 
 
     public function get_venta_separacion(VentasInterface $repo, Request $request) {
-        $data = $request->all();    
+        $data = $request->all();
 
         $result = $repo->get_venta_separacion($data["idcliente"]);
 
         return response()->json($result);
-        
+
     }
 
     public function get_venta_nota(VentasInterface $repo, Request $request) {
-        $data = $request->all();    
+        $data = $request->all();
 
         $result = $repo->get_venta_nota($data["idcliente"]);
 
         return response()->json($result);
-        
+
     }
 
 
     public function imprimir_lista_cobraza_cuotas(Request $request, CajaDiariaDetalleInterface $repo_caja, SolicitudInterface $solicitud_repositorio) {
-        $data = $request->all();    
-        
+
+        ini_set('max_execution_time', '300000000');
+        set_time_limit(300000000);
+        ini_set('memory_limit', '512M');
+        $data = $request->all();
+
         $datos = array();
 
         // $solicitudes = $repo->get_visita_solicitudes($id);
-        $datos["empresa"] = $repo_caja->get_empresa(); 
+        $datos["empresa"] = $repo_caja->get_empresa();
 
         $where = "";
 
@@ -410,7 +414,7 @@ class VentasController extends Controller
         INNER JOIN ERP_SolicitudCronograma AS sc ON(sc.cCodConsecutivo=s.cCodConsecutivo AND sc.nConsecutivo=s.nConsecutivo AND vd.nrocuota=sc.nrocuota)
         WHERE FORMAT(v.fecha_emision, 'yyyy-MM-dd') BETWEEN '{$data["fecha_inicio"]}' AND '{$data["fecha_fin"]}' AND s.idCobrador IS NOT NULL {$where} AND ISNULL(v.anulado, 'N')<>'S'
         GROUP BY s.idCobrador, c.descripcion";
-
+        // die($sql_cobradores);
         $cobradores = DB::select($sql_cobradores);
         $vacios = 0;
         foreach ($cobradores as $key => $value) {
@@ -423,24 +427,30 @@ class VentasController extends Controller
             INNER JOIN ERP_SolicitudCronograma AS sc ON(sc.cCodConsecutivo=s.cCodConsecutivo AND sc.nConsecutivo=s.nConsecutivo AND vd.nrocuota=sc.nrocuota)
             INNER JOIN ERP_Moneda AS m ON(m.IdMoneda=v.idmoneda)
             WHERE FORMAT(v.fecha_emision, 'yyyy-MM-dd') BETWEEN '{$data["fecha_inicio"]}' AND '{$data["fecha_fin"]}' AND s.idCobrador={$value->idCobrador} AND ISNULL(v.anulado, 'N')<>'S'";
-           
+            // echo $sql."\n";
             $pagos = DB::select($sql);
-            
+
             if(count($pagos) <= 0) {
                 $vacios ++;
             }
 
+
             foreach ($pagos as $kp => $vp) {
+
+
                 $cuotas = $solicitud_repositorio->get_solicitud_cronograma($vp->cCodConsecutivo, $vp->nConsecutivo);
                 $pagos[$kp]->nrocuotas = count($cuotas);
             }
             $cobradores[$key]->pagos = $pagos;
-        
+
+
         }
+
+
 
         $datos["cobradores"] = $cobradores;
         // echo "<pre>";
-        // print_r($datos);
+        // var_dump($datos);
         // exit;
 
         if($vacios > 0) {
@@ -448,7 +458,7 @@ class VentasController extends Controller
             exit;
         }
 
-        
+
         $pdf = PDF::loadView("reportes.lista_cobranza_cuotas", $datos)->setPaper('A4', "landscape");
         return $pdf->stream("lista_cobranza_cuotas.pdf"); // ver
         // return $pdf->stream("credito_directo.pdf"); // ver
@@ -534,7 +544,7 @@ class VentasController extends Controller
         foreach ($de_1_8 as $key => $value) {
             $total_de_1_8 += (float) $value->saldo;
         }
-       
+
         $result["de_1_8"]["monto_soles"] = number_format($total_de_1_8, 2);
         $result["de_1_8"]["monto_dolares"] = number_format($total_de_1_8 / $tipo_cambio, 2);
         $result["de_1_8"]["clientes"] = count($de_1_8);
@@ -553,13 +563,13 @@ class VentasController extends Controller
         foreach ($de_9_30 as $key => $value) {
             $total_de_9_30 += (float) $value->saldo;
         }
-       
+
         $result["de_9_30"]["monto_soles"] = number_format($total_de_9_30, 2);
         $result["de_9_30"]["monto_dolares"] = number_format($total_de_9_30 / $tipo_cambio, 2);
         $result["de_9_30"]["clientes"] = count($de_9_30);
         $result["de_9_30"]["mora_porcentaje"] = number_format($total_de_9_30 / $total_general, 2) * 100;
 
-        
+
         $sql = "SELECT s.cCodConsecutivo, s.nConsecutivo, s.saldo, count(*) AS cuotas FROM ERP_Solicitud AS s
         INNER JOIN ERP_Consecutivos AS c ON(c.cCodConsecutivo=s.cCodConsecutivo)
         INNER JOIN ERP_SolicitudCronograma AS sc ON(s.cCodConsecutivo=sc.cCodConsecutivo AND s.nConsecutivo=sc.nConsecutivo)
@@ -572,7 +582,7 @@ class VentasController extends Controller
         foreach ($de_31_60 as $key => $value) {
             $total_de_31_60 += (float) $value->saldo;
         }
-       
+
         $result["de_31_60"]["monto_soles"] = number_format($total_de_31_60, 2);
         $result["de_31_60"]["monto_dolares"] = number_format($total_de_31_60 / $tipo_cambio, 2);
         $result["de_31_60"]["clientes"] = count($de_31_60);
@@ -591,7 +601,7 @@ class VentasController extends Controller
         foreach ($de_61_90 as $key => $value) {
             $total_de_61_90 += (float) $value->saldo;
         }
-       
+
         $result["de_61_90"]["monto_soles"] = number_format($total_de_61_90, 2);
         $result["de_61_90"]["monto_dolares"] = number_format($total_de_61_90 / $tipo_cambio, 2);
         $result["de_61_90"]["clientes"] = count($de_61_90);
@@ -609,7 +619,7 @@ class VentasController extends Controller
         foreach ($de_91_120 as $key => $value) {
             $total_de_91_120 += (float) $value->saldo;
         }
-       
+
         $result["de_91_120"]["monto_soles"] = number_format($total_de_91_120, 2);
         $result["de_91_120"]["monto_dolares"] = number_format($total_de_91_120 / $tipo_cambio, 2);
         $result["de_91_120"]["clientes"] = count($de_91_120);
@@ -627,7 +637,7 @@ class VentasController extends Controller
         foreach ($de_121_150 as $key => $value) {
             $total_de_121_150 += (float) $value->saldo;
         }
-       
+
         $result["de_121_150"]["monto_soles"] = number_format($total_de_121_150, 2);
         $result["de_121_150"]["monto_dolares"] = number_format($total_de_121_150 / $tipo_cambio, 2);
         $result["de_121_150"]["clientes"] = count($de_121_150);
@@ -646,7 +656,7 @@ class VentasController extends Controller
         foreach ($de_151_270 as $key => $value) {
             $total_de_151_270 += (float) $value->saldo;
         }
-       
+
         $result["de_151_270"]["monto_soles"] = number_format($total_de_151_270, 2);
         $result["de_151_270"]["monto_dolares"] = number_format($total_de_151_270 / $tipo_cambio, 2);
         $result["de_151_270"]["clientes"] = count($de_151_270);
@@ -665,7 +675,7 @@ class VentasController extends Controller
         foreach ($de_271_360 as $key => $value) {
             $total_de_271_360 += (float) $value->saldo;
         }
-       
+
         $result["de_271_360"]["monto_soles"] = number_format($total_de_271_360, 2);
         $result["de_271_360"]["monto_dolares"] = number_format($total_de_271_360 / $tipo_cambio, 2);
         $result["de_271_360"]["clientes"] = count($de_271_360);
@@ -684,7 +694,7 @@ class VentasController extends Controller
         foreach ($de_361 as $key => $value) {
             $total_de_361 += (float) $value->saldo;
         }
-       
+
         $result["de_361"]["monto_soles"] = number_format($total_de_361, 2);
         $result["de_361"]["monto_dolares"] = number_format($total_de_361 / $tipo_cambio, 2);
         $result["de_361"]["clientes"] = count($de_361);
@@ -707,7 +717,7 @@ class VentasController extends Controller
         $result = $this->obtener_data_reporte($data, $repo_orden);
         $datos = array();
         $datos["data"] = $result;
-        $datos["empresa"] = $repo_caja->get_empresa(); 
+        $datos["empresa"] = $repo_caja->get_empresa();
         $tienda = "TODAS LAS TIENDAS";
         if(!empty($data["idtienda"])) {
             $tienda = $shop_repo->find($data["idtienda"])[0]->descripcion;
@@ -734,7 +744,7 @@ class VentasController extends Controller
         $nConsecutivo = $array[1];
         $idventa = $array[2];
 
-       
+
 
         $parametro_cuota = $repo_caja_diara_detalle->get_parametro_cuota();
 
@@ -752,5 +762,5 @@ class VentasController extends Controller
         $validar = $repo->validar_nota($data["idventa"]);
         return response()->json($validar);
     }
-  
+
 }

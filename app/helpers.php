@@ -76,9 +76,9 @@ function validatePermission($url)
     return (isset($permission));
 }
 
-function parseDataList($data, $request, $sort_default, $data_select)
+function parseDataList($data, $request, $sort_default, $data_select, $sort_asc_desc = 'ASC')
 {
-    $search = ($request->has('jtSorting')) ? explode(' ', $request->input('jtSorting')) : [$sort_default, 'ASC'];
+    $search = ($request->has('jtSorting')) ? explode(' ', $request->input('jtSorting')) : [$sort_default, $sort_asc_desc];
 
     $rows = $data->count();
 
@@ -203,6 +203,20 @@ function parseSelectAndSerialOnly($data, $key_id, $key_number, $key_serial)
     return $rows;
 }
 
+function parseSelectTwoOnly($data, $key_id, $key_one, $key_two)
+{
+    $rows = [];
+
+    foreach ($data as $d) {
+        $rows[] = [
+            'DisplayTextOne' => $d->$key_one,
+            'DisplayTextTwo' => $d->$key_two,
+            'Value' => $d->$key_id
+        ];
+    }
+    return $rows;
+}
+
 function setIdTableByMax($max, $attributes)
 {
     $id = ($max) ? (int)$max + 1 : 1;
@@ -230,20 +244,16 @@ function generateExcelCuentasxCobrar($data_cabe,$simboloMoneda,$cambio,$file_nam
     return response()->json($response);
 }
 
-function generateExcel($data, $file_name, $sheet_name)
+function generateExcel($data, $file_name, $sheet_name, $view = 'view')
 {
-    // echo "<pre>";
-    // print_r($data); exit;
-
-    $file = Excel::create($file_name, function ($excel) use ($data, $sheet_name) {
-        $excel->sheet($sheet_name, function ($sheet) use ($data) {
+    $file = Excel::create($file_name, function ($excel) use ($data, $sheet_name, $view) {
+        $excel->sheet($sheet_name, function ($sheet) use ($data, $view) {
             $sheet->setColumnFormat(array(
                 'J' =>  \PHPExcel_Style_NumberFormat::FORMAT_NUMBER_00,
                 'K' =>  \PHPExcel_Style_NumberFormat::FORMAT_NUMBER_00
                
             ));
-            $sheet->loadView('excel.view')->with('data', $data);
-           
+            $sheet->loadView('excel.' . $view)->with('data', $data);
         });
     });
 

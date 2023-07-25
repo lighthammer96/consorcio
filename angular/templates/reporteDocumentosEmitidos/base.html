@@ -1,0 +1,78 @@
+<style>
+    .table-wrapper {
+
+        max-height: 200px !important;
+        width: auto !important;
+        overflow: auto !important;
+        display: inline-block !important;
+    }
+
+    .table-earnings {
+        background: #F3F5F6 !important;
+    }
+
+    .modal2 {
+        text-align: center;
+        padding: 0 !important;
+    }
+
+    .modal2:before {
+        content: '';
+        display: inline-block;
+        height: 100%;
+        vertical-align: middle;
+        margin-right: -4px;
+    }
+
+    .modal-dialog2 {
+        display: inline-block;
+        text-align: left;
+        vertical-align: middle;
+    }
+
+    .modal-open {
+        overflow: scroll !important;
+    }
+
+    h5 {
+        font: sans-serif;
+        margin-top: 30px;
+        text-align: center;
+    }
+
+    h5.linea {
+        position: relative;
+        z-index: 1;
+    }
+
+    h5.linea:before {
+        border-top: 2px solid #D6DBDF;
+        content: "";
+        margin: 0 auto;
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 95%;
+        z-index: -1;
+    }
+
+    h5.linea span {
+
+        background: #fff;
+        padding: 0 15px;
+    }
+</style>
+<div class="panel  panel-danger-admin">
+    <div class="panel-heading">
+        Gestión de Documentos Emitidos
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="table_container_ventas" class="table-responsive"></div>
+            </div>
+        </div>
+    </div>
+</div>

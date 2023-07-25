@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class View_OrdenCompraConformidad extends Model
 {
-   
     protected $table = 'COM_VWPorAprobarOrden';
 
     public $timestamps = true;

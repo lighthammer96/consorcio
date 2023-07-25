@@ -1,0 +1,344 @@
+<style>
+    .table-wrapper {
+
+        max-height: 200px !important;
+        width: auto !important;
+        overflow: auto !important;
+        display: inline-block !important;
+    }
+
+    .table-earnings {
+        background: #F3F5F6 !important;
+    }
+
+    .modal2 {
+        text-align: center;
+        padding: 0 !important;
+    }
+
+    .modal2:before {
+        content: '';
+        display: inline-block;
+        height: 100%;
+        vertical-align: middle;
+        margin-right: -4px;
+    }
+
+    .modal-dialog2 {
+        display: inline-block;
+        text-align: left;
+        vertical-align: middle;
+    }
+
+    .modal-open {
+        overflow: scroll !important;
+    }
+
+    h5 {
+        font: sans-serif;
+        margin-top: 30px;
+        text-align: center;
+    }
+
+    h5.linea {
+        position: relative;
+        z-index: 1;
+    }
+
+    h5.linea:before {
+        border-top: 2px solid #D6DBDF;
+        content: "";
+        margin: 0 auto;
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 95%;
+        z-index: -1;
+    }
+
+    h5.linea span {
+
+        background: #fff;
+        padding: 0 15px;
+    }
+</style>
+<div class="panel  panel-danger-admin">
+    <div class="panel-heading">
+        Gestión de Visitas a Clientes
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="table_container_visita_cliente" class="table-responsive"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal" id="modal-visita" role="dialog" style="overflow-y: scroll;">
+    <div class="modal-dialog" role="document" style="width:70%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="title-visita"></h4>
+
+            </div>
+            <form id="formulario-visita">
+                <input type="hidden" name="idvisita" id="idvisita">
+               
+                <div class="modal-body">
+                    <div class="tab-content">
+                        <!-- <br> -->
+                        <div>
+                            <div style="float:left">
+                            
+                            </div>
+                            <div style="float:right">
+                             
+
+                                <button type="button" id="" class="btn btn-danger-admin btn-sm"
+                                    ng-click="guardar_visita()">
+                                    <span class="fa fa-save"></span>
+                                    Guardar
+                                </button>
+                            </div>
+                        </div>
+                        <br>
+                        <!-- <h5 class="linea"><span>Datos Generales</span></h5> -->
+                        <div class="form-horizontal">
+
+                            <br>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="" class="control-label col-md-2">Fecha </label>
+                                        <div class="col-md-3" style="padding-left: 0px;">
+                                         
+                                            <input type="date" id="fechareg" name="fechareg" class="form-control input-sm input-registro" >
+                                        </div>
+                                        <label for="" class="control-label col-md-2">Cobrador </label>
+                                        <div class="col-md-5" style="padding-left: 0px;">
+                                           
+                                            <select id="idcobrador" style="width: 100%;" name="idcobrador"class="form-control input-sm input-registro"></select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group registro">
+                                        <div class="col-md-3" style="margin-top: 15px;">
+                                            <button type="button" id=""
+                                                class="btn btn-danger-admin btn-sm" ng-click="agregar_solicitud()">
+                                                <span class="fa fa-book"></span>
+                                                Agregar Solicitud
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered table-striped table-hover"
+                                                    id="tabla-visitas">
+                                                    <thead>
+                                                        <tr>
+                                                            <th width="200px">Cliente</th>
+                                                            <th width="110px">Solicitud</th>
+                                                            <th width="110px">Saldo</th>
+                                                            <th width="150px">Cuotas</th>
+                                                            <th width="250px" class="resultados">Observación</th>
+                                                            <th width="40px" class="registro"></th>
+                                                            <th width="40px" class="resultados"></th>
+                                                           
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="detalle-visitas"></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                       
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="float:left">
+                        <!-- <button type="button" id="" class="btn btn-primary btn-sm btn_ejecucion" disabled>
+                            <span class="fa fa-save"></span>
+                            En Ejecución
+                        </button>
+                        <button type="button" id="" class="btn btn-warning btn-sm btn_terminada" disabled>
+                            <span class="fa fa-save"></span>
+                            Terminada
+                        </button> -->
+                        <!-- <button type="button" id="aprobaciones" ng-click="mostrar_aprobaciones()" class="btn btn-danger btn-sm " style="display: none;" >
+                            <span class="fa fa-check"></span>
+                            Aprobaciones
+                        </button> -->
+                    </div>
+                    <div style="float:right">
+                       
+                        <!-- <button type="button" id="imprimir-solicitud" ng-click="imprimir_solicitud()"  class="btn btn-info btn-sm">
+                            <span class="fa fa-file-pdf-o"></span>
+                            Imprimir
+                        </button> -->
+
+                        <!-- <button type="button" id="procesar-visita" ng-click="procesar_visita()"  class="btn btn-info btn-sm">
+                            <span class="fa fa-cogs"></span>
+                            Procesar
+                        </button> -->
+                      
+                        <button type="button" id="" class="btn btn-danger-admin btn-sm"
+                            ng-click="guardar_visita()">
+                            <span class="fa fa-save"></span>
+                            Guardar
+                        </button>
+                        <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">
+                            <span class="fa fa-times"></span> Cerrar
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal" id="modal-detalle" role="dialog" style="overflow-y: scroll;">
+    <div class="modal-dialog" role="document" style="width:70%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="title-detalle"></h4>
+
+            </div>
+            <form id="formulario-detalle">
+                <input type="hidden" name="valor_igv" id="valor_igv">
+                <input type="hidden" name="cCodConsecutivo" id="cCodConsecutivo">
+                <input type="hidden" name="nConsecutivo" id="nConsecutivo">
+                <input type="hidden" name="tipo_comprobante" id="tipo_comprobante">
+                <input type="hidden" name="anticipo" id="anticipo">
+                <input type="hidden" name="idventa" id="idventa">
+                <input type="hidden" name="t_monto_total" id="t_monto_total">
+        
+                <input type="hidden" name="idmoneda" id="idmoneda">
+                <input type="hidden" name="condicion_pago" id="condicion_pago">
+                <div class="modal-body">
+                    <div class="tab-content">
+                        <!-- <br> -->
+                        <div>
+                            <div style="float:left">
+                            
+                            </div>
+                            <div style="float:right">
+                             
+
+                                <!-- <button type="button" id="" class="btn btn-danger-admin btn-sm"
+                                    ng-click="guardar_visita()">
+                                    <span class="fa fa-save"></span>
+                                    Guardar
+                                </button> -->
+                            </div>
+                        </div>
+                        <br>
+                        <!-- <h5 class="linea"><span>Datos Generales</span></h5> -->
+                        <div class="form-horizontal">
+
+                            <!-- <br> -->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                      
+                                        <label for="" class="control-label col-md-2">Cliente </label>
+                                        <div class="col-md-4" style="padding-left: 0px;">
+                                           
+                                            <select id="idcliente"  style="width: 100%;" name="idcliente"class="form-control input-sm input-registro"></select>
+                                        </div>
+                                        <label for="" class="control-label col-md-2">Solicitud </label>
+                                        <div class="col-md-4" style="padding-left: 0px;">
+                                           
+                                            <select id="idsolicitud"   style="width: 100%;" name="idsolicitud"class="form-control input-sm input-registro"></select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered table-striped table-hover"
+                                                    id="tabla-cuotas-credito">
+                                                    <thead>
+                                                        <tr>
+                                                            <th width="100px">Vencimiento</th>
+                                                            <th width="100px">Cuota</th>
+                                                            <th width="100px">Mora</th>
+                                                            
+                                                            <th width="100px">Saldo Capital </th>
+                                                            <th width="100px">Pagado </th>
+                                            
+                                                            <th width="30px">#</th>
+                                                        
+                                                            <th width="100px" class="registro">Sel</th>
+                                                            <th width="80px" class="resultados">Fecha Compromiso Pago</th>
+                                                            <th width="80px" class="resultados">Monto Pago</th>
+                                                            <th width="250px" class="resultados">Observación</th>
+                                                            
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="cuotas-credito"></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                
+                                  
+                                </div>
+                                
+                            </div>
+                        </div>
+                       
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="float:left">
+                        <!-- <button type="button" id="" class="btn btn-primary btn-sm btn_ejecucion" disabled>
+                            <span class="fa fa-save"></span>
+                            En Ejecución
+                        </button>
+                        <button type="button" id="" class="btn btn-warning btn-sm btn_terminada" disabled>
+                            <span class="fa fa-save"></span>
+                            Terminada
+                        </button> -->
+                        <!-- <button type="button" id="aprobaciones" ng-click="mostrar_aprobaciones()" class="btn btn-danger btn-sm " style="display: none;" >
+                            <span class="fa fa-check"></span>
+                            Aprobaciones
+                        </button> -->
+                    </div>
+                    <div style="float:right">
+                       
+                        <!-- <button type="button" id="imprimir-solicitud" ng-click="imprimir_solicitud()"  class="btn btn-info btn-sm">
+                            <span class="fa fa-file-pdf-o"></span>
+                            Imprimir
+                        </button> -->
+                      
+                        <button type="button" id="" class="btn btn-danger-admin btn-sm"
+                            ng-click="agregar_solicitud_detalle()">
+                            <span class="fa fa-save"></span>
+                            Agregar
+                        </button>
+                        <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">
+                            <span class="fa fa-times"></span> Cerrar
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

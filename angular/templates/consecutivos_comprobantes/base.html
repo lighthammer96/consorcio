@@ -1,0 +1,99 @@
+<div class="panel  panel-danger-admin">
+    <div class="panel-heading">
+        Gestión de Consecutivos de Comprobantes
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="table_container_consecutivos_comprobantes" class="table-responsive"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="modalConsecutivoCombro" role="dialog">
+    <div class="modal-dialog" role="document">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title" id="titleConsecutivoCombro"></h4>
+        </div>
+        <div class="modal-body">
+            <form id="form_aprobacion">
+              <div class="form-horizontal">
+                 <div class="row">
+                    <div class="col-md-12">
+                        <div class="alert alert-danger hide" role="alert" id="msg_cont">
+                            <span class="fa fa-warning"></span>
+                            Debe seleccionar un Artículo
+                        </div> 
+                        <div class="form-group">
+                            <input type="hidden" class="form-control input-sm " id="id_consecutivo" >
+                            <label class="col-sm-2 control-label">Tienda</label>
+                            <div class="col-sm-4">
+                                <select  name="idtienda" style="width: 100%;" class="form-control input-sm" id="idtienda">
+                                </select>    
+                            </div>
+                            <label class="col-sm-2 control-label">Serie </label>
+                            <div class="col-sm-4">
+                                <input type="text"  name="serie" style="width: 100%;" class="form-control input-sm" id="serie" maxlength="10">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Longitud</label>
+                            <div class="col-sm-4">
+                                <input type="text"  name="longitud" style="width: 100%;" class="form-control input-sm" id="longitud" onkeypress="return soloNumeros(event)">   
+                            </div>
+                            <label class="col-sm-2 control-label">Inicio</label>
+                            <div class="col-sm-4">
+                                 <input type="text"  name="numero" style="width: 100%;" class="form-control input-sm" id="numero" onkeypress="return soloNumeros(event)">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Actual </label>
+                            <div class="col-sm-4">
+                                <input type="text"  name="actual" style="width: 100%;" class="form-control input-sm" id="actual" onkeypress="return soloNumeros(event)">
+                            </div> 
+                            <label class="col-sm-2 control-label">Último</label>
+                            <div class="col-sm-4">
+                                <input type="text"  name="ultimo" style="width: 100%;" class="form-control input-sm" id="ultimo" onkeypress="return soloNumeros(event)">   
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Usuarios</label>
+                            <div class="col-sm-4">
+                                <select style="width: 100%;" class="form-control input-sm" id="idusuario">
+                                </select>
+                            </div>
+                             <label class="col-sm-2 control-label">Tipo Documento</label>
+                            <div class="col-sm-4">
+                                <select style="width: 100%;" class="form-control input-sm" id="IdTipoDocumento">
+                                </select>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-hover" id="tabla_contable-detalle">
+                                    <thead>
+                                    <tr>
+                                        <th>Usuario</th>
+                                        <th width="50px"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="tableDetalleConsecutivo"></tbody>
+                                </table>
+                        </div> 
+                    </div>
+                 </div>   
+              </div>  
+            </form>
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-danger-admin btn-sm" ng-click="saveComprobante()" >Guardar</button>  
+        <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+      
+    </div>
+</div>

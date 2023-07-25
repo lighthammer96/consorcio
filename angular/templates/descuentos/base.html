@@ -1,0 +1,200 @@
+<div class="panel panel-danger-admin">
+    <div class="panel-heading">
+        Gestión de Descuentos
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="table_container_Descuento" class="table-responsive"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="modalDescuento" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title" id="titleModalDescuento"></h4>
+        </div>
+        <div class="modal-body">
+              <div class="form-horizontal">
+                 <div class="row">
+                    <div class="col-md-12">
+                        <div class="alert alert-danger hide" role="alert" id="msg_cont">
+                            <span class="fa fa-warning"></span>
+                            Debe seleccionar un Artículo
+                        </div> 
+                        <div class="form-group">
+                             <input type="hidden" class="form-control input-sm " id="idDescuento" >
+                            <label class="col-sm-1 control-label">Descripción</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control input-sm" id="descripcion">
+                            </div>
+                             <label class="col-sm-1 control-label">F. Inicio</label>
+                            <div class="col-sm-3">
+                                <input type="date" class="form-control input-sm" id="dFecIni">
+                            </div>
+
+                            <label class="col-sm-1  control-label">F. Fin</label>
+                            <div class="col-sm-3">
+                                <input type="date" class="form-control input-sm" id="dFecFin">
+                            </div>
+                        </div> 
+                        <div class="form-group">
+                            <label class="col-sm-1 control-label">Tipo</label>
+                            <div class="col-sm-2">
+                               <select id="idTipo" class="form-control input-sm">
+                                   <option value="">Seleccionar</option>
+                                   <option value="P">Porcentaje</option>
+                                   <option value="M">Monto</option>
+                               </select>
+                            </div>
+                            <label class="col-sm-2 control-label">Porcentaje</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control input-sm" id="nPorcDescuento"  disabled >
+                            </div>
+                            <label class="col-sm-2 control-label">Moneda</label>
+                            <div class="col-sm-2">
+                                <select id="idMoneda"  disabled class="form-control input-sm"></select>
+                            </div>
+                           <!--  <label class="col-sm-1 control-label">Estado</label>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control input-sm" id="grupoContable">
+                            </div> -->
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-1 control-label">Monto</label>
+                            <div class="col-sm-2">
+                                <input type="text"  disabled class="form-control input-sm" id="nMonto">
+                            </div>
+
+                            <label class="col-sm-2  control-label">Limite Uso</label>
+                             <div class="col-sm-1">
+                                <label class="checkbox-inline i-checks">
+                                    <input type="checkbox" id="limit" >
+                                </label>
+                            </div>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control input-sm" id="nLimiteUso"  readonly>
+                            </div>
+
+                            <label class="col-sm-2 control-label">Cantidad Uso</label>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control input-sm" id="nCantUso" readonly>
+                            </div>
+
+                           
+                           
+                        </div>
+                        <div class="form-group">
+                             <label class="col-sm-1 control-label">Saldo Uso</label>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control input-sm" id="nSaldoUso" readonly>
+                            </div>
+                             <label class="col-sm-2 control-label">Usuarios</label>
+                            <div class="col-sm-2">
+                                <label class="checkbox-inline i-checks">
+                                    <input type="checkbox" id="p_stateUsuar" checked>
+                                    <span id="user_text">Todos</span>
+                                </label>
+                            </div>
+                            <label class="col-sm-2 col-md-offset-1 control-label">Tipo Aplicación</label>
+                            <div class="col-sm-2">
+                                <label class="checkbox-inline i-checks">
+                                    <input type="checkbox" id="p_stateAplica" checked>
+                                    <span id="tipe_text">Total</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                             <label class="col-sm-1 control-label">Estado</label>
+                            <div class="col-sm-2">
+                                <label class="checkbox-inline i-checks">
+                                    <input type="checkbox" id="p_state" checked>
+                                    <span id="state_text">Activo</span>
+                                </label>
+                            </div>
+
+                            <label style="display: none;" class="col-sm-2 col-md-offset-5 control-label todos_articulos">Todos los articulos</label>
+                            <div style="display: none;" class="col-sm-2 todos_articulos">
+                                <label class="checkbox-inline i-checks">
+                                    <input type="checkbox" id="todos_articulos" checked>
+                                    <span id="state_todos_articulos">Todos</span>
+                                </label>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="form-horizontal">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                           <div class="col-sm-12">
+                                             <h5 class="">Usuarios</h5>
+                                           </div> 
+                                    </div> 
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+                                            <select id="usuarios_select" class="form-control input-sm" style="width: 100%"  disabled><option value="">Seleccionar</option></select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered table-striped table-hover" id="tabla_grupo_revision">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Usuario</th>
+                                                                <th width="50px"></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="table_usuario"></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                   <div class="form-group">
+                                         <div class="col-sm-12">
+                                           <h5 class="">Productos</h5>
+                                         </div>  
+                                    </div> 
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+                                            <select id="productos_select" class="form-control input-sm" style="width: 100%" disabled><option value="">Seleccionar</option></select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered table-striped table-hover" id="tabla_grupo_revision">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Código</th>
+                                                                <th>Artículo</th>
+                                                                <th width="50px"></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="table_articulo"></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>    
+                            </div>
+                        </div>
+                    </div>
+                 </div>   
+              </div>  
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-danger-admin btn-sm" ng-click="saveDescuento()" >Guardar</button>  
+        <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+      
+    </div>
+</div>

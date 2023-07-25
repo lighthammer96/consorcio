@@ -8,10 +8,12 @@
 
 namespace App\Http\Recopro\Periodo;
 
-
 interface PeriodoInterface
 {
     public function all();
+
     public function create(array $attributes);
+
+    public function findDate($date);
 
 }

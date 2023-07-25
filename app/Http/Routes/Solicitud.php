@@ -3,8 +3,8 @@
  * Created by PhpStorm.
  * User: JAIR
  * Date: 4/5/2017
- * Time: 6:59 PM 
- */ 
+ * Time: 6:59 PM
+ */
 
 Route::post('solicitud/list', ['as' => 'solicitud.list', 'uses' => 'SolicitudController@all']);
 Route::post('solicitud/list_ventas', ['as' => 'solicitud.list_ventas', 'uses' => 'SolicitudController@list_ventas']);

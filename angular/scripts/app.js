@@ -163,7 +163,7 @@
         'sys.app.consolidated_projects',
         'sys.app.project_approval',
         // Tesoreria
-        'sys.app.cash_expense_girls',
+        'sys.app.petty_cash_expense',
         'sys.app.replenishment_cashs',
         'sys.app.sales_charges',
         'sys.app.purchase_payments',
@@ -1005,6 +1005,21 @@
                 cancel: 'No'
             }, function(){
                 callback();
+            });
+        };
+
+        $scope.showIFrame = function (cont, load, id, url, title_con, title) {
+            $(cont).addClass('hide');
+            $(load).removeClass('hide');
+            $(title_con).html(title);
+            $(cont).html('<iframe width="100%" height="500" src="" id="' + id + '" frameborder="0" allowfullscreen></iframe>');
+            $(load).html('<div class="text-center" style="padding:6em 0;"><i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i></div>');
+            id = $("#" + id);
+            id.attr({'src': base_url + url});
+            id.load(function () {
+                $(load).addClass('hide');
+                $(cont).removeClass('hide');
+                $(load).empty();
             });
         };
     }

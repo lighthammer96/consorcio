@@ -1,7 +1,9 @@
 <?php namespace App\Http\Recopro\ConfigJerarquiaCompraDetalle;
+
 use App\Http\Recopro\User\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
 /**
  * Created by PhpStorm.
  * User: Jair Vasquez
@@ -10,7 +12,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class ConfigJerarquiaCompraDetalle extends Model
 {
-  
     protected $table = 'ERP_AprobacionCompraDetalle';
 
     public $timestamps = true;
@@ -20,13 +21,14 @@ class ConfigJerarquiaCompraDetalle extends Model
     protected $keyType = 'string';
 
     public $incrementing = false;
-    
+
     const CREATED_AT = 'dFecCre';
+
     const UPDATED_AT = 'dFecMod';
-    
-    protected $fillable = ['nIdAprob', 'nIdUsuario','nOrden','cIdUsuCre','cIdUsuMod'];
-    
-     public function user_c()
+
+    protected $fillable = ['nIdAprob', 'nIdUsuario', 'nOrden', 'cIdUsuCre', 'cIdUsuMod'];
+
+    public function user_c()
     {
         return $this->belongsTo(User::class, 'cIdUsuCre');
     }

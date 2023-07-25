@@ -20,6 +20,8 @@ interface SolicitudCompraInterface
 
     public function update($id, array $attributes);
 
+    public function destroy($id);
+
     public function getIDByLast();
 
     public function getIDByConsecutive($type);

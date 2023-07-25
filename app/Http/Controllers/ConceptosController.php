@@ -14,7 +14,7 @@ use App\Http\Recopro\Conceptos\ConceptosInterface;
 use App\Http\Requests\ConceptosRequest;
 class ConceptosController extends Controller
 {
-     use ConceptosTrait;
+    use ConceptosTrait;
 
     public function __construct()
     {

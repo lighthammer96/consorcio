@@ -1,0 +1,137 @@
+<div class="modal" id="modalPCE" role="dialog" data-keyboard="false">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="titlePCE"></h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active">
+                            <a data-target="#general" aria-controls="tab1" role="tab" data-toggle="tab">General</a>
+                        </li>
+                        <li role="presentation">
+                            <a data-target="#documents" aria-controls="tab2" role="tab" data-toggle="tab">Documentos</a>
+                        </li>
+                        <li role="presentation" class="hide" id="pce_li_vouchers">
+                            <a data-target="#vouchers" aria-controls="tab3" role="tab" data-toggle="tab">Vales de Gasolina</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="general">
+                            <div class="separator"></div>
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">N° Rendición</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="pce_code" class="form-control input-sm" readonly />
+                                    </div>
+                                    <label class="col-sm-2 control-label">Periodo Contable</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="pce_accounting_period" class="form-control input-sm" readonly />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Fecha Emisión</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="pce_date" class="form-control input-sm" readonly />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Caja Chica</label>
+                                    <div class="col-sm-4">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control input-sm" id="pce_pc" readonly />
+                                            <span class="input-group-btn">
+                                    <button class="btn btn-success btn-sm" type="button" id="pce_pc_btn"
+                                            ng-click="openPettyCash()">
+                                        <span class="fa fa-search-plus"></span>
+                                    </button>
+                                </span>
+                                        </div>
+                                    </div>
+                                    <label class="col-sm-2 control-label">Saldo en Caja</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="pce_pc_total" class="form-control input-sm" readonly />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Observación</label>
+                                    <div class="col-sm-4">
+                            <textarea class="form-control input-sm" rows="2" placeholder="Observación"
+                                      id="pce_observation"></textarea>
+                                    </div>
+                                    <label class="col-sm-2 control-label">Monto Documento</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="pce_total" class="form-control input-sm" readonly />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="documents">
+                            <div class="separator"></div>
+                            <button type="button" class="btn btn-primary btn-sm" id="pce_open_doc" ng-click="openDocument()">
+                                <span class="fa fa-plus"></span>
+                                Agregar Documento
+                            </button>
+                            <div class="separator"></div>
+                            <table class="table table-bordered table-striped table-hover">
+                                <thead>
+                                <tr>
+                                    <th>N° Documento</th>
+                                    <th>Proveedor</th>
+                                    <th>Glosa</th>
+                                    <th>SubTotal</th>
+                                    <th>IGV</th>
+                                    <th>Total</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody id="pce_detail"></tbody>
+                            </table>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="vouchers">
+                            <div class="separator"></div>
+                            <button type="button" class="btn btn-primary btn-sm" id="pce_open_voucher" ng-click="openVoucher()">
+                                <span class="fa fa-plus"></span>
+                                Agregar Vale
+                            </button>
+                            <div class="separator"></div>
+                            <table class="table table-bordered table-striped table-hover">
+                                <thead>
+                                <tr>
+                                    <th>Codigo</th>
+                                    <th>Fecha</th>
+                                    <th>Glosa</th>
+                                    <th>Responsable</th>
+                                    <th>¿Es consumido?</th>
+                                    <th>Monto</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody id="pce_vouchers"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-save" ng-click="processPCE()">
+                    <span class="fa fa-sign-out"></span>
+                    Procesar
+                </button>
+                <button type="button" class="btn btn-success btn-save" ng-click="savePCE()">
+                    <span class="fa fa-save"></span>
+                    Guardar
+                </button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                    <span class="fa fa-times"></span> Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

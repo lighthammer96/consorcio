@@ -71,7 +71,7 @@ class SolicitudRepository implements SolicitudInterface
 //     }
 // >>>>>>> 4870a79d0dc412d8e5cb96175d98abd570e4358d
 
-   
+
 
     public function all()
     {
@@ -185,6 +185,16 @@ class SolicitudRepository implements SolicitudInterface
     public function get_parametro_cuotas()
     {
         $param = DB::select("select * from ERP_Parametros WHERE id=4");
+        if (count($param) > 0) {
+            return $param[0]->value;
+        } else {
+            return 0;
+        }
+    }
+
+    public function get_parametro_dia_vencimiento()
+    {
+        $param = DB::select("select * from ERP_Parametros WHERE id=29");
         if (count($param) > 0) {
             return $param[0]->value;
         } else {
@@ -329,7 +339,7 @@ class SolicitudRepository implements SolicitudInterface
     }
 
 
-       public function get_solicitud_credito($cCodConsecutivo, $nConsecutivo)
+    public function get_solicitud_credito($cCodConsecutivo, $nConsecutivo)
     {
 
         $sql = "SELECT s.*, f.cNumerodocumento AS documento_fiador, cy.cNumerodocumento AS documento_conyugue, fc.cNumerodocumento AS documento_fiadorconyugue 
@@ -367,7 +377,7 @@ class SolicitudRepository implements SolicitudInterface
         return $result;
     }
 
- 
+
 
 
     public function get_formas_pago()
@@ -384,7 +394,7 @@ class SolicitudRepository implements SolicitudInterface
         INNER JOIN ERP_Usuarios AS u ON(u.id=sc.nIdUsuario)
         /*INNER JOIN ERP_Aprobacion AS a ON(a.idaprobacion=sc.nIdAprob)*/
         WHERE sc.cCodConsecutivo='{$cCodConsecutivo}' AND sc.nConsecutivo={$nConsecutivo}";
-    // die($sql);
+        // die($sql);
         $result = DB::select($sql);
         return $result;
 
@@ -400,10 +410,10 @@ class SolicitudRepository implements SolicitudInterface
         saldo_mora = ISNULL(saldo_mora, 0) - {$data["pagado_mora"]}
 
         WHERE cCodConsecutivo='{$data["cCodConsecutivo"]}' AND nConsecutivo={$data["nConsecutivo"]}";
-    // die($sql_update);
+        // die($sql_update);
         $result = DB::statement($sql_update);
-        
-        return $result; 
+
+        return $result;
     }
 
     public function update_saldos_solicitud_solo_credito($data) {
@@ -412,10 +422,10 @@ class SolicitudRepository implements SolicitudInterface
         pagado = ISNULL(pagado, 0) + {$data["monto_pagar_credito"]}
        
         WHERE cCodConsecutivo='{$data["cCodConsecutivo"]}' AND nConsecutivo={$data["nConsecutivo"]}";
-    // die($sql_update);
+        // die($sql_update);
         $result = DB::statement($sql_update);
-        
-        return $result; 
+
+        return $result;
     }
 
 
@@ -431,8 +441,8 @@ class SolicitudRepository implements SolicitudInterface
         WHERE cCodConsecutivo='{$data["cCodConsecutivo"]}' AND nConsecutivo={$data["nConsecutivo"]} AND nrocuota={$data["nrocuota"]}";
 
         $result = DB::statement($sql_update);
-        
-        return $result; 
+
+        return $result;
     }
 
     public function update_reprogramacion($data) {
@@ -445,8 +455,8 @@ class SolicitudRepository implements SolicitudInterface
         WHERE cCodConsecutivo='{$data["cCodConsecutivo"]}' AND nConsecutivo={$data["nConsecutivo"]} AND nrocuota={$data["nrocuota"]}";
 
         $result = DB::statement($sql_update);
-        
-        return $result; 
+
+        return $result;
     }
 
 
@@ -460,8 +470,8 @@ class SolicitudRepository implements SolicitudInterface
         WHERE cCodConsecutivo='{$data["cCodConsecutivo"]}' AND nConsecutivo={$data["nConsecutivo"]} AND nrocuota={$data["nrocuota"]}";
 
         $result = DB::statement($sql_update);
-        
-        return $result; 
+
+        return $result;
     }
 
     public function validar_serie($idserie) {
@@ -469,10 +479,10 @@ class SolicitudRepository implements SolicitudInterface
         INNER JOIN ERP_SolicitudArticulo AS sa ON(sa.cCodConsecutivo=s.cCodConsecutivo AND sa.nConsecutivo=s.nConsecutivo)
         INNER JOIN ERP_SolicitudDetalle AS sd ON(sa.id=sd.id_solicitud_articulo AND sa.cCodConsecutivo=sd.cCodConsecutivo AND sa.nConsecutivo=sd.nConsecutivo)
         WHERE s.estado NOT IN(5, 10) AND sd.idSerie={$idserie}";
-        
+
         $result = DB::select($sql);
         return $result;
-        
+
     }
 
     public function copiar_solicitud($cCodConsecutivo, $nConsecutivo) {

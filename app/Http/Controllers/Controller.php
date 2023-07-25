@@ -16,6 +16,43 @@ use Illuminate\Support\Facades\DB;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    public static $_TYPE_DOCUMENT_OTHER = '00';
+
+    public static $_TYPE_DOCUMENT_BILL = '01';
+
+    public static $_TYPE_DOCUMENT_HONORARIES = '02';
+
+    public static $_TYPE_DOCUMENT_PURCHASE_SETTLEMENT = '04';
+
+    public static $_TYPE_DOCUMENT_TRAVEL_TICKET = '05';
+
+    public static $_TYPE_DOCUMENT_AIR_CARRIAGE_LETTER = '06';
+
+    public static $_TYPE_DOCUMENT_CREDIT_NOTE = '07';
+
+    public static $_TYPE_DOCUMENT_DEBIT_NOTE = '08';
+
+    public static $_TYPE_DOCUMENT_CASH_REGISTER_TICKET = '12';
+
+    public static $_TYPE_DOCUMENT_RECEIPT_PUBLIC_SERVICES = '14';
+
+    public static $_TYPE_DOCUMENT_RETENTION_RECEIPT = '20';
+
+    public static $_TYPE_DOCUMENT_PERCEPTION_RECEIPT = '40';
+
+    public static $_TYPE_DOCUMENT_EXCHANGE_LETTER = '70';
+
+    public static $_TYPE_DOCUMENT_CREDIT_NOTE_SPECIAL = '87';
+
+    public static $_TYPE_DOCUMENT_DEBIT_NOTE_SPECIAL = '88';
+
+    public static $_TYPE_DOCUMENT_CREDIT_NOTE_NOT_FISCAL = '97';
+
+    public static $_TYPE_DOCUMENT_DEBIT_NOTE_NOT_FISCAL = '98';
+
+    public static $_TYPE_DOCUMENT_OUT_NOTE = '100';
+
     public function __construct()
     {
         $this->base_model = new BaseModel();
@@ -88,7 +125,7 @@ class Controller extends BaseController
         $fields = $this->listar_campos($table);
         $primary_key = array();
         $foreign_key = array();
-      
+
         foreach ($data as $key => $value) {
             if(is_null($value)) {
                 $data[$key] = "null";
@@ -96,7 +133,7 @@ class Controller extends BaseController
         }
 
         for ($i = 0; $i < count($fields["campos"]); $i++) {
-       
+
             if (isset($data[$fields["campos"][$i]])) {
 
                 $datos[$fields["campos"][$i]] = $data[$fields["campos"][$i]];
@@ -123,7 +160,7 @@ class Controller extends BaseController
                 }
             }
         }
-      
+
         $contador = 0;
         foreach ($datos as $key => $value) {
             if (in_array($key, $fields["campos"])) {
@@ -390,7 +427,7 @@ class Controller extends BaseController
         // $update_venta["nConsecutivo"]    = $data["nConsecutivo"];
         // $update_venta["monto"]           = $data["monto"];
         // $Repo->update_saldos_venta($update_venta);
-      
+
         $sql = "
             DECLARE	@return_value int,
             @sMensaje varchar(250)
@@ -593,28 +630,28 @@ class Controller extends BaseController
 
     public function get_header($username, $secret)
     {
-       // Create a unique identifier, or nonce.
-       // This example is used for simplicity in demonstration. Use a method
-       // that guarantees uniqueness in a production environment.
-       //$nonce = md5(rand());
-       //$created = date("Y-m-d H:i:s");
-       //$combo_string = $nonce . $created . $secret;
-    
-       // The sha1 command is not available in all versions of PHP.
-       // If your version of PHP does not support this command, use
-       //openssl directly with the command:
-       // echo -n <string> | openssl dgst -sha1
-       //$sha1_string = sha1($combo_string);
-       //$password = base64_encode($sha1_string);
-       $password=$secret;
-       
-       $headers = '<wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
+        // Create a unique identifier, or nonce.
+        // This example is used for simplicity in demonstration. Use a method
+        // that guarantees uniqueness in a production environment.
+        //$nonce = md5(rand());
+        //$created = date("Y-m-d H:i:s");
+        //$combo_string = $nonce . $created . $secret;
+
+        // The sha1 command is not available in all versions of PHP.
+        // If your version of PHP does not support this command, use
+        //openssl directly with the command:
+        // echo -n <string> | openssl dgst -sha1
+        //$sha1_string = sha1($combo_string);
+        //$password = base64_encode($sha1_string);
+        $password=$secret;
+
+        $headers = '<wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
           <wsse:UsernameToken xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
              <wsse:Username>'.$username.'</wsse:Username>
              <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">'.$password.'</wsse:Password>         
           </wsse:UsernameToken>
        </wsse:Security>';
-       return $headers;
+        return $headers;
     }
 
     public function envio_json_cpe($ruta_json)
@@ -625,7 +662,7 @@ class Controller extends BaseController
         if(count($url) <= 0) {
             throw new Exception("No existe el parametro URL CPE FE");
         }
-        
+
         $cliente = new  \nusoap_client($url[0]->value, true);
 
         $err = $cliente->getError();
@@ -633,7 +670,7 @@ class Controller extends BaseController
             die('Error: ' . $err);
         }
         $filename = $ruta_json; //nombre del archivo txt formato [99999999999]-[99]-[A000]-99999999.txt
-       
+
         if (!file_exists(base_path("public/CPE/"))) {
             mkdir(base_path("public/CPE/"), 0777, true);
         }
@@ -686,8 +723,8 @@ class Controller extends BaseController
             #DEVUELVE CODIGO DE ERROR O RECHAZO
             // echo $_strFaultCode;
             // echo $_strFaultString;
-            $response["status"] = "ei"; 
-            $response["msg"] = $_strFaultCode.": ".$_strFaultString; 
+            $response["status"] = "ei";
+            $response["msg"] = $_strFaultCode.": ".$_strFaultString;
             return response()->json($response);
 
         } else if (!(!isset($_strContentFile) || trim($_strContentFile) === '')) { //si esta todo correcto devuelve el xml firmado y puede extraer el valor resumen
@@ -714,17 +751,17 @@ class Controller extends BaseController
             $solicitud_cronograma = $solicitud_repositorio->get_solicitud_cronograma($venta[0]->cCodConsecutivo_solicitud, $venta[0]->nConsecutivo_solicitud);
         }
 
-	
+
 
         $empresa = $compania_repo->find("00000");
-		
+
         $parametro_igv =  $solicitud_repositorio->get_parametro_igv();
 
         if (count($parametro_igv) <= 0) {
             throw new Exception("Por favor cree el parametro IGV!");
         }
 
-		
+
         $json["invoice"]["tip_doc"] = $venta[0]->IdTipoDocumento;
         $json["invoice"]["serie"] = $venta[0]->serie_comprobante;
         $json["invoice"]["correl"] = str_pad($venta[0]->numero_comprobante, 8, "0", STR_PAD_LEFT);
@@ -732,11 +769,11 @@ class Controller extends BaseController
         $json["invoice"]["cod_mon"] = $venta[0]->EquivalenciaSunat;
         $json["invoice"]["tip_oper"] = "0101";
         $json["invoice"]["fec_ven"] = $venta[0]->fecha_emision_server;
-        
+
         // $json["invoice"]["hora_emi"] = $venta[0]->hora_server;
         $json["invoice"]["ubl_version"] = "2.1";
         $json["invoice"]["customizacion"] = "2.0";
-	
+
         $json["invoice"]["emisor"]["tip_doc"] = "6";
         $json["invoice"]["emisor"]["num_doc"] = $empresa->Ruc;
         $json["invoice"]["emisor"]["raz_soc"] = $empresa->RazonSocial;
@@ -753,7 +790,7 @@ class Controller extends BaseController
         $json["invoice"]["adquiriente"]["raz_soc"] = $venta[0]->razonsocial_cliente;
         $json["invoice"]["adquiriente"]["dir"] = $venta[0]->direccion;
         $json["invoice"]["adquiriente"]["cod_pais"] = "PE";
-		
+
         $json["invoice"]["tot"]["exo"] = sprintf('%.2f', round($venta[0]->t_monto_exonerado, 2));
         $json["invoice"]["tot"]["val_vent"] = sprintf('%.2f', round($venta[0]->t_monto_total, 2));
         $json["invoice"]["tot"]["imp_tot"] = sprintf('%.2f', round($venta[0]->t_monto_total, 2));
@@ -789,7 +826,7 @@ class Controller extends BaseController
                 $json["invoice"]["cuota"] = array();
                 $cuotas = array();
             }
-         
+
             foreach ($solicitud_cronograma as $key => $value) {
                 $cuotas["descrip"] = "Cuota " . $value->nrocuota;
                 $cuotas["monto_neto"] = sprintf('%.2f', round($value->valor_cuota, 2));
@@ -800,10 +837,10 @@ class Controller extends BaseController
             }
         }
 
-		
+
 
         $json["invoice"]["det"] = array();
-      
+
         $detalle_venta = array();
         $cont = 1;
         foreach ($venta_detalle as $key => $value) {
@@ -829,7 +866,7 @@ class Controller extends BaseController
 
 
         $json["invoice"]["leyen"][0]["leyen_cod"] = "1000";
-       
+
         $json["invoice"]["leyen"][0]["leyen_descrip"] = $this->convertir($venta[0]->t_monto_total);
 
         if ($venta[0]->comprobante_x_saldo == "S" && $venta[0]->tipo_comprobante == "0") { // por el saldo, segunda boleta
@@ -842,7 +879,7 @@ class Controller extends BaseController
             //     $json["invoice"]["leyen"][1]["leyen_cod"] = "2001";
             //     $json["invoice"]["leyen"][1]["leyen_descrip"] = "BIENES TRANSFERIDOS EN LA AMAZONIA REGION SELVA PARA SER CONSUMIDOS EN LA MISMA";
             // }
-           
+
         }
 
         $json_encode = json_encode($json, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
@@ -854,7 +891,7 @@ class Controller extends BaseController
         $name = $empresa->Ruc . "-" . $venta[0]->IdTipoDocumento . "-" . $venta[0]->serie_comprobante . "-" . str_pad($venta[0]->numero_comprobante, 8, "0", STR_PAD_LEFT);
         file_put_contents(base_path("public/CPE/") . $name . ".json", $json_encode);
         $this->envio_json_cpe($name . ".json");
-        
+
     }
 
     public function consultar_cdr($documento_cpe) {
@@ -868,7 +905,7 @@ class Controller extends BaseController
         if(count($url) <= 0) {
             throw new Exception("No existe el parametro URL CPE FE");
         }
-        
+
         $cliente = new  \nusoap_client($url[0]->value, true);
 
         if (!file_exists(base_path("public/CDR/"))) {
@@ -880,7 +917,7 @@ class Controller extends BaseController
             die('Error: '.$err);
         }
         $filename = $documento_cpe.'.xml'; //nombre del archivo txt formato [99999999999]-[99]-[A000]-99999999.xml
-        //$pathRoot = 'C:/Users/Javier/Documents/app/'; //directorio local donde se generan los xml del cdr desde el sistema en PHP 
+        //$pathRoot = 'C:/Users/Javier/Documents/app/'; //directorio local donde se generan los xml del cdr desde el sistema en PHP
 
         $sql_usuario = "SELECT * FROM ERP_Parametros WHERE id=20";
         $usuario = DB::select($sql_usuario);
@@ -902,7 +939,7 @@ class Controller extends BaseController
         $parametros = array('fileName'=>$filename);
         $respuesta=$cliente->call("getStatusCdr",$parametros,'http://service.sunat.gob.pe','',$this->get_header($username, $password));
 
-		// print_R($respuesta);
+        // print_R($respuesta);
 
         $_strFaultCode='';
         $_strFaultString='';
@@ -915,30 +952,30 @@ class Controller extends BaseController
                     break;
                 case 'faultstring':
                     $_strFaultString=$value;
-                break;
+                    break;
                 case 'applicationResponse':
-                    $_strContentFile=$value;	
-                break;
+                    $_strContentFile=$value;
+                    break;
                 case 'statusCdr':
                     foreach ($value as $key2 => $value2){
                         switch($key2){
                             case 'content':
-                                $_strContentFile=$value2;	
-                            break;
+                                $_strContentFile=$value2;
+                                break;
                             case 'statusCode':
-                                $_strStatusCode=$value2;	
-                            break;
+                                $_strStatusCode=$value2;
+                                break;
                         }
-                    }			
-                break;
-                default:		
+                    }
+                    break;
+                default:
                     echo 'sin respuesta';
-                break;
-                
+                    break;
+
             }
         }
         ############################
-        #obtener codigo 
+        #obtener codigo
         ############################
         // var_dump($_strFaultCode);
         // var_dump($_strContentFile);
@@ -955,7 +992,7 @@ class Controller extends BaseController
 
             file_put_contents("CDR/".'R-'.$filename, base64_decode($_strContentFile));
         }
-		// exit;
+        // exit;
         return $respuesta;
 
     }

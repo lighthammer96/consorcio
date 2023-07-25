@@ -14,12 +14,9 @@ use App\Http\Recopro\SolicitudCompra\SolicitudCompraTrait;
 use App\Http\Recopro\SolicitudCompraArticulo\SolicitudCompraArticuloInterface;
 use Illuminate\Http\Request;
 use App\Http\Recopro\SolicitudCompra\SolicitudCompraInterface;
-use App\Http\Recopro\Warehouse\WarehouseInterface;
-use App\Http\Recopro\Operation\OperationInterface;
 use App\Http\Recopro\Product\ProductInterface;
 use App\Http\Recopro\Lot\LotInterface;
 use App\Http\Recopro\Localizacion\LocalizacionInterface;
-use App\Http\Requests\SolicitudCompraRequest;
 use App\Http\Recopro\Serie\SerieInterface;
 use App\Http\Recopro\Solicitud_Asignacion\Solicitud_AsignacionInterface;
 use Carbon\Carbon;
@@ -148,13 +145,13 @@ class SolicitudCompraController extends Controller
             if ($state == 1 && count($detail) == 0) {
                 throw new \Exception('Debe agregar minimo 1 articulo');
             }
-            $scaRepo->deleteBySol($id);
+            $sca_id = [];
             foreach ($detail as $det) {
                 $p_id = $det['id'];
                 $q_ = (float)$det['q'];
                 $date_required_ = $det['date'];
                 $date_required_ = Carbon::createFromFormat('d/m/Y', $date_required_);
-                $scaRepo->create([
+                $sca = $scaRepo->createUpdate([
                     'idMovimiento' => $id,
                     'idArticulo' => $p_id,
                     'cantidad' => $q_,
@@ -163,7 +160,9 @@ class SolicitudCompraController extends Controller
                     'consecutivo' => $scaRepo->getIDByLast(),
                     'observaciones' => $det['observations']
                 ]);
+                $sca_id[] = $sca->id;
             }
+            $scaRepo->deleteByExcept($id, $sca_id);
             $data_return = [];
             if ($state == 0) {
                 $number = $sol->nConsecutivo;

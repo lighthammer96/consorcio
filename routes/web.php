@@ -323,6 +323,11 @@ Route::group(['middleware' => ['auth', 'permission']], function () {
 
     require app_path() . '\Http\Routes\ProjectApproval.php';
 
+
+    require app_path() . '\Http\Routes\ReplenishmentCash.php';
+
+    require app_path() . '\Http\Routes\PettyCashExpense.php';
+
 });
 
 Route::get('migrate_excel', 'MigrationController@index');

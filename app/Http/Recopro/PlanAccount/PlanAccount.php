@@ -12,13 +12,15 @@ class PlanAccount extends Model
 {
     protected $table = 'PlanCuentas';
 
-    protected $keyType = 'string';
+    public $timestamps = false;
 
     protected $primaryKey = 'IdCuenta';
 
-    protected $fillable = [];
+    protected $keyType = 'string';
 
-    protected $hidden = [];
+    public $incrementing = false;
+
+    protected $fillable = ['IdCuenta', 'NombreCuenta', 'IdCuentaPadre'];
 
 
 

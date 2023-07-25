@@ -15,7 +15,7 @@ use App\Http\Requests\Query_stockRequest;
 use App\Http\Recopro\Solicitud_Asignacion\Solicitud_AsignacionInterface;
 class Query_stockController extends Controller
 {
-     use Query_stockTrait;
+    use Query_stockTrait;
 
     public function __construct()
     {
@@ -41,7 +41,7 @@ class Query_stockController extends Controller
     // }
 
     public function excel(Query_stockInterface $repo, Request $request)
-    {   
+    {
         ini_set('max_execution_time', '3000');
         set_time_limit(3000);
         $s = $request->input('search', '');
@@ -51,7 +51,7 @@ class Query_stockController extends Controller
         $filtro_cate =  $request->input('filtro_cate');
         return generateExcel($this->generateDataExcel($repo->allFiltro($s,$filtro_art,$filtro_idAlm,$filtro_idLoc,$filtro_cate)), 'LISTA DE ARTICULOS CON STOCK', 'Articulo');
     }
-     public function getDataFiltro(Query_stockInterface $repo)
+    public function getDataFiltro(Query_stockInterface $repo)
     {
         try {
             $data_almacen=$repo->get_almacen();
@@ -83,7 +83,7 @@ class Query_stockController extends Controller
             return response()->json([
                 'status' => true,
                 'localizaciones' => $data,
-              
+
             ]);
 
         } catch (\Exception $e) {
@@ -93,40 +93,40 @@ class Query_stockController extends Controller
             ]);
         }
     }
-      public function pdf(Request $request,Solicitud_AsignacionInterface $repcom, Query_stockInterface $repo)
-    {       
-            date_default_timezone_set('America/Lima');
-            $fechacA= date("d/m/Y");
-            $s = $request->input('search', '');
-            $filtro_art =  $request->input('filtro_art');
-            $filtro_idAlm =  $request->input('filtro_idAlm');
-            $filtro_idLoc =  $request->input('filtro_idLoc');
-            $filtro_cate =  $request->input('filtro_cate');
-            $simboloMoneda = $repo->getSimboloMoneda();
-            //   $img='logo.jpg'; 
-            // $path = public_path('img/' . $img);
+    public function pdf(Request $request,Solicitud_AsignacionInterface $repcom, Query_stockInterface $repo)
+    {
+        date_default_timezone_set('America/Lima');
+        $fechacA= date("d/m/Y");
+        $s = $request->input('search', '');
+        $filtro_art =  $request->input('filtro_art');
+        $filtro_idAlm =  $request->input('filtro_idAlm');
+        $filtro_idLoc =  $request->input('filtro_idLoc');
+        $filtro_cate =  $request->input('filtro_cate');
+        $simboloMoneda = $repo->getSimboloMoneda();
+        //   $img='logo.jpg';
+        // $path = public_path('img/' . $img);
 
-            $data_compania=$repcom->get_compania(); 
+        $data_compania=$repcom->get_compania();
 
-            $path = public_path('/'.$data_compania[0]->ruta_logo);
-            if(!file_exists($path)){
-                $path = public_path('/img/a1.jpg');
-            }
+        $path = public_path('/'.$data_compania[0]->ruta_logo);
+        if(!file_exists($path)){
+            $path = public_path('/img/a1.jpg');
+        }
 
-            $type_image = pathinfo($path, PATHINFO_EXTENSION);
-            $image = file_get_contents($path);
-            $image = 'data:image/' . $type_image . ';base64,' . base64_encode($image);
-            $data =$repo->allFiltro($s,$filtro_art,$filtro_idAlm,$filtro_idLoc,$filtro_cate);
-            return response()->json([
-                'status' => true,
-                'filtro_art'=>$filtro_art,
-                'filtro_idAlm'=>$filtro_idAlm,
-                'filtro_idLoc'=>$filtro_idLoc,
-                'filtro_cate'=>$filtro_cate,
-                'data' => $data,
-                'fechacA'=>$fechacA,
-                'simboloMoneda'=>$simboloMoneda,
-                 'img'=>$image,
-            ]);
+        $type_image = pathinfo($path, PATHINFO_EXTENSION);
+        $image = file_get_contents($path);
+        $image = 'data:image/' . $type_image . ';base64,' . base64_encode($image);
+        $data =$repo->allFiltro($s,$filtro_art,$filtro_idAlm,$filtro_idLoc,$filtro_cate);
+        return response()->json([
+            'status' => true,
+            'filtro_art'=>$filtro_art,
+            'filtro_idAlm'=>$filtro_idAlm,
+            'filtro_idLoc'=>$filtro_idLoc,
+            'filtro_cate'=>$filtro_cate,
+            'data' => $data,
+            'fechacA'=>$fechacA,
+            'simboloMoneda'=>$simboloMoneda,
+            'img'=>$image,
+        ]);
     }
-} 
+}

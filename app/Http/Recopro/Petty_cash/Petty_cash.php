@@ -19,7 +19,8 @@ class Petty_cash extends Model
 
     protected $table = 'ERP_CajaChica';
 
-    protected $fillable = ['code', 'description', 'liable_id', 'user_created', 'user_updated', 'user_deleted'];
+    protected $fillable = ['code', 'description', 'liable_id', 'total', 'is_vale',
+        'user_created', 'user_updated', 'user_deleted'];
 
     protected $hidden = ['deleted_at'];
 

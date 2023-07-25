@@ -1,0 +1,81 @@
+<div class="panel  panel-danger-admin">
+    <div class="panel-heading">
+        Gestión de Cajas
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="table_container_cajas" class="table-responsive"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="modalCajas" role="dialog">
+    <div class="modal-dialog" role="document">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title" id="titleModalCajas"></h4>
+        </div>
+        <div class="modal-body">
+            <form id="form_aprobacion">
+              <div class="form-horizontal">
+                 <div class="row">
+                    <div class="col-md-12">
+                        <div class="alert alert-danger hide" role="alert" id="msg_cont">
+                            <span class="fa fa-warning"></span>
+                            Debe seleccionar un Artículo
+                        </div> 
+                        <div class="form-group">
+                            <input type="hidden" class="form-control input-sm " id="idcaja" >
+                             <label class="col-sm-2 control-label">Nombre </label>
+                            <div class="col-sm-4">
+                                <input type="text"  name="nombre_aprobacion" style="width: 100%;" class="form-control input-sm" id="nombre_caja">
+                            </div>
+                            <label class="col-sm-2 control-label">Tienda</label>
+                            <div class="col-sm-4">
+                                <select  name="idtienda" style="width: 100%;" class="form-control input-sm" id="idtienda">
+                                </select>    
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Activo</label>
+                            <div class="col-sm-4">
+                                <label class="checkbox-inline i-checks">
+                                    <input type="checkbox" id="p_state" checked>
+                                    <span id="state_text">SI</span>
+                                </label>
+                            </div>
+                            <label class="col-sm-2 control-label">Usuarios</label>
+                            <div class="col-sm-4">
+                                <select style="width: 100%;" class="form-control input-sm" id="idusuario">
+                                </select>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-hover" id="tabla_contable-detalle">
+                                    <thead>
+                                    <tr>
+                                        <th>Usuario</th>
+                                        <th width="50px"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="tableDetalleCaja"></tbody>
+                                </table>
+                        </div> 
+                    </div>
+                 </div>   
+              </div>  
+            </form>
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-danger-admin btn-sm" ng-click="saveCaja()" >Guardar</button>  
+        <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+      
+    </div>
+</div>

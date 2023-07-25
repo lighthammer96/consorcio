@@ -5,286 +5,312 @@
     'use strict';
     angular.module('sys.app.replenishment_cashs')
         .config(Config)
-        .controller('ReplenishmentcashCtrl', ReplenishmentcashCtrl);
+        .controller('ReplenishmentCashCtrl', ReplenishmentCashCtrl);
 
     Config.$inject = ['$stateProvider', '$urlRouterProvider'];
 
-    ReplenishmentcashCtrl.$inject = ['$scope', '_', 'RESTService', '$rootScope', 'AlertFactory', 'Notify'];
+    ReplenishmentCashCtrl.$inject = ['$scope', '_', 'RESTService'];
 
-    function ReplenishmentcashCtrl($scope, _, RESTService, $rootScope, AlertFactory, Notify) {
+    function ReplenishmentCashCtrl($scope, _, RESTService)
+    {
+        var modalRC;
+        var titleRC;
+        var modalPettyCash;
+        var modalPaymentMethod;
+        var call_m = false;
 
-        var modalW;
-        var modalDocument;
-        var titleWar;
-        var type_id;
-        var default_type = '';
-        var w_user_body;
-        var Replenishmentcash_id;
-        var w_description;
-        var w_code_internal;
-        var w_type_id;
-        var w_physical_location;
-        var w_address;
-        var w_state;
-        var modalCash;
-        var modalProyect;
-        var modalProvider;
+        var rc_id = 0;
+        var rc_state = 1;
+        var rc_date;
+        var rc_accounting_period;
+        var rc_type_change;
+        var rc_petty_cash_id = '';
+        var rc_petty_cash;
+        var rc_responsible;
+        var rc_user_required;
+        var rc_currency;
+        var rc_concept;
+        var rc_payment_method_id = '';
+        var rc_payment_method;
+        var rc_origin_change = 0;
+        var rc_number;
+        var rc_bank_id;
+        var rc_current_account_id;
+        var rc_amount;
+
+        var rc_currency_data = [];
+        var rc_bank_data = [];
+        var rc_bank_account_data = [];
+
+        function clearRC() {
+            cleanRequired();
+            titleRC.empty();
+            rc_id = 0;
+            rc_state = 1;
+            rc_date.val('').prop('disabled', false);
+            rc_accounting_period.val('');
+            rc_type_change.val('');
+            rc_petty_cash_id = '';
+            rc_petty_cash.val('');
+            rc_petty_cash.next('span').find('button').prop('disabled', false);
+            rc_responsible.val('');
+            rc_user_required.val('').prop('disabled', false);
+            rc_currency.val('1').prop('disabled', false);
+            rc_concept.val('').prop('disabled', false);
+            rc_payment_method_id = '';
+            rc_payment_method.val('');
+            rc_payment_method.next('span').find('button').prop('disabled', false);
+            rc_origin_change = 0;
+            rc_number.val('').prop('disabled', false);
+            rc_bank_id.val('').prop('disabled', false).trigger('change.select2');
+            rc_current_account_id.val('').trigger('change.select2');
+            rc_current_account_id.prop('disabled', true);
+            rc_amount.val('').prop('disabled', false);
+            $('button.btn-save').removeClass('hide');
+            $('button.btn-process').addClass('hide');
+        }
+
+        function getDataForm() {
+            RESTService.all('replenishment_cashs/data_form', '', function (response) {
+                if (!_.isUndefined(response.status) && response.status) {
+                    rc_currency_data = response.currency;
+                    rc_bank_data = response.bank;
+                    rc_bank_account_data = response.bankAccount;
+                }
+            }, function () {
+                getDataForm();
+            });
+        }
 
         function overModals() {
-            modalW = $('#modalRC');
-            titleWar = $('#title-rc');
-            modalDocument = $('#modalDocument');
-            modalCash= $("#modalCash");
-            modalProyect=$("#modalProyect");
-            modalProvider=$("#modalProvider");
-     
-            w_user_body = $("#w_user_body");
-            Replenishmentcash_id = $("#Replenishmentcash_id");
-            w_description = $('#w_description');
-            w_code_internal = $("#w_code_internal");
-            w_type_id = $("#w_type_id");
-            w_physical_location = $("#w_physical_location");
-            w_address = $("#w_address");
-            w_state = $("#w_state");
-
-
-            modalDocument.on('hidden.bs.modal', function (e) {
-                modalW.attr('style', 'display:block;');
-            });
-            modalDocument.on('show.bs.modal', function (e) {
-                modalW.attr('style', 'display:block; z-index:2030 !important');
-            });
-           modalCash.on('hidden.bs.modal', function (e) {
-                modalW.attr('style', 'display:block;');
-            });
-            modalCash.on('show.bs.modal', function (e) {
-                modalW.attr('style', 'display:block; z-index:2030 !important');
-            });
-           modalProvider.on('hidden.bs.modal', function (e) {
-                modalW.attr('style', 'display:block;');
-            });
-            modalProvider.on('show.bs.modal', function (e) {
-                modalW.attr('style', 'display:block; z-index:2030 !important');
-            });
-            
-            
-            modalW.on('hidden.bs.modal', function (e) {
-                cleanReplenishmentcash();
-            });
             if (!call_m) {
+                titleRC = $('#titleRC');
+                rc_date = $("#rc_date");
+                rc_date.addClass('readonly-white').datepicker({
+                    changeMonth: true,
+                    changeYear: true,
+                    dateFormat: 'dd/mm/yy',
+                    beforeShow: function () {
+                        setTimeout(function () {
+                            $('.ui-datepicker').css('z-index', 2052);
+                        });
+                    },
+                    onSelect: function (dateText, instance) {
+                        validTypeChangeRC(this.value, instance.lastVal);
+                    }
+                });
+                rc_accounting_period = $("#rc_accounting_period");
+                rc_type_change = $("#rc_type_change");
+                rc_petty_cash = $("#rc_petty_cash");
+                rc_responsible = $("#rc_responsible");
+                rc_user_required = $("#rc_user_required");
+                rc_currency = $('#rc_currency');
+                rc_currency.empty();
+                _.each(rc_currency_data, function (item) {
+                    rc_currency.append('<option value="' + item.Value + '">' + item.DisplayText + '</option>');
+                });
+                rc_concept = $('#rc_concept');
+                rc_payment_method = $("#rc_payment_method");
+                rc_number = $("#rc_number");
+
+                rc_bank_id = $('#rc_bank_id');
+                rc_bank_id.html('<option value="">SELECCIONAR</option>');
+                _.each(rc_bank_data, function (item) {
+                    rc_bank_id.append('<option value="' + item.Value + '">' + item.DisplayText + '</option>');
+                });
+                rc_bank_id.select2();
+                rc_bank_id.change(function (e) {
+                    if (rc_payment_method.val() === '' && rc_origin_change === 0) {
+                        $scope.showAlert('', 'Debe seleccionar forma de ingreso.', 'warning');
+                        rc_bank_id.val('').trigger('change.select2');
+                        return false;
+                    } else {
+                        loadBankAccount(rc_bank_id.val());
+                        rc_current_account_id.prop('disabled', false);
+                    }
+                    e.preventDefault();
+                });
+
+                rc_current_account_id = $('#rc_current_account_id');
+                rc_current_account_id.html('<option value="">SELECCIONAR</option>');
+                _.each(rc_bank_account_data, function (item) {
+                    rc_current_account_id.append('<option value="' + item.Value + '">' + item.Value + ' ' + item.DisplayText + '</option>');
+                });
+                rc_current_account_id.select2();
+                rc_current_account_id.change(function () {
+                    if (rc_bank_id.val() === '' && rc_origin_change === 0) {
+                        $scope.showAlert('', 'Debe Seleccionar banco.', 'warning');
+                        rc_current_account_id.val('');
+                        return false;
+                    }
+                });
+                rc_amount = $('#rc_amount');
+
+                modalRC = $('#modalRC');
+                modalRC.on('hidden.bs.modal', function (e) {
+                    clearRC();
+                });
+
+                modalPettyCash = $('#modalPettyCash');
+                modalPettyCash.on('show.bs.modal', function (e) {
+                    $('#LoadRecordsButtonCash').click();
+                    modalRC.attr('style', 'display:block; z-index:2030 !important');
+                });
+                modalPettyCash.on('hidden.bs.modal', function (e) {
+                    $('#search_cash').val('');
+                    $('#LoadRecordsButtonCash').click();
+                    modalRC.attr('style', 'display:block; overflow-y: auto;');
+                });
+
+                modalPaymentMethod = $("#modalPaymentMethod");
+                modalPaymentMethod.on('show.bs.modal', function (e) {
+                    $('#LoadRecordsButtonPaymentMethod').click();
+                    modalRC.attr('style', 'display:block; z-index:2030 !important');
+                });
+                modalPaymentMethod.on('hidden.bs.modal', function (e) {
+                    $('#search_pm').val('');
+                    $('#LoadRecordsButtonPaymentMethod').click();
+                    modalRC.attr('style', 'display:block;');
+                });
+
+                call_m = true;
+
                 callModals();
             }
         }
 
-        function cleanReplenishmentcash()
-        {
-            titleWar.html('');
-            Replenishmentcash_id.val('');
-            w_description.val('');
-            w_address.val('');
-            w_code_internal.val('');
-            w_state.prop('checked', false);
-            w_physical_location.prop('checked',false);
-            w_user_body.html('');
-            activeTab('almacen');
-        }
-
-        function newReplenishmentcash() {
+        function newRC() {
             overModals();
-            modalW.modal('show');
-            titleWar.html('Nueva Reposición de Caja Chica');
+            titleRC.html('Nueva Reposición de Caja Chica');
+            modalRC.modal('show');
         }
 
-
-        $scope.openDocument = function () {
-            //$('#LoadRecordsButtonUser').click();
-            modalDocument.modal('show');
+        $scope.openPettyCash = function () {
+            modalPettyCash.modal('show');
         };
 
-        $scope.openCash = function () {
-            //$('#LoadRecordsButtonUser').click();
-            modalCash.modal('show');
-        };
-        
-        $scope.openProyect = function () {
-            //$('#LoadRecordsButtonUser').click();
-            modalProyect.modal('show');
+        $scope.openPaymentMethod = function () {
+            modalPaymentMethod.modal('show');
         };
 
-        $scope.openProvider = function () {
-            //$('#LoadRecordsButtonUser').click();
-            modalProvider.modal('show');
-        };
-
-
-/*        RESTService.all('Replenishmentcashs/data_form', '', function (response) {
-            if (!_.isUndefined(response.status) && response.status == true) {
-                _.each(response.types, function (item) {
-                    if (default_type == '') default_type = item.Value;
-                    $("#w_type_id").append('<option value="' + item.Value + '">' + item.DisplayText + '</option>');
-                });
+        $scope.saveRC = function (option) {
+            var b_val = true;
+            b_val = b_val && rc_date.required();
+            b_val = b_val && rc_petty_cash.required();
+            b_val = b_val && rc_user_required.required();
+            b_val = b_val && rc_concept.required();
+            b_val = b_val && rc_payment_method.required();
+            if (b_val && rc_payment_method_id !== 'EFE') {
+                b_val = b_val && rc_number.required();
             }
-        });*/
-
-    function findReplenishmentcash(id)
-        {
-            overModals();
-             modalW.modal('show');
-             titleWar.html('Editar Reposición de Caja Chica');
-/*            titleWar.html('Editar Almacén');
-            RESTService.get('Replenishmentcashs/find', id, function(response) {
-                if (!_.isUndefined(response.status) && response.status == true) {
-                    console.log(response);
-                    var data_p = response.data;
-                    Replenishmentcash_id.val(data_p.id);
-                    var chk_state = (data_p.state == '1');
-                    w_state.prop('checked', chk_state);
-                    var chk_pl = (data_p.physical_location == '1');
-                    w_physical_location.prop('checked', chk_pl);
-                    w_description.val(data_p.description);
-                    w_address.val(data_p.address);
-                    w_code_internal.val(data_p.code_internal);
-
-                    modalW.modal('show');
-                    _.each(data_p.users, function(b) {
-                        addToReplenishmentcash(b.id, b.username,b.name);
-
-                    });
-                } else {
-                    AlertFactory.textType({
-                        title: '',
-                        message: 'Hubo un error al obtener el Usuario. Intente nuevamente.',
-                        type: 'error'
-                    });
+            if (b_val && rc_payment_method_id !== 'EFE') {
+                if (rc_bank_id.val() === '') {
+                    rc_bank_id.select2('open');
+                    return false;
                 }
-            });*/
-        }
-
-
-        $scope.saveReplenishmentcash = function () {
-            var bval = true;
-            bval = bval && w_description.required();
-            bval = bval && w_type_id.required();
-            bval = bval && w_address.required();
-            bval = bval && w_code_internal.required();
-            if (bval) {
-                var users = [];
-                $.each($('.w_user'), function (idx, item) {
-                    users[idx] = $(item).val();
-                });
-                users = users.join(',');
-
+                if (rc_current_account_id.val() === '') {
+                    rc_current_account_id.select2('open');
+                    return false;
+                }
+            }
+            b_val = b_val && rc_amount.required();
+            if (b_val) {
                 var params = {
-                    'id': Replenishmentcash_id.val(),
-                    'code_internal': w_code_internal.val(),
-                    'description': w_description.val(),
-                    'type_id': w_type_id.val(),
-                    'address': w_address.val(),
-                    'state': ((w_state.prop('checked')) ? 1 : 0),
-                    'physical_location': ((w_physical_location.prop('checked')) ? 1 : 0),
-                    'users': users
+                    'option': option,
+                    'date': rc_date.val(),
+                    'petty_cash_id': rc_petty_cash_id,
+                    'delivered_to': rc_user_required.val(),
+                    'currency_id': rc_currency.val(),
+                    'concept': rc_concept.val(),
+                    'payment_method_id': rc_payment_method_id,
+                    'number': rc_number.val(),
+                    'bank_id': rc_bank_id.val(),
+                    'current_account_id': rc_current_account_id.val(),
+                    'total': rc_amount.val()
                 };
-
-                var w_id = (Replenishmentcash_id.val() == '') ? 0 : Replenishmentcash_id.val();
-                console.log(w_id);
-
-                RESTService.updated('Replenishmentcashs/saveReplenishmentcash', w_id, params, function (response) {
-                    if (!_.isUndefined(response.status) && response.status == true) {
-                        console.log(response);
-                        AlertFactory.textType({
-                            title: '',
-                            message: 'El Almacén se guardó correctamente.',
-                            type: 'success'
-                        });
-                        modalW.modal('hide');
-                        LoadRecordsButtonReplenishmentcash.click();
-                    } else {
-                        AlertFactory.textType({
-                            title: '',
-                            message: 'Hubo un error al guardar el Almacén. Intente nuevamente.',
-                            type: 'error'
-                        });
-                    }
+                var txt_confirm_ = (option === 1) ? 'guardar' : 'procesar';
+                $scope.showConfirm('', '¿Está seguro que desea ' + txt_confirm_ + ' la reposición?', function () {
+                    RESTService.updated('replenishment_cashs/save', rc_id, params, function (response) {
+                        if (!_.isUndefined(response.status) && response.status) {
+                            var txt_success_ = (option === 1) ? 'guardó' : 'procesó';
+                            $scope.showAlert('', 'Reposición de caja chica se ' + txt_success_ + ' correctamente.', 'success');
+                            modalRC.modal('hide');
+                            $('#LoadRecordsButtonRC').click();
+                        } else {
+                            $scope.showAlert('', response.message, 'warning');
+                        }
+                    });
                 });
             }
-
         };
 
-        function addToReplenishmentcash(code, username, name) {
-            if ($('#tr_b_' + code).length > 0) {
-                AlertFactory.showWarning({
-                    title: '',
-                    message: 'Ya se asignó este Usuario'
-                });
-                return false;
-            }
-            var tr = $('<tr id="tr_b_' + code + '"></tr>');
-            var td1 = $('<td>' + username + '</td>');
-            var tdu = $('<td>' + name + '</td>');
-            var inp = $('<input type="hidden" class="w_user" value="' + code + '" />');
-            td1.append(inp);
-            var td2 = $('<td class="text-center"></td>');
-            var btn = $('<button class="btn btn-danger btn-xs delReplenishmentcash" data-id="' + code + '" type="button"><span class="fa fa-trash"></span></button>');
-            td2.append(btn);
-            tr.append(td1).append(tdu).append(td2);
-            $("#w_user_body").append(tr);
-            $("#modalUsuario").modal('hide');
-
-            $('.delReplenishmentcash').click(function (e) {
-                var code = $(this).attr('data-id');
-                AlertFactory.confirm({
-                    title: '',
-                    message: '¿Está seguro que desea quitar este Almacén?',
-                    confirm: 'Si',
-                    cancel: 'No'
-                }, function () {
-                    $('#tr_b_' + code).remove();
-                });
-                e.preventDefault();
+        function findRC(id) {
+            overModals();
+            RESTService.get('replenishment_cashs/find', id, function (response) {
+                if (!_.isUndefined(response.status) && response.status) {
+                    var data = response.data;
+                    rc_id = id;
+                    rc_state = parseInt(data.state_id);
+                    var disabled_ = (rc_state > 1);
+                    rc_date.val(data.date).prop('disabled', disabled_);
+                    rc_accounting_period.val(data.period_id);
+                    rc_petty_cash_id = data.petty_cash_id;
+                    rc_petty_cash.val(data.petty_cash_);
+                    rc_petty_cash.next('span').find('button').prop('disabled', disabled_);
+                    rc_responsible.val(data.liable_);
+                    rc_user_required.val(data.delivered_to).prop('disabled', disabled_);
+                    rc_currency.val(data.currency_id).prop('disabled', disabled_);
+                    rc_type_change.val(data.type_change_);
+                    rc_concept.val(data.concept).prop('disabled', disabled_);
+                    rc_payment_method_id = data.payment_method_id;
+                    rc_payment_method.val(data.payment_method_);
+                    rc_payment_method.next('span').find('button').prop('disabled', disabled_);
+                    rc_number.val(data.number).prop('disabled', disabled_);
+                    if (data.payment_method_id === 'EFE') {
+                        rc_bank_id.val(data.bank_id).prop('disabled', true).trigger('change.select2');
+                        rc_current_account_id.val(data.current_account_id).prop('disabled', true).trigger('change.select2');
+                    } else {
+                        rc_bank_id.val(data.bank_id).prop('disabled', disabled_).trigger('change.select2');
+                        rc_current_account_id.val(data.current_account_id).prop('disabled', true).trigger('change.select2');
+                    }
+                    var total_ = (disabled_) ? numberFormat(data.total, 2) : data.total;
+                    rc_amount.val(total_).prop('disabled', disabled_);
+                    if (disabled_) {
+                        $('button.btn-save').addClass('hide');
+                    } else {
+                        $('button.btn-process').removeClass('hide');
+                    }
+                    var txt_ = (rc_state > 1) ? 'Ver' : 'Editar';
+                    titleRC.html(txt_ + ' Reposición de Caja Chica');
+                    modalRC.modal('show');
+                } else {
+                    $scope.showAlert('', response.message, 'warning');
+                }
             });
         }
 
-        var search = getFormSearch('frm-search-replenishmentcash', 'search_replenishmentcash', 'LoadRecordsButtonReplenishmentcash');
+        var search = getFormSearch('frm-search-rc', 'search_rc', 'LoadRecordsButtonRC');
 
         var table_container_rc = $("#table_container_rc");
 
         table_container_rc.jtable({
-            title: "Lista de reposición de Caja",
+            title: "Lista de Reposición de Caja",
             paging: true,
-            sorting: true,
             actions: {
-                    listAction: function (postData, jtParams) {
-                    return {
-                        "Result": "OK",
-                        "Records": [
-                            { "description": "Caja chica morales","Responsable": "JUAN MESTANZA","proyecto":"6375471-PROYECTO PRUEBA","glosa":"POR 	ALAMBRADO ELECTRICO","cheque":"0000352", "saldo": "456.00", "fecha": "12/01/2017"},
-                            { "description": "Caja chica Tarapoto","Responsable": "PEDRO DE LA CRUZ","proyecto":"7375473-PROYECTO PRUEBA","glosa":"POR 	ALUMBRADO ELECTRICO","cheque":"0000354", "saldo": "756.00", "fecha": "12/02/2017"},
-                            { "description": "Caja chica Lima","Responsable": "FAUSTINO SANCHEXZ","proyecto":"8775473-PROYECTO PRUEBA","glosa":"POR CONSTRUCCION DE DUCTOS","cheque":"0000358", "saldo": "656.00", "fecha": "12/03/2017"},
-                            { "description": "Caja chica Chiclayo","Responsable": "FIORELA GARCIA","proyecto":"5475472-PROYECTO PRUEBA","glosa":"POR 	TRANSPORTE DE MATERIALES","cheque":"0000356", "saldo": "256.00", "fecha": "12/04/2017"},
-                        ],
-                        "TotalRecordCount": 4
-                    };
-                  },
-                  deleteAction: base_url + '/receptions/delete'
+                listAction: base_url + '/replenishment_cashs/list',
+                deleteAction: base_url + '/replenishment_cashs/delete'
             },
             toolbar: {
                 items: [{
                     cssClass: 'buscador',
                     text: search
                 }, {
-                    cssClass: 'btn-primary',
-                    text: '<i class="fa fa-file-excel-o"></i> Exportar a Excel',
+                    cssClass: 'btn-danger-admin',
+                    text: '<i class="fa fa-plus"></i> Nuevo',
                     click: function () {
-                        window.open(base_url + '/chexpensegirls/excel');
+                        newRC();
                     }
-                },
-                    {
-                        cssClass: 'btn-success',
-                        text: '<i class="fa fa-plus"></i> Nuevo Reposición de Caja Chica',
-                        click: function () {
-                            newReplenishmentcash();
-                        }
-                    }]
+                }]
             },
             fields: {
                 id: {
@@ -293,33 +319,40 @@
                     edit: false,
                     list: false
                 },
-                description: {
+                petty_cash_: {
                     title: 'Caja',
-                    width: '7%'
+                    width: '4%'
                 },
-                Responsable: {
+                liable_: {
                     title: 'Responsable',
+                    width: '5%'
+                },
+                payment_method_: {
+                    title: 'Forma de Ingreso',
                     width: '7%'
                 },
-                proyecto: {
-                    title: 'Proyecto'
-                },
-                glosa: {
-                    title: 'Glosa'
-                },
-                cheque: {
-                    title: 'Cheque',
-                    width: '4%'
-                },
-                saldo:{
-                    title:'Saldo',
-                    listClass: 'text-right',
-                    width: '4%'
-                },
-                fecha:{
-                    title:'Fecha',
+                number: {
+                    title: 'Número Op.',
                     listClass: 'text-center',
-                    width: '4%'
+                    width: '5%'
+                },
+                date: {
+                    title: 'Fecha',
+                    listClass: 'text-center',
+                    width: '5%'
+                },
+                concept: {
+                    title: 'Concepto',
+                    width: '7%'
+                },
+                total: {
+                    title: 'Monto',
+                    listClass: 'text-right',
+                    width: '5%'
+                },
+                state_: {
+                    title: 'Estado',
+                    width: '5%'
                 },
                 edit: {
                     width: '1%',
@@ -327,57 +360,42 @@
                     edit: false,
                     create: false,
                     display: function (data) {
-                        return '<a href="javascript:void(0)" title="Editar" class="edit_w" data-code="' +
+                        return '<a href="javascript:void(0)" title="Editar" class="edit_rc" data-code="' +
                             data.record.id + '"><i class="fa fa-pencil-square-o fa-1-5x fa-green"></i></a>';
                     }
                 }
             },
             recordsLoaded: function (event, data) {
-                $('.edit_w').click(function (e) {
-                    var id = $(this).attr('data-code');
-                    findReplenishmentcash(id);
+                table_container_rc.find('a.edit_rc').click(function (e) {
+                    var code_ = $(this).attr('data-code');
+                    findRC(code_);
                     e.preventDefault();
                 });
             }
         });
 
-        generateSearchForm('frm-search-replenishmentcash', 'LoadRecordsButtonReplenishmentcash', function () {
+        generateSearchForm('frm-search-rc', 'LoadRecordsButtonRC', function () {
             table_container_rc.jtable('load', {
-                search: $('#search_replenishmentcash').val()
+                search: $('#search_rc').val()
             });
         }, true);
 
-        var call_m = false;
+        function callModals()
+        {
+            var search_cc = getFormSearch('frm-search-cash', 'search_cash', 'LoadRecordsButtonCash');
 
-        function callModals() {
-            call_m = true;
+            var table_container_cc = $("#table_container_cash");
 
-            var search_u = getFormSearch('frm-search-cash', 'search_cash', 'LoadRecordsButtonCash');
-
-            var table_container_c = $("#table_container_cash");
-
-            table_container_c.jtable({
+            table_container_cc.jtable({
                 title: "Lista de Cajas Chicas",
                 paging: true,
-                sorting: true,
                 actions: {
-                    listAction: function (postData, jtParams) {
-                    return {
-                        "Result": "OK",
-                        "Records": [
-                            { "description": "Caja chica morales"},
-                            { "description": "Caja chica Tarapoto"},
-                            { "description": "Caja chica Lima"},
-                            { "description": "Caja chica Chiclayo"},
-                        ],
-                        "TotalRecordCount": 4
-                    };
-                  }
+                    listAction: base_url + '/replenishment_cashs/getPettyCash'
                 },
                 toolbar: {
                     items: [{
                         cssClass: 'buscador',
-                        text: search_u
+                        text: search_cc
                     }]
                 },
                 fields: {
@@ -387,176 +405,148 @@
                         edit: false,
                         list: false
                     },
+                    code: {
+                        title: 'Código'
+                    },
                     description: {
-                        title: 'Caja'
+                        title: 'Descripción'
+                    },
+                    liable_name: {
+                        title: 'Responsable'
+                    },
+                    total: {
+                        title: 'Saldo',
+                        listClass: 'text-right'
                     },
                     select: {
                         width: '1%',
                         sorting: false,
                         edit: false,
                         create: false,
+                        listClass: 'text-center',
                         display: function (data) {
-                            return '<a href="javascript:void(0)" title="Seleccionar" class="select_u" data-code="' +
-                                data.record.id + '" data-title="' + data.record.username + '"data-name="' + data.record.name + '" ><i class="fa fa-circle-o fa-1-5x"></i></a>';
+                            return '<a href="javascript:void(0)" title="Seleccionar" class="select_cc" data-id="' +
+                                data.record.id + '"><i class="fa fa-' + icon_select + ' fa-1-5x"></i></a>';
                         }
                     }
                 },
                 recordsLoaded: function (event, data) {
-                    $('.select_u').click(function (e) {
-                        var code = $(this).attr('data-code');
-                        var username = $(this).attr('data-title');
-                        var name = $(this).attr('data-name');
-                        addToReplenishmentcash(code, username, name);
+                    table_container_cc.find('a.select_cc').click(function (e) {
+                        var mod_id = $(this).attr('data-id');
+                        var info_ = _.find(data.records, function (item) {
+                            return parseInt(item.id) === parseInt(mod_id);
+                        });
+                        if (info_) {
+                            rc_petty_cash_id = mod_id;
+                            rc_petty_cash.val(info_.code + ' - ' + info_.description).removeClass('border-red');
+                            rc_responsible.val(info_.liable_name);
+                        }
+                        modalPettyCash.modal('hide');
                         e.preventDefault();
                     });
                 }
             });
             generateSearchForm('frm-search-cash', 'LoadRecordsButtonCash', function () {
-                table_container_c.jtable('load', {
+                table_container_cc.jtable('load', {
                     search: $('#search_cash').val()
                 });
-            },false);
-        // proyecto
+            }, false);
 
-           var search_p = getFormSearch('frm-search-proyect', 'search_proyect', 'LoadRecordsButtonProyect');
+            var search_pm = getFormSearch('frm-search-pm', 'search_pm', 'LoadRecordsButtonPaymentMethod');
 
-            var table_container_c = $("#table_container_provider");
+            var table_container_pm = $("#table_container_payment_method");
 
-            table_container_c.jtable({
-                title: "Lista de Proyectos",
+            table_container_pm.jtable({
+                title: "Lista de Forma de Ingreso",
                 paging: true,
-                sorting: true,
                 actions: {
-                    listAction: function (postData, jtParams) {
-                    return {
-                        "Result": "OK",
-                        "Records": [
-                            { "description": "Construción SA","code":"9875443"},
-                            { "description": "Construccion de un puente","code":"6375471"},
-                            { "description": "Enchapado de piso","code":"6375458"},
-                            { "description": "Planos de puentes","code":"8375443"},
-                        ],
-                        "TotalRecordCount": 4
-                    };
-                  }
+                    listAction: base_url + '/replenishment_cashs/getPaymentMethod'
                 },
                 toolbar: {
                     items: [{
                         cssClass: 'buscador',
-                        text: search_u
+                        text: search_pm
                     }]
                 },
                 fields: {
-                    id: {
+                    codigo_formapago: {
                         key: true,
                         create: false,
                         edit: false,
-                        list: false
+                        title: 'Código',
+                        width: '2%',
+                        listClass: 'text-center'
                     },
-                    description: {
-                        title: 'Proyecto'
+                    forma_pago: {
+                        title: 'Descripción'
                     },
-                    code:{
-                        title:'Código'
-                    }
-                    ,
                     select: {
                         width: '1%',
-                        sorting: false,
                         edit: false,
                         create: false,
+                        listClass: 'text-center',
                         display: function (data) {
-                            return '<a href="javascript:void(0)" title="Seleccionar" class="select_u" data-code="' +
-                                data.record.id + '" data-title="' + data.record.username + '"data-name="' + data.record.name + '" ><i class="fa fa-circle-o fa-1-5x"></i></a>';
+                            return '<a href="javascript:void(0)" title="Seleccionar" class="select_pm" data-id="' +
+                                data.record.codigo_formapago + '"><i class="fa fa-' + icon_select + ' fa-1-5x"></i></a>';
                         }
                     }
                 },
                 recordsLoaded: function (event, data) {
-                    $('.select_u').click(function (e) {
-                        var code = $(this).attr('data-code');
-                        var username = $(this).attr('data-title');
-                        var name = $(this).attr('data-name');
-                        addToReplenishmentcash(code, username, name);
-                        e.preventDefault();
-                    });
-                }
-            });
-            generateSearchForm('frm-search-cash', 'LoadRecordsButtonCash', function () {
-                table_container_c.jtable('load', {
-                    search: $('#search_cash').val()
-                });
-            },false);
-           // proveedor
-
-         var search_p = getFormSearch('frm-search-provider', 'search_provider', 'LoadRecordsButtonProvider');
-
-            var table_container_pr = $("#table_container_providerd");
-
-            table_container_pr.jtable({
-                title: "Lista de Proveedor",
-                paging: true,
-                sorting: true,
-                actions: {
-                    listAction: function (postData, jtParams) {
-                    return {
-                        "Result": "OK",
-                        "Records": [
-                            { "razon_social": "Construción SA","ruc":"35946576892"},
-                            { "razon_social": "Solución SA","ruc":"45946576891"},
-                            { "razon_social": "Peralta S.R.L","ruc":"64946576865"},
-                        ],
-                        "TotalRecordCount": 4
-                    };
-                  }
-                },
-                toolbar: {
-                    items: [{
-                        cssClass: 'buscador',
-                        text: search_u
-                    }]
-                },
-                fields: {
-                    id: {
-                        key: true,
-                        create: false,
-                        edit: false,
-                        list: false
-                    },
-                    razon_social: {
-                        title: 'Razón Social'
-                    },
-                    ruc:{
-                        title:'Ruc'
-                    }
-                    ,
-                    select: {
-                        width: '1%',
-                        sorting: false,
-                        edit: false,
-                        create: false,
-                        display: function (data) {
-                            return '<a href="javascript:void(0)" title="Seleccionar" class="select_u" data-code="' +
-                                data.record.id + '" data-title="' + data.record.username + '"data-name="' + data.record.name + '" ><i class="fa fa-check-circle-o fa-1-5x"></i></a>';
+                    table_container_pm.find('a.select_pm').click(function (e) {
+                        var mod_id = $(this).attr('data-id');
+                        var info_ = _.find(data.records, function (item) {
+                            return item.codigo_formapago === mod_id;
+                        });
+                        if (info_) {
+                            rc_payment_method_id = mod_id;
+                            rc_payment_method.val(info_.forma_pago).removeClass('border-red');
+                            if (mod_id === 'EFE') {
+                                rc_origin_change = 1;
+                                rc_bank_id.prop('disabled', true).val('').trigger('change.select2');
+                                rc_current_account_id.prop('disabled', true).val('').trigger('change.select2');
+                            } else {
+                                rc_origin_change = 0;
+                                rc_bank_id.prop('disabled', false);
+                            }
                         }
-                    }
-                },
-                recordsLoaded: function (event, data) {
-                    $('.select_u').click(function (e) {
-                        var code = $(this).attr('data-code');
-                        var username = $(this).attr('data-title');
-                        var name = $(this).attr('data-name');
-                        addToReplenishmentcash(code, username, name);
+                        modalPaymentMethod.modal('hide');
                         e.preventDefault();
                     });
                 }
             });
-
-            generateSearchForm('frm-search-provider', 'LoadRecordsButtonProvider', function () {
-                table_container_pr.jtable('load', {
-                    search: $('#search_provider').val()
+            generateSearchForm('frm-search-pm', 'LoadRecordsButtonPaymentMethod', function () {
+                table_container_pm.jtable('load', {
+                    search: $('#search_pm').val()
                 });
-            },false);
+            }, false);
         }
+
+        function validTypeChangeRC(date, last_date) {
+            date = moment(date, 'DD/MM/YYYY').format('YYYY-MM-DD');
+            RESTService.get('replenishment_cashs/validTypeChange', date, function (response) {
+                if (!_.isUndefined(response.status) && response.status) {
+                    rc_accounting_period.val(response.data.ap);
+                    rc_type_change.val(response.data.tc);
+                    rc_date.removeClass('border-red');
+                } else {
+                    $scope.showAlert('', response.message, 'warning');
+                    rc_date.val(last_date);
+                }
+            });
+        }
+
+        function loadBankAccount(bank) {
+            rc_current_account_id.html('<option value="">SELECCIONAR</option>');
+            if (bank !== '' && !_.isUndefined(bank)) {
+                RESTService.get('replenishment_cashs/findBankAccount', bank, function (response) {
+                    _.each(response.bankAccount, function (item) {
+                        rc_current_account_id.append('<option value="' + item.Value + '">' + item.Value + ' - ' + item.DisplayText + '</option>');
+                    });
+                });
+            }
+        }
+
+        getDataForm();
     }
 
     function Config($stateProvider, $urlRouterProvider) {
@@ -565,7 +555,7 @@
             .state('replenishment_cashs', {
                 url: '/replenishment_cashs',
                 templateUrl: base_url + '/templates/replenishment_cashs/base.html',
-                controller: 'ReplenishmentcashCtrl'
+                controller: 'ReplenishmentCashCtrl'
             });
 
         $urlRouterProvider.otherwise('/');

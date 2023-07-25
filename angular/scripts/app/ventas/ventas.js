@@ -294,7 +294,7 @@
                     var saldo = parseFloat($(this).attr('data-saldo'));
                     // alert(idventa_referencia);
                     var anulado = $(this).attr('data-anulado');
-                   
+
                     if(anulado == "S") {
                         AlertFactory.textType({
                             title: '',
@@ -316,12 +316,12 @@
                     //     });
                     //     return false;
                     // }
-                    
+
                     $.post("ventas/get_caja_diaria", {},
                         function (data, textStatus, jqXHR) {
                             // console.log();
                             if (data.length > 0) {
-                               
+
                                 $.post("ventas/validar_nota", { idventa: idventa },
                                     function (data, textStatus, jqXHR) {
                                         if(data.length > 0) {
@@ -331,17 +331,17 @@
                                                 type: 'info'
                                             });
                                             return false;
-                                           
+
                                         } else {
                                             find_documento(idventa);
                                         }
                                     },
                                     "json"
                                 );
-                        
 
-                                   
-                                
+
+
+
 
                             } else {
                                 AlertFactory.textType({
@@ -368,25 +368,25 @@
                             if(data.length <= 0) {
                                 if (idtipodocumento == "12") {
                                     if(tipo_solicitud != "null") {
-                                        
+
                                         window.open("ventas/imprimir_ticket/" + id);
                                     } else {
                                         window.open("ventas/imprimir_ticket_movimiento_caja/" + id);
                                     }
                                 } else {
                                     window.open("ventas/imprimir_comprobante/" + id);
-                                    
+
                                 }
                             } else {
-                              
+
                                 window.open("ventas/imprimir_ticket_pago_cuota/" + id);
                             }
-                           
+
                         },
                         "json"
                     );
-                    
-                    
+
+
                     e.preventDefault();
                 });
 
@@ -596,4 +596,4 @@
         $urlRouterProvider.otherwise('/');
     }
 })
-    ();
+();

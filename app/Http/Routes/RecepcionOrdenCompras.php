@@ -1,14 +1,7 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: JAIR 
- * Date: 4/5/2017
- * Time: 6:59 PM
- */
- 
-// Route::post('recepcionOrdenCompras/list', ['as' => 'recepcionOrdenCompras.list', 'uses' => 'Entrega_servicesTecnicoController@all']);//borrar
 
-Route::post('recepcionOrdenCompras/list', ['as' => 'recepcionOrdenCompras.list', 'uses' => 'RecepcionOrdenCompraController@all']);
+Route::post('recepcionOrdenCompras/list', 'RecepcionOrdenCompraController@all');
+Route::post('recepcionOrdenCompras/listOC', 'RegisterOrdenCompraController@all');
 
 
 Route::post('recepcionOrdenCompras/create', ['as' => 'recepcionOrdenCompras.create', 'uses' => 'Entrega_servicesTecnicoController@create']);
@@ -28,7 +21,7 @@ Route::post('recepcionOrdenCompras/get_ventas_entrega', ['as' => 'recepcionOrden
 
 Route::get('recepcionOrdenCompras/get_venta_detalle/{id}', ['as' => 'recepcionOrdenCompras.get_venta_detalle', 'uses' => 'Entrega_servicesTecnicoController@get_venta_detalle']);
 
-Route::get('recepcionOrdenCompras/data_formOrdenCompra', ['as' => 'recepcionOrdenCompras.data_formOrdenCompra', 'uses' => 'RegisterOrdenCompraController@getDataOrdenComprasRecepcion']); 
+//Route::get('recepcionOrdenCompras/data_formOrdenCompra', 'RegisterOrdenCompraController@getDataOrdenComprasRecepcion');
 
 Route::get('recepcionOrdenCompras/deleteDetalleST/{id}', ['as' => 'recepcionOrdenCompras.deleteDetalleST', 'uses' => 'Register_movementController@deleteDetalleST']);
 
@@ -42,9 +35,6 @@ Route::get('recepcionOrdenCompras/pdfMovemen', 'Register_movementController@pdf'
 Route::get('recepcionOrdenCompras/findMovement/{id}', ['as' => 'recepcionOrdenCompras.findMovement', 'uses' => 'Register_movementController@find']);
 
 Route::get('recepcionOrdenCompras/validateLoteMovement/{id}', ['as' => 'recepcionOrdenCompras.validateLoteMovement', 'uses' => 'Register_movementController@validateLote']);
-
-
-Route::get('recepcionOrdenCompras/validaDetalleMovement/{id}', ['as' => 'recepcionOrdenCompras.validaDetalleMovement', 'uses' => 'Register_movementController@validaDetalle']);
 
 Route::get('recepcionOrdenCompras/procesarTransferenciaMovement/{id}', ['as' => 'recepcionOrdenCompras.procesarTransferenciaMovement', 'uses' => 'Register_movementController@procesarTransferencia']);
 

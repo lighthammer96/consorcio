@@ -137,7 +137,7 @@ class ReporteRepuestoController extends Controller
         ]);
     }
     //  public function pdf(Request $request, Query_movementsInterface $repo)
-    // {       
+    // {
     //         date_default_timezone_set('America/Lima');
     //         $fechacA= date("d/m/Y");
     //         $s = $request->input('search', '');
@@ -155,14 +155,14 @@ class ReporteRepuestoController extends Controller
     //         $data = $repo->allFiltro($s,$filtro_art,$filtro_idAlm,$filtro_idLoc,$filtro_cate,$filtro_nat,$filtro_oper,$n_movimiento,$cod_lote,$cod_serie,$fecha_inicio,$fecha_fin);
     //         $simboloMoneda = $repo->getSimboloMoneda();
     //         // $operacion = $repo->get_movimiento($id);
-    //         // $data = $repo->find($id); 
+    //         // $data = $repo->find($id);
     //         // $data_movimiento_Articulo=$repo->get_movement_articulo_print($id);
     //         // $data_movimiento_lote=$repo->get_movemen_lote($id);
     //         // $data_movimiento_serie=$repo->get_movemen_Serie($id);
     //         // if($data['fecha_proceso']){
     //         //     $data['fecha_proceso']=date("d/m/Y", strtotime($data['fecha_proceso']));
     //         // }else{
-    //         //    $data['fecha_proceso']=''; 
+    //         //    $data['fecha_proceso']='';
     //         // };
     //         // $data['fecha_impresion']=date("d/m/Y");
     //         // $img='logo.jpg';

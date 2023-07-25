@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class View_AL_Entega_ST_Cliente extends Model
 {
-  
+
     protected $table = 'AL_Entega_ST_Cliente';
 
     public $timestamps = true;
@@ -23,7 +23,7 @@ class View_AL_Entega_ST_Cliente extends Model
     public $incrementing = false;
 
     protected $fillable = ['nro', 'fecha', 'tipooperacion', 'Usuario', 'estado', 'documento', 'cliente'];
-    
+
     // public function user_u()
     // {
     //     return $this->belongsTo(User::class, 'idUsuario');

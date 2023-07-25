@@ -27,7 +27,7 @@ class PettyCashController extends  controller
     public function all(Request $request, Petty_cashInterface $repo)
     {
         $s = $request->input('search', '');
-        $params = ['id', 'code', 'description', 'liable_id'];
+        $params = ['id', 'code', 'description', 'liable_id', 'total', 'is_vale'];
         $data = $repo->search($s);
         $info = parseDataList($data, $request, 'id', $params);
         $data = $info[1];
@@ -35,6 +35,8 @@ class PettyCashController extends  controller
         foreach ($data as $d) {
             $d->liable_name = ($d->liable) ? $d->liable->name : '';
             $d->liable_username = ($d->liable) ? $d->liable->username : '';
+            $d->total = is_null($d->total) ? 0 : $d->total;
+            $d->is_vale = ($d->is_vale == 1) ? 'SI' : 'NO';
         }
 
         return response()->json([
@@ -44,11 +46,13 @@ class PettyCashController extends  controller
         ]);
     }
 
-    public function createUpdate($id, Petty_cashInterface $repo, Request $request, Petty_cashUserInterface $wuRepo)
+    public function createUpdate($id, Petty_cashInterface $repo, Request $request, Petty_cashUserInterface $pcuRepo)
     {
         DB::beginTransaction();
         try {
-            $data = $request->all();
+            $data = $request->except(['is_vale']);
+            $is_vale = $request->input('is_vale', 0);
+            $data['is_vale'] = $is_vale;
             $data_users = $data['users'];
             $users = explode(',', $data_users);
             unset($data['id'], $data['users']);
@@ -65,18 +69,19 @@ class PettyCashController extends  controller
                 $petty_cash = $repo->create($data);
                 $id = $petty_cash->id;
             }
-            $wuRepo->deleteByPettyCash($id, $users);
+            $pcuRepo->deleteByPettyCash($id, $users);
             if ($data_users != '') {
                 foreach ($users as $b) {
-                    $wuRepo->create([
+                    $pcuRepo->create([
                         'petty_cash_id' => $id,
                         'user_id' => $b
                     ]);
                 }
             }
             DB::commit();
-            return response()->json(['status' => true]);
-
+            return response()->json([
+                'status' => true
+            ]);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json([
@@ -91,14 +96,14 @@ class PettyCashController extends  controller
         try {
             $data = $repo->find($id);
 
-            $data['liable_username'] = $data->liable->username;
-            $data['liable_name'] = $data->liable->name;
+            $data['liable_username'] = ($data->liable) ? $data->liable->username : '';
+            $data['liable_name'] = ($data->liable) ? $data->liable->name : '';
             $users = [];
             foreach ($data->PettyCashUser as $bp) {
                 $users[] = [
-                    'id' => $bp->user->id,
-                    'username' => $bp->user->username,
-                    'name' => $bp->user->name,
+                    'id' => ($bp->user) ? $bp->user->id : '',
+                    'username' => ($bp->user) ? $bp->user->username : '',
+                    'name' => ($bp->user) ? $bp->user->name : '',
                 ];
             }
             $data['users'] = $users;
@@ -116,15 +121,57 @@ class PettyCashController extends  controller
         }
     }
 
-    public function destroy(Petty_cashInterface $repo, Request $request)
+    public function destroy(Request $request, Petty_cashInterface $pcRepo, Petty_cashUserInterface $pcuRepo)
     {
-        $id = $request->input('id');
-        $repo->destroy($id);
-        return response()->json(['Result' => 'OK']);
+        DB::beginTransaction();
+        try {
+            $id = $request->input('id');
+            $pcuRepo->deleteByPettyCash($id, []);
+            $pcRepo->destroy($id);
+            DB::commit();
+            return response()->json([
+                'Result' => 'OK'
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'Result' => 'ERROR',
+                'Message' => [$e->getMessage()]
+            ]);
+        }
     }
 
     public function excel(Petty_cashInterface $repo)
     {
         return generateExcel($this->generateDataExcel($repo->all()), 'LISTA DE CAJAS CHICAS', 'cajas_chicas');
+    }
+
+    public function getPettyCash(Request $request, Petty_cashInterface $repo)
+    {
+        try {
+            $s = $request->input('search', '');
+            $params = ['id', 'code', 'description', 'liable_id', 'total', 'is_vale'];
+            $data = $repo->search($s);
+            $info = parseDataList($data, $request, 'id', $params);
+            $data = $info[1];
+
+            foreach ($data as $d) {
+                $d->liable_name = ($d->liable) ? $d->liable->name : '';
+                $d->total = is_null($d->total) ? 0 : $d->total;
+                $d->is_vale = (int)$d->is_vale;
+                unset($d->liable);
+            }
+
+            return response()->json([
+                'Result' => 'OK',
+                'TotalRecordCount' => $info[0],
+                'Records' => $data
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'Result' => 'ERROR',
+                'Message' => [$e->getMessage()]
+            ]);
+        }
     }
 }

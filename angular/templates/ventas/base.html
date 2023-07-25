@@ -1,0 +1,222 @@
+<style>
+    .table-wrapper {
+
+        max-height: 200px !important;
+        width: auto !important;
+        overflow: auto !important;
+        display: inline-block !important;
+    }
+
+    .table-earnings {
+        background: #F3F5F6 !important;
+    }
+
+    .modal2 {
+        text-align: center;
+        padding: 0 !important;
+    }
+
+    .modal2:before {
+        content: '';
+        display: inline-block;
+        height: 100%;
+        vertical-align: middle;
+        margin-right: -4px;
+    }
+
+    .modal-dialog2 {
+        display: inline-block;
+        text-align: left;
+        vertical-align: middle;
+    }
+
+    .modal-open {
+        overflow: scroll !important;
+    }
+
+    h5 {
+        font: sans-serif;
+        margin-top: 30px;
+        text-align: center;
+    }
+
+    h5.linea {
+        position: relative;
+        z-index: 1;
+    }
+
+    h5.linea:before {
+        border-top: 2px solid #D6DBDF;
+        content: "";
+        margin: 0 auto;
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 95%;
+        z-index: -1;
+    }
+
+    h5.linea span {
+
+        background: #fff;
+        padding: 0 15px;
+    }
+</style>
+<div class="panel  panel-danger-admin">
+    <div class="panel-heading">
+        Gestión de Documentos Emitidos
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="table_container_ventas" class="table-responsive"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal" id="modalVentas" role="dialog" style="overflow-y: scroll;">
+    <div class="modal-dialog" role="document" style="">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="titleModalVentas"></h4>
+
+            </div>
+            <form id="formulario-ventas">
+                <input type="hidden" name="valor_igv" id="valor_igv">
+                <input type="hidden" name="cCodConsecutivo" id="cCodConsecutivo">
+                <input type="hidden" name="nConsecutivo" id="nConsecutivo">
+                <input type="hidden" name="tipo_comprobante" id="tipo_comprobante">
+                <input type="hidden" name="anticipo" id="anticipo">
+                <input type="hidden" name="idventa" id="idventa">
+                <input type="hidden" name="t_monto_total" id="t_monto_total">
+                <input type="hidden" name="idcliente" id="idcliente">
+                <input type="hidden" name="idmoneda" id="idmoneda">
+                <input type="hidden" name="condicion_pago" id="condicion_pago">
+                <input type="hidden" name="saldo" id="saldo">
+                <div class="modal-body">
+                    <div class="tab-content">
+                        <br>
+                        <div>
+                            <div style="float:left">
+                            
+                            </div>
+                            <div style="float:right">
+                             
+
+                                <button type="button" id="" class="btn btn-danger-admin btn-sm btn_guardarOrden"
+                                    ng-click="guardar_venta()">
+                                    <span class="fa fa-save"></span>
+                                    Guardar
+                                </button>
+                            </div>
+                        </div>
+                        <br>
+                        <!-- <h5 class="linea"><span>Datos Generales</span></h5> -->
+                        <div class="form-horizontal">
+
+                            <br>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="" class="control-label col-md-2 col-md-offset-2">Serie </label>
+                                        <div class="col-md-3">
+                                            <!-- <input type="text" id="serie_comprobante" name="serie_comprobante" class="form-control input-sm"> -->
+                                            <select id="serie_comprobante" name="serie_comprobante"class="form-control input-sm"></select>
+                                        </div>
+                                        <label for="" class="control-label col-md-2">Número </label>
+                                        <div class="col-md-3">
+                                            <input type="text" id="numero_comprobante" name="numero_comprobante" class="form-control input-sm" readonly="readonly">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                     
+                                        <label class="col-sm-1 control-label">DNI</label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control input-sm" id="documento"  name="documento" readonly="readonly">
+                                        </div>
+                                       
+                                        <label class="col-sm-3 control-label">Apellidos y Nombres</label>
+                                        <div class="col-sm-5">
+                                            <input type="t" class="form-control input-sm" id="cliente"  name="cliente" readonly="readonly"> 
+                                        </div>
+                                       
+
+                                    </div>
+                             
+                                    <div class="form-group">
+                                        <label for="" class="control-label col-md-2">Motivo</label>
+                                        <div class="col-md-5">
+                                            <!-- <input type="text" id="serie_comprobante" name="serie_comprobante" class="form-control input-sm"> -->
+                                            <select id="idmotivo" name="idmotivo"class="form-control input-sm"></select>
+                                        </div>
+
+                                        <label class="col-sm-2 control-label">Monto</label>
+                                        <div class="col-sm-3">
+                                            <input type="number" class="form-control input-sm" id="monto"  name="monto" > 
+                                        </div>
+                                      
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="" class="control-label col-md-2">Descripción</label>
+                                        <div class="col-md-12">
+                                            <textarea class="form-control input-sm" name="descripcion" id="descripcion" cols="30" rows="5"></textarea>
+                                        </div>
+
+                                       
+                                      
+                                    </div>
+                                 
+                                   
+                                </div>
+                            </div>
+                        </div>
+                       
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="float:left">
+                        <!-- <button type="button" id="" class="btn btn-primary btn-sm btn_ejecucion" disabled>
+                            <span class="fa fa-save"></span>
+                            En Ejecución
+                        </button>
+                        <button type="button" id="" class="btn btn-warning btn-sm btn_terminada" disabled>
+                            <span class="fa fa-save"></span>
+                            Terminada
+                        </button> -->
+                        <!-- <button type="button" id="aprobaciones" ng-click="mostrar_aprobaciones()" class="btn btn-danger btn-sm " style="display: none;" >
+                            <span class="fa fa-check"></span>
+                            Aprobaciones
+                        </button> -->
+                    </div>
+                    <div style="float:right">
+                       
+                        <!-- <button type="button" id="imprimir-solicitud" ng-click="imprimir_solicitud()"  class="btn btn-info btn-sm">
+                            <span class="fa fa-file-pdf-o"></span>
+                            Imprimir
+                        </button> -->
+                      
+                        <button type="button" id="" class="btn btn-danger-admin btn-sm btn_guardarOrden"
+                            ng-click="guardar_venta()">
+                            <span class="fa fa-save"></span>
+                            Guardar
+                        </button>
+                        <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">
+                            <span class="fa fa-times"></span> Cerrar
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

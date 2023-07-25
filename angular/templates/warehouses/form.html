@@ -18,6 +18,9 @@
                         <li role="presentation">
                             <a data-target="#usuario" aria-controls="tab2" role="tab" data-toggle="tab">Usuario</a>
                         </li>
+                        <li role="presentation">
+                            <a data-target="#localizacion" aria-controls="tab3" role="tab" data-toggle="tab">Localización</a>
+                        </li>
                     </ul>
 
                     <!-- Tab panes -->
@@ -65,23 +68,18 @@
                                         </label>
                                     </div>
                                 </div>
+                               
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">Local</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" id="w_local" class="form-control input-sm">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">Proyecto</label>
+                                    <label class="col-sm-2 control-label">Tienda</label>
                                     <div class="col-sm-10">
                                         <input type="hidden" id="w_project_id">
                                         <div class="input-group">
-                                            <input type="text" readonly id="w_project_code" style="width: 30%"
+                                            <input type="hidden" readonly id="w_project_code" 
                                                    class="form-control input-sm">
-                                            <input type="text" id="w_project_description" readonly style="width: 70%"
+                                            <input type="text" id="w_project_description" readonly 
                                                    class="form-control input-sm">
                                             <span class="input-group-btn">
-                                                <button class="btn btn-success btn-sm btn-group_sm" type="button"
+                                                <button class="btn btn-danger-admin btn-sm btn-group_sm" type="button"
                                                         ng-click="openProject()">
                                                     <span class="fa fa-search-plus"></span>
                                                 </button>
@@ -93,7 +91,7 @@
                         </div>
                         <div role="tabpanel" class="tab-pane" id="usuario">
                             <br>
-                            <button class="btn btn-sm btn-success" type="button" ng-click="openUser()"
+                            <button class="btn btn-sm btn-danger-admin" type="button" ng-click="openUser()"
                                     style="margin-bottom: 5px">
                                 <span class="fa fa-plus-circle"></span>
                                 Agregar
@@ -111,15 +109,62 @@
                                 </table>
                             </div>
                         </div>
+                        <div role="tabpanel" class="tab-pane" id="localizacion">
+                           <br>
+                            <div class="form-horizontal">
+                                 <div class="form-group">
+                                    <label class="col-sm-2 control-label">Código</label>
+                                     <input type="hidden" class="form-control input-sm" id="ident_locali" maxlength="20">
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control input-sm" id="w_code_localizacion" maxlength="20">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input type="hidden" id="warehouse_id">
+                                    <label class="col-sm-2 control-label">Localización</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control input-sm" id="w_description_localizacion">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Estado</label>
+                                    <div class="col-sm-2">
+                                        <label class="checkbox-inline i-checks">
+                                            <input type="checkbox" id="p_state_localizacion" checked>
+                                            <span id="p_loc_text">Activo</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <br>
+                                <button class="btn btn-sm btn-danger-admin" type="button" ng-click="AgregarLocaliza()"
+                                    style="margin-bottom: 5px">
+                                <span class="fa fa-plus-circle"></span>
+                                Agregar
+                                </button>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>Código</th>
+                                            <th>Localización</th>
+                                            <th>Estado</th>
+                                            <th width="50px"></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="w_tienda_body"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" ng-click="saveWarehouse()">
+                <button type="button" class="btn btn-danger-admin" ng-click="saveWarehouse()">
                     <span class="fa fa-save"></span>
                     Guardar
                 </button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                <button type="button" class="btn btn-success" data-dismiss="modal">
                     <span class="fa fa-times"></span> Cerrar
                 </button>
             </div>

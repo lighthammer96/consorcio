@@ -14,7 +14,7 @@
     function Entrega_servicesTecnicoCtrl($scope, _, RESTService, AlertFactory) {
 
         var proformas_completas;
-        var codigo_actual; //variable para identificar en que fila voy a gregar lotes o series 
+        var codigo_actual; //variable para identificar en que fila voy a gregar lotes o series
         var cCodConsecutivoOS = $("#cCodConsecutivoOS");
         var nConsecutivoOS = $("#nConsecutivoOS");
         var aartML = []; //arrays para guardas lo s datos de lotes
@@ -23,11 +23,11 @@
         var afinML = [];
         var avenML = [];
         var tipoCompra; //variable que contendrá los tipos de  compras
-        var aartMK = []; //arrays de id kits 
+        var aartMK = []; //arrays de id kits
         var aartMLE = [];//arrays lotes exis
         var naturalezaGeneral;
         var aartMSN = [];//ARRAY DE series nueva
-        var aartMSE = [];//array series  exis 
+        var aartMSE = [];//array series  exis
         var acantMS = [];
         var achasis = [];
         var acolor = [];
@@ -35,7 +35,7 @@
         var aaniofabricacion = [];
         var aaserie = [];
         var idMovimientoDelete = $("#idMovimientoDelete");
-        var aartMN = [];//arrays de nada 
+        var aartMN = [];//arrays de nada
         var costoMK = $("#costoMK");
         var costoNa = $("#costoNa");
         var costoAS = $("#costoAS");
@@ -208,7 +208,7 @@
                                 var costo_total = "";
                                 var precio = "";
                                 var precioTotal = "";
-                                // add 
+                                // add
                                 cont = cont + 1;
                                 console.log("ejeci _7");
                                 var idDetalle = 0;
@@ -909,8 +909,8 @@
             }
             bval = bval && fecha_registro.required();
             var iChe = 'I';
-            var cont_se = 0;//contador de check de lotes y series 
-            var cont_che = 0;// contador de check selecionados 
+            var cont_se = 0;//contador de check de lotes y series
+            var cont_che = 0;// contador de check selecionados
             $(".check_val").each(function () {
                 cont_se = cont_se + 1
                 if ($(this).prop('checked')) {
@@ -2589,7 +2589,7 @@
                     // idAlmacen.append('<option value="" selected>Seleccionar</option>');
                     //  _.each(response.almacen, function(item) {
                     //     idAlmacen.append('<option value="'+item.Value+'">'+item.DisplayText+'</option>');
-                    // }); 
+                    // });
 
                 }
             }, function () {
@@ -2709,14 +2709,14 @@
                     // type: 'checkbox',
                     // defaultValue: 'A',
 
-                }, 
+                },
                 documento: {
                     title: 'Documento',
-                   
+
                 },
                 cliente: {
                     title: 'Cliente',
-                   
+
                 },
                 edit: {
                     width: '1%',
@@ -3181,4 +3181,4 @@
         $urlRouterProvider.otherwise('/');
     }
 })
-    ();
+();

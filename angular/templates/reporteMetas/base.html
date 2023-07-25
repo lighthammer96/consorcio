@@ -1,0 +1,60 @@
+<div class="panel panel-danger-admin">
+    <div class="panel-heading">
+        Gestión de Reporte de Metas y Objetivos
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-12"> 
+                <div class="form-group">
+                    <label class="col-sm-1 control-label">Año</label>
+                    <div class="col-sm-1">
+                       <input type="number" id="Anio" class="form-control input-sm" placeholder="AÑO"  required minlength="6" min="2010" value="2022" />
+                    </div>
+                    <!-- <div class="col-sm-3">
+                      <select id="mes" class="form-control input-sm">
+                        <option value="1">ENERO</option>
+                        <option value="2">FEBRERO</option>
+                        <option value="3">MARZO</option>
+                        <option value="4">ABRIL</option>
+                        <option value="5">MAYO</option>
+                        <option value="6">JUNIO</option>
+                        <option value="7">JULIO</option>
+                        <option value="8">AGOSTO</option>
+                        <option value="9">SEPTIEMBRE</option>
+                        <option value="10">OCTUBRE</option>
+                        <option value="11">NOVIEMBRE</option>
+                        <option value="12">DICIEMBRE</option>
+                      </select>
+                    </div> -->
+                    <label class="col-sm-2 control-label" style="padding: 0;">Tipo de Objetivo</label>
+                    <div class="col-sm-2">
+                      <select id="tipoObjetivos" class="form-control input-sm">
+                      </select>
+                    </div>
+                    <label class="col-sm-1 control-label">Fecha</label>
+                    <div class="col-sm-2" style="padding: 0;">
+                      <input type="date" name="fecha" id="fecha" class="form-control input-sm">
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="btn-group">
+                             <button type="button" class="btn btn-primary btn-sm" id="btn_imprimirDiario">
+                                    <span class="fa fa-file-excel-o"></span>
+                                                  Reporte de Metas 
+                             </button>
+                        </div>
+                        <br><br>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-primary btn-sm" id="btn_imprimirMes">
+                                   <span class="fa fa-file-excel-o"></span>
+                                                Reporte de Objetivos
+                            </button>
+                       </div>
+                    </div>
+                    <!-- <div class="col-sm-2">
+                        
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

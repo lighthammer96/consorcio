@@ -1,0 +1,58 @@
+<!-- Modal -->
+<div class="modal" id="modalVoucher" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Vale de Gasolina </h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Codigo</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="gv_code" class="form-control input-sm" />
+                        </div>
+                        <label class="col-sm-2 control-label">Fecha</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="gv_date" class="form-control input-sm" readonly />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Glosa</label>
+                        <div class="col-sm-4">
+                            <textarea class="form-control input-sm" rows="2" placeholder="Glosa" id="gv_gloss"></textarea>
+                        </div>
+                        <label class="col-sm-2 control-label">Responsable</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="gv_responsible" class="form-control input-sm" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Monto</label>
+                        <div class="col-sm-2">
+                            <input type="text" id="gv_amount" class="form-control input-sm text-right"
+                                   onblur="roundDecimals(this, 2)" onkeypress="return validDecimals(event, this, 3)"
+                                   onclick="this.select()">
+                        </div>
+                        <label class="col-sm-2 col-sm-offset-2 control-label">
+                            ¿Es consumido?
+                            <input type="checkbox" id="gv_is_consumed">
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success btn-save" ng-click="saveVoucher()">
+                    <span class="fa fa-save"></span>
+                    Guardar
+                </button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                    <span class="fa fa-times"></span> Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

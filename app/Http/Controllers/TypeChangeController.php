@@ -8,6 +8,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Recopro\AccountingPeriod\AccountingPeriodInterface;
+use App\Http\Recopro\Periodo\PeriodoInterface;
 use App\Http\Recopro\TypeChange\TypeChangeInterface;
 use App\Http\Recopro\TypeChange\TypeChangeTrait;
 use App\Http\Requests\TypeChangeRequest;
@@ -76,5 +78,36 @@ class TypeChangeController extends Controller
     public function excel(TypeChangeInterface $repo)
     {
         return generateExcel($this->generateDataExcel($repo->all()), 'LISTA DE TIPOS DE CAMBIOS', 'Tipos de Cambios');
+    }
+
+    public function validTypeChangePeriod($date_, TypeChangeInterface $tcRepo, PeriodoInterface $peRepo)
+    {
+        try {
+            $date = $tcRepo->getByDate($date_);
+            $change_status = ($date->Fecha == $date_);
+            if (!$change_status) {
+                throw new \Exception('No se ha detectado un tipo de cambio con la fecha seleccionada. '.
+                    'Por favor dirigete al módulo de Tipo de Cambio para registrarlo o seleccione otra fecha');
+            }
+            $period = $peRepo->findDate($date_);
+            if (!$period) {
+                throw new \Exception('Periodo cerrado o no existe');
+            }
+            $change = (float)$date->Venta;
+
+            return response()->json([
+                'status' => true,
+                'data' => [
+                    'tc' => $change,
+                    'ap' => $period->periodo,
+                    'ap_state' => $period->estado
+                ]
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
     }
 }

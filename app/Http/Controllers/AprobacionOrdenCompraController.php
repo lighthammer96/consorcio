@@ -1,78 +1,129 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: JAIR
- * Date: 4/5/2017
- * Time: 6:59 PM
- */
 
 namespace App\Http\Controllers;
 
+use App\Http\Recopro\OrdenCompraConformidad\OrdenCompraConformidadInterface;
+use App\Http\Recopro\RegisterOrdenCompra\RegisterOrdenCompraInterface;
+use App\Http\Recopro\RegisterOrdenCompraArticulo\RegisterOrdenCompraArticuloInterface;
 use App\Http\Recopro\View_OrdenCompraConformidad\View_OrdenCompraConformidadTrait;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Recopro\View_OrdenCompraConformidad\View_OrdenCompraConformidadInterface;
-use App\Http\Requests\View_OrdenCompraConformidadRequest;
 use DB;
+
 class AprobacionOrdenCompraController extends Controller
 {
-     use View_OrdenCompraConformidadTrait;
+    use View_OrdenCompraConformidadTrait;
 
     public function __construct()
     {
-//        $this->middleware('json');
+        $this->middleware('ajax', ['only' => ['all']]);
     }
 
     public function all(Request $request, View_OrdenCompraConformidadInterface $repo)
     {
-        $s = $request->input('search', '');
-        $params = ['idOrdenCompra','Conformidad', 'Codigo','Consecutivo','IdUsuario','Usuario', 'EstadoAprob','Fecha','FechaReq','TipoDoc', 'NumeroDoc','Proveedor','Moneda','Total', 'EstadoOC'];
-        return parseList($repo->search($s), $request, 'Codigo', $params);
+        try {
+            $s = $request->input('search', '');
+            $params = ['idOrdenCompra', 'Conformidad', 'Codigo', 'Consecutivo', 'IdUsuario', 'Usuario', 'EstadoAprob',
+                'Fecha', 'FechaReq', 'TipoDoc', 'NumeroDoc', 'Proveedor', 'Moneda', 'Total', 'EstadoOC'];
+            $info = parseDataList($repo->search($s), $request, 'Codigo', $params);
+
+            $data = $info[1];
+
+            foreach ($data as $d) {
+                $d->Fecha = Carbon::parse($d->Fecha)->format('d/m/Y');
+                $d->FechaReq = Carbon::parse($d->FechaReq)->format('d/m/Y');
+                $d->Total = formatNumberTotal($d->Total, 2);
+                $state_ = 'Por Aprobar';
+                $state_ = ($d->EstadoAprob == 1) ? 'Aprobado' : $state_;
+                $state_ = ($d->EstadoAprob == 2) ? 'Rechazado' : $state_;
+                $d->state_ = $state_;
+            }
+            return response()->json([
+                'Result' => 'OK',
+                'TotalRecordCount' => $info[0],
+                'Records' => $data
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'Result' => 'ERROR',
+                'Message' => [$e->getMessage()]
+            ]);
+        }
     }
 
-    public function getAprobadores($id, View_OrdenCompraConformidadInterface $repo)
+    public function getApprovers($id, RegisterOrdenCompraInterface $ocRepo, OrdenCompraConformidadInterface $occRepo)
     {
         try {
-            $todo=explode("*", $id);
-            $data = $repo->getAprobadores($todo[0],$todo[1]);
+            $oc = $ocRepo->find($id);
+            $data = [];
+            foreach ($occRepo->findBy($oc->cCodConsecutivo, $oc->nConsecutivo) as $occ) {
+                $user = $occ->user;
+                $state_ = 'Por Aprobar';
+                $state_ = ($occ->iEstado == 1) ? 'Aprobado' : $state_;
+                $state_ = ($occ->iEstado == 2) ? 'Rechazado' : $state_;
+                $data[] = [
+                    'name' => $user->name,
+                    'comment' => (is_null($occ->cObservacion)) ? '' : $occ->cObservacion,
+                    'date_reg' => Carbon::parse($occ->dFecReg)->format('d/m/Y'),
+                    'date_upd' => Carbon::parse($occ->updated_at)->format('d/m/Y'),
+                    'state' => $state_
+                ];
+            }
             return response()->json([
                 'status' => true,
                 'data' => $data
             ]);
-
         } catch (\Exception $e) {
             return response()->json([
                 'status' => false,
                 'message' => $e->getMessage()
             ]);
         }
-    }  
+    }
 
-
-      public function AprobarRechazarSolicitud($id, View_OrdenCompraConformidadInterface $repo,Request $request)
+    public function approvalReject($id, Request $request, OrdenCompraConformidadInterface $occRepo,
+                                   RegisterOrdenCompraInterface $ocRepo, RegisterOrdenCompraArticuloInterface $ocaRepo)
     {
-       
+        DB::beginTransaction();
         try {
-            $data = $request->all();
-            $res = array("status" => "i");
-            $data_update = array(); 
-            $data_update["nCodConformidad"] = $data["nCodConformidad"];
-            $data_update['aprobaComentario'] =$data['aprobaComentario'];
-            if(empty($data['aprobaComentario'])){
-                $data_update['aprobaComentario']=null;
-            }
-            $data_update['iEstado'] = $data['iEstado'];
-            $data_update['id']=$id;
-            $res = $repo->aprobarRechazar($data_update);
-            $val=$res[0]->msg;
+            $nro_con = $request->input('nCodConformidad', '');
+            $comment = $request->input('aprobaComentario', '');
+            $option = $request->input('iEstado', '');
 
-           
-           
+            $occRepo->update($nro_con, [
+                'iEstado' => $option,
+                'cObservacion' => $comment
+            ]);
+
+            $oc = $ocRepo->find($id);
+            $order_may = 0; $complete = true;
+            foreach ($occRepo->findBy($oc->cCodConsecutivo, $oc->nConsecutivo) as $occ) {
+                $order_may = ((int)$occ->nOrden > $order_may) ? (int)$occ->nOrden : $order_may;
+                $complete = ((int)$occ->iEstado == 0) ? false : $complete;
+            }
+
+            $oca_state = ($option == 1) ? 3 : 8;
+            foreach ($oc->detailArticle as $oca) {
+                $ocaRepo->update($oca->id, [
+                    'iEstado' => $oca_state
+                ]);
+            }
+            if ($option == 1) {
+                if ($order_may == 1 || $complete) {
+                    $ocRepo->update($id, [
+                        'iEstado' => 3
+                    ]);
+                }
+            } else {
+                $ocRepo->update($id, [
+                    'iEstado' => 8
+                ]);
+            }
 
             DB::commit();
             return response()->json([
-                'status' => true,
-                'msg'=>trim($val),
-               
+                'status' => true
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
@@ -82,21 +133,17 @@ class AprobacionOrdenCompraController extends Controller
             ]);
         }
     }
-    
-    public function updateComentarioAprobacion($id,View_OrdenCompraConformidadInterface $repo,Request $request)
+
+    public function updateCommentApproval($id, Request $request, RegisterOrdenCompraInterface $ocRepo)
     {
         DB::beginTransaction();
         try {
-            $data = $request->all();
-            $comentario = strtoupper($data['comentarioAprobacion']);
-            $idCom = explode("_", $id);
-           
-            $repo->update_aprobacion($idCom[0],$idCom[1],$comentario);
-           
+            $ocRepo->update($id, [
+                'comentarioAprobacion' => $request->input('comment', '')
+            ]);
             DB::commit();
             return response()->json([
-                'status' => true,
-               'data_comentario'=>$comentario,
+                'status' => true
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
@@ -105,58 +152,5 @@ class AprobacionOrdenCompraController extends Controller
                 'message' => $e->getMessage(),
             ]);
         }
-    }
-
-
-    public function create(View_OrdenCompraConformidadInterface $repo, Request $request)
-    {
-        $data = $request->all();
-        $table="ERP_Categoria";
-        $id='idCategoria';
-        $data['idCategoria'] = $repo->get_consecutivo($table,$id);
-        $data['descripcion'] = strtoupper($data['Categoria']);
-        $estado='A';
-        if(!isset($data['estado'])){
-            $estado='I';
-        };
-        $data['estado'] =  $estado;
-        $repo->create($data);
-
-        return response()->json([
-            'Result' => 'OK',
-            'Record' => []
-        ]);
-    }
-
-    public function update(View_OrdenCompraConformidadInterface $repo, Request $request)
-    {
-        $data = $request->all();
-        $id = $data['idCategoria'];
-        $data['descripcion'] = strtoupper($data['Categoria']);
-        $estado='A';
-        if(!isset($data['estado'])){
-            $estado='I';
-        };
-        $data['estado'] =  $estado;
-        $repo->update($id, $data);
-
-        return response()->json(['Result' => 'OK']);
-    }
-
-    public function destroy(View_OrdenCompraConformidadInterface $repo, Request $request)
-    {
-        $id = $request->input('idCategoria');
-        $repo->destroy($id);
-        return response()->json(['Result' => 'OK']);
-    }
-
-    // // public function getAll(BrandInterface $repo)
-    // // {
-    // //     return parseSelect($repo->all(), 'id', 'description');
-    // // }
-
-    public function excel(View_OrdenCompraConformidadInterface $repo)
-    {
-        return generateExcel($this->generateDataExcel($repo->all()), 'LISTA DE CATEGORÍAS', 'Categoría');
     }
 }

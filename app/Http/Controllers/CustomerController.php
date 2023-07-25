@@ -6,7 +6,7 @@
  * Time: 6:59 PM
  */
 
-namespace App\Http\Controllers;  
+namespace App\Http\Controllers;
 
 use App\Http\Recopro\Customer\CustomerTrait;
 use Illuminate\Http\Request;
@@ -20,7 +20,7 @@ use Carbon\Carbon;
 use DB;
 class CustomerController extends Controller
 {
-     use CustomerTrait;
+    use CustomerTrait;
 
     public function __construct()
     {
@@ -38,7 +38,7 @@ class CustomerController extends Controller
         DB::beginTransaction();
         try {
             $data = $request->all();
-            $table1="ERP_Persona"; 
+            $table1="ERP_Persona";
             $idt1='idPersona';
             $dato=[];
             $dato['cDireccion'] = strtoupper($data['direccion']);
@@ -57,9 +57,9 @@ class CustomerController extends Controller
             $tip='06';
             $raz=strtoupper($data['razonsocial_cliente']);
             if($data['tipodoc']=='01'){
-                 $tip='01';
-                 $dato['cNombrePersona'] = strtoupper($data['razonsocial_cliente']);
-                 $raz=null;
+                $tip='01';
+                $dato['cNombrePersona'] = strtoupper($data['razonsocial_cliente']);
+                $raz=null;
             }
             $idPersonacl='';
             $dato['cTipopersona'] = $tip;
@@ -92,9 +92,9 @@ class CustomerController extends Controller
                 $idPersonacl=$w->idPersona;
             } else {
                 if ($w) {
-                     // $datos_cliente = $repo->find($id);
-                     $dataper=$rePer->update($w->idPersona, $dato);
-                     $idPersonacl=$w->idPersona;
+                    // $datos_cliente = $repo->find($id);
+                    $dataper=$rePer->update($w->idPersona, $dato);
+                    $idPersonacl=$w->idPersona;
                     // throw new \Exception('Ya existe un documento con este código. Por favor ingrese otro código.');
 
                 }else{
@@ -102,11 +102,11 @@ class CustomerController extends Controller
                     $dataper=$rePer->create($dato);
                     $idPersonacl=$dataper->idPersona;
                 }
-                
+
 
             };
 
-          
+
 
             $table="ERP_Clientes";
             $idt='id';
@@ -150,7 +150,7 @@ class CustomerController extends Controller
     }
     public function create(CustomerInterface $repo,PersonaInterface $rePer, Request $request)
     {
-        
+
 
         $data = $request->all();
 
@@ -164,7 +164,7 @@ class CustomerController extends Controller
         $data['direccion'] = strtoupper($data['direccion']);
         $data['correo_electronico'] = strtoupper($data['correo_electronico']);
         $data['celular'] = strtoupper($data['celular']);
-        
+
         $repo->create($data);
         return response()->json([
             'Result' => 'OK',
@@ -173,7 +173,7 @@ class CustomerController extends Controller
     }
     public function data_form (CustomerInterface $tipodoc)
     {
-       
+
         $tipo_doc = $tipodoc->gte_tipo_doc();
         $tipo_clie = $tipodoc->tipo_clie();
         $tipoc_doc_venta = $tipodoc->tipoc_doc_venta();
@@ -214,7 +214,7 @@ class CustomerController extends Controller
     // // {
     // //     return parseSelect($repo->all(), 'id', 'description');
     // // }
-     public function getTipoDocumento(TablaSunatInterface $repo)
+    public function getTipoDocumento(TablaSunatInterface $repo)
     {
         return parseSelect($repo->allTipoDocumento(), 'cCodigo', 'cDescripcion');
     }
@@ -222,11 +222,11 @@ class CustomerController extends Controller
     {
         return parseSelect($repo->allTipoPersona(), 'cCodigo', 'cDescripcion');
     }
-     public function getTipoCliente(TypeCostumerInterface $repo)
+    public function getTipoCliente(TypeCostumerInterface $repo)
     {
         return parseSelect($repo->allActive(), 'id', 'descripcion');
     }
-      public function getTipoDocumentoVenta(DocumentTypeInterface $repo)
+    public function getTipoDocumentoVenta(DocumentTypeInterface $repo)
     {
         return parseSelect($repo->all(), 'IdTipoDocumento', 'Descripcion');
     }
@@ -250,7 +250,7 @@ class CustomerController extends Controller
                 'message' => $e->getMessage()
             ]);
         }
-    } 
+    }
     public function get_cliente_documento($id, CustomerInterface $repo)
     {
         try {
@@ -266,7 +266,7 @@ class CustomerController extends Controller
                 'message' => $e->getMessage()
             ]);
         }
-    } 
+    }
 
     public function validar_cliente(Request $request, CustomerInterface $repo) {
         $data = $request->all();

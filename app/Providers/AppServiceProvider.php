@@ -3,6 +3,9 @@
 namespace App\Providers;
 
 use App\Http\Composers\MenuComposer;
+use App\Http\Recopro\AccountPay\AccountPay;
+use App\Http\Recopro\AccountPay\AccountPayInterface;
+use App\Http\Recopro\AccountPay\AccountPayRepository;
 use App\Http\Recopro\AnalysisUnitaryPrice\AnalysisUnitaryPrice;
 use App\Http\Recopro\AnalysisUnitaryPrice\AnalysisUnitaryPriceInterface;
 use App\Http\Recopro\AnalysisUnitaryPrice\AnalysisUnitaryPriceRepository;
@@ -24,15 +27,42 @@ use App\Http\Recopro\Bancos\BancosRepository;
 
 use App\Http\Recopro\Carroceria\Carroceria;
 use App\Http\Recopro\Carroceria\CarroceriaInterface;
-use App\Http\Recopro\Carroceria\CarroceriaRepository; 
+use App\Http\Recopro\Carroceria\CarroceriaRepository;
 
 
-use App\Http\Recopro\Empresa\Empresa; 
+use App\Http\Recopro\ClassificationAcquisition\ClassificationAcquisition;
+use App\Http\Recopro\ClassificationAcquisition\ClassificationAcquisitionInterface;
+use App\Http\Recopro\ClassificationAcquisition\ClassificationAcquisitionRepository;
+use App\Http\Recopro\Conceptos\Conceptos;
+use App\Http\Recopro\Conceptos\ConceptosInterface;
+use App\Http\Recopro\Conceptos\ConceptosRepository;
+use App\Http\Recopro\CostCenter\CostCenter;
+use App\Http\Recopro\CostCenter\CostCenterInterface;
+use App\Http\Recopro\CostCenter\CostCenterRepository;
+use App\Http\Recopro\Empresa\Empresa;
 use App\Http\Recopro\Empresa\EmpresaInterface;
 use App\Http\Recopro\Empresa\EmpresaRepository;
 
 
-use App\Http\Recopro\View_Movimiento_Conformidad_Compra\View_Movimiento_Conformidad_Compra; 
+use App\Http\Recopro\GasVoucher\GasVoucher;
+use App\Http\Recopro\GasVoucher\GasVoucherInterface;
+use App\Http\Recopro\GasVoucher\GasVoucherRepository;
+use App\Http\Recopro\OperationDestination\OperationDestination;
+use App\Http\Recopro\OperationDestination\OperationDestinationInterface;
+use App\Http\Recopro\OperationDestination\OperationDestinationRepository;
+use App\Http\Recopro\OrdenCompraConformidad\OrdenCompraConformidad;
+use App\Http\Recopro\OrdenCompraConformidad\OrdenCompraConformidadInterface;
+use App\Http\Recopro\OrdenCompraConformidad\OrdenCompraConformidadRepository;
+use App\Http\Recopro\PettyCashExpense\PettyCashExpense;
+use App\Http\Recopro\PettyCashExpense\PettyCashExpenseInterface;
+use App\Http\Recopro\PettyCashExpense\PettyCashExpenseRepository;
+use App\Http\Recopro\ReplenishmentPettyCash\ReplenishmentPettyCash;
+use App\Http\Recopro\ReplenishmentPettyCash\ReplenishmentPettyCashInterface;
+use App\Http\Recopro\ReplenishmentPettyCash\ReplenishmentPettyCashRepository;
+use App\Http\Recopro\View_AL_Entega_ST_Cliente\View_AL_Entega_ST_Cliente;
+use App\Http\Recopro\View_AL_Entega_ST_Cliente\View_AL_Entega_ST_ClienteInterface;
+use App\Http\Recopro\View_AL_Entega_ST_Cliente\View_AL_Entega_ST_ClienteRepository;
+use App\Http\Recopro\View_Movimiento_Conformidad_Compra\View_Movimiento_Conformidad_Compra;
 use App\Http\Recopro\View_Movimiento_Conformidad_Compra\View_Movimiento_Conformidad_CompraInterface;
 use App\Http\Recopro\View_Movimiento_Conformidad_Compra\View_Movimiento_Conformidad_CompraRepository;
 
@@ -167,11 +197,6 @@ use App\Http\Recopro\View_movimiento_cierre\View_movimiento_cierreRepository;
 use App\Http\Recopro\View_cierre_cuentas_cobrar\View_cierre_cuentas_cobrar; 
 use App\Http\Recopro\View_cierre_cuentas_cobrar\View_cierre_cuentas_cobrarInterface;
 use App\Http\Recopro\View_cierre_cuentas_cobrar\View_cierre_cuentas_cobrarRepository;
-
-
-use App\Http\Recopro\View_AL_Entega_ST_Cliente\View_AL_Entega_ST_Cliente; 
-use App\Http\Recopro\View_AL_Entega_ST_Cliente\View_AL_Entega_ST_ClienteInterface;
-use App\Http\Recopro\View_AL_Entega_ST_Cliente\View_AL_Entega_ST_ClienteRepository;
 
 use App\Http\Recopro\Movimiento_Detalle_cierre\Movimiento_Detalle_cierre; 
 use App\Http\Recopro\Movimiento_Detalle_cierre\Movimiento_Detalle_cierreInterface;
@@ -504,10 +529,6 @@ use App\Http\Recopro\Consecutive\ConsecutiveRepository;
 use App\Http\Recopro\Category\Category;
 use App\Http\Recopro\Category\CategoryInterface;
 use App\Http\Recopro\Category\CategoryRepository;
-
-use App\Http\Recopro\Conceptos\Conceptos;
-use App\Http\Recopro\Conceptos\ConceptosInterface;
-use App\Http\Recopro\Conceptos\ConceptosRepository;
 
 use App\Http\Recopro\HeadAccountan\HeadAccountan;
 use App\Http\Recopro\HeadAccountan\HeadAccountanInterface;
@@ -1068,6 +1089,15 @@ class AppServiceProvider extends ServiceProvider
         $this->registerConsumerReturnProduct();
 
         $this->registerReporteDocumentosEmitidos();
+        $this->registerOrdenCompraConformidad();
+        $this->registerReplenishmentPettyCash();
+        $this->registerPettyCashExpense();
+        $this->registerAccountPay();
+        $this->registerGasVoucher();
+        $this->registerOperationDestination();
+        $this->registerClassificationAcquisition();
+
+        $this->registerCostCenter();
 
     }
 
@@ -2902,6 +2932,72 @@ class AppServiceProvider extends ServiceProvider
 
         $app->bind(ReporteDocumentosEmitidosInterface::class, function ($app) {
             return new ReporteDocumentosEmitidosRepository(new ReporteDocumentosEmitidos());
+        });
+    }
+
+    public function registerOrdenCompraConformidad()
+    {
+        $app = $this->app;
+
+        $app->bind(OrdenCompraConformidadInterface::class, function ($app) {
+            return new OrdenCompraConformidadRepository(new OrdenCompraConformidad());
+        });
+    }
+
+    public function registerReplenishmentPettyCash()
+    {
+        $app = $this->app;
+
+        $app->bind(ReplenishmentPettyCashInterface::class, function ($app) {
+            return new ReplenishmentPettyCashRepository(new ReplenishmentPettyCash());
+        });
+    }
+
+    public function registerPettyCashExpense()
+    {
+        $app = $this->app;
+        $app->bind(PettyCashExpenseInterface::class, function ($app) {
+            return new PettyCashExpenseRepository(new PettyCashExpense());
+        });
+    }
+
+    public function registerAccountPay()
+    {
+        $app = $this->app;
+        $app->bind(AccountPayInterface::class, function ($app) {
+            return new AccountPayRepository(new AccountPay());
+        });
+    }
+
+    public function registerGasVoucher()
+    {
+        $app = $this->app;
+        $app->bind(GasVoucherInterface::class, function ($app) {
+            return new GasVoucherRepository(new GasVoucher());
+        });
+    }
+
+    public function registerOperationDestination()
+    {
+        $app = $this->app;
+        $app->bind(OperationDestinationInterface::class, function ($app) {
+            return new OperationDestinationRepository(new OperationDestination());
+        });
+    }
+
+    public function registerClassificationAcquisition()
+    {
+        $app = $this->app;
+        $app->bind(ClassificationAcquisitionInterface::class, function ($app) {
+            return new ClassificationAcquisitionRepository(new ClassificationAcquisition());
+        });
+    }
+
+    public function registerCostCenter()
+    {
+        $app = $this->app;
+        $app->bind(CostCenterInterface::class, function ($app) {
+            return new CostCenterRepository(new CostCenter());
         });
     }
 

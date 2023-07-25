@@ -31,7 +31,7 @@
         var cEstadoCivil = $("#cEstadoCivil");
         var idsector = $("#idsector");
 
-        
+
 
         $scope.chkState = function () {
             var txt_state2 = (w_state.prop('checked')) ? 'Activo' : 'Inactivo';
@@ -65,7 +65,7 @@
                         } else {
                             // console.log(dataPersona);
                             // console.log("si hay ");
-                           
+
                             tipodoc.val(dataPersona[0].cTipodocumento).trigger('change');
                             var nclie = dataPersona[0].cRazonsocial;
                             if (nclie.length == 0) {
@@ -120,7 +120,7 @@
                         $("#cNombres_c").val(data.nombres);
                         $("#cApepat_c").val(data.apellidoPaterno);
                         $("#cApemat_c").val(data.apellidoMaterno);
-                       
+
                     } else if (data.razonSocial != null) {
                         var razon = data.razonSocial;
                         var direc = data.direccion;
@@ -408,9 +408,9 @@
             bval = bval && distrito.required();
             // bval = bval && idsector.required();
             if (tipodoc.val() == '01') {
-                bval = bval && $("#cApepat_c").required();   
-                bval = bval && $("#cApemat_c").required();   
-                bval = bval && $("#cNombres_c").required();   
+                bval = bval && $("#cApepat_c").required();
+                bval = bval && $("#cApemat_c").required();
+                bval = bval && $("#cNombres_c").required();
             }
             if (tipodoc.val() == '01' && documento.val().length != 8) {
                 AlertFactory.textType({
@@ -505,7 +505,7 @@
                     tipos_doc_venta = tipoc_doc_venta;
 
                     //  _.each(response.operaciones, function(item) {
-                    //    
+                    //
                     // });
 
                 }
@@ -688,4 +688,4 @@
         $urlRouterProvider.otherwise('/');
     }
 })
-    ();
+();

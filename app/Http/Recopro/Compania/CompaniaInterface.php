@@ -8,10 +8,11 @@
 
 namespace App\Http\Recopro\Compania;
 
-
 interface CompaniaInterface
 {
     public function all();
+
     public function create(array $attributes);
 
+    public function first();
 }

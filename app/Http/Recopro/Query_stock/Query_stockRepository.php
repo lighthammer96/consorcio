@@ -42,7 +42,7 @@ class Query_stockRepository implements Query_stockInterface
     {
         $dato = $this->model->Where('Total', '>', 0);
         if (!empty($filtro_art)) {
-            // $dato=$dato->Where('Articulo',$filtro_art)->Where('Total','>',0); 
+            // $dato=$dato->Where('Articulo',$filtro_art)->Where('Total','>',0);
             $dato = $dato->Where('code_article', $filtro_art)->Where('Total', '>', 0);
         }
         if (!empty($filtro_idAlm)) {

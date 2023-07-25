@@ -38,7 +38,7 @@ class SolicitudCompraRepository implements SolicitudCompraInterface
 
     public function all()
     {
-        return $this->model->get();
+        return $this->model->all();
     }
 
     public function find($id)
@@ -74,6 +74,12 @@ class SolicitudCompraRepository implements SolicitudCompraInterface
             ->orderByRaw('CONVERT(INT, nConsecutivo) DESC')->first();
         return ($last) ? (int)$last->nConsecutivo + 1 : 1;
     }
+
+    public function destroy($id)
+    {
+        $this->model->find($id)->delete();
+    }
+
 
 
     public function get_consecutivo($table, $id)
@@ -265,19 +271,6 @@ select vt.numero_comprobante as tiket, ve.idventa as idventa,ve.serie_comprobant
 
         $mostrar = DB::select("select * from ERP_Productos where code_article='$codigo'");
         return $mostrar;
-    }
-
-    public function destroy($id)
-    {
-
-        // $pdo=DB::connection()->getPdo();
-        // $destroy=DB::select("SET NOCOUNT ON; EXEC AL_Elimina_Movimiento '$id'");
-        // return $destroy;
-        $mostrar = DB::table('ERP_SolicitudCompra')->where('idMovimiento', $id)->delete();
-
-        $mostrar = DB::table('ERP_SolicitudCompra_Detalle')->where('idMovimiento', $id)->delete();
-        $mostrar = DB::table('ERP_SolicitudCompra_Articulo')->where('idMovimiento', $id)->delete();
-
     }
 
     public function get_movimiento($id)

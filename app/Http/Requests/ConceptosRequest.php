@@ -23,13 +23,13 @@ class ConceptosRequest extends FormRequest
      * @return array
      */
     public function rules()
-    { 
-         return [
+    {
+        return [
             'descripcion' => 'required|min:1|max:200',
-            
+
         ];
     }
-    
+
     public function response(array $errors)
     {
         $errors = [

@@ -1,10 +1,13 @@
 <?php namespace App\Http\Recopro\ConfigJerarquiaCompra;
+
+use App\Http\Recopro\ConfigJerarquiaCompraDetalle\ConfigJerarquiaCompraDetalle;
 use App\Http\Recopro\User\User;
 use App\Http\Recopro\Shop\Shop;
 use App\Http\Recopro\Area\Area;
 use App\Http\Recopro\Currency\Currency;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
 /**
  * Created by PhpStorm.
  * User: Jair Vasquez
@@ -13,7 +16,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class ConfigJerarquiaCompra extends Model
 {
-  
     protected $table = 'ERP_AprobacionCompra';
 
     public $timestamps = true;
@@ -23,12 +25,15 @@ class ConfigJerarquiaCompra extends Model
     protected $keyType = 'string';
 
     public $incrementing = false;
-    
+
     const CREATED_AT = 'dFecCre';
+
     const UPDATED_AT = 'dFecMod';
-    protected $fillable = ['nIdAprob','montoInicio','montoFin','nIdTienda','nIdMoneda','dFecIni','dFecFin','nIdArea','cIdUsuCre','cIdUsuMod'];
-    
-     public function user_c()
+
+    protected $fillable = ['nIdAprob', 'montoInicio', 'montoFin', 'nIdTienda', 'nIdMoneda', 'dFecIni', 'dFecFin',
+        'nIdArea', 'cIdUsuCre', 'cIdUsuMod'];
+
+    public function user_c()
     {
         return $this->belongsTo(User::class, 'cIdUsuCre');
     }
@@ -37,18 +42,25 @@ class ConfigJerarquiaCompra extends Model
     {
         return $this->belongsTo(User::class, 'cIdUsuMod');
     }
-     public function shop_u()
+
+    public function shop_u()
     {
         return $this->belongsTo(Shop::class, 'nIdTienda');
     }
 
-     public function area_u()
+    public function area_u()
     {
         return $this->belongsTo(Area::class, 'nIdArea');
     }
+
     public function moneda_u()
     {
         return $this->belongsTo(Currency::class, 'nIdMoneda');
+    }
+
+    public function detail()
+    {
+        return $this->hasMany(ConfigJerarquiaCompraDetalle::class, 'nIdAprob');
     }
 
 }

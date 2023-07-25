@@ -1,7 +1,9 @@
 <?php namespace App\Http\Recopro\Currency;
+
 use App\Http\Recopro\User\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
 /**
  * Created by PhpStorm.
  * User: Jair Vasquez
@@ -10,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Currency extends Model
 {
-  
+
     protected $table = 'ERP_Moneda';
 
     public $timestamps = true;
@@ -21,9 +23,10 @@ class Currency extends Model
 
     public $incrementing = false;
 
-    protected $fillable = [ 'Descripcion', 'Simbolo', 'EquivalenciaSunat', 'Estado', 'Abreviatura','user_created','user_updated','user_deleted','deleted_at'];
-    
-     public function user_c()
+    protected $fillable = ['Descripcion', 'Simbolo', 'EquivalenciaSunat', 'Estado', 'Abreviatura',
+        'user_created', 'user_updated', 'user_deleted', 'deleted_at'];
+
+    public function user_c()
     {
         return $this->belongsTo(User::class, 'user_created');
     }

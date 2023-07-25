@@ -11,11 +11,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * Date: 4/4/2017
  * Time: 10:10 PM
  */
-
 class TypeChange extends Model
 {
-   
- 
+
+
 //    protected $table = 'ERP_TipoCambios';
     protected $table = 'ERP_TipoCambio';
 
@@ -24,7 +23,8 @@ class TypeChange extends Model
     public $incrementing = false;
 
 //    protected $fillable = ['date_register','purchase','sale','state','user_created', 'user_updated', 'user_deleted'];
-    protected $fillable = ['Fecha','cambioComercialCompra','cambioComercialVenta','IdMoneda', 'Compra', 'Venta', 'user_created', 'user_updated', 'user_deleted'];
+    protected $fillable = ['Fecha', 'cambioComercialCompra', 'cambioComercialVenta', 'IdMoneda', 'Compra', 'Venta',
+        'user_created', 'user_updated', 'user_deleted'];
 
     protected $hidden = ['deleted_at'];
 
@@ -37,6 +37,7 @@ class TypeChange extends Model
     {
         return $this->belongsTo(User::class, 'user_updated');
     }
+
     public function currency_u()
     {
         return $this->belongsTo(Currency::class, 'IdMoneda');

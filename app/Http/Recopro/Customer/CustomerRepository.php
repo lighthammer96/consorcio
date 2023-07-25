@@ -12,18 +12,18 @@ use Illuminate\Support\Facades\DB;
 class CustomerRepository implements CustomerInterface
 {
     protected $model;
- private static $_ACTIVE = 'A';
+    private static $_ACTIVE = 'A';
     public function __construct(Customer $model)
     {
-        $this->model = $model; 
-       
+        $this->model = $model;
+
     }
 
     public function all()
     {
         return $this->model->get();
     }
-     public function search($s)
+    public function search($s)
     {
         return $this->model->where(function($q) use ($s){
             $q->where('tipodoc', 'LIKE', '%'.$s.'%');
@@ -33,15 +33,15 @@ class CustomerRepository implements CustomerInterface
             $q->orWhere('direccion', 'LIKE', '%'.$s.'%');
             $q->orWhere('correo_electronico', 'LIKE', '%'.$s.'%');
             $q->orWhere('celular', 'LIKE', '%'.$s.'%');
-             $q->orWhere('IdTipoDocumento', 'LIKE', '%'.$s.'%');
+            $q->orWhere('IdTipoDocumento', 'LIKE', '%'.$s.'%');
         });
 
     }
     public function allActive()
     {
-       return $this->model->where('estado', self::$_ACTIVE)->get();
+        return $this->model->where('estado', self::$_ACTIVE)->get();
     }
-     public function create(array $attributes)
+    public function create(array $attributes)
     {
         $attributes['cIdUsuCre'] = auth()->id();
         $attributes['cIdUsuMod'] = auth()->id();
@@ -49,14 +49,14 @@ class CustomerRepository implements CustomerInterface
     }
     public function get_consecutivo($table,$id)
     {     $mostrar=DB::select("select top 1 * from $table order by CONVERT(INT, $id) DESC");
-         $actu=0;
-         if(!$mostrar){
+        $actu=0;
+        if(!$mostrar){
             $actu=0;
-         }else{
+        }else{
             $actu=intval($mostrar[0]->$id);
-         };
-        $new=$actu+1; 
-        return $new; 
+        };
+        $new=$actu+1;
+        return $new;
     }
     public function update($id, array $attributes)
     {
@@ -71,36 +71,36 @@ class CustomerRepository implements CustomerInterface
         DB::table('ERP_Persona')->where('idPersona',$idPersona)->delete();
         $model->update($attributes);
         $model->delete();
-     
+
     }
-     public function findByCode($code)
+    public function findByCode($code)
     {
         return $this->model->where('documento', $code)->first();
     }
     public function gte_tipo_doc()
-    {   
+    {
         $mostrar=DB::select("select cCodigo Codigo, cDescripcion TipoDocumento 
 from ERP_TABLASUNAT
 where cnombretabla = 'TIPO_DOCUMENTO'");
-        return $mostrar; 
+        return $mostrar;
     }
     public function tipo_clie()
-    {   
+    {
         $mostrar=DB::select("select * from ERP_TipoCliente where estado='A'");
-        return $mostrar; 
+        return $mostrar;
     }
-      public function tipoc_doc_venta()
-    {   
+    public function tipoc_doc_venta()
+    {
         $mostrar=DB::select("select * from ERP_TipoDocumento
 where IdTipoDocumento in ('01','03')");
-        return $mostrar; 
+        return $mostrar;
     }
-     public function getPersona()
-    {   
+    public function getPersona()
+    {
         $mostrar=DB::select("Select * from ERP_TABLASUNAT where cNombretabla = 'TIPO_PERSONA'");
-        return $mostrar; 
+        return $mostrar;
     }
-    public function find($id) 
+    public function find($id)
     {
         $sql = "SELECT ti.*, p.*, FORMAT(p.dFechanacimiento, 'dd/MM/yyyy') AS dFechanacimiento , ub.*, DATEDIFF(yy,p.dFechanacimiento, GETDATE()) AS edad, FORMAT(p.dFechanacimiento, 'yyyy-MM-dd') AS dFechanacimiento_server, 
         CONCAT(ti.direccion,'-',ub.cDistrito) AS direccion_ubigeo

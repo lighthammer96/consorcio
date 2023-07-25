@@ -1,174 +1,108 @@
-<!-- Modal -->
-<div class="modal" id="modalRC" tabindex="-1" role="dialog">
+<div class="modal" id="modalRC" role="dialog" data-keyboard="false">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title" id="title-rc"></h4>
+                <h4 class="modal-title" id="titleRC"></h4>
             </div>
             <div class="modal-body">
-                <div>
-                    <!-- Nav tabs -->
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class="active">
-                            <a data-target="#general" aria-controls="tab1" role="tab" data-toggle="tab">General</a>
-                        </li>
-                        <li role="presentation">
-                            <a data-target="#reposicion" aria-controls="tab2" role="tab" data-toggle="tab">Reposición</a>
-                        </li>
-                    </ul>
-
-                    <!-- Tab panes -->
-                    <div class="tab-content">
-                        <div role="tabpanel" class="tab-pane active" id="general">
-                            <br>
-                            <div class="form-horizontal">
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">Periodo Contable</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" id="periodo" class="form-control input-sm" readonly value="201702">
-                                    </div>
-                                    <label class="col-sm-2 control-label">Fecha</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" id="fecha" class="form-control input-sm" value="12/03/2017">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">Caja Chica</label>
-                                    <div class="col-sm-4">
-                                        <div class="input-group">
-                                            <input type="hidden" id="cash_id">
-                                            <input type="text" class="form-control input-sm"
-                                                   id="username" readonly="readonly" value="CAJA TARAPOTO">
-                                            <span class="input-group-btn">
-                                                <button class="btn btn-success btn-sm" type="button"
-                                                        ng-click="openCash()">
-                                                    <span class="fa fa-search-plus"></span>
-                                                </button>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <label class="col-sm-2 control-label">Responsable</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" id="balance" class="form-control input-sm" value="ANGELA DIAZ" readonly="readonly">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">Usuario</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" id="balance" class="form-control input-sm" value="ANGELA DIAZ" readonly="readonly">
-                                    </div>
-                                    <label class="col-sm-2 control-label">Tipo de Conversión</label>
-                                    <div class="col-sm-4">
-                                        <select class="form-control input-sm">
-                                            <option>02-Moneda</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">Proyecto</label>
-                                    <div class="col-sm-4">
-                                        <div class="input-group">
-                                            <input type="hidden" id="cash_id">
-                                            <input type="text" class="form-control input-sm"
-                                                   id="username" readonly="readonly" value="00038">
-                                            <span class="input-group-btn">
-                                                <button class="btn btn-success btn-sm" type="button"
-                                                        ng-click="openProvider()">
-                                                    <span class="fa fa-search-plus"></span>
-                                                </button>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <label class="col-sm-2 control-label">Tipo de Cambio</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" id="type_change" class="form-control input-sm" value="3.423" readonly="readonly">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">Descripción Proyecto</label>
-                                    <div class="col-sm-4">
-                                        <textarea class="form-control input-sm" rows="2" placeholder="Descripción Proyecto" id="glosa" readonly></textarea>
-                                    </div>
-                                    <label class="col-sm-2 control-label">Glosa</label>
-                                    <div class="col-sm-4">
-                                        <textarea class="form-control input-sm" rows="2" placeholder="Glosa" id="glosa"></textarea>
-                                    </div>
-                                </div>
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Fecha</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="rc_date" class="form-control input-sm" readonly />
+                        </div>
+                        <label class="col-sm-2 control-label">Periodo Contable</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="rc_accounting_period" class="form-control input-sm" readonly />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Caja Chica</label>
+                        <div class="col-sm-4">
+                            <div class="input-group">
+                                <input type="text" class="form-control input-sm" id="rc_petty_cash" readonly />
+                                <span class="input-group-btn">
+                                    <button class="btn btn-success btn-sm" type="button"
+                                            ng-click="openPettyCash()">
+                                        <span class="fa fa-search-plus"></span>
+                                    </button>
+                                </span>
                             </div>
                         </div>
-                        <div role="tabpanel" class="tab-pane" id="reposicion">
-                            <br>
-                            <div class="form-horizontal">
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">Forma de Ingreso</label>
-                                    <div class="col-sm-4">
-                                        <select class="form-control input-sm">
-                                            <option>CHEQUES CON CLAUSULAS NO NEGOCIABLE</option>
-                                        </select>
-                                    </div>
-                                    <label class="col-sm-2 control-label">Cta.Cte</label>
-                                    <div class="col-sm-4">
-                                        <select class="form-control input-sm">
-                                            <option>02</option>
-                                        </select>
-                                    </div>
-                                </div>
-                               <div class="form-group">
-                                    <label class="col-sm-2 control-label">Número</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" id="balance" class="form-control input-sm" value="0000352" readonly="readonly">
-                                    </div>
-                                    <label class="col-sm-2 control-label">Banco</label>
-                                    <div class="col-sm-4">
-                                        <select class="form-control input-sm">
-                                            <option>CONTINENTAL</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">Desde</label>
-                                    <div class="col-sm-4">
-                                     <input type="text" id="fecha" class="form-control input-sm" value="01/01/2017">
-                                    </div>
-                                    <label class="col-sm-2 control-label">Hasta</label>
-                                    <div class="col-sm-4">
-                                     <input type="text" id="fecha" class="form-control input-sm" value="02/02/2017">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">Total Gasto</label>
-                                    <div class="col-sm-2">
-                                       <input type="text" id="balance" class="form-control input-sm text-right" value="0.00" readonly="readonly">
-                                    </div>
-                                    <label class="col-sm-2 control-label">Saldo Actual</label>
-                                    <div class="col-sm-2">
-                                        <input type="text" id="balance" class="form-control input-sm text-right" value="0.00" readonly="readonly">
-                                    </div>
-                                    <label class="col-sm-2 control-label">Saldo Anterior</label>
-                                    <div class="col-sm-2">
-                                        <input type="text" id="balance" class="form-control input-sm text-right" value="0.00" readonly="readonly">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">Reposición</label>
-                                    <div class="col-sm-2">
-                                        <input type="text" id="balance" class="form-control input-sm text-right" value="2,000.00">
-                                    </div>
-                                    <label class="col-sm-2 control-label">Nuevo Saldo</label>
-                                    <div class="col-sm-2">
-                                        <input type="text" id="balance" class="form-control input-sm input-sm text-right" value="2,000.00" readonly="readonly">
-                                    </div>
-                                </div>
+                        <label class="col-sm-2 control-label">Responsable</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="rc_responsible" class="form-control input-sm" readonly />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Entregado A</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="rc_user_required" class="form-control input-sm" />
+                        </div>
+                        <label class="col-sm-2 control-label">Moneda</label>
+                        <div class="col-sm-4">
+                            <select class="form-control input-sm" id="rc_currency"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Tipo de Cambio</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="rc_type_change" class="form-control input-sm" readonly />
+                        </div>
+                        <label class="col-sm-2 control-label">Concepto</label>
+                        <div class="col-sm-4">
+                            <textarea class="form-control input-sm" rows="2" placeholder="Concepto" id="rc_concept"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Forma de Ingreso</label>
+                        <div class="col-sm-4">
+                            <div class="input-group">
+                                <input type="text" class="form-control input-sm" id="rc_payment_method" readonly />
+                                <span class="input-group-btn">
+                                    <button class="btn btn-success btn-sm" type="button"
+                                            ng-click="openPaymentMethod()">
+                                        <span class="fa fa-search-plus"></span>
+                                    </button>
+                                </span>
                             </div>
+                        </div>
+                        <label class="col-sm-2 control-label">Número</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="rc_number" class="form-control input-sm" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Banco</label>
+                        <div class="col-sm-4">
+                            <select class="form-control input-sm" id="rc_bank_id"
+                                    style="width: 100%"></select>
+                        </div>
+                        <label class="col-sm-2 control-label">Cta.Cte</label>
+                        <div class="col-sm-4">
+                            <select class="form-control input-sm" id="rc_current_account_id" disabled
+                                    style="width: 100%"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Monto</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="rc_amount" class="form-control input-sm"
+                                   onblur="roundDecimals(this, 2)" onkeypress="return validDecimals(event, this, 3)"
+                                   onclick="this.select()" />
                         </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" ng-click="saveCashexpensegirl()">
+                <button type="button" class="btn btn-primary btn-process hide" ng-click="saveRC(2)">
+                    <span class="fa fa-sign-out"></span>
+                    Procesar
+                </button>
+                <button type="button" class="btn btn-success btn-save" ng-click="saveRC(1)">
                     <span class="fa fa-save"></span>
                     Guardar
                 </button>

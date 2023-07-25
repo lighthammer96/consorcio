@@ -79,4 +79,10 @@ class CuentasBancariasRepository implements CuentasBancariasInterface
         $new=$actu+1;
         return $new; 
     }
+
+    public function findByBank($id)
+    {
+        return $this->model->where('idbanco', $id)
+            ->get();
+    }
 }

@@ -922,3 +922,7 @@ div.front_desc {
 .sidebar-collapse .nav > li > a {
     color: #fff !important;
 }
+
+div.jtable-main-container table.jtable thead th.jtable-column-header div.jtable-column-header-container {
+    height: auto;
+}

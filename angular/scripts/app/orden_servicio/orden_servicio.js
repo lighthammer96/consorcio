@@ -208,7 +208,7 @@
 
                         $.post("orden_servicios/validar_cliente", { id_cliente: id },
                             function (data, textStatus, jqXHR) {
-                              
+
                                 if(data.length > 0) {
                                     $("#tipodoc").prop("disabled", true);
                                     $("#documento").prop("readonly", true);
@@ -227,7 +227,7 @@
                             },
                             "json"
                         );
-                    
+
                     } else {
                         AlertFactory.textType({
                             title: '',
@@ -410,7 +410,7 @@
                 if (!_.isUndefined(response.status) && response.status) {
                     var data = response.data;
                     if (data[0].Mensaje == 'OK') {
-                       
+
                         AlertFactory.textType({
                             title: '',
                             message: 'La orden se registró correctamente',
@@ -1138,8 +1138,8 @@
         //      td2.append(btn).append(idRevision_input).append(idTipo_input).append(idinput_modoser).append(idGrupDe_input);
         //      tr.append(td1).append(tda).append(tdb).append(td2);
         //      table_servicios.append(tr);
-        //     idMoneda.data("prev",idMoneda.val()); 
-        //     id_tipocli.data("prev",id_cliente_tipo_or.val());   
+        //     idMoneda.data("prev",idMoneda.val());
+        //     id_tipocli.data("prev",id_cliente_tipo_or.val());
         //     var precio=arrayRe[2];
         //      if(tipoTo=='1'){
         //         var mo_r=mo_revision.val();
@@ -1176,7 +1176,7 @@
         //         var new_trp=Number(mo_trp)+Number(precio);
         //         otros_rep.val(new_trp.toFixed(decimales_redondeo));
         //      }
-        //     sumar_key(); 
+        //     sumar_key();
         //     servicios_select.val("").trigger("change");
         //     tipo_totales_slec.val("").trigger("change");
         //     //  var totales_table=$("#tr_pre"+code);
@@ -1246,7 +1246,7 @@
         //                     $(this).attr('data-precio',mont.toFixed(decimales_redondeo));
         //                     otros_rep.val(new_trp.toFixed(decimales_redondeo));
         //                  }
-        //                 sumar_key(); 
+        //                 sumar_key();
         //             }
         //          });
 
@@ -1328,7 +1328,7 @@
         //             var new_trp=Number(mo_trp)-Number(precio_borrar);
         //             otros_rep.val(new_trp.toFixed(decimales_redondeo));
         //          }
-        //             sumar_key(); 
+        //             sumar_key();
         //             $('#tr_b_' + code).remove();
         //         }
 
@@ -2738,7 +2738,7 @@
                         if (Number(data_p[0].Mensaje)) {
                             $("#nConsecutivo").val(data_p[0].Mensaje);
                             estado.val("0");
-                            // btn_guardarOrden.prop('disabled',true); 
+                            // btn_guardarOrden.prop('disabled',true);
 
                             cCodConsecutivo.prop('disabled', true);
                             AlertFactory.textType({
@@ -2780,10 +2780,10 @@
                 });
             }
         }
-        //          function getSunat() 
+        //          function getSunat()
         // {
         //   $("#contenedor").slideDown(0);
-        //   var dni='71980490';  
+        //   var dni='71980490';
 
 
         //   // const url="https://dniruc.apisperu.com/api/v1/dni/71980490?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InJleXNhbmdhbWE3QGdtYWlsLmNvbSJ9.hfobQC8FM5IyKKSaa7usUXV0aY1Y8YthAhdN8LoMlMM";
@@ -2854,7 +2854,7 @@
                     // horaEnt
                     // nKilometraje
                     // if(data[0].iEstado!='0'){
-                    //       btn_guardarOrden.prop('disabled',true); 
+                    //       btn_guardarOrden.prop('disabled',true);
                     // }
                     // id_tipocli.data("prev",id_cliente_tipo_or.val());
                     // idMoneda.data("prev",idMoneda.val());
@@ -2923,7 +2923,7 @@
                             getDistrito(dataPersona[0].cCodUbigeo, dataPersona[0].cProvincia);
                             getSector("xxxxxx", dataPersona[0].cCodUbigeo);
 
-                            
+
                             $("#cNombres_c").val(dataPersona[0].cNombres);
                             $("#cApepat_c").val(dataPersona[0].cApepat);
                             $("#cApemat_c").val(dataPersona[0].cApemat);
@@ -3130,9 +3130,9 @@
             bval = bval && distrito.required();
             // bval = bval && idsector.required();
             if (tipodoc.val() == '01') {
-                bval = bval && $("#cApepat_c").required();   
-                bval = bval && $("#cApemat_c").required();   
-                bval = bval && $("#cNombres_c").required();   
+                bval = bval && $("#cApepat_c").required();
+                bval = bval && $("#cApemat_c").required();
+                bval = bval && $("#cNombres_c").required();
             }
             if (tipodoc.val() == '01' && documento.val().length != 8) {
                 AlertFactory.textType({
@@ -3437,7 +3437,7 @@
                 // },
                 cliente: {
                     title: 'Cliente',
-                  
+
                 },
                 iEstado: {
                     title: 'Estado',
@@ -3580,13 +3580,13 @@
             recordsLoaded: function (event, data) {
                 $('.agregar-vehiculo').click(function (e) {
                     // var placa = $(this).attr('data-placa');
-                   
+
                     // $("#placa").val(placa);
                     // getPlaca();
 
                     var id = $(this).attr('data-id');
                     var tabla = $(this).attr('data-tabla');
-                    
+
                     if(tabla == "ERP_VehTerceros") {
                         $("#tipo_articulo").val("terceros");
                     }
@@ -3600,14 +3600,14 @@
                     $("#modal-vehiculos").modal("hide");
                     e.preventDefault();
                 });
-               
+
             },
 
             formCreated: function (event, data) {
-              
+
             },
             formSubmitting: function (event, data) {
-              
+
             }
         });
 
@@ -3630,4 +3630,4 @@
         $urlRouterProvider.otherwise('/');
     }
 })
-    ();
+();

@@ -7,6 +7,7 @@
  */
 
 namespace App\Http\Controllers;
+
 use App\Http\Recopro\Register_movement\Register_movementTrait;
 use App\Http\Recopro\Category\CategoryTrait;
 use Illuminate\Http\Request;
@@ -23,7 +24,8 @@ use App\Http\Recopro\Operation\OperationInterface;
 use App\Http\Recopro\Ventas\VentasInterface;
 use App\Http\Recopro\Warehouse\WarehouseInterface;
 use App\Http\Requests\ProformaRequest;
-use DB; 
+use DB;
+
 class RecepcionOrdenCompraController extends Controller
 {
     use Register_movementTrait;
@@ -33,17 +35,10 @@ class RecepcionOrdenCompraController extends Controller
 //        $this->middleware('json');
     }
 
-    // public function all(Request $request, CategoryInterface $repo)
-    // {
-    //     $s = $request->input('search', '');
-    //     $params = ['idCategoria', 'descripcion as Categoria','estado'];
-    //     return parseList($repo->search($s), $request, 'idCategoria', $params);
-    // }
-
     public function all(Request $request, Register_movementInterface $repo)
     {
         $s = $request->input('search', '');
-        $params = ['idTipoOperacion','idUsuario','estado','idMovimiento'];
+        $params = ['idTipoOperacion', 'idUsuario', 'estado', 'idMovimiento'];
         return parseList($repo->search_recepcionCompra($s), $request, '', $params);
     }
 
@@ -51,5 +46,5 @@ class RecepcionOrdenCompraController extends Controller
     {
         return generateExcel($this->generateDataExcel($repo->all_orden_compra()), 'LISTA DE MOVIMIENTOS', 'Lista de movimientos');
     }
-    
+
 }

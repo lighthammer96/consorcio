@@ -9,6 +9,8 @@
 namespace App\Http\Recopro\DocumentType;
 
 
+use App\Http\Controllers\Controller;
+
 class DocumentTypeRepository implements DocumentTypeInterface
 {
     protected $model;
@@ -18,10 +20,25 @@ class DocumentTypeRepository implements DocumentTypeInterface
         $this->model = $model;
     }
 
-    public function search($s)
+    public function search($filter)
     {
+        $s = (isset($filter['search'])) ? $filter['search'] : '';
+
         return $this->model->where(function ($q) use ($s) {
-            $q->where('code', 'LIKE', '%' . $s . '%');
+            $q->where('Descripcion', 'LIKE', '%' . $s . '%');
+        })->where(function ($q) use ($filter) {
+            if (isset($filter['without_letter']) && $filter['without_letter'] == 'true') {
+                $q->where('IdTipoDocumento', '<>', Controller::$_TYPE_DOCUMENT_EXCHANGE_LETTER);
+                $q->where('IdTipoDocumento', '<>', Controller::$_TYPE_DOCUMENT_OUT_NOTE);
+            }
+            if (isset($filter['without_notes']) && $filter['without_notes'] == 'true') {
+                $q->where('IdTipoDocumento', '<>', Controller::$_TYPE_DOCUMENT_CREDIT_NOTE);
+                $q->where('IdTipoDocumento', '<>', Controller::$_TYPE_DOCUMENT_CREDIT_NOTE_NOT_FISCAL);
+                $q->where('IdTipoDocumento', '<>', Controller::$_TYPE_DOCUMENT_CREDIT_NOTE_SPECIAL);
+                $q->where('IdTipoDocumento', '<>', Controller::$_TYPE_DOCUMENT_DEBIT_NOTE);
+                $q->where('IdTipoDocumento', '<>', Controller::$_TYPE_DOCUMENT_DEBIT_NOTE_NOT_FISCAL);
+                $q->where('IdTipoDocumento', '<>', Controller::$_TYPE_DOCUMENT_DEBIT_NOTE_SPECIAL);
+            }
         });
     }
 

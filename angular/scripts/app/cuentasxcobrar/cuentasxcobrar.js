@@ -188,12 +188,12 @@
                         return $img;
                     }
                 },
-                 print: {
+                print: {
                     width: '1%',
                     sorting: false,
                     edit: false,
                     create: false,
-                    listClass: 'text-center', 
+                    listClass: 'text-center',
                     display: function (data) {
                         return '<a href="javascript:void(0)" title="Imprimir Cronograma" class="print_content" data-code="' +
                             data.record.cCodConsecutivo +'*'+data.record.nConsecutivo+'"><i class="fa fa-file-pdf-o fa-1-5x fa-red"></i></a>';
@@ -350,7 +350,7 @@
 
                     var id = totalid[0] + "|" + totalid[1];
                     window.open("cuentasxcobrars/imprimir_cronograma/" + id);
-                   // $scope.loadTarjetaCobranzaPDF('cuentasxcobrars/tarjetaCobranza', data_pdf);
+                    // $scope.loadTarjetaCobranzaPDF('cuentasxcobrars/tarjetaCobranza', data_pdf);
 
                     e.preventDefault();
                 });
@@ -425,7 +425,7 @@
                 distrito: $("#distrito option:selected").text(),
                 idsector: $('#idsector').val(),
 
-               
+
                 search_cuentas_cobrar: $("#search_cuentas_cobrar").val(),
             };
             //             $scope.openDoc('projects/excel', data_excel);
@@ -434,26 +434,31 @@
         });
 
         $("#btn_expExcel").click(function (e) {
-            var data_excel = {
-                search: '',
-                filtro_tienda: $('#filtro_tienda').val(),
-                idInicio: $('#idInicio').val(),
-                idFin: $('#idFin').val(),
-                idClienteFiltro: $('#idClienteFiltro').val(),
-                idCobradorFiltro: $('#idCobradorFiltro').val(),
-                FechaInicioFiltro: $('#FechaInicioFiltro').val(),
-                FechaFinFiltro: $('#FechaFinFiltro').val(),
-                idTipoSolicitud: $('#idTipoSolicitud').val(),
-                idConvenio: $("#idConvenio").val(),
-                Departamento: $("#Departamento").val(),
-                provincia: $("#provincia").val(),
-                iddistrito: $("#distrito").val(),
-                distrito: $("#distrito option:selected").text(),
-                idsector: $('#idsector').val(),
-                search_cuentas_cobrar: $("#search_cuentas_cobrar").val(),
-            };
+            // var data_excel = {
+            //     search: '',
+            //     filtro_tienda: $('#filtro_tienda').val(),
+            //     idInicio: $('#idInicio').val(),
+            //     idFin: $('#idFin').val(),
+            //     idClienteFiltro: $('#idClienteFiltro').val(),
+            //     idCobradorFiltro: $('#idCobradorFiltro').val(),
+            //     FechaInicioFiltro: $('#FechaInicioFiltro').val(),
+            //     FechaFinFiltro: $('#FechaFinFiltro').val(),
+            //     idTipoSolicitud: $('#idTipoSolicitud').val(),
+            //     idConvenio: $("#idConvenio").val(),
+            //     Departamento: $("#Departamento").val(),
+            //     provincia: $("#provincia").val(),
+            //     iddistrito: $("#distrito").val(),
+            //     distrito: $("#distrito option:selected").text(),
+            //     idsector: $('#idsector').val(),
+            //     search_cuentas_cobrar: $("#search_cuentas_cobrar").val(),
+            // };
             //             $scope.openDoc('projects/excel', data_excel);
-            $scope.openDoc('cuentasxcobrars/excelCuentasxCobrar', data_excel);
+            // $scope.openDoc('cuentasxcobrars/excelCuentasxCobrar', data_excel);
+
+            var data_excel = $('#filtro_tienda').val()+"|"+$('#idInicio').val()+"|"+$('#idFin').val()+"|"+ $('#idClienteFiltro').val()+"|"+$('#idCobradorFiltro').val()+"|"+$('#FechaInicioFiltro').val()+"|"+$('#FechaFinFiltro').val()+"|"+$('#idTipoSolicitud').val()+"|"+$("#idConvenio").val()+"|"+$("#Departamento").val()+"|"+$("#provincia").val()+"|"+$("#distrito").val()+"|"+$("#distrito option:selected").text()+"|"+$('#idsector').val()+"|"+$("#search_cuentas_cobrar").val();
+
+            window.open('cuentasxcobrars/excelCuentasxCobrar/'+ data_excel);
+
         });
 
 
@@ -689,4 +694,4 @@
         $urlRouterProvider.otherwise('/');
     }
 })
-    ();
+();

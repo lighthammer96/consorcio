@@ -1,0 +1,49 @@
+<div class="panel panel-danger-admin">
+    <div class="panel-heading">
+        Gestión de Reporte Mensual de Actividades
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-12"> 
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Año</label>
+                    <div class="col-sm-3">
+                       <input type="number" id="Anio" class="form-control input-sm" placeholder="AÑO"  required minlength="6" min="2010" value="2022" />
+                    </div>
+                    <div class="col-sm-3">
+                      <select id="mes" class="form-control input-sm">
+                        <option value="1">ENERO</option>
+                        <option value="2">FEBRERO</option>
+                        <option value="3">MARZO</option>
+                        <option value="4">ABRIL</option>
+                        <option value="5">MAYO</option>
+                        <option value="6">JUNIO</option>
+                        <option value="7">JULIO</option>
+                        <option value="8">AGOSTO</option>
+                        <option value="9">SEPTIEMBRE</option>
+                        <option value="10">OCTUBRE</option>
+                        <option value="11">NOVIEMBRE</option>
+                        <option value="12">DICIEMBRE</option>
+                      </select>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="btn-group">
+                             <button type="button" class="btn btn-success btn-sm" id="btn_imprimirMovimiento">
+                                    <span class="fa fa-file-pdf-o"></span>
+                                                Imprimir Resumen
+                             </button>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="btn-group">
+                             <button type="button" class="btn btn-primary btn-sm" id="btn_imprimirExcelMetas">
+                                    <span class="fa fa-file-excel-o"></span>
+                                                Imprimir Resumen
+                             </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

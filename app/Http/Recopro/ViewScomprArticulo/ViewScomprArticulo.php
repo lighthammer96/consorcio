@@ -1,7 +1,9 @@
 <?php namespace App\Http\Recopro\ViewScomprArticulo;
+
 use App\Http\Recopro\User\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
 /**
  * Created by PhpStorm.
  * User: Jair Vasquez
@@ -10,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class ViewScomprArticulo extends Model
 {
-  
+
     protected $table = 'ERP_view_solicitudCompraArticulo';
 
     public $timestamps = true;
@@ -19,7 +21,8 @@ class ViewScomprArticulo extends Model
 
     public $incrementing = false;
 
-    protected $fillable = ['fecha_requerida','impuesto','cCodConsecutivo','nConsecutivo','idMovimiento','consecutivo','idArticulo','unidadMedida','cantidad','articulo'];
-    
+    protected $fillable = ['fecha_requerida', 'impuesto', 'cCodConsecutivo', 'nConsecutivo', 'idMovimiento', 'consecutivo',
+        'idArticulo', 'unidadMedida', 'cantidad', 'articulo'];
+
 
 }

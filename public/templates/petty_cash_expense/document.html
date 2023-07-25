@@ -1,0 +1,179 @@
+<!-- Modal -->
+<div class="modal" id="modalDocument" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Registro de Documento </h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Fecha Registro</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="ap_register_date" class="form-control input-sm" readonly />
+                        </div>
+                        <label class="col-sm-2 control-label">Fecha Emisión</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="ap_emission_date" class="form-control input-sm" readonly />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Periodo</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="ap_period" class="form-control input-sm" readonly />
+                        </div>
+                        <label class="col-sm-2 control-label">Tipo Cambio</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="ap_type_change" class="form-control input-sm" readonly />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Condición de Pago</label>
+                        <div class="col-sm-4">
+                            <select id="ap_payment_condition" class="form-control input-sm"></select>
+                        </div>
+                        <label class="col-sm-2 control-label"> Fecha Vencimiento</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="ap_expired_date" class="form-control input-sm" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Clasif Adquis</label>
+                        <div class="col-sm-4">
+                            <div class="input-group">
+                                <input type="text" class="form-control input-sm" id="ap_classification_acquisition" readonly />
+                                <span class="input-group-btn">
+                                    <button class="btn btn-success btn-sm" type="button" id="ap_classification_acquisition_btn"
+                                            ng-click="openClassificationAcquisition()">
+                                        <span class="fa fa-search-plus"></span>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                        <label class="col-sm-2 control-label">Dest Operac</label>
+                        <div class="col-sm-4">
+                            <select id="ap_operation_destination" class="form-control input-sm"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Proveedor</label>
+                        <div class="col-sm-4">
+                            <div class="input-group">
+                                <input type="text" class="form-control input-sm"
+                                       id="ap_provider" readonly />
+                                <span class="input-group-btn">
+                                    <button class="btn btn-success btn-sm" type="button" id="ap_provider_btn"
+                                            ng-click="openProvider()">
+                                        <span class="fa fa-search-plus"></span>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                        <label class="col-sm-2 control-label">Moneda</label>
+                        <div class="col-sm-4">
+                            <select id="ap_currency" class="form-control input-sm"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Tipo Documento</label>
+                        <div class="col-sm-4">
+                            <div class="input-group">
+                                <input type="text" class="form-control input-sm"
+                                       id="ap_document_type" readonly />
+                                <span class="input-group-btn">
+                                    <button class="btn btn-success btn-sm" type="button" id="ap_document_type_btn"
+                                            ng-click="openDocumentType()">
+                                        <span class="fa fa-search-plus"></span>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                        <label class="col-sm-2 control-label">N° Documento</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="ap_document_number" class="form-control input-sm" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Cuenta Contable</label>
+                        <div class="col-sm-4">
+                            <div class="input-group">
+                                <input type="text" class="form-control input-sm"
+                                       id="ap_account" readonly />
+                                <span class="input-group-btn">
+                                    <button class="btn btn-success btn-sm" type="button" id="ap_account_btn"
+                                            ng-click="openAccount()">
+                                        <span class="fa fa-search-plus"></span>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                        <label class="col-sm-2 control-label">Centro Costo</label>
+                        <div class="col-sm-4">
+                            <div class="input-group">
+                                <input type="text" class="form-control input-sm"
+                                       id="ap_cost_center" readonly />
+                                <span class="input-group-btn">
+                                    <button class="btn btn-success btn-sm" type="button" id="ap_cost_center_btn"
+                                            ng-click="openCostCenter()">
+                                        <span class="fa fa-search-plus"></span>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Glosa</label>
+                        <div class="col-sm-4">
+                           <textarea class="form-control input-sm" rows="2" placeholder="Glosa" id="ap_gloss"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Afecto</label>
+                        <div class="col-sm-2">
+                            <input type="text" id="ap_affection" class="form-control input-sm text-right"
+                                   onblur="roundDecimals(this, 2)" onkeypress="return validDecimals(event, this, 3)"
+                                   onclick="this.select()">
+                        </div>
+                        <label class="col-sm-2 control-label">Inafecto</label>
+                        <div class="col-sm-2">
+                            <input type="text" id="ap_unaffected" class="form-control input-sm text-right"
+                                   onblur="roundDecimals(this, 2)" onkeypress="return validDecimals(event, this, 3)"
+                                   onclick="this.select()">
+                        </div>
+                        <label class="col-sm-2 control-label">Exonerado</label>
+                        <div class="col-sm-2">
+                            <input type="text" id="ap_exonerated" class="form-control input-sm text-right"
+                                   onblur="roundDecimals(this, 2)" onkeypress="return validDecimals(event, this, 3)"
+                                   onclick="this.select()">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 col-sm-offset-4 control-label">
+                            IGV (<span class="ap_per_igv_"></span>%)
+                            <input type="checkbox" id="ap_is_igv">
+                        </label>
+                        <div class="col-sm-2">
+                            <input type="text" id="ap_igv" class="form-control input-sm text-right" readonly />
+                        </div>
+                        <label class="col-sm-2 control-label">Total</label>
+                        <div class="col-sm-2">
+                            <input type="text" id="ap_total" class="form-control input-sm text-right" readonly />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success btn-save" ng-click="saveDocument()">
+                    <span class="fa fa-save"></span>
+                    Guardar
+                </button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                    <span class="fa fa-times"></span> Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

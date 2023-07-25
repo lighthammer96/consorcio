@@ -3,7 +3,7 @@
 /**
  * Created by PhpStorm.
  * User: JAIR
- * Date: 4/5/2017 
+ * Date: 4/5/2017
  * Time: 6:59 PM
  */
 
@@ -29,31 +29,32 @@ class AsignacioncobradorController extends Controller
     {
         //        $this->middleware('json');
     }
-    public function excelCuentasxCobrar(Request $request, Orden_servicioInterface $repOs, Query_movementsInterface $repomo, Solicitud_AsignacionInterface $repo)
+    public function excelCuentasxCobrar($data, Orden_servicioInterface $repOs, Query_movementsInterface $repomo, Solicitud_AsignacionInterface $repo)
     {
 
         ini_set('max_execution_time', '3000');
         set_time_limit(3000);
-        $s = $request->input('search', '');
-        $filtro_tienda = $request->input('filtro_tienda', '');
-        $idInicio = $request->input('idInicio', '');
-        $idFin = $request->input('idFin', '');
-        $idClienteFiltro = $request->input('idClienteFiltro', '');
-        $idCobradorFiltro = $request->input('idCobradorFiltro', '');
+        $array_data = explode("|", $data);
+        $s = "";
+        $filtro_tienda = $array_data[0];
+        $idInicio = $array_data[1];
+        $idFin = $array_data[2];
+        $idClienteFiltro = $array_data[3];
+        $idCobradorFiltro = $array_data[4];
 
-        $FechaInicioFiltro = $request->input('FechaInicioFiltro', '');
-        $FechaFinFiltro = $request->input('FechaFinFiltro', '');
+        $FechaInicioFiltro = $array_data[5];
+        $FechaFinFiltro = $array_data[6];
 
-        $idTipoSolicitud = $request->input('idTipoSolicitud', '');
-        $idConvenio = $request->input('idConvenio', '');
-        $search_cuentas_cobrar = $request->input('search_cuentas_cobrar', '');
+        $idTipoSolicitud = $array_data[7];
+        $idConvenio = $array_data[8];
+        $search_cuentas_cobrar = $array_data[14];
 
-        $Departamento = $request->input('Departamento', '');
-        $provincia = $request->input('provincia', '');
-        $iddistrito = $request->input('iddistrito', '');
-        $distrito = $request->input('distrito', '');
+        $Departamento = $array_data[9];
+        $provincia = $array_data[10];
+        $iddistrito = $array_data[11];
+        $distrito = $array_data[12];
 
-        $idsector = $request->input('idsector', '');
+        $idsector = $array_data[13];
 
 
 
@@ -64,7 +65,7 @@ class AsignacioncobradorController extends Controller
         //  print_r($datafilcab); exit;
 
         $solitud = array();
-        
+
         foreach ($datafilcab as $row) {
             array_push($solitud, $row->idventa);
         }
@@ -77,90 +78,6 @@ class AsignacioncobradorController extends Controller
         $data_compania = $repo->get_compania();
         $data_cabe = $repo->get_cuentas_caber($solitud);
 
-        // $data_compania=$repo->get_compania(); 
-        // $path = public_path('/'.$data_compania[0]->ruta_logo);
-        // $type_image = pathinfo($path, PATHINFO_EXTENSION);
-        // $image = file_get_contents($path);
-        // $image = 'data:image/' . $type_image . ';base64,' . base64_encode($image);
-        // return response()->json([
-        //     'status' => true,
-        //      'img'=>$image,
-        //      'data_cabe'=>$data_cabe,
-        //      'simboloMoneda'=>$simboloMoneda,
-        //      'cambio'=>$cambio,
-        // ]);
-
-        return generateExcelCuentasxCobrar($data_cabe, $simboloMoneda, $cambio, 'CUENTAS POR COBRAR POR CLIENTE', 'Cuentas');
-    }
-
-    public function diasmora($fecha_vencimiento, $saldo_cuota)
-    {
-        $fecha1 = date('Y/m/d', strtotime($fecha_vencimiento));
-    
-        $hoy = date('Y/m/d');
-        $fecha1 = new DateTime($fecha1);
-        $hoy = new DateTime($hoy);
-        $diff = $fecha1->diff($hoy);
-        $dim = 0;
-        if ($fecha1 > $hoy) {
-            $dim = 0;
-        } else {
-            if ($diff->days > 0) {
-                $dim = $diff->days;
-            }
-            if (intval($saldo_cuota) <= 0) {
-                $dim = 0;
-            }
-        }
-    
-        return $dim;
-    }
-
-    public function excelCuentasxCobrar_cierre($id, Request $request, Orden_servicioInterface $repOs, Query_movementsInterface $repomo, Solicitud_Asignacion_cierreInterface $repo)
-    {
-        // ini_set("display_errors", 1);
-        // error_reporting(E_ALL);
-      
-      
-        
-        // print_r($id); exit;
-        // $data = $request->all();
-        // $array = explode("*", $data["periodo"]);
-      
-        $array = explode("|", $id);
-        $periodo_variable = $array[0];
-        $array_periodo = explode("*", $periodo_variable);
-        $periodo = $array_periodo[0];
-        $estado= $array[1];
-
-        // print_r($periodo); exit;
-      
-        $datafilcab = $repo->searchAsignacionCobradorxCuentasGet($periodo);
-      
-
-
-        $solitud = array();
-
-        if(count($datafilcab) <= 0) {
-            echo '<script>alert("NO HAY DATOS!"); window.close();</script>';
-            exit;
-        }
-
-       
-        
-        foreach ($datafilcab as $row) {
-            array_push($solitud, $row->idventa);
-        }
-
-
-        $fecha_actual = date("Y-m-d");
-        $cambio = $repOs->cambio_tipo(2, $fecha_actual);
-
-        $solitud = implode(",", $solitud);
-        $simboloMoneda = $repomo->getSimboloMonedaTotal();
-        $data_compania = $repo->get_compania();
-        $data_cabe = $repo->get_cuentas_caber($solitud, $periodo);
-       
         $html = "";
         $array = array();
         $conc = 1;
@@ -186,11 +103,11 @@ class AsignacioncobradorController extends Controller
         ini_set('max_execution_time', '300000');
         set_time_limit(300000);
         header("Content-Type:   application/vnd.ms-excel; charset=utf-8");
-        header("Content-Disposition: attachment; filename=archivo.xls");
+        header("Content-Disposition: attachment; filename=CuentasXCobrar.xls");
         header("Expires: 0");
         header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
         header("Cache-Control: private",false);
-      
+
         foreach ($data_cabe as $key => $value) {
             $fecul = '';
             if($value->fecultpago != null){
@@ -207,7 +124,7 @@ class AsignacioncobradorController extends Controller
                             <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 125px;" >'.$simboloMoneda[0]->Simbolo.' '.number_format($total_monto,2).'</td>
                             <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 125px;" >'.$simboloMoneda[0]->Simbolo.' '.number_format($consol,2).'</td>
                             <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 260px;" colspan="2"  >Nro. Registros Total: '.$contfi .'</td>';
-                        
+
                     $html .= '</tr>';
 
                     $html .= '<tr>';
@@ -217,7 +134,7 @@ class AsignacioncobradorController extends Controller
                             <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 125px;" >'.$simboloMoneda[1]->Simbolo.' '.number_format($total_monto_dolares,2).'</td>
                             <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 125px;" >'.$simboloMoneda[1]->Simbolo.' '.number_format($condol,2).'</td>
                             <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 260px;" colspan="2"  > </td>';
-                            
+
                     $html .= '</tr>';
                     array_push($data_envio, $html);
                     $consol = 0;
@@ -234,9 +151,9 @@ class AsignacioncobradorController extends Controller
                 array_push($data_envio, $html);
                 $array = array();
                 $conc ++;
-               
+
             }
-            
+
             // detalle
             $html = '<tr>';
             $html .= '  <td style="width: 50px;"></td>';
@@ -253,7 +170,7 @@ class AsignacioncobradorController extends Controller
             $html .= '  <td style="border: 1px solid #000000; text-align: center; width: 130px;">'.$value->cobrador.'</td>';
             $html .= '</tr>';
             array_push($data_envio, $html);
-           
+
             if($value->idmoneda==1) {
                 $consol = $consol + floatval($value->monto_pendiente);
                 $totalsole = $totalsole + floatval($value->monto_pendiente);
@@ -266,8 +183,8 @@ class AsignacioncobradorController extends Controller
                 $total_monto_dolares_final = $total_monto_dolares_final + floatval($value->monto_total);
             }
 
-           
-            
+
+
 
             array_push($array, trim($value->cliente));
 
@@ -281,7 +198,7 @@ class AsignacioncobradorController extends Controller
                         <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 125px;" >'.$simboloMoneda[0]->Simbolo.' '.number_format($total_monto,2).'</td>
                         <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 125px;" >'.$simboloMoneda[0]->Simbolo.' '.number_format($consol,2).'</td>
                         <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 260px;" colspan="2"  >Nro. Registros Total: '.$contfi.'</td>';
-                    
+
                 $html .= '</tr>';
 
                 $html .= '<tr>';
@@ -291,16 +208,16 @@ class AsignacioncobradorController extends Controller
                         <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 125px;" >'.$simboloMoneda[1]->Simbolo.' '.number_format($total_monto_dolares,2).'</td>
                         <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 125px;" >'.$simboloMoneda[1]->Simbolo.' '.number_format($condol,2).'</td>
                         <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 260px;" colspan="2"  > </td>';
-                        
+
                 $html .= '</tr>';
                 array_push($data_envio, $html);
             }
-          
+
             $contfi ++;
             $contador ++;
 
         }
-       
+
         $totalfin=floatval($totaldola)+(floatval($totalsole)/floatval($cambio[0]->Mensaje));
         $totalfin2=floatval($total_monto_dolares_final)+(floatval($total_monto_final)/floatval($cambio[0]->Mensaje));
         $html = '<tr>';
@@ -320,13 +237,261 @@ class AsignacioncobradorController extends Controller
                 <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 125px;" >'.$simboloMoneda[1]->Simbolo.' '.number_format($totalfin2,2).'</td>
                 <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 125px;" >'.$simboloMoneda[1]->Simbolo.' '.number_format($totalfin,2).'</td>
                 <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 260px;" colspan="2"  ></td>';
-               
-        $html .= '</tr>'; 
+
+        $html .= '</tr>';
+        array_push($data_envio, $html);
+
+        // $data_compania=$repo->get_compania();
+        // $path = public_path('/'.$data_compania[0]->ruta_logo);
+        // $type_image = pathinfo($path, PATHINFO_EXTENSION);
+        // $image = file_get_contents($path);
+        // $image = 'data:image/' . $type_image . ';base64,' . base64_encode($image);
+        // return response()->json([
+        //     'status' => true,
+        //      'img'=>$image,
+        //      'data_cabe'=>$data_cabe,
+        //      'simboloMoneda'=>$simboloMoneda,
+        //      'cambio'=>$cambio,
+        // ]);
+
+        // return generateExcelCuentasxCobrar($data_cabe, $simboloMoneda, $cambio, 'CUENTAS POR COBRAR POR CLIENTE', 'Cuentas');
+        return view("excel.viewCuentasxCobrar_xls")->with("data_envio", $data_envio);
+    }
+
+    public function diasmora($fecha_vencimiento, $saldo_cuota)
+    {
+        $fecha1 = date('Y/m/d', strtotime($fecha_vencimiento));
+
+        $hoy = date('Y/m/d');
+        $fecha1 = new DateTime($fecha1);
+        $hoy = new DateTime($hoy);
+        $diff = $fecha1->diff($hoy);
+        $dim = 0;
+        if ($fecha1 > $hoy) {
+            $dim = 0;
+        } else {
+            if ($diff->days > 0) {
+                $dim = $diff->days;
+            }
+            if (intval($saldo_cuota) <= 0) {
+                $dim = 0;
+            }
+        }
+
+        return $dim;
+    }
+
+    public function excelCuentasxCobrar_cierre($id, Request $request, Orden_servicioInterface $repOs, Query_movementsInterface $repomo, Solicitud_Asignacion_cierreInterface $repo)
+    {
+        // ini_set("display_errors", 1);
+        // error_reporting(E_ALL);
+
+
+
+        // print_r($id); exit;
+        // $data = $request->all();
+        // $array = explode("*", $data["periodo"]);
+
+        $array = explode("|", $id);
+        $periodo_variable = $array[0];
+        $array_periodo = explode("*", $periodo_variable);
+        $periodo = $array_periodo[0];
+        $estado= $array[1];
+
+        // print_r($periodo); exit;
+
+        $datafilcab = $repo->searchAsignacionCobradorxCuentasGet($periodo);
+
+
+
+        $solitud = array();
+
+        if(count($datafilcab) <= 0) {
+            echo '<script>alert("NO HAY DATOS!"); window.close();</script>';
+            exit;
+        }
+
+
+
+        foreach ($datafilcab as $row) {
+            array_push($solitud, $row->idventa);
+        }
+
+
+        $fecha_actual = date("Y-m-d");
+        $cambio = $repOs->cambio_tipo(2, $fecha_actual);
+
+        $solitud = implode(",", $solitud);
+        $simboloMoneda = $repomo->getSimboloMonedaTotal();
+        $data_compania = $repo->get_compania();
+        $data_cabe = $repo->get_cuentas_caber($solitud, $periodo);
+
+        $html = "";
+        $array = array();
+        $conc = 1;
+        $consol = 0;
+        $condol = 0;
+        $totalsole = 0;
+        $totaldola = 0;
+        $totalfin  = 0;
+        $total_monto = 0;
+        $total_monto_dolares = 0;
+        $total_monto_final = 0;
+        $total_monto_dolares_final = 0;
+        $contfi = 0;
+        $contador = 1;
+        $data_envio = array();
+
+        if(count($data_cabe) <= 0) {
+            echo '<script>alert("NO HAY DATOS!"); window.close();</script>';
+            exit;
+        }
+
+
+        ini_set('max_execution_time', '300000');
+        set_time_limit(300000);
+        header("Content-Type:   application/vnd.ms-excel; charset=utf-8");
+        header("Content-Disposition: attachment; filename=CierreCuentasXCobrar.xls");
+        header("Expires: 0");
+        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+        header("Cache-Control: private",false);
+
+        foreach ($data_cabe as $key => $value) {
+            $fecul = '';
+            if($value->fecultpago != null){
+                $fecul = date("d/m/Y",strtotime($value->fecultpago));
+            }
+
+            if(!in_array(trim($value->cliente), $array)) {
+
+                if($conc > 1) {
+                    $html = '<tr>';
+                    $html .= '  <td style="width: 50px;"></td>';
+                    $html .= '  <td style="border: 1px solid #000000; text-align: center;color:#000000;     background-color:#ffff00; width: 580px;" colspan="5"  >Total por Cobrar en Moneda Base</td>
+                            <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 235px;" colspan="2" >Soles:</td>
+                            <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 125px;" >'.$simboloMoneda[0]->Simbolo.' '.number_format($total_monto,2).'</td>
+                            <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 125px;" >'.$simboloMoneda[0]->Simbolo.' '.number_format($consol,2).'</td>
+                            <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 260px;" colspan="2"  >Nro. Registros Total: '.$contfi .'</td>';
+
+                    $html .= '</tr>';
+
+                    $html .= '<tr>';
+                    $html .= '  <td style="width: 50px;"></td>';
+                    $html .= '  <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 580px;" colspan="5"  ></td>
+                            <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 235px;" colspan="2" >Dolares:</td>
+                            <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 125px;" >'.$simboloMoneda[1]->Simbolo.' '.number_format($total_monto_dolares,2).'</td>
+                            <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 125px;" >'.$simboloMoneda[1]->Simbolo.' '.number_format($condol,2).'</td>
+                            <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 260px;" colspan="2"  > </td>';
+
+                    $html .= '</tr>';
+                    array_push($data_envio, $html);
+                    $consol = 0;
+                    $condol = 0;
+                    $contfi = 0;
+                    $total_monto = 0;
+                    $total_monto_dolares = 0;
+                }
+                // cliente
+                $html = '<tr>';
+                $html .= '  <td style="width: 50px;"></td>';
+                $html .= '  <td style="border: 1px solid #000000; text-align: center; width: 1325px;"  colspan="11">'.$conc.'.'.' Cliente'." - ".$value->cliente." - ". $value->documento_cliente ." - "." "." "." ".$value->direccion.' '.$value->cDepartamento.' '.$value->cProvincia.' '.$value->cDistrito.'</td>';
+                $html .= '</tr>';
+                array_push($data_envio, $html);
+                $array = array();
+                $conc ++;
+
+            }
+
+            // detalle
+            $html = '<tr>';
+            $html .= '  <td style="width: 50px;"></td>';
+            $html .= '  <td style="border: 1px solid #000000; text-align: center; width: 120px;">'.$value->documento_ven.'</td>';
+            $html .= '  <td style="border: 1px solid #000000; text-align: center; width: 120px;">'.$value->cCodConsecutivo.'-'.$value->nConsecutivo.'</td>';
+            $html .= '  <td style="border: 1px solid #000000; text-align: center; width: 115px;">'.date("d/m/Y",strtotime($value->fecha_emision)).'</td>';
+            $html .= '  <td style="border: 1px solid #000000; text-align: center; width: 115px;">'.date("d/m/Y",strtotime($value->fecha_vencimiento)).'</td>';
+            $html .= '  <td style="border: 1px solid #000000; text-align: center; width: 120px;">'.$this->diasmora($value->fecha_vencimiento,$value->monto_pendiente).'</td>';
+            $html .= '  <td style="border: 1px solid #000000; text-align: center; width: 115px;">'.$fecul.'</td>';
+            $html .= '  <td style="border: 1px solid #000000; text-align: center; width: 115px;">'.$value->moneda.'</td>';
+            $html .= '  <td style="border: 1px solid #000000; text-align: center; width: 120px;">'.$value->Simbolo.' '.number_format($value->monto_total,2).'</td>';
+            $html .= '  <td style="border: 1px solid #000000; text-align: center; width: 125px;">'.$value->Simbolo.' '.number_format($value->monto_pendiente,2).'</td>';
+            $html .= '  <td style="border: 1px solid #000000; text-align: center; width: 130px;">'.$value->vendedor.'</td>';
+            $html .= '  <td style="border: 1px solid #000000; text-align: center; width: 130px;">'.$value->cobrador.'</td>';
+            $html .= '</tr>';
+            array_push($data_envio, $html);
+
+            if($value->idmoneda==1) {
+                $consol = $consol + floatval($value->monto_pendiente);
+                $totalsole = $totalsole + floatval($value->monto_pendiente);
+                $total_monto = $total_monto + floatval($value->monto_total);
+                $total_monto_final = $total_monto_final + floatval($value->monto_total);
+            } else {
+                $condol = $condol + floatval($value->monto_pendiente);
+                $totaldola = $totaldola + floatval($value->monto_pendiente);
+                $total_monto_dolares = $total_monto_dolares_final + floatval($value->monto_total);
+                $total_monto_dolares_final = $total_monto_dolares_final + floatval($value->monto_total);
+            }
+
+
+
+
+            array_push($array, trim($value->cliente));
+
+            // para el ultimo registro
+            if(count($data_cabe) == $contador) {
+                $contfi ++;
+                $html = '<tr>';
+                $html .= '  <td style="width: 50px;"></td>';
+                $html .= '  <td style="border: 1px solid #000000; text-align: center;color:#000000;     background-color:#ffff00; width: 580px;" colspan="5"  >Total por Cobrar en Moneda Base</td>
+                        <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 235px;" colspan="2" >Soles:</td>
+                        <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 125px;" >'.$simboloMoneda[0]->Simbolo.' '.number_format($total_monto,2).'</td>
+                        <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 125px;" >'.$simboloMoneda[0]->Simbolo.' '.number_format($consol,2).'</td>
+                        <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 260px;" colspan="2"  >Nro. Registros Total: '.$contfi.'</td>';
+
+                $html .= '</tr>';
+
+                $html .= '<tr>';
+                $html .= '  <td style="width: 50px;"></td>';
+                $html .= '  <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 580px;" colspan="5"  ></td>
+                        <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 235px;" colspan="2" >Dolares:</td>
+                        <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 125px;" >'.$simboloMoneda[1]->Simbolo.' '.number_format($total_monto_dolares,2).'</td>
+                        <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 125px;" >'.$simboloMoneda[1]->Simbolo.' '.number_format($condol,2).'</td>
+                        <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 260px;" colspan="2"  > </td>';
+
+                $html .= '</tr>';
+                array_push($data_envio, $html);
+            }
+
+            $contfi ++;
+            $contador ++;
+
+        }
+
+        $totalfin=floatval($totaldola)+(floatval($totalsole)/floatval($cambio[0]->Mensaje));
+        $totalfin2=floatval($total_monto_dolares_final)+(floatval($total_monto_final)/floatval($cambio[0]->Mensaje));
+        $html = '<tr>';
+        $html .= '  <td style="width: 50px;"></td>';
+        $html .= '  <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 580px;" colspan="5"  >Total por Cobrar a T.C: '.$cambio[0]->Mensaje.'</td>
+                <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 235px;" colspan="2" ></td>
+                <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 125px;">'.$simboloMoneda[0]->Simbolo.' '.number_format($total_monto_final,2).'</td>
+                <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 125px;">'.$simboloMoneda[0]->Simbolo.' '.number_format($totalsole,2).'</td>
+                <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 260px;" colspan="2" ></td>';
+        $html .= '</tr>';
+
+
+        $html .= '<tr>';
+        $html .= '  <td style="width: 50px;"></td>';
+        $html .= '  <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 580px;" colspan="5"  ></td>
+                <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 235px;" colspan="2" >Dolares:</td>
+                <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 125px;" >'.$simboloMoneda[1]->Simbolo.' '.number_format($totalfin2,2).'</td>
+                <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 125px;" >'.$simboloMoneda[1]->Simbolo.' '.number_format($totalfin,2).'</td>
+                <td style="border: 1px solid #000000; text-align: center;color:#000000;background-color:#ffff00; width: 260px;" colspan="2"  ></td>';
+
+        $html .= '</tr>';
         array_push($data_envio, $html);
 
         // echo count($data_envio);
         // exit;
-        return view("excel.viewCuentasxCobrar_xls")->with("data_envio", $data_envio); 
+        return view("excel.viewCuentasxCobrarCierre_xls")->with("data_envio", $data_envio);
         // return generateExcelCuentasxCobrar($data_cabe, $simboloMoneda, $cambio, 'CUENTAS POR COBRAR POR CLIENTE', 'Cuentas');
         // return generateExcelCuentasxCobrar($data_envio, $simboloMoneda, $cambio, 'CUENTAS POR COBRAR POR CLIENTE', 'Cuentas');
     }

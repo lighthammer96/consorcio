@@ -1426,8 +1426,10 @@ function roundValue(value, decimals) {
     return (parseFloat(value)).toFixed(decimals)
 }
 
-function roundMath(val) {
-    return Math.round(parseFloat(val) * 100) / 100;
+function roundMath(val, decimals) {
+    decimals = typeof decimals !== 'undefined' ? decimals : 2;
+    decimals = Math.pow(10, decimals);
+    return Math.round(parseFloat(val) * decimals) / decimals;
 }
 
 function numberFormat(value, decimals, dec_point, thousands_sep) {
@@ -9012,7 +9014,6 @@ function create_pdf_QuerystockCierre(response) {
 
 }
 function create_pdf_Querymovimiento(response) {
-    // console.log(response);
     var filtro_art = response.filtro_art;
     var filtro_idAlm = response.filtro_idAlm;
     var filtro_idLoc = response.filtro_idLoc;

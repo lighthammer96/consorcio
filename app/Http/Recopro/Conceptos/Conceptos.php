@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Conceptos extends Model
 {
-  
+
     protected $table = 'ERP_Conceptos';
 
     public $timestamps = true;
@@ -22,8 +22,8 @@ class Conceptos extends Model
     public $incrementing = false;
 
     protected $fillable = ['idconcepto', 'descripcion', 'cuenta_contable', 'centro_costo','estado','user_created','user_updated'];
-    
-     public function user_c()
+
+    public function user_c()
     {
         return $this->belongsTo(User::class, 'user_created');
     }

@@ -1,6 +1,7 @@
 <?php namespace App\Http\Recopro\SolicitudCompraArticulo;
 
 use App\Http\Recopro\Product\Product;
+use App\Http\Recopro\SolicitudCompra\SolicitudCompra;
 use App\Http\Recopro\User\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -17,13 +18,11 @@ class SolicitudCompraArticulo extends Model
 
     public $timestamps = true;
 
-    protected $primaryKey = 'idMovimiento';
-
-    protected $keyType = 'string';
+    protected $primaryKey = 'id';
 
     public $incrementing = false;
 
-    protected $fillable = ['idMovimiento', 'idArticulo', 'cantidad', 'fecha_requerida', 'estado', 'consecutivo',
+    protected $fillable = ['id', 'idMovimiento', 'idArticulo', 'cantidad', 'fecha_requerida', 'estado', 'consecutivo',
         'observaciones',
         'user_created', 'user_updated'];
 
@@ -40,6 +39,11 @@ class SolicitudCompraArticulo extends Model
     public function article()
     {
         return $this->belongsTo(Product::class, 'idArticulo');
+    }
+
+    public function movement()
+    {
+        return $this->belongsTo(SolicitudCompra::class, 'idMovimiento');
     }
 
 }

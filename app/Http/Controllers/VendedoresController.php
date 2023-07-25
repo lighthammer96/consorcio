@@ -35,9 +35,9 @@ class VendedoresController extends Controller
         $table="ERP_Vendedores";
         $id='idvendedor';
         $data['idvendedor'] = $repo->get_consecutivo($table,$id);
-     
 
-       
+
+
         $repo->create($data);
 
         return response()->json([

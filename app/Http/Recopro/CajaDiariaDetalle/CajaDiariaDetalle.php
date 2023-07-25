@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class CajaDiariaDetalle extends Model
 {
-  
+
     protected $table = 'ERP_CajaDiariaDetalle';
 
     public $timestamps = true;
@@ -25,8 +25,8 @@ class CajaDiariaDetalle extends Model
     public $incrementing = false;
 
     protected $fillable = ['idCajaDiaria','banco','numero_cuenta', 'consecutivo','codigoTipo','codigoFormaPago','idMoneda','monto','descripcion','nroTarjeta','nroOperacion','user_created','user_updated','created_at','naturaleza', 'idconcepto'];
-    
-     public function user_c()
+
+    public function user_c()
     {
         return $this->belongsTo(User::class, 'user_created');
     }
@@ -35,7 +35,7 @@ class CajaDiariaDetalle extends Model
     {
         return $this->belongsTo(User::class, 'user_updated');
     }
-     public function moneda_u()
+    public function moneda_u()
     {
         return $this->belongsTo(Currency::class, 'idMoneda');
     }

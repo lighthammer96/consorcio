@@ -320,4 +320,4 @@
         $urlRouterProvider.otherwise('/');
     }
 })
-    ();
+();

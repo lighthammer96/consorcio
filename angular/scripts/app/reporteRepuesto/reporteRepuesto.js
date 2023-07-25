@@ -248,4 +248,4 @@
         $urlRouterProvider.otherwise('/');
     }
 })
-    ();
+();

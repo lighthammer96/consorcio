@@ -1,0 +1,123 @@
+<div class="panel panel-danger-admin">
+    <div class="panel-heading">
+        Gestión de Grupo Contable  
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="table_container_Head_Accountan" class="table-responsive"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="modalGrupoContable" role="dialog">
+    <div class="modal-dialog" role="document">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title" id="titleModalGrupoContable"></h4>
+        </div>
+        <div class="modal-body">
+              <div class="form-horizontal">
+                 <div class="row">
+                    <div class="col-md-12">
+                        <div class="alert alert-danger hide" role="alert" id="msg_cont">
+                            <span class="fa fa-warning"></span>
+                            Debe seleccionar un Artículo
+                        </div> 
+                        <div class="form-group">
+                             <input type="hidden" class="form-control input-sm " id="grupoContable_id" >
+                             
+                            <label class="col-sm-4 control-label">Grupo Contable</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control input-sm" id="grupoContable">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Estado</label>
+                            <div class="col-sm-4">
+                                <label class="checkbox-inline i-checks">
+                                    <input type="checkbox" id="p_state" checked>
+                                    <span id="state_text">Activo</span>
+                                </label>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <div class="col-sm-4">
+                            <button type="button" class="btn btn-danger-admin btn-sm" ng-click="addDetalle()" >Agregar Detalle</button> 
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-hover" id="tabla_contable-detalle">
+                                    <thead>
+                                    <tr>
+                                        <th>Operación</th>
+                                        <th>Cuenta</th>
+                                        <th>Centro Costo</th>
+                                        <th width="50px"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="w_contable_detalle"></tbody>
+                                </table>
+                        </div> 
+                    </div>
+                 </div>   
+              </div>  
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-danger-admin btn-sm" ng-click="saveGrupoContable()" >Guardar</button>  
+        <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+      
+    </div>
+</div>
+<div class="modal" id="modalDetalle" role="dialog">
+    <div class="modal-dialog" role="document">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title" id="title">Detalle Grupo Contable</h4>
+        </div>
+        <div class="modal-body">
+              <div class="form-horizontal">
+                 <div class="row">
+                    <div class="col-md-12">
+                        <div class="alert alert-danger hide" role="alert" id="msg_cont">
+                            <span class="fa fa-warning"></span>
+                            Debe seleccionar un Artículo
+                        </div> 
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Operación</label>
+                            <div class="col-sm-3">
+                                <select id="id_operacion" name="nOperacion" class="form-control input-sm"></select>
+                            </div>
+                            <label class="col-sm-2 control-label">Cuenta</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control input-sm" id="cuenta">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Centro Costo</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control input-sm" id="centrocosto">
+                            </div>
+                        </div>
+                       
+                    </div>
+                 </div>   
+              </div>  
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-danger-admin btn-sm" ng-click="AgregarTable()" >Agregar</button>  
+        <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+      
+    </div>
+</div>

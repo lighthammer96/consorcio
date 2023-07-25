@@ -14,11 +14,10 @@ use App\Http\Recopro\Currency\Currency;
  */
 class CuentasBancarias extends Model
 {
-   
-
     protected $table = 'ERP_CuentasBancarias';
 
-    protected $fillable = ['id_cuentabancaria', 'numero_cuenta', 'descripcion_cuenta', 'user_created', 'user_updated', 'user_deleted', 'idbanco','IdMoneda'];
+    protected $fillable = ['id_cuentabancaria', 'numero_cuenta', 'descripcion_cuenta',
+        'user_created', 'user_updated', 'user_deleted', 'idbanco', 'IdMoneda'];
     protected $primaryKey = 'id_cuentabancaria';
     // protected $keyType = 'string';
     protected $hidden = ['deleted_at'];
@@ -35,8 +34,9 @@ class CuentasBancarias extends Model
 
     public function banco_d()
     {
-        return $this->belongsTo(Bancos::class,'idbanco');
+        return $this->belongsTo(Bancos::class, 'idbanco');
     }
+
     public function currency_cuenta()
     {
         return $this->belongsTo(Currency::class, 'IdMoneda');

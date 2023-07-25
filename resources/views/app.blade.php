@@ -120,7 +120,7 @@
 <script src="{{ url('js/fileinput.min.js') }}"></script>
 <script src="{{ url('js/fileinput.es.js') }}"></script>
 <script src="{{ url('js/project_functions.js') }}"></script>
-<script src="{{ url('js/admin.js') }}"></script>
+<script src="{{ url('js/admin.js') }}?v={{ filemtime('js/admin.js') }}"></script>
 
 <!-- Crop -->
 <script src="{{ url('js/crop/cropper.min.js') }}"></script>
@@ -128,7 +128,7 @@
 <script src="{{ url('js/crop/crop.js') }}"></script>
 
 <!-- App level -->
-<script src="{{ url('js/recopro.min.js') }}"></script>
+<script src="{{ url('js/recopro.min.js') }}?v={{ filemtime('js/recopro.min.js') }}"></script>
 
 </body>
 </html>

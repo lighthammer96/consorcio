@@ -1,0 +1,212 @@
+
+<style>
+    .mensajeCaja {
+        color: red;
+        cursor: pointer;
+    }
+    .negrita, input, select, td {
+        font-weight: bold;
+    }
+</style>
+<div class="panel panel-danger-admin">
+    <div class="panel-heading">
+        Gestión de Apertura de Caja
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="table_container_AperturaCaja" class="table-responsive"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="modalAperturaCaja" role="dialog">
+            <div class="modal-dialog  modal-lg" style="width:80%;"  role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="titlemodalAperturaCaja"></h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-horizontal">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <input type="hidden" id="idCajaDiaria" > 
+                                    <input type="hidden" id="consecutivo" >
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label negrita">Fecha</label>
+                                        <div class="col-sm-2">
+                                           <input type="date" class="form-control input-sm" id="fechaCaja">
+                                        </div>
+                                        <label class="col-sm-1 control-label negrita">Caja</label>
+                                        <div class="col-sm-2">
+                                             <select id="idCaja"  style="width: 100%;" class="form-control input-sm" ></select>
+                                        </div>
+                                        <label class="col-sm-1 control-label negrita">Usuario</label>
+                                        <div class="col-sm-2">
+                                           <select id="idUsuario" style="width: 100%;" class="form-control input-sm" disabled></select>
+                                        </div>
+                                        <label class="col-sm-1 control-label negrita">Estado</label>
+                                        <div class="col-sm-2">
+                                             <select id="estado" class="form-control input-sm" disabled>
+                                                 <option value=""></option>
+                                                 <option value="1">Aperturado</option>
+                                                 <option value="0">Cerrado</option>
+                                             </select>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="form-group">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                               <div class="col-sm-3"><p><h5>Moneda</h5></p></div>
+                                                <div class="col-sm-9">
+                                                    <p><h5>Soles</h5></p>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label negrita">Total Efectivo</label>
+                                                <div class="col-sm-3">
+                                                   <input type="text" class="form-control input-sm" id="totalEfectivo" value="0" disabled >
+                                                </div>
+                                                <label class="col-sm-3 control-label negrita">Total Egreso</label>
+                                                <div class="col-sm-3">
+                                                   <input type="text" class="form-control input-sm" id="totalEgresos" value="0"  disabled>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label negrita">Total Otros Ingresos</label>
+                                                <div class="col-sm-3">
+                                                   <input type="text" class="form-control input-sm" id="totalOtrosIngresos" value="0"  disabled>
+                                                </div>
+                                                <label class="col-sm-3 control-label negrita">No Efectivo</label>
+                                                <div class="col-sm-3">
+                                                   <input type="text" class="form-control input-sm" id="totalNoEfectivo" value="0"  disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <div class="col-sm-3"><p><h5>Moneda</h5></p></div>
+                                                <div class="col-sm-9">
+                                                    <p><h5>Dólares</h5></p>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label negrita">Total Efectivo</label>
+                                                <div class="col-sm-3">
+                                                   <input type="text" class="form-control input-sm" id="totalEfectivoDol" value="0"  disabled >
+                                                </div>
+                                                <label class="col-sm-3 control-label negrita">Total Egreso</label>
+                                                <div class="col-sm-3">
+                                                   <input type="text" class="form-control input-sm" id="totalEgresosDol" value="0" disabled>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label negrita">Total Otros Ingresos</label>
+                                                <div class="col-sm-3">
+                                                   <input type="text" class="form-control input-sm" id="totalOtrosIngresosDol" value="0"  disabled>
+                                                </div>
+                                                <label class="col-sm-3 control-label negrita">No Efectivo</label>
+                                                <div class="col-sm-3">
+                                                   <input type="text" class="form-control input-sm" id="totalNoEfectivoDol" value="0"  disabled>
+                                                </div>
+                                            </div> 
+                                        </div>    
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-3"> 
+                                            <div class="btn-group">
+                                              <button type="button" id="btn_apertura" class="btn btn-danger-admin btn-sm">Apertura Caja</button>
+                                              <button type="button" id="btn_cierra" class="btn btn-primary btn-sm">Cierre Caja</button>
+                                            </div>
+                                        </div>
+                                        <label class="col-sm-1 col-md-offset-5 control-label negrita">Reportes</label>
+                                        <div class="col-sm-2">
+                                            <select id="estadReporte" class="form-control input-sm" >
+                                                <option value="">Seleccionar</option>
+                                                <option value="1">Caja diaria</option>
+                                                <option value="2">Cuadre caja</option>
+                                                 <option value="3">Comprobantes</option>
+                                            </select>
+                                        </div>
+                                        <div class="btn-group">
+                                            <button type="button" id="btn_imprimirCaja" class="btn btn-info btn-sm"> <span
+                                                    class="fa fa-file-pdf-o"></span> Imprimir </button>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="form-group">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                               <div class="col-sm-3"><p><h5>Moneda</h5></p></div>
+                                                <div class="col-sm-9">
+                                                    <p><h5>Soles</h5></p>
+                                                </div>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered table-striped table-hover" id="tabla_articulo_movi" >
+                                                    <thead>
+                                                        <tr>
+                                                            <th width="150px">Denominación</th>
+                                                            <th width="50px">Cantidad</th>
+                                                            <th width="100px">Monto</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="table_demoninacionesSoles"></tbody>
+                                                </table>
+                                            </div>
+                                            <div class="form-group">
+                                               <label class="col-sm-8 control-label negrita">Total</label>
+                                                <div class="col-sm-4">
+                                                   <input type="text" class="form-control input-sm" id="totalSoles" disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <div class="col-sm-3"><p><h5>Moneda</h5></p></div>
+                                                <div class="col-sm-9">
+                                                    <p><h5>Dólares</h5></p>
+                                                </div>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered table-striped table-hover" id="tabla_articulo_movi" >
+                                                    <thead>
+                                                        <tr>
+                                                            <th width="150px">Denominación</th>
+                                                            <th width="50px">Cantidad</th>
+                                                            <th width="100px">Monto</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="table_demoninacionesDolares"></tbody>
+                                                </table>
+                                            </div>
+                                            <div class="form-group">
+                                               <label class="col-sm-8 control-label negrita">Total</label>
+                                                <div class="col-sm-4">
+                                                   <input type="text" class="form-control input-sm" id="totalDolares" disabled>
+                                                </div>
+                                            </div> 
+                                        </div>    
+                                    </div>
+                                    
+                                </div>
+                            </div>
+
+                        </div>  
+                    </div>
+                    <div class="modal-footer">
+                        <!-- <button type="button" class="btn btn-danger-admin btn-sm"  id="btn_procesarApertura"  ng-click="saveCajasDiarias()">
+                            <span class="fa fa-save"></span>
+                            Guardar
+                        </button> -->
+                        <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">
+                            <span class="fa fa-times"></span> Cerrar
+                        </button>
+                    </div>
+                </div>
+            </div>
+</div>
