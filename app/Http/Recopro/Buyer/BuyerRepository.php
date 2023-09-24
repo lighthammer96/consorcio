@@ -68,4 +68,11 @@ class BuyerRepository implements BuyerInterface
     {
         return $this->model->where('code', $code)->first();
     }
+
+    public function getActiveByUser($user_id)
+    {
+        return $this->model->where('user_id', $user_id)
+            ->where('state', '1')
+            ->first();
+    }
 }

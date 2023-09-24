@@ -1,40 +1,24 @@
-<style>
-    .table-wrapper {
-        max-height: 200px !important;
-        width: auto !important;
-        overflow: auto !important;
-        display: inline-block !important;
-    }
-    .modal2 {
-        text-align: center;
-        padding: 0 !important;
-    }
-    .modal2:before {
-        content: '';
-        display: inline-block;
-        height: 100%;
-        vertical-align: middle;
-        margin-right: -4px;
-    }
-    .modal-dialog2 {
-        display: inline-block;
-        text-align: left;
-        vertical-align: middle;
-    }
-</style>
 <div class="panel  panel-danger-admin">
     <div class="panel-heading">
+        <div class="pull-right date_range_div resize-pull">
+            <label class="checkbox-inline i-checks">
+                <input type="checkbox" checked class="chk_date_range_r" id="chk_date_range"/>
+            </label>
+            <div id="reqDates" class="">
+                <i class="fa fa-calendar"></i>&nbsp;
+                <span></span> <b class="caret"></b>
+            </div>
+        </div>
         Gestión de Recepción de Ordenes de Compra
     </div>
     <div class="panel-body">
         <div class="row">
             <div class="col-md-12">
-                <div id="table_container_Register_Movement" class="table-responsive"></div>
+                <div id="table_container_rpo" class="table-responsive"></div>
             </div>
         </div>
     </div>
 </div>
-<div ng-include src="'/templates/partials/crop.html'"></div>
 <div class="modal" id="modalRec" role="dialog">
     <div class="modal-dialog modal-lg" style="width:90%;" role="document">
         <div class="modal-content">
@@ -49,8 +33,12 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">Ordenes de Compra</label>
-                                <div class="col-sm-8">
+                                <label class="col-sm-1 control-label">Código</label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control input-sm" id="r_code" readonly />
+                                </div>
+                                <label class="col-sm-1 control-label">O/C</label>
+                                <div class="col-sm-2">
                                     <div class="input-group">
                                         <input type="text" class="form-control input-sm" id="r_oc" readonly />
                                         <span class="input-group-btn">
@@ -61,72 +49,45 @@
                                         </span>
                                     </div>
                                 </div>
-                                <label class="col-sm-2 control-label">Consecutivo</label>
-                                <div class="col-sm-1">
-                                    <input type="text" class="form-control input-sm" id="r_oc_consecutive" readonly />
+                                <label class="col-sm-1 control-label">Fecha</label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control input-sm" id="r_date" readonly />
+                                </div>
+                                <label class="col-sm-1 control-label">Almacén</label>
+                                <div class="col-sm-2">
+                                    <select id="r_warehouse" class="form-control input-sm"></select>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">Operación</label>
-                                <div class="col-sm-3">
-                                    <select id="idTipoOperacion" class="form-control input-sm" disabled></select>
+                                <label class="col-sm-1 control-label">Operación</label>
+                                <div class="col-sm-2">
+                                    <select id="r_operation" class="form-control input-sm" disabled></select>
                                 </div>
                                 <label class="col-sm-1 control-label">Moneda</label>
                                 <div class="col-sm-2">
-                                    <select id="idMoneda" class="form-control input-sm" disabled></select>
+                                    <select id="r_currency" class="form-control input-sm" disabled></select>
                                 </div>
-                                <label class="col-sm-1 control-label">Fecha</label>
-                                <div class="col-sm-3">
-                                    <input type="date" class="form-control input-sm" id="fecha_registro">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Observaciones</label>
-                                <div class="col-sm-10">
-                                            <textarea id="observaciones" rows="2"
-                                                      class="form-control input-sm"></textarea>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Estado</label>
-                                <div class="col-sm-2">
-                                    <select type="text" class="form-control input-sm" id="p_state" disabled="disabled">
-                                        <option value="" selected></option>
-                                        <option value="0">Registrado</option>
-                                        <option value="1">Procesado</option>
-                                    </select>
-                                </div>
-                                <label class="col-sm-4  control-label">&nbsp;</label>
-                                <div class="col-sm-4">
-                                    <button type="button" disabled class="btn btn-info btn-sm" id="ProcesarTransferenciaBoton">
-                                        <span class="fa fa-save"></span>
-                                        Procesar
-                                    </button>
-                                    <button type="button" class="btn btn-success btn-sm" id="btn_imprimirMovimiento">
-                                        <span class="fa fa-file-pdf-o"></span>
-                                        Imprimir
-                                    </button>
+                                <label class="col-sm-1 control-label">Observaciones</label>
+                                <div class="col-sm-5">
+                                    <textarea id="r_observations" rows="2" class="form-control input-sm"></textarea>
                                 </div>
                             </div>
                             <div class="table-responsive">
-                                <table class="table table-bordered table-striped table-hover" id="tabla_articulo_movi">
+                                <table class="table table-bordered table-striped table-hover">
                                     <thead>
                                     <tr>
                                         <th>Artículo</th>
-                                        <th>Almacén</th>
-                                        <th>Localización</th>
-                                        <th width="90px" height="20px">Cantidad</th>
-                                        <th width="90px" height="20px">Cantidad Pendiente</th>
-                                        <th width="90px" height="20px">Costo</th>
-                                        <th>Costo Total</th>
-                                        <th>Precio</th>
-                                        <!--       <th>Precio Total</th> -->
-                                        <th width="50px"></th>
-                                        <th width="50px"></th>
+                                        <th width="15%">Localización</th>
+                                        <th width="15%">Lote</th>
+                                        <th width="10%">Precio</th>
+                                        <th width="10%">Cantidad OC</th>
+                                        <th width="10%">Cantidad Pendiente</th>
+                                        <th width="10%">Recepción</th>
+                                        <th width="50px">Series</th>
                                         <th width="50px"></th>
                                     </tr>
                                     </thead>
-                                    <tbody id="articulo_mov_det"></tbody>
+                                    <tbody id="r_detail"></tbody>
                                 </table>
                             </div>
                         </div>
@@ -134,8 +95,15 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger-admin btn-sm" id="btn_movimiento_detalle"
-                        ng-click="guardarMovimientoDetalle()">
+                <button type="button" class="btn btn-info btn-sm btn-print hide" ng-click="printRec()">
+                    <span class="fa fa-file-pdf-o"></span>
+                    Imprimir
+                </button>
+                <button type="button" class="btn btn-success btn-sm btn-save" ng-click="saveRec(2)">
+                    <span class="fa fa-save"></span>
+                    Procesar
+                </button>
+                <button type="button" class="btn btn-danger-admin btn-sm btn-save" ng-click="saveRec(1)">
                     <span class="fa fa-save"></span>
                     Guardar
                 </button>
@@ -166,98 +134,17 @@
         </div>
     </div>
 </div>
-<div class="modal " id="modalRecArticulo" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-lg" role="document">
-        <!-- Modal content-->
+<div class="modal" id="modalLocalization" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title" id="titleRecArticulo">Artículos</h4>
+                <h4 class="modal-title">Localizaciones</h4>
             </div>
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <div id="table_container_Register_Articulo" class="table-responsive"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger-admin btn-sm" ng-click="addArtLisSeri()">
-                    <span class="fa fa-plus"></span>
-                    Agregar
-                </button>
-                <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">Cerrar</button>
-            </div>
-        </div>
-
-    </div>
-</div>
-
-
-<div class="modal" id="modalKit" role="dialog">
-    <div class="modal-dialog" role="document">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title" id="titleModalLote">Kit</h4>
-            </div>
-            <div class="modal-body">
-                <div class="form-horizontal">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="alert alert-danger hide" role="alert" id="msg_cont">
-                                <span class="fa fa-warning"></span>
-                                Debe seleccionar un Artículo
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Artículo</label>
-                                <div class="col-sm-6">
-                                    <input type="text" id="desProductoMK" readonly class="form-control input-sm">
-                                </div>
-                                <div class="col-sm-2">
-                                    <input type="text" class="form-control input-sm" id="cantProductoMK">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <!-- <button type="button" class="btn btn-danger-admin btn-sm" ng-click="addArtkit()" >Agregar</button>   -->
-                <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">Cerrar</button>
-            </div>
-        </div>
-
-    </div>
-</div>
-<div class="modal" id="modalNada" role="dialog">
-    <div class="modal-dialog" role="document">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title" id="titleModalLote">Artículo</h4>
-            </div>
-            <div class="modal-body">
-                <div class="form-horizontal">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="alert alert-danger hide" role="alert" id="msg_cont">
-                                <span class="fa fa-warning"></span>
-                                Debe seleccionar un Artículo
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Artículo</label>
-                                <div class="col-sm-6">
-                                    <input type="text" id="desProductoMN" readonly class="form-control input-sm">
-                                </div>
-                                <div class="col-sm-2">
-                                    <input type="text" class="form-control input-sm" id="cantProductoMN">
-                                </div>
-                            </div>
-                        </div>
+                        <div id="table_container_loc" class="table-responsive"></div>
                     </div>
                 </div>
             </div>
@@ -265,144 +152,97 @@
                 <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
-
     </div>
 </div>
-<div class="modal " id="modalAlmacenArticulo" tabindex="-1" role="dialog">
+<div class="modal" id="modalLote" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
-
-        <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title" id="titlemodalAlmacenArticulo">Stock en Almacén</h4>
+                <h4 class="modal-title">Lotes</h4>
             </div>
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <div id="table_container_Almacen_Articulo" class="table-responsive"></div>
+                        <div id="table_container_lote" class="table-responsive"></div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger-admin btn-sm" ng-click="addArtLisSeri()">
-                    <span class="fa fa-plus"></span>
-                    Agregar
-                </button>
                 <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
-
     </div>
 </div>
-<div class="modal" id="modalLoteR" role="dialog">
+<div class="modal" id="modalSeries" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
-
-        <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title" id="titleModalLote">Lote</h4>
+                <h4 class="modal-title">Series</h4>
             </div>
             <div class="modal-body">
-                <div class="form-horizontal">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="alert alert-danger hide" role="alert" id="msg_cont">
-                                <span class="fa fa-warning"></span>
-                                Debe seleccionar un Artículo
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Artículo</label>
-                                <div class="col-sm-6">
-                                    <input type="text" id="desProductoMll" readonly class="form-control input-sm">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Lote</label>
-                                <div class="col-sm-6">
-                                    <input type="text" id="codigoLoteMll" class="form-control input-sm">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Fecha Vencimiento</label>
-                                <div class="col-sm-4">
-                                    <input type="text" id="fechaVl" readonly class="form-control input-sm">
-                                </div>
-                            </div>
-                        </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="table_container_series" class="table-responsive"></div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="btn_Lotd" disabled type="button" class="btn btn-danger-admin btn-sm"
-                        ng-click="addLoteExi()">Agregar
-                </button>
                 <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
-
     </div>
 </div>
-<div class="modal" id="modalSerieR" role="dialog">
+<div class="modal" id="modalSeriesProduct" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
-        <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title" id="titleModalLote">Serie</h4>
+                <h4 class="modal-title">Serie del Articulo</h4>
             </div>
             <div class="modal-body">
                 <div class="form-horizontal">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="alert alert-danger hide" role="alert" id="msg_cont">
-                                <span class="fa fa-warning"></span>
-                                Debe seleccionar un Artículo
-                            </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">Artículo</label>
+                                <label class="col-sm-1 control-label">Artículo</label>
                                 <div class="col-sm-6">
-                                    <input type="text" id="desProductoMss" readonly class="form-control input-sm">
+                                    <input type="text" id="r_series_text" readonly class="form-control input-sm">
                                 </div>
                                 <label class="col-sm-1 control-label">Cantidad</label>
-                                <div class="col-sm-2">
-                                    <input type="text" id="cantProductoMss" class="form-control input-sm"
-                                           onkeypress="return soloNumeros(event)">
+                                <div class="col-sm-1">
+                                    <input type="text" id="r_series_q" class="form-control input-sm text-right" readonly />
                                 </div>
                             </div>
-                            <br>
                             <div class="form-group">
                                 <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12 ">
-                                    <button id="btnAgreSer" type="button" class="btn btn-danger-admin btn-sm"
-                                            ng-click="addtableSerie()">Agregar Serie
+                                    <button type="button" class="btn btn-danger-admin btn-sm btn-frm"
+                                            ng-click="addSeries()">Agregar Serie
                                     </button>
 
-                                    <button id="btnSeleSerie" type="button" class="btn btn-danger-admin btn-sm"
-                                            ng-click="addSeleccSerie()">Seleccionar Serie
+                                    <button type="button" class="btn btn-danger-admin btn-sm btn-frm"
+                                            ng-click="selectSeries()">Seleccionar Serie
                                     </button>
                                 </div>
                             </div>
-                            <br>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div id="table_container_Series_Articulo" class="table-responsive"></div>
-                                </div>
-                            </div>
-                            <div class="table-responsive table-wrapper">
-                                <table class="table table-bordered table-striped table-hover" id="tabla_articulo_serie">
-                                    <thead id="table_serie_cabecera">
-                                    <!-- <tr>
-                                        <th width="250px" >Artículo</th>
-                                        <th width="250px" height="20px">Nr° Serie</th>
-                                        <th width="250px" height="20px">Chasis</th>
-                                        <th width="250px" height="20px">Motor</th>
-                                        <th width="100px" height="20px">Color</th>
-                                        <th width="150px" height="20px">Año fabricación</th>
-                                        <th width="100px" height="20px">Año Modelo</th>
-                                    </tr> -->
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th width="10%">Artículo</th>
+                                        <th width="10%">N°Serie</th>
+                                        <th width="10%">Chasis</th>
+                                        <th width="10%">Motor</th>
+                                        <th width="10%">Color</th>
+                                        <th width="10%">Año<br>fabricación</th>
+                                        <th width="10%">Año<br>Modelo</th>
+                                        <th width="10%">Tipo Compra</th>
+                                        <th width="10%">N°Poliza</th>
+                                        <th width="10%">N°Lote</th>
+                                    </tr>
                                     </thead>
-                                    <tbody id="articulo_serie_det"></tbody>
+                                    <tbody id="r_series_detail"></tbody>
                                 </table>
                             </div>
                         </div>
@@ -410,62 +250,10 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" id="btn_serC" disabled class="btn btn-danger-admin btn-sm"
-                        ng-click="addSerieCompleTab()">Agregar
-                </button>
+                <button type="button" class="btn btn-danger-admin btn-sm btn-frm"
+                        ng-click="addSeriesProduct()">Agregar</button>
                 <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
-
-    </div>
-</div>
-<div class="modal" id="modalLote" role="dialog">
-    <div class="modal-dialog" role="document">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title" id="titleModalLote">Lote</h4>
-            </div>
-            <div class="modal-body">
-                <div class="form-horizontal">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="alert alert-danger hide" role="alert" id="msg_cont">
-                                <span class="fa fa-warning"></span>
-                                Debe seleccionar un Artículo
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Artículo</label>
-                                <div class="col-sm-6">
-                                    <input type="text" id="desProductoML" readonly class="form-control input-sm">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Lote</label>
-                                <div class="col-sm-4">
-                                    <input type="text" readonly class="form-control input-sm" id="lotProductoML">
-                                </div>
-                                <label class="col-sm-2 control-label">Fecha de Ingreso</label>
-                                <div class="col-sm-4">
-                                    <input type="date" class="form-control input-sm hasDatepicker" id="fIngrePrML">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Fecha de Vencimiento</label>
-                                <div class="col-sm-4">
-                                    <input type="date" class="form-control input-sm hasDatepicker" id="fVenPrML">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger-admin btn-sm" ng-click="addArtLote()">Agregar</button>
-                <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">Cerrar</button>
-            </div>
-        </div>
-
     </div>
 </div>

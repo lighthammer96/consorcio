@@ -12,6 +12,7 @@ namespace App\Http\Recopro\PettyCashExpense;
 use App\Http\Recopro\AccountPay\AccountPay;
 use App\Http\Recopro\GasVoucher\GasVoucher;
 use App\Http\Recopro\Petty_cash\Petty_cash;
+use App\Http\Recopro\PettyCashExpenseClose\PettyCashExpenseClose;
 use App\Http\Recopro\User\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -52,8 +53,19 @@ class PettyCashExpense extends Model
         return $this->hasMany(AccountPay::class, 'petty_cash_expense_id');
     }
 
+    public function documentsOrder()
+    {
+        return $this->hasMany(AccountPay::class, 'petty_cash_expense_id')
+            ->orderBy('created_at', 'DESC');
+    }
+
     public function vouchers()
     {
         return $this->hasMany(GasVoucher::class, 'petty_cash_expense_id');
+    }
+
+    public function pceCloses()
+    {
+        return $this->hasMany(PettyCashExpenseClose::class, 'petty_cash_expense_id');
     }
 }

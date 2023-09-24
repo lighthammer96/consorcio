@@ -107,7 +107,10 @@ class Entrega_servicesTecnicoController extends Controller
     {
         return generateExcel($this->generateDataExcel($repo->all_entrega_servicio()), 'LISTA DE ENTREGAS A SERVICIOS TÉCNICOS', 'Entregas');
     }
-    public function createUpdate($id, Register_movementInterface $repoM, Request $request, OperationInterface $opRepo, Register_movement_ArticuloInterface $repo, LotInterface $lorepo, Register_movement_DetalleInterface $redm, SerieInterface $seri, Register_Transfer_ArticuloInterface $vali)
+    public function createUpdate($id, Register_movementInterface $repoM, Request $request, OperationInterface $opRepo,
+                                 Register_movement_ArticuloInterface $repo, LotInterface $lorepo,
+                                 Register_movement_DetalleInterface $redm, SerieInterface $seri,
+                                 Register_Transfer_ArticuloInterface $vali)
     {
 
         try {

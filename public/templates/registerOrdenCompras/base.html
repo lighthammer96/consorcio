@@ -6,6 +6,15 @@
 </style>
 <div class="panel  panel-danger-admin">
     <div class="panel-heading">
+        <div class="pull-right date_range_div resize-pull">
+            <label class="checkbox-inline i-checks">
+                <input type="checkbox" checked class="chk_date_range_oc" id="chk_date_range"/>
+            </label>
+            <div id="reqDates" class="">
+                <i class="fa fa-calendar"></i>&nbsp;
+                <span></span> <b class="caret"></b>
+            </div>
+        </div>
         Gestión de Orden de Compra
     </div>
     <div class="panel-body">
@@ -78,7 +87,19 @@
                             <div class="form-group">
                                 <label class="col-sm-1  control-label">Proveedor</label>
                                 <div class="col-sm-4">
-                                    <select id="oc_provider" class="form-control input-sm" style="width:100%"></select>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control input-sm" id="oc_provider" readonly />
+                                        <span class="input-group-btn">
+                                            <button id="oc_provider_btn" class="btn btn-success btn-sm"
+                                                    type="button" ng-click="openProvider()">
+                                                <span class="fa fa-search-plus"></span>
+                                            </button>
+                                            <button id="oc_provider_btn_new" class="btn btn-danger btn-sm"
+                                                    type="button" ng-click="newProvider()">
+                                                <span class="fa fa-plus"></span>
+                                            </button>
+                                        </span>
+                                    </div>
                                 </div>
                                 <label class="col-sm-2  control-label">Condición de Pago</label>
                                 <div class="col-sm-2">
@@ -210,6 +231,14 @@
                 <button type="button" class="btn btn-danger btn-sm" ng-click="printOC()">
                     <span class="fa fa-file-pdf-o"></span>
                     Imprimir
+                </button>
+                <button type="button" class="btn btn-warning btn-sm btn-cancel hide" ng-click="cancelOC()">
+                    <span class="fa fa-sign-out"></span>
+                    Cancelar OC
+                </button>
+                <button type="button" class="btn btn-warning btn-sm btn-close hide" ng-click="closeOC()">
+                    <span class="fa fa-sign-out"></span>
+                    Cerrar OC
                 </button>
                 <button type="button" class="btn btn-success btn-sm" id="oc_btn_send_approval" ng-click="saveOC(2)">
                     <span class="fa fa-check"></span>
@@ -352,6 +381,150 @@
             <div class="modal-body">
                 <div id="modal_pdf_load"></div>
                 <div id="modal_pdf_show"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="modalProvider" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Proveedores</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="table_container_prov" class="table-responsive"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="modalRegisterProvider" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Registrar Proveedor</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Tipo Documento</label>
+                        <div class="col-sm-4">
+                            <select id="p_type_doc" class="form-control input-sm"></select>
+                        </div>
+                        <label class="col-sm-2 control-label">Documento</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control input-sm " id="p_document" maxlength="11">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Tipo Proveedor</label>
+                        <div class="col-sm-4">
+                            <select id="p_type_prov" class="form-control input-sm"></select>
+                        </div>
+                        <label class="col-sm-2 control-label">Tipo Doc. de Venta</label>
+                        <div class="col-sm-4">
+                            <select id="p_type_doc_sale" class="form-control input-sm"></select>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Razon Social</label>
+                        <div class="col-sm-10">
+                            <input id="p_rs" class="form-control input-sm" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Dirección</label>
+                        <div class="col-sm-10">
+                            <input id="p_address" class="form-control input-sm" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Contacto</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control input-sm " id="p_contact">
+                        </div>
+                        <label class="col-sm-2 control-label">Correo</label>
+                        <div class="col-sm-4">
+                            <input type="email" class="form-control input-sm " id="p_email">
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Celular</label>
+                        <div class="col-sm-4">
+                            <input id="p_cellphone" class="form-control input-sm" />
+                        </div>
+                        <label class="col-sm-2 control-label">Teléfono</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control input-sm " id="p_phone">
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Departamento</label>
+                        <div class="col-sm-4">
+                            <select id="p_department" class="form-control input-sm">
+                                <option value="">Seleccione</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-2 control-label">Provincia</label>
+                        <div class="col-sm-4">
+                            <select id="p_province" class="form-control input-sm">
+                                <option value="">Seleccione</option></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Distrito</label>
+                        <div class="col-sm-4">
+                            <select id="p_district" class="form-control input-sm">
+                                <option value="">Seleccione</option></select>
+                        </div>
+                        <label class="col-sm-2 control-label">Estado Civil</label>
+                        <div class="col-sm-4">
+                            <select class="form-control input-sm" id="p_ec">
+                                <option value="">Seleccionar</option>
+                                <option value="S">Soltero</option>
+                                <option value="C">Casado</option>
+                                <option value="D">Divorciado</option>
+                                <option value="V">Viudo</option>
+                                <option value="X">Conviviente</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Impuesto</label>
+                        <div class="col-sm-1">
+                            <label class="checkbox-inline i-checks">
+                                <input type="checkbox" id="p_imp" checked>
+                            </label>
+                        </div>
+                        <label class="col-sm-2 control-label">Congelado</label>
+                        <div class="col-sm-1">
+                            <label class="checkbox-inline i-checks">
+                                <input type="checkbox" id="p_con" checked>
+                            </label>
+                        </div>
+                        <label class="col-sm-2 control-label">Activo</label>
+                        <div class="col-sm-1">
+                            <label class="checkbox-inline i-checks">
+                                <input type="checkbox" id="p_act" checked>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger-admin btn-sm" ng-click="saveProvider()">Registrar</button>
+                <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>

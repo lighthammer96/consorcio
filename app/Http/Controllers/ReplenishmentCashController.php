@@ -23,7 +23,7 @@ class ReplenishmentCashController extends Controller
             $params = ['id', 'date', 'petty_cash_id', 'concept', 'total', 'state_id', 'number', 'payment_method_id',
                 'liable_id'];
             $data = $repo->search($filter);
-            $info = parseDataList($data, $request, 'id', $params);
+            $info = parseDataList($data, $request, 'id', $params, 'DESC');
             $data = $info[1];
 
             foreach ($data as $d) {

@@ -62,8 +62,7 @@ class Proveedor extends Model
 
     public function tipo_u()
     {
-
-        $ft = $this->belongsTo(TablaSunat::class, 'tipodoc', 'cCodigo');
-        return $ft->where('cnombretabla', 'TIPO_DOCUMENTO');
+        return $this->belongsTo(TablaSunat::class, 'tipodoc', 'cCodigo')
+            ->where('cnombretabla', 'TIPO_DOCUMENTO');
     }
 }

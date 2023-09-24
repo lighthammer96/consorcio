@@ -8,6 +8,8 @@ namespace App\Http\Recopro\PurchaseOrder;
  * Date: 19/09/2017
  * Time: 09:51 AM
  */
+
+use App\Http\Recopro\Buyer\Buyer;
 use App\Http\Recopro\ContestProvider\ContestProvider;
 use App\Http\Recopro\Entity\Entity;
 use App\Http\Recopro\Project\Project;
@@ -24,9 +26,10 @@ class PurchaseOrder extends Model
     protected $table = 'ERP_OrdenCompra';
 
     protected $fillable = ['number_oc', 'project_id', 'contest_provider_id', 'date_emission', 'type_id', 'oc_state_id',
-        'type_oc', 'payment_condition_id', 'payment_advance', 'currency_id', 'is_igv', 'subtotal', 'igv', 'total', 'quote_provider',
-        'subtotal_local', 'igv_local', 'total_local', 'subtotal_dollar', 'igv_dollar', 'total_dollar', 'delivery_days',
-        'provider_id', 'delivery_date', 'warehouse_id', 'user_created', 'user_updated', 'user_deleted', 'deleted_at'];
+        'type_oc', 'payment_condition_id', 'payment_advance', 'currency_id', 'is_igv', 'subtotal', 'igv', 'total',
+        'quote_provider', 'subtotal_local', 'igv_local', 'total_local', 'subtotal_dollar', 'igv_dollar', 'total_dollar',
+        'delivery_days', 'provider_id', 'delivery_date', 'warehouse_id',
+        'user_created', 'user_updated', 'user_deleted', 'deleted_at'];
 
     protected $hidden = ['created_at', 'updated_at', 'deleted_at', 'user_updated', 'user_deleted'];
 
@@ -52,9 +55,8 @@ class PurchaseOrder extends Model
 
     public function provider()
     {
-        return $this->belongsTo(Entity::class, 'provider_id', 'IdEntidad');
+        return $this->belongsTo(Entity::class, 'idProveedor', 'IdEntidad');
     }
-
 
     public function type()
     {

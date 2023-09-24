@@ -1971,11 +1971,12 @@ function generateSearchForm(form_id, btn_id, callback, is_click) {
     });
 }
 
-function generateDateRangePicker(calendar, start, end, callback) {
+function generateDateRangePicker(calendar, start, end, callback, opens) {
+    opens = typeof opens !== 'undefined' ? opens : 'left';
     calendar.daterangepicker({
         startDate: start,
         endDate: end,
-        opens: 'left',
+        opens: opens,
         showDropdowns: true,
         alwaysShowCalendars: true,
         showCustomRangeLabel: false,
@@ -9505,7 +9506,10 @@ function create_pdf_Querymovimiento(response) {
 
 
 }
-function create_pdf_movimientoEntrega(response) {
+function create_pdf_movimientoEntrega(response, params) {
+    var title_ = (_.isUndefined(params.title)) ? '' : params.title;
+    var client_txt_ = (_.isUndefined(params.client_txt)) ? '' : params.client_txt;
+    var user_txt_ = (_.isUndefined(params.user_txt)) ? '' : params.user_txt;
     var data_compania = response.data_compania;
     var data_p = response.data;
     var operacion = response.data_movimientoEntrega;
@@ -9514,8 +9518,13 @@ function create_pdf_movimientoEntrega(response) {
     if (operacion[0].serie_comprobante != null) {
         codVen = operacion[0].serie_comprobante + '-' + operacion[0].numero_comprobante;
         codSol = operacion[0].cCodConsecutivo + '-' + operacion[0].nConsecutivo;
+    } else if(operacion[0].number_reception != null) {
+        codVen = operacion[0].cCodConsecutivo + '-' + operacion[0].nConsecutivo;
+        codSol = operacion[0].number_reception;
     }
     var mov_ar = response.data_movimientoEntregaArti;
+    var mov_ar2 = response.movimiento_Ar;
+    mov_ar = (mov_ar.length === 0 && mov_ar2.length > 0) ? mov_ar2 : mov_ar;
     var mov_det = response.data_movimiento_serie;
     var total_di = data_compania[0].direcciones_oficinas;
     var tot = total_di.split('|');
@@ -9539,9 +9548,10 @@ function create_pdf_movimientoEntrega(response) {
     var column5 = [];
     var column6 = [];
     var header = [];
-    column1.push({ text: 'MOVIMIENTO DE ' + operacion[0].tipoOperacion, alignment: 'center', bold: true, colSpan: 47, height: 70 }, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {});
+    title_ = (title_ !== '') ? title_ : operacion[0].tipoOperacion;
+    column1.push({ text: 'MOVIMIENTO DE ' + title_, alignment: 'center', bold: true, colSpan: 47, height: 70 }, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {});
     column2.push({ text: ' N° Movimiento:', bold: true, alignment: 'center', fontSize: 9, border: [true, true, false, true], colSpan: 15 }, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, { text: data_p.idMovimiento, border: [false, false, true, true], fontSize: 9, colSpan: 3 }, {}, {}, { text: ' Fecha Transacción: ', bold: true, fontSize: 9, border: [false, false, false, true], alignment: 'center', colSpan: 10 }, {}, {}, {}, {}, {}, {}, {}, {}, {}, { text: data_p.fecha_proceso, fontSize: 9, border: [false, false, true, true], colSpan: 5 }, {}, {}, {}, {}, { text: ' Fecha Impresión:', bold: true, fontSize: 9, border: [false, false, false, true], alignment: 'center', colSpan: 9, height: 80 }, {}, {}, {}, {}, {}, {}, {}, {}, { text: data_p.fecha_impresion, fontSize: 9, border: [false, false, true, true], colSpan: 5 }, {}, {}, {}, {});
-    column5.push({ text: 'Item', bold: true, colSpan: 2, fontSize: 9, height: 100 }, {}, { text: 'Artículo', alignment: 'center', bold: true, colSpan: 16, fontSize: 10, height: 100 }, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, { text: 'Almacén', bold: true, colSpan: 7, fontSize: 9, height: 100 }, {}, {}, {}, {}, {}, {}, { text: 'Localización', bold: true, colSpan: 8, fontSize: 10, height: 100 }, {}, {}, {}, {}, {}, {}, {}, { text: 'Lote', bold: true, colSpan: 9, fontSize: 10, height: 100 }, {}, {}, {}, {}, {}, {}, {}, {}, { text: 'Unidad', bold: true, colSpan: 2, fontSize: 9, height: 100 }, {}, { text: 'Cantidad', bold: true, fontSize: 9, height: 100 }, { text: 'Cantidad Requeridad', bold: true, fontSize: 9, height: 100 }, { text: 'Cantidad Pendiente', bold: true, fontSize: 9, height: 100 });
+    column5.push({ text: 'Item', bold: true, colSpan: 2, fontSize: 9, height: 100 }, {}, { text: 'Artículo', alignment: 'center', bold: true, colSpan: 16, fontSize: 10, height: 100 }, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, { text: 'Almacén', bold: true, colSpan: 7, fontSize: 9, height: 100 }, {}, {}, {}, {}, {}, {}, { text: 'Localización', bold: true, colSpan: 8, fontSize: 10, height: 100 }, {}, {}, {}, {}, {}, {}, {}, { text: 'Lote', bold: true, colSpan: 9, fontSize: 10, height: 100 }, {}, {}, {}, {}, {}, {}, {}, {}, { text: 'Unidad', bold: true, colSpan: 2, fontSize: 9, height: 100 }, {}, { text: 'Cantidad', bold: true, fontSize: 9, height: 100 }, { text: 'Cantidad Requerida', bold: true, fontSize: 9, height: 100 }, { text: 'Cantidad Pendiente', bold: true, fontSize: 9, height: 100 });
     header.push(column1);
     header.push(column2);
     header.push(column5);
@@ -9661,7 +9671,7 @@ function create_pdf_movimientoEntrega(response) {
                             text: [
                                 {
                                     fontSize: 9,
-                                    text: "CLIENTE: ",
+                                    text: (client_txt_ === '') ? "CLIENTE: " : client_txt_,
                                     bold: true,
                                 },
                                 {
@@ -9689,7 +9699,7 @@ function create_pdf_movimientoEntrega(response) {
                             text: [
                                 {
                                     fontSize: 9,
-                                    text: "VENDEDOR: ",
+                                    text: (user_txt_ === '') ? "VENDEDOR: " : user_txt_,
                                     bold: true,
                                 },
                                 {
@@ -10197,4 +10207,18 @@ function getFormSearchComprobantes(form_id, input_id, btn_id) {
         '</div>' +
 
         '</form>';
+}
+
+function codeUniqueTime() {
+    var date = new Date();
+    var components = [
+        date.getYear(),
+        date.getMonth(),
+        date.getDate(),
+        date.getHours(),
+        date.getMinutes(),
+        date.getSeconds(),
+        date.getMilliseconds()
+    ];
+    return components.join('');
 }

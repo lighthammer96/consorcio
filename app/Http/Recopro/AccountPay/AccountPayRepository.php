@@ -58,4 +58,13 @@ class AccountPayRepository implements AccountPayInterface
             ->whereNotIn('id', $ids)
             ->delete();
     }
+
+    public function getByDocumentAndTypeProvider($provider, $document, $type)
+    {
+        return $this->model->where('provider_id', $provider)
+            ->where('document_number', $document)
+            ->where('document_type_id', $type)
+            ->where('state_id', '<>', 3)
+            ->first();
+    }
 }

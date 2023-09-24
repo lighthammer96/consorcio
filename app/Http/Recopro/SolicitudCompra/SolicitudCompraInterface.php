@@ -10,7 +10,7 @@ namespace App\Http\Recopro\SolicitudCompra;
 
 interface SolicitudCompraInterface
 {
-    public function search($s);
+    public function search($filter);
 
     public function all();
 

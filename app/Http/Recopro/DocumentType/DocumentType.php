@@ -15,6 +15,10 @@ class DocumentType extends Model
 
     protected $table = 'ERP_TipoDocumento';
 
+    protected $primaryKey = 'IdTipoDocumento';
+
+    protected $keyType = 'string';
+
     protected $fillable = ['IdTipoDocumento','Descripcion', 'EquivalenciaSunat', 'Referencia'];
 
     public $timestamps = false;

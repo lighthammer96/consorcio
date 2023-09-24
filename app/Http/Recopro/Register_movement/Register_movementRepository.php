@@ -346,6 +346,62 @@ where er.idMovimiento='$id'");
         return $mostrar;
     }
 
+    public function get_movimientoEntregaCompra($id)
+    {
+        $mostrar = DB::select("select ti.descripcion as tipoOperacion,prov.razonsocial as razonsocial_cliente,prov.direccion as direccion_cliente,prov.documento as documento_cliente,prov.celular as celular_cliente,rpo.code as number_reception,
+com.description as vendedor, * 
+from ERP_Movimiento as er 
+inner join ERP_RecepcionOrdenCompra as rpo on rpo.mov_id=er.idMovimiento
+inner join ERP_TipoOperacion as ti on er.idTipoOperacion=ti.idTipoOperacion 
+left join ERP_OrdenCompra as oc on (er.cCodConsecutivo=oc.cCodConsecutivo AND er.nConsecutivo=oc.nConsecutivo)
+left join ERP_Proveedor as prov on (prov.id=oc.idProveedor)
+left join ERP_Compradores as com on oc.buyer_id=com.id
+where er.idMovimiento='$id'");
+        return $mostrar;
+    }
+
+    public function get_movimientoConformidadCompra($id)
+    {
+        $mostrar = DB::select("select ti.descripcion as tipoOperacion,prov.razonsocial as razonsocial_cliente,prov.direccion as direccion_cliente,prov.documento as documento_cliente,prov.celular as celular_cliente,cs.code as number_reception,
+com.description as vendedor, * 
+from ERP_Movimiento as er 
+inner join ERP_ConformidadServicios as cs on cs.mov_id=er.idMovimiento
+inner join ERP_TipoOperacion as ti on er.idTipoOperacion=ti.idTipoOperacion 
+left join ERP_OrdenCompra as oc on (er.cCodConsecutivo=oc.cCodConsecutivo AND er.nConsecutivo=oc.nConsecutivo)
+left join ERP_Proveedor as prov on (prov.id=oc.idProveedor)
+left join ERP_Compradores as com on oc.buyer_id=com.id
+where er.idMovimiento='$id'");
+        return $mostrar;
+    }
+
+    public function get_movimientoDevolucionCompra($id)
+    {
+        $mostrar = DB::select("select ti.descripcion as tipoOperacion,prov.razonsocial as razonsocial_cliente,prov.direccion as direccion_cliente,prov.documento as documento_cliente,prov.celular as celular_cliente,ret.code as number_reception,
+com.description as vendedor, * 
+from ERP_Movimiento as er 
+inner join ERP_DevolucionOrdenCompra as ret on ret.mov_id=er.idMovimiento
+inner join ERP_TipoOperacion as ti on er.idTipoOperacion=ti.idTipoOperacion 
+left join ERP_OrdenCompra as oc on (er.cCodConsecutivo=oc.cCodConsecutivo AND er.nConsecutivo=oc.nConsecutivo)
+left join ERP_Proveedor as prov on (prov.id=oc.idProveedor)
+left join ERP_Compradores as com on oc.buyer_id=com.id
+where er.idMovimiento='$id'");
+        return $mostrar;
+    }
+
+    public function get_movimientoDevolucionCS($id)
+    {
+        $mostrar = DB::select("select ti.descripcion as tipoOperacion,prov.razonsocial as razonsocial_cliente,prov.direccion as direccion_cliente,prov.documento as documento_cliente,prov.celular as celular_cliente,ret.code as number_reception,
+com.description as vendedor, * 
+from ERP_Movimiento as er 
+inner join ERP_DevolucionConformidadServicios as ret on ret.mov_id=er.idMovimiento
+inner join ERP_TipoOperacion as ti on er.idTipoOperacion=ti.idTipoOperacion 
+left join ERP_OrdenCompra as oc on (er.cCodConsecutivo=oc.cCodConsecutivo AND er.nConsecutivo=oc.nConsecutivo)
+left join ERP_Proveedor as prov on (prov.id=oc.idProveedor)
+left join ERP_Compradores as com on oc.buyer_id=com.id
+where er.idMovimiento='$id'");
+        return $mostrar;
+    }
+
     public function get_movement_articulo_print($id)
     {
         $mostrar = DB::select("SELECT ma.cantidad as cantidad, ma.consecutivo as consecutivo,pr.description as producto,al.description as almacen,lo.descripcion as localizacion,lot.Lote as lote,un.Abreviatura as unidad FROM ERP_Movimiento_Articulo as ma left JOIN ERP_Almacen  as al on al.id=ma.idAlmacen LEFT join ERP_Localizacion as lo on lo.idLocalizacion=ma.idLocalizacion inner join ERP_Productos as pr on pr.id=ma.idArticulo INNER JOIN ERP_UnidadMedida as un on pr.um_id=un.IdUnidadMedida LEFT JOIN ERP_Lote as lot  on lot.idLote=ma.idLote where ma.idMovimiento='$id'");
@@ -356,6 +412,20 @@ where er.idMovimiento='$id'");
     {
         $mostrar = DB::select("
                  SELECT prd.nCant as cantidadRequeridad,prd.nCantidadPendienteEntregar,ma.cantidad as cantidad, ma.consecutivo as consecutivo,pr.description as producto,al.description as almacen,lo.descripcion as localizacion,lot.Lote as lote,un.Abreviatura as unidad FROM ERP_Movimiento_Articulo as ma left JOIN ERP_Almacen  as al on al.id=ma.idAlmacen LEFT join ERP_Localizacion as lo on lo.idLocalizacion=ma.idLocalizacion inner join ERP_Productos as pr on pr.id=ma.idArticulo INNER JOIN ERP_UnidadMedida as un on pr.um_id=un.IdUnidadMedida LEFT JOIN ERP_Lote as lot  on lot.idLote=ma.idLote inner join ERP_Movimiento as mov on(mov.idMovimiento=ma.idMovimiento) inner join ERP_ProformaDetalle as prd on(prd.cCodConsecutivo=mov.cCodConsecutivo and prd.nConsecutivo=mov.nConsecutivo and ma.idArticulo=prd.idProducto) where ma.idMovimiento='$id'");
+        return $mostrar;
+    }
+
+    public function get_movement_articulo_printCompra($id)
+    {
+        $mostrar = DB::select("SELECT ma.cantidad as cantidadRequeridad, '0' as nCantidadPendienteEntregar,ma.cantidad as cantidad, ma.consecutivo as consecutivo,pr.description as producto,al.description as almacen,lo.descripcion as localizacion,lot.Lote as lote,un.Abreviatura as unidad 
+FROM ERP_Movimiento_Articulo as ma 
+left JOIN ERP_Almacen  as al on al.id=ma.idAlmacen 
+LEFT join ERP_Localizacion as lo on lo.idLocalizacion=ma.idLocalizacion 
+inner join ERP_Productos as pr on pr.id=ma.idArticulo 
+INNER JOIN ERP_UnidadMedida as un on pr.um_id=un.IdUnidadMedida 
+LEFT JOIN ERP_Lote as lot  on lot.idLote=ma.idLote 
+inner join ERP_Movimiento as mov on(mov.idMovimiento=ma.idMovimiento) 
+where ma.idMovimiento='$id'");
         return $mostrar;
     }
 

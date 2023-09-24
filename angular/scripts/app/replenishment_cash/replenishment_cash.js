@@ -1,6 +1,3 @@
-/**
- * Created by EVER on 28/04/2017.
- */
 (function () {
     'use strict';
     angular.module('sys.app.replenishment_cashs')
@@ -13,6 +10,29 @@
 
     function ReplenishmentCashCtrl($scope, _, RESTService)
     {
+        moment.locale('es');
+        var start = moment().startOf('month');
+        var end = moment().endOf('month');
+
+        var chk_date_range = $('#chk_date_range');
+        chk_date_range.click(function () {
+            $('#LoadRecordsButtonRC').click();
+        });
+        generateCheckBox('.chk_date_range_replenishment_pc');
+
+        var reqDates = $('#reqDates');
+
+        var showDate = function (from, to) {
+            start = from;
+            end = to;
+            reqDates.find('span').html(from.format('MMM D, YYYY') + ' - ' + to.format('MMM D, YYYY'));
+            if (chk_date_range.prop('checked')) {
+                $('#LoadRecordsButtonRC').click();
+            }
+        };
+        generateDateRangePicker(reqDates, start, end, showDate);
+        showDate(start, end);
+
         var modalRC;
         var titleRC;
         var modalPettyCash;
@@ -376,7 +396,10 @@
 
         generateSearchForm('frm-search-rc', 'LoadRecordsButtonRC', function () {
             table_container_rc.jtable('load', {
-                search: $('#search_rc').val()
+                search: $('#search_rc').val(),
+                check: (chk_date_range.prop('checked')),
+                from: start.format('YYYY-MM-DD'),
+                to: end.format('YYYY-MM-DD')
             });
         }, true);
 

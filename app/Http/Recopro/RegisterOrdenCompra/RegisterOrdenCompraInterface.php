@@ -22,4 +22,6 @@ interface RegisterOrdenCompraInterface
 
     public function destroy($id);
 
+    public function getDataByReport($filter);
+
 }

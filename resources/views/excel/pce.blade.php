@@ -35,19 +35,25 @@
     <tr>
         <th style="border: 1px solid #000000;">TOTAL GASTOS</th>
         <td style="border: 1px solid #000000;text-align: right">{{ $data['total'] }}</td>
-        <th style="border: 1px solid #000000;" colspan="2">
-            @if ($data['is_voucher'] == 'SI') TOTAL VALES CONSUMIDOS @endif</th>
-        <th style="border: 1px solid #000000;text-align: right">
-            @if ($data['is_voucher'] == 'SI') {{ $data['total_v_si'] }} @endif</th>
+        <th style="border: 1px solid #000000;" colspan="2">TOTAL DOCUMENTOS DE CIERRE</th>
+        <th style="border: 1px solid #000000;text-align: right">{{ $data['total_close'] }}</th>
     </tr>
     <tr>
         <th></th>
         <th></th>
         <th style="border: 1px solid #000000;" colspan="2">
-            @if ($data['is_voucher'] == 'SI') TOTAL VALES NO CONSUMIDOS @endif</th>
+            @if ($data['is_voucher'] == 'SI') TOTAL VALES CONSUMIDOS @endif</th>
         <th style="border: 1px solid #000000;text-align: right">
-            @if ($data['is_voucher'] == 'SI') {{ $data['total_v_no'] }} @endif</th>
+            @if ($data['is_voucher'] == 'SI') {{ $data['total_v_si'] }} @endif</th>
     </tr>
+    @if ($data['is_voucher'] == 'SI')
+    <tr>
+        <th></th>
+        <th></th>
+        <th style="border: 1px solid #000000;" colspan="2">TOTAL VALES NO CONSUMIDOS</th>
+        <th style="border: 1px solid #000000;text-align: right">{{ $data['total_v_no'] }}</th>
+    </tr>
+    @endif
     <tr>
         <th style="text-align: center" colspan="5">
             GASTOS
@@ -68,6 +74,25 @@
             <td style="border: 1px solid #000000;">{{ $det['document_type'] }}</td>
             <td style="border: 1px solid #000000;">{{ $det['number'] }}</td>
             <td style="border: 1px solid #000000;">{{ $det['gloss'] }}</td>
+            <td style="border: 1px solid #000000;text-align: right">{{ $det['total'] }}</td>
+        </tr>
+    @endforeach
+    <tr>
+        <th style="text-align: center" colspan="5">
+            DOCUMENTOS DE CIERRE
+        </th>
+    </tr>
+    <tr>
+        <th style="border: 1px solid #000000;">Numero</th>
+        <th style="border: 1px solid #000000;">Glosa</th>
+        <th style="border: 1px solid #000000;">Responsable</th>
+        <th style="border: 1px solid #000000;">Total</th>
+    </tr>
+    @foreach($data['detail_close'] as $det)
+        <tr>
+            <td style="border: 1px solid #000000;">{{ $det['number'] }}</td>
+            <td style="border: 1px solid #000000;">{{ $det['gloss'] }}</td>
+            <td style="border: 1px solid #000000;">{{ $det['responsible'] }}</td>
             <td style="border: 1px solid #000000;text-align: right">{{ $det['total'] }}</td>
         </tr>
     @endforeach

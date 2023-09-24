@@ -11,6 +11,7 @@ use App\Http\Recopro\PaymentCondition\PaymentConditionInterface;
 use App\Http\Recopro\Periodo\PeriodoInterface;
 use App\Http\Recopro\Petty_cash\Petty_cashInterface;
 use App\Http\Recopro\PettyCashExpense\PettyCashExpenseInterface;
+use App\Http\Recopro\PettyCashExpenseClose\PettyCashExpenseCloseInterface;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
@@ -24,7 +25,7 @@ class PettyCashExpenseController extends Controller
             $params = ['id', 'date', 'petty_cash_id', 'total', 'code', 'observation', 'accounting_period', 'state_id',
                 'user_created', 'created_at as date_created'];
 
-            $info = parseDataList($repo->search($filter), $request, 'id', $params);
+            $info = parseDataList($repo->search($filter), $request, 'id', $params, 'DESC');
 
             $data = $info[1];
             foreach ($data as $d) {
@@ -83,7 +84,8 @@ class PettyCashExpenseController extends Controller
     }
 
     public function createUpdate($id, Request $request, PettyCashExpenseInterface $pceRepo, Petty_cashInterface $pcRepo,
-                                 PeriodoInterface $peRepo, AccountPayInterface $apRepo, GasVoucherInterface $gvRepo)
+                                 PeriodoInterface $peRepo, AccountPayInterface $apRepo, GasVoucherInterface $gvRepo,
+                                 PettyCashExpenseCloseInterface $pceCRepo)
     {
         DB::beginTransaction();
         try {
@@ -96,7 +98,7 @@ class PettyCashExpenseController extends Controller
                     throw new \Exception('No puede modificar esta rendición');
                 }
             }
-            $data = $request->except(['type', 'documents']);
+            $data = $request->except(['type', 'documents', 'documents_close', 'vouchers']);
             $pc = $pcRepo->find($data['petty_cash_id']);
             if (!$pc) {
                 throw new \Exception('La caja chica seleccionada no existe');
@@ -123,32 +125,53 @@ class PettyCashExpenseController extends Controller
                 $id = $pce->id;
             }
             $documents_ = $request->input('documents', []);
+            $documents_close_ = $request->input('documents_close', []);
             $total_docs = 0;
             if ($type_ == 2) {
+                if (count($documents_) == 0) {
+                    throw new \Exception('Se debe ingresar los gastos de la rendición');
+                }
                 $amount_sol_ = 0;
                 foreach ($documents_ as $doc) {
                     $ap = $apRepo->update($doc, [
                         'state_id' => 2
                     ]);
+                    if (is_null($ap->IdCuenta)) {
+                        $number_doc = $ap->document_number;
+                        throw new \Exception('Debe ingresar la cuenta contable del documento: ' . $number_doc);
+                    }
                     $ap_sol = ($ap->currency_id == 1) ? (float)$ap->amount : round($ap->amount * $ap->type_change, 2);
                     $amount_sol_ += $ap_sol;
                 }
+                foreach ($documents_close_ as $doc_c) {
+                    $docC = $pceCRepo->find($doc_c);
+                    $amount_sol_ += (float)$docC->total;
+                }
                 $amount_sol_ = round($amount_sol_, 2);
+                if ($total_pc != $amount_sol_) {
+                    throw new \Exception('El monto total de los documentos (' . formatNumberTotal($amount_sol_, 2) .
+                        ') debe ser igual al saldo de caja chica (' . formatNumberTotal($total_pc, 2) . ')');
+                }
                 $total_docs += $amount_sol_;
                 $pcRepo->update($pc->id, [
                     'total' => $pc->total - $amount_sol_
                 ]);
-                if (count($documents_) == 0) {
-                    throw new \Exception('Se debe ingresar los gastos de la rendición');
-                }
             }
             $apRepo->deleteByPettyCashExpense($id, $documents_);
+            $pceCRepo->deleteByPettyCashExpense($id, $documents_close_);
 
             $vouchers_ = $request->input('vouchers', []);
+            $voucher_ids = [];
+            foreach ($vouchers_ as $doc) {
+                $voucher_ids[] = $doc['id'];
+                $gvRepo->update($doc['id'], [
+                    'is_consumed' => $doc['is_consumed']
+                ]);
+            }
             if ($type_ == 2) {
                 $count_consumed = 0; $total_consumed = 0;
                 foreach ($vouchers_ as $doc) {
-                    $gv = $gvRepo->update($doc, [
+                    $gv = $gvRepo->update($doc['id'], [
                         'state_id' => 2
                     ]);
                     if ($gv->is_consumed == 1) {
@@ -159,19 +182,18 @@ class PettyCashExpenseController extends Controller
                 if ($pc_is_vale == 1 && count($vouchers_) == 0) {
                     throw new \Exception('Se debe ingresar por lo menos un vale de gasolina');
                 }
-                if (count($vouchers_) > 0 && $count_consumed == 0) {
-                    throw new \Exception('Existen vales de gasolina ingresados por lo menos uno debe estar ' .
-                        'marcado como consumido.');
-                }
-                $total_docs = round($total_docs, 2);
-                $total_consumed = round($total_consumed, 2);
-//                if (count($vouchers_) > 0 && count($documents_) != $count_consumed) {
-                if (count($vouchers_) > 0 && $total_docs != $total_consumed) {
-                    throw new \Exception('No se puede procesar la rendición porque la sumatoria de vales ' .
-                        'consumidos no coincide con los documentos ingresados');
-                }
+//                if (count($vouchers_) > 0 && $count_consumed == 0) {
+//                    throw new \Exception('Existen vales de gasolina ingresados por lo menos uno debe estar ' .
+//                        'marcado como consumido.');
+//                }
+//                $total_docs = round($total_docs, 2);
+//                $total_consumed = round($total_consumed, 2);
+//                if (count($vouchers_) > 0 && $total_docs != $total_consumed) {
+//                    throw new \Exception('No se puede procesar la rendición porque la sumatoria de vales ' .
+//                        'consumidos no coincide con los documentos ingresados');
+//                }
             }
-            $gvRepo->deleteByPettyCashExpense($id, $vouchers_);
+            $gvRepo->deleteByPettyCashExpense($id, $voucher_ids);
 
             DB::commit();
             return response()->json([
@@ -215,9 +237,22 @@ class PettyCashExpenseController extends Controller
                     'total' => $ap->amount,
                     'total_sol' => ($ap->currency_id == 1) ? $ap->amount : round($ap->amount * $ap->type_change),
                     'currency' => ($ap->currency) ? $ap->currency->Simbolo : '',
+                    'account' => (is_null($ap->IdCuenta)) ? '' : $ap->IdCuenta
                 ];
             }
             $data->documents_ = $documents;
+
+            $documents_close = [];
+            foreach ($data->pceCloses as $pceC) {
+                $documents_close[] = [
+                    'id' => $pceC->id,
+                    'number' => $pceC->number,
+                    'gloss' => (is_null($pceC->gloss)) ? '' : $pceC->gloss,
+                    'responsible' => $pceC->responsible,
+                    'total' => $pceC->total
+                ];
+            }
+            $data->documents_close_ = $documents_close;
 
             $vouchers = [];
             foreach ($data->vouchers as $gv) {
@@ -233,7 +268,7 @@ class PettyCashExpenseController extends Controller
             }
             $data->vouchers_ = $vouchers;
 
-            unset($data->petty_cash, $data->documents, $data->vouchers,
+            unset($data->petty_cash, $data->documents, $data->vouchers, $data->pceCloses,
                 $data->user_created, $data->user_deleted, $data->user_updated);
 
             return response()->json([
@@ -256,7 +291,7 @@ class PettyCashExpenseController extends Controller
                 throw new \Exception('La rendición no existe');
             }
             $documents = [];
-            foreach ($data->documents as $ap) {
+            foreach ($data->documentsOrder as $ap) {
                 $provider_ = ($ap->provider) ? $ap->provider->NombreEntidad : '';
                 $documents[] = [
                     'id' => $ap->id,
@@ -268,6 +303,17 @@ class PettyCashExpenseController extends Controller
                     'total' => $ap->amount,
                     'total_sol' => ($ap->currency_id == 1) ? $ap->amount : round($ap->amount * $ap->type_change),
                     'currency' => ($ap->currency) ? $ap->currency->Simbolo : '',
+                    'account' => (is_null($ap->IdCuenta)) ? '' : $ap->IdCuenta
+                ];
+            }
+            $documents_close = [];
+            foreach ($data->pceCloses as $pceC) {
+                $documents_close[] = [
+                    'id' => $pceC->id,
+                    'number' => $pceC->number,
+                    'gloss' => (is_null($pceC->gloss)) ? '' : $pceC->gloss,
+                    'responsible' => $pceC->responsible,
+                    'total' => $pceC->total
                 ];
             }
             $vouchers = [];
@@ -286,6 +332,7 @@ class PettyCashExpenseController extends Controller
                 'status' => true,
                 'data' => [
                     'documents' => $documents,
+                    'documents_close' => $documents_close,
                     'vouchers' => $vouchers,
                 ]
             ]);
@@ -357,6 +404,16 @@ class PettyCashExpenseController extends Controller
                     'total' => (float)$gv->amount,
                 ];
             }
+            $total_doc_close = 0; $detail_close = [];
+            foreach ($pce->pceCloses as $pceC) {
+                $detail_close[] = [
+                    'number' => $pceC->number,
+                    'gloss' => (is_null($pceC->gloss)) ? '' : $pceC->gloss,
+                    'responsible' => $pceC->responsible,
+                    'total' => (float)$pceC->total
+                ];
+                $total_doc_close += (float)$pceC->total;
+            }
             $data = [
                 'pc' => ($pc_) ? $pc_->description : '',
                 'responsible' => ($pc_ && $pc_->liable) ? $pc_->liable->name : '',
@@ -366,8 +423,10 @@ class PettyCashExpenseController extends Controller
                 'total' => (float)$pce->total,
                 'total_v_si' => $total_v_si,
                 'total_v_no' => $total_v_no,
+                'total_close' => $total_doc_close,
                 'detail1' => $detail1,
                 'detail2' => $detail2,
+                'detail_close' => $detail_close
             ];
             return generateExcel($data, 'RENDICIÓN DE CAJA CHICA', 'Rendicion', 'pce');
         } catch (\Exception $e) {

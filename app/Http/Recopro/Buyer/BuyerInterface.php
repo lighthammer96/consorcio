@@ -24,4 +24,6 @@ interface BuyerInterface
     public function destroy($id);
 
     public function findByCode($code);
+
+    public function getActiveByUser($user_id);
 }

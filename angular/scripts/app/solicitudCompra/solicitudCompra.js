@@ -1,7 +1,3 @@
-/**
- * Created by JAIR on 4/5/2017.
- */
-
 (function () {
     'use strict';
     angular.module('sys.app.solicitudCompras')
@@ -13,6 +9,29 @@
 
     function SolicitudCompraCtrl($scope, _, RESTService)
     {
+        moment.locale('es');
+        var start = moment().startOf('month');
+        var end = moment().endOf('month');
+
+        var chk_date_range = $('#chk_date_range');
+        chk_date_range.click(function () {
+            $('#LoadRecordsButtonSol').click();
+        });
+        generateCheckBox('.chk_date_range_sc');
+
+        var reqDates = $('#reqDates');
+
+        var showDate = function (from, to) {
+            start = from;
+            end = to;
+            reqDates.find('span').html(from.format('MMM D, YYYY') + ' - ' + to.format('MMM D, YYYY'));
+            if (chk_date_range.prop('checked')) {
+                $('#LoadRecordsButtonSol').click();
+            }
+        };
+        generateDateRangePicker(reqDates, start, end, showDate);
+        showDate(start, end);
+
         var date_now = moment.tz('America/Lima').format('DD/MM/YYYY');
 
         var modalSol = $("#modalSol");
@@ -472,7 +491,10 @@
 
         generateSearchForm('frm-search-sol', 'LoadRecordsButtonSol', function () {
             table_container_sol.jtable('load', {
-                search: $('#search_b').val()
+                search: $('#search_b').val(),
+                check: (chk_date_range.prop('checked')),
+                from: start.format('YYYY-MM-DD'),
+                to: end.format('YYYY-MM-DD')
             });
         }, true);
 

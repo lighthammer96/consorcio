@@ -56,4 +56,12 @@ class OrdenCompraConformidadRepository implements OrdenCompraConformidadInterfac
             ->where('nConsecutivo', $nro)
             ->get();
     }
+
+    public function findByUser($cod_id, $nro, $user)
+    {
+        return $this->model->where('cCodConsecutivo', $cod_id)
+            ->where('nConsecutivo', $nro)
+            ->where('nIdUsuario', $user)
+            ->first();
+    }
 }

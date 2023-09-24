@@ -13,7 +13,27 @@
     function PettyCashExpenseCtrl($scope, _, RESTService)
     {
         moment.locale('es');
-        var date_now = moment.tz('America/Lima').format('DD/MM/YYYY');
+        var start = moment().startOf('month');
+        var end = moment().endOf('month');
+
+        var chk_date_range = $('#chk_date_range');
+        chk_date_range.click(function () {
+            $('#LoadRecordsButtonPCE').click();
+        });
+        generateCheckBox('.chk_date_range_pce');
+
+        var reqDates = $('#reqDates');
+
+        var showDate = function (from, to) {
+            start = from;
+            end = to;
+            reqDates.find('span').html(from.format('MMM D, YYYY') + ' - ' + to.format('MMM D, YYYY'));
+            if (chk_date_range.prop('checked')) {
+                $('#LoadRecordsButtonPCE').click();
+            }
+        };
+        generateDateRangePicker(reqDates, start, end, showDate);
+        showDate(start, end);
 
         var call_m = false;
         var modalPCE;
@@ -26,6 +46,7 @@
         var modalVoucher;
         var modalCCo;
         var modalCostCenter;
+        var modalDocumentClose;
 
         var pce_id = 0;
         var pce_state_id = 1;
@@ -39,12 +60,11 @@
         var pce_pc_total;
         var pce_total;
         var pce_observation;
-        var pce_open_doc;
         var pce_detail;
         var pce_detail_select_ = '';
-        var pce_open_voucher;
         var pce_vouchers;
         var pce_voucher_select_ = '';
+        var pce_detail2;
 
         var ap_id = 0;
         var ap_register_date;
@@ -80,6 +100,8 @@
         var ap_cost_center;
         var ap_cost_center_btn;
 
+        var pce_v_chk;
+
         var gv_id = 0;
         var gv_code;
         var gv_date;
@@ -87,6 +109,12 @@
         var gv_responsible;
         var gv_amount;
         var gv_is_consumed;
+
+        var ap_close_id = 0;
+        var ap_close_number;
+        var ap_close_gloss;
+        var ap_close_responsible;
+        var ap_close_total;
 
         var ap_payment_condition_data = [];
         var ap_operation_destination_data = [];
@@ -110,12 +138,11 @@
             pce_observation.val('').prop('disabled', false);
             pce_detail.empty();
             pce_detail_select_ = '';
-            pce_open_doc.removeClass('hide');
+            pce_detail2.empty();
             $('li#pce_li_vouchers').addClass('hide');
             pce_vouchers.empty();
             pce_voucher_select_ = '';
-            pce_open_voucher.removeClass('hide');
-            $('button.btn-save').removeClass('hide');
+            $('button.btn-frm').removeClass('hide');
         }
 
         function cleanDocument() {
@@ -151,6 +178,9 @@
             ap_cost_center_id = '';
             ap_cost_center.val('');
             ap_cost_center_btn.prop('disabled', false);
+
+            pce_v_chk.prop('checked', false).iCheck('update');
+            $('span.pce_v_chk_content').removeClass('hide');
         }
 
         function cleanGV() {
@@ -161,6 +191,14 @@
             gv_responsible.val('').prop('disabled', false);
             gv_amount.val('').prop('disabled', false);
             gv_is_consumed.prop('disabled', false).iCheck('update');
+        }
+
+        function cleanDocumentClose() {
+            ap_close_id = 0;
+            ap_close_number.val('');
+            ap_close_gloss.val('');
+            ap_close_responsible.val('');
+            ap_close_total.val('');
         }
 
         function getDataForm() {
@@ -189,9 +227,8 @@
                 pce_pc_total = $("input#pce_pc_total");
                 pce_total = $("input#pce_total");
                 pce_observation = $("textarea#pce_observation");
-                pce_open_doc = $("button#pce_open_doc");
                 pce_detail = $("tbody#pce_detail");
-                pce_open_voucher = $("button#pce_open_voucher");
+                pce_detail2 = $("tbody#pce_detail2");
                 pce_vouchers = $("tbody#pce_vouchers");
 
                 ap_register_date = $('input#ap_register_date');
@@ -283,6 +320,12 @@
                 ap_cost_center = $("input#ap_cost_center");
                 ap_cost_center_btn = $("button#ap_cost_center_btn");
 
+                pce_v_chk = $('input#pce_v_chk');
+                pce_v_chk.click(function () {
+                    chkVouchers(0);
+                });
+                generateCheckBox('input#pce_v_chk');
+
                 gv_code = $('input#gv_code');
                 gv_date = $('input#gv_date');
                 generateDatePicker(gv_date);
@@ -291,6 +334,11 @@
                 gv_amount = $('input#gv_amount');
                 gv_is_consumed = $("input#gv_is_consumed");
                 generateCheckBox('input#gv_is_consumed');
+
+                ap_close_number = $('input#ap_close_number');
+                ap_close_gloss = $('textarea#ap_close_gloss');
+                ap_close_responsible = $('input#ap_close_responsible');
+                ap_close_total = $('input#ap_close_total');
 
                 modalPCE = $('#modalPCE');
                 modalPCE.on('hidden.bs.modal', function (e) {
@@ -317,6 +365,15 @@
                 modalDocument.on('hidden.bs.modal', function (e) {
                     modalPCE.attr('style', 'display:block; overflow-y: auto;');
                     cleanDocument();
+                });
+
+                modalDocumentClose = $('#modalDocumentClose');
+                modalDocumentClose.on('show.bs.modal', function (e) {
+                    modalPCE.attr('style', 'display:block; z-index:2030 !important');
+                });
+                modalDocumentClose.on('hidden.bs.modal', function (e) {
+                    modalPCE.attr('style', 'display:block; overflow-y: auto;');
+                    cleanDocumentClose();
                 });
 
                 modalClassificationAcquisition = $('#modalClassificationAcquisition');
@@ -430,6 +487,14 @@
             modalCostCenter.modal('show');
         };
 
+        $scope.openDocumentClose = function () {
+            if (pce_id === 0) {
+                $scope.showAlert('', 'Para agregar documentos debe guardar la rendición', 'warning');
+                return false;
+            }
+            modalDocumentClose.modal('show');
+        };
+
         function validTypeChangeAP(date, last_date) {
             date = moment(date, 'DD/MM/YYYY').format('YYYY-MM-DD');
             RESTService.get('petty_cash_expense/validTypeChange', date, function (response) {
@@ -461,6 +526,10 @@
                     _.each(response.data.documents, function (row) {
                         addPCEDetail(row);
                     });
+                    pce_detail2.empty();
+                    _.each(response.data.documents_close, function (row) {
+                        addPCEDetail2(row);
+                    });
                     pce_vouchers.empty();
                     _.each(response.data.vouchers, function (row) {
                         addPCEVouchers(row);
@@ -476,6 +545,7 @@
             tr_.append('<td>' + row.document_number + '</td>');
             tr_.append('<td>' + row.provider_name + '</td>');
             tr_.append('<td>' + row.gloss + '</td>');
+            tr_.append('<td class="text-center">' + row.account + '</td>');
             var subtotal_ = (_.isNull(row.subtotal) || _.isUndefined(row.subtotal)) ? 0 : row.subtotal;
             var igv_ = (_.isNull(row.igv) || _.isUndefined(row.igv)) ? 0 : row.igv;
             var total_ = (_.isNull(row.total) || _.isUndefined(row.total)) ? 0 : row.total;
@@ -511,6 +581,44 @@
                 e.preventDefault();
             });
         }
+        function addPCEDetail2(row)
+        {
+            var tr_ = $('<tr data-id="' + row.id + '" data-tot="' + row.total + '"></tr>');
+            tr_.append('<td class="text-center">' + row.number + '</td>');
+            tr_.append('<td>' + row.gloss + '</td>');
+            tr_.append('<td>' + row.responsible + '</td>');
+            var total_ = (_.isNull(row.total) || _.isUndefined(row.total)) ? 0 : row.total;
+            tr_.append('<td class="text-right">' + numberFormat(total_, 2) + '</td>');
+            var td_ = $('<td class="text-center"></td>');
+            if (pce_state_id < 2) {
+                td_.append('<button class="btn btn-primary btn-xs editPCEC" title="Editar" ' +
+                    'type="button"><span class="fa fa-edit"></span></button>');
+                td_.append('&nbsp;<button class="btn btn-danger btn-xs deletePCEC" title="Eliminar" ' +
+                    'type="button"><span class="fa fa-trash"></span></button>');
+            }
+            tr_.append(td_);
+            pce_detail2.append(tr_);
+
+            pceCalculateTot();
+
+            if (pce_state_id < 2) {
+                pce_detail2.find('button.editPCEC').off().on('click', function (e) {
+                    var tr_ = $(this).closest('tr');
+                    var tr_id = tr_.attr('data-id');
+                    findDocumentClose(tr_id);
+                    e.preventDefault();
+                });
+                pce_detail2.find('button.deletePCEC').off().on('click', function (e) {
+                    var tr_ = $(this).closest('tr');
+                    $scope.showConfirm('', '¿Está seguro que desea quitar este documento de cierre?', function () {
+                        tr_.remove();
+                        pceCalculateTot();
+                    });
+                    e.preventDefault();
+                });
+            }
+
+        }
         function addPCEVouchers(row)
         {
             var tr_ = $('<tr data-id="' + row.id + '"></tr>');
@@ -518,9 +626,18 @@
             tr_.append('<td class="text-center">' + row.date + '</td>');
             tr_.append('<td>' + row.gloss + '</td>');
             tr_.append('<td>' + row.responsible + '</td>');
-            tr_.append('<td class="text-center">' + row.is_consumed + '</td>');
-            tr_.append('<td class="text-right">' + numberFormat(row.amount, 2) + '</td>');
+
+            var chk_ = (row.is_consumed === 'SI') ? 'checked' : '';
             var td_ = $('<td class="text-center"></td>');
+            var inp_chk = (pce_state_id < 2) ?
+                $('<input type="checkbox" class="pce_v_chk pce_v_chk' + row.id + '" ' + chk_ + ' />') :
+                $('<span>' + row.is_consumed + '</span>');
+            td_.append(inp_chk);
+            tr_.append(td_);
+
+            // tr_.append('<td class="text-center">' + row.is_consumed + '</td>');
+            tr_.append('<td class="text-right">' + numberFormat(row.amount, 2) + '</td>');
+            td_ = $('<td class="text-center"></td>');
             td_.append('<button class="btn btn-primary btn-xs editPCE" title="Editar" ' +
                 'type="button"><span class="fa fa-edit"></span></button>');
             if (pce_state_id < 2) {
@@ -538,13 +655,19 @@
                 e.preventDefault();
             });
 
-            pce_vouchers.find('button.deletePCE').off().on('click', function (e) {
-                var tr_ = $(this).closest('tr');
-                $scope.showConfirm('', '¿Está seguro que desea quitar este vale?', function () {
-                    tr_.remove();
+            if (pce_state_id < 2) {
+                pce_vouchers.find('button.deletePCE').off().on('click', function (e) {
+                    var tr_ = $(this).closest('tr');
+                    $scope.showConfirm('', '¿Está seguro que desea quitar este vale?', function () {
+                        tr_.remove();
+                    });
+                    e.preventDefault();
                 });
-                e.preventDefault();
-            });
+                pce_vouchers.find('input.pce_v_chk').off().on('click', function (e) {
+                    chkVouchers(1);
+                });
+                generateCheckBox('input.pce_v_chk' + row.id);
+            }
         }
 
         $scope.savePCE = function () {
@@ -560,12 +683,18 @@
             b_val = b_val && pce_date.required();
             b_val = b_val && pce_pc.required();
             if (b_val) {
-                var document_ = [], vouchers_ = [];
+                var document_ = [], vouchers_ = [], document_close_ = [];
                 _.each(pce_detail.find('tr'), function (item) {
                     document_.push($(item).attr('data-id'));
                 });
+                _.each(pce_detail2.find('tr'), function (item) {
+                    document_close_.push($(item).attr('data-id'));
+                });
                 _.each(pce_vouchers.find('tr'), function (item) {
-                    vouchers_.push($(item).attr('data-id'));
+                    vouchers_.push({
+                        'id': $(item).attr('data-id'),
+                        'is_consumed': ($(item).find('input.pce_v_chk').prop('checked')) ? 1 : 0
+                    });
                 });
                 if (type === 2) {
                     var valid_ = false;
@@ -597,6 +726,7 @@
                     'total': parseFloat(total_bal),
                     'observation': pce_observation.val(),
                     'documents': document_,
+                    'documents_close': document_close_,
                     'vouchers': vouchers_,
                     'type': type
                 };
@@ -641,14 +771,16 @@
                     _.each(data_.documents_, function (row) {
                         addPCEDetail(row);
                     });
+                    pce_detail2.empty();
+                    _.each(data_.documents_close_, function (row) {
+                        addPCEDetail2(row);
+                    });
                     pce_vouchers.empty();
                     _.each(data_.vouchers_, function (row) {
                         addPCEVouchers(row);
                     });
                     if (disabled_) {
-                        pce_open_doc.addClass('hide');
-                        pce_open_voucher.addClass('hide');
-                        $('button.btn-save').addClass('hide');
+                        $('button.btn-frm, span.pce_v_chk_content').addClass('hide');
                     }
                     var txt_ = (pce_state_id === 1) ? 'Editar ' : '';
                     titlePCE.html(txt_ + 'Rendición de Caja Chica');
@@ -676,7 +808,7 @@
                 return false;
             }
             b_val = b_val && ap_document_number.required();
-            b_val = b_val && ap_account.required();
+            // b_val = b_val && ap_account.required();
             b_val = b_val && ap_gloss.required();
             b_val = b_val && ap_affection.required();
             b_val = b_val && ap_unaffected.required();
@@ -692,6 +824,9 @@
                     if (parseInt(tr_doc_.attr('data-id')) !== parseInt(ap_id)) {
                         total_doc_ += parseFloat(tr_doc_.attr('data-tot'));
                     }
+                });
+                _.each(pce_detail2.find('tr'), function (item) {
+                    total_doc_ += parseFloat($(item).attr('data-tot'));
                 });
                 if ((total_doc_ + amount_) > pce_pc_total_) {
                     $scope.showAlert('', 'La sumatoria de los documentos a ingresar: ' +
@@ -738,6 +873,9 @@
         function pceCalculateTot() {
             var total_ = 0;
             _.each(pce_detail.find('tr'), function (tr) {
+                total_ += parseFloat($(tr).attr('data-tot'));
+            });
+            _.each(pce_detail2.find('tr'), function (tr) {
                 total_ += parseFloat($(tr).attr('data-tot'));
             });
             pce_total.val(numberFormat(total_, 2));
@@ -848,6 +986,70 @@
                     gv_is_consumed.prop('checked', chk_is_consumed).iCheck('update').prop('disabled', disabled_);
                     gv_amount.val(data.amount).prop('disabled', disabled_);
                     modalVoucher.modal('show');
+                } else {
+                    $scope.showAlert('', response.message, 'warning');
+                }
+            });
+        }
+
+        $scope.saveDocumentClose = function () {
+            var b_val = true;
+            b_val = b_val && ap_close_number.required();
+            b_val = b_val && ap_close_gloss.required();
+            b_val = b_val && ap_close_responsible.required();
+            b_val = b_val && ap_close_total.required();
+            if (b_val) {
+                var amount_ = (ap_close_total.val() === '') ? 0 : parseFloat(ap_close_total.val());
+
+                var total_doc_ = 0, pce_pc_total_ = parseFloat(replaceAll(pce_pc_total.val(), ',', ''));
+                _.each(pce_detail.find('tr'), function (item) {
+                    total_doc_ += parseFloat($(item).attr('data-tot'));
+                });
+                _.each(pce_detail2.find('tr'), function (item) {
+                    var tr_doc_ = $(item);
+                    if (parseInt(tr_doc_.attr('data-id')) !== parseInt(ap_close_id)) {
+                        total_doc_ += parseFloat(tr_doc_.attr('data-tot'));
+                    }
+                });
+                if ((total_doc_ + amount_) > pce_pc_total_) {
+                    $scope.showAlert('', 'La sumatoria de los documentos a ingresar: ' +
+                        numberFormat(total_doc_+amount_, 2) +
+                        ', supera el total de la caja chica: ' + numberFormat(pce_pc_total_, 2) +
+                        '. Por favor verifique el detalle del documento', 'warning');
+                    return false;
+                }
+                var params = {
+                    'petty_cash_expense_id': pce_id,
+                    'number': ap_close_number.val(),
+                    'gloss': ap_close_gloss.val(),
+                    'responsible': ap_close_responsible.val(),
+                    'total': amount_
+                };
+                $scope.showConfirm('', '¿Está seguro que desea guardar el Documento de Cierre?', function () {
+                    RESTService.updated('petty_cash_expense/saveDocumentClose', ap_close_id, params, function (response) {
+                        if (!_.isUndefined(response.status) && response.status) {
+                            $scope.showAlert('', 'El Documento de Cierre se guardó correctamente.', 'success');
+                            modalDocumentClose.modal('hide');
+                            loadDocuments(pce_id);
+                        } else {
+                            $scope.showAlert('', response.message, 'warning');
+                        }
+                    });
+                });
+            }
+        }
+
+        function findDocumentClose(id) {
+            RESTService.get('petty_cash_expense/findDocumentClose', id, function (response) {
+                if (!_.isUndefined(response.status) && response.status) {
+                    var data = response.data;
+                    ap_close_id = id;
+                    var disabled_ = (pce_state_id > 1);
+                    ap_close_number.val(data.number).prop('disabled', disabled_);
+                    ap_close_gloss.val(data.gloss).prop('disabled', disabled_);
+                    ap_close_responsible.val(data.responsible).prop('disabled', disabled_);
+                    ap_close_total.val(data.total).prop('disabled', disabled_);
+                    modalDocumentClose.modal('show');
                 } else {
                     $scope.showAlert('', response.message, 'warning');
                 }
@@ -969,7 +1171,10 @@
 
         generateSearchForm('frm-search-pc_expense', 'LoadRecordsButtonPCE', function () {
             table_container_pce.jtable('load', {
-                search: $('#search_pc_expense').val()
+                search: $('#search_pc_expense').val(),
+                check: (chk_date_range.prop('checked')),
+                from: start.format('YYYY-MM-DD'),
+                to: end.format('YYYY-MM-DD')
             });
         }, true);
 
@@ -1377,6 +1582,22 @@
         }
 
         getDataForm();
+
+        function chkVouchers(origin) {
+            if (origin === 0) {
+                var is_chk = pce_v_chk.prop('checked');
+                pce_vouchers.find('input.pce_v_chk').prop('checked', is_chk).iCheck('update');
+            } else {
+                var is_chk_ = true;
+                _.each(pce_vouchers.find('input.pce_v_chk'), function (inp) {
+                    if (!$(inp).prop('checked')) {
+                        is_chk_ = false;
+                        return false;
+                    }
+                });
+                pce_v_chk.prop('checked', is_chk_).iCheck('update');
+            }
+        }
     }
 
     function Config($stateProvider, $urlRouterProvider) {

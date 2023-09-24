@@ -36,6 +36,12 @@ use App\Http\Recopro\ClassificationAcquisition\ClassificationAcquisitionReposito
 use App\Http\Recopro\Conceptos\Conceptos;
 use App\Http\Recopro\Conceptos\ConceptosInterface;
 use App\Http\Recopro\Conceptos\ConceptosRepository;
+use App\Http\Recopro\ConformanceServices\ConformanceServices;
+use App\Http\Recopro\ConformanceServices\ConformanceServicesInterface;
+use App\Http\Recopro\ConformanceServices\ConformanceServicesRepository;
+use App\Http\Recopro\ConformanceServicesDetail\ConformanceServicesDetail;
+use App\Http\Recopro\ConformanceServicesDetail\ConformanceServicesDetailInterface;
+use App\Http\Recopro\ConformanceServicesDetail\ConformanceServicesDetailRepository;
 use App\Http\Recopro\CostCenter\CostCenter;
 use App\Http\Recopro\CostCenter\CostCenterInterface;
 use App\Http\Recopro\CostCenter\CostCenterRepository;
@@ -56,9 +62,36 @@ use App\Http\Recopro\OrdenCompraConformidad\OrdenCompraConformidadRepository;
 use App\Http\Recopro\PettyCashExpense\PettyCashExpense;
 use App\Http\Recopro\PettyCashExpense\PettyCashExpenseInterface;
 use App\Http\Recopro\PettyCashExpense\PettyCashExpenseRepository;
+use App\Http\Recopro\PettyCashExpenseClose\PettyCashExpenseClose;
+use App\Http\Recopro\PettyCashExpenseClose\PettyCashExpenseCloseInterface;
+use App\Http\Recopro\PettyCashExpenseClose\PettyCashExpenseCloseRepository;
+use App\Http\Recopro\ReceptionPurchaseOrder\ReceptionPurchaseOrder;
+use App\Http\Recopro\ReceptionPurchaseOrder\ReceptionPurchaseOrderInterface;
+use App\Http\Recopro\ReceptionPurchaseOrder\ReceptionPurchaseOrderRepository;
+use App\Http\Recopro\ReceptionPurchaseOrderDetail\ReceptionPurchaseOrderDetail;
+use App\Http\Recopro\ReceptionPurchaseOrderDetail\ReceptionPurchaseOrderDetailInterface;
+use App\Http\Recopro\ReceptionPurchaseOrderDetail\ReceptionPurchaseOrderDetailRepository;
+use App\Http\Recopro\ReceptionPurchaseOrderSeries\ReceptionPurchaseOrderSeries;
+use App\Http\Recopro\ReceptionPurchaseOrderSeries\ReceptionPurchaseOrderSeriesInterface;
+use App\Http\Recopro\ReceptionPurchaseOrderSeries\ReceptionPurchaseOrderSeriesRepository;
 use App\Http\Recopro\ReplenishmentPettyCash\ReplenishmentPettyCash;
 use App\Http\Recopro\ReplenishmentPettyCash\ReplenishmentPettyCashInterface;
 use App\Http\Recopro\ReplenishmentPettyCash\ReplenishmentPettyCashRepository;
+use App\Http\Recopro\ReturnConformanceServices\ReturnConformanceServices;
+use App\Http\Recopro\ReturnConformanceServices\ReturnConformanceServicesInterface;
+use App\Http\Recopro\ReturnConformanceServices\ReturnConformanceServicesRepository;
+use App\Http\Recopro\ReturnConformanceServicesDetail\ReturnConformanceServicesDetail;
+use App\Http\Recopro\ReturnConformanceServicesDetail\ReturnConformanceServicesDetailInterface;
+use App\Http\Recopro\ReturnConformanceServicesDetail\ReturnConformanceServicesDetailRepository;
+use App\Http\Recopro\ReturnPurchaseOrder\ReturnPurchaseOrder;
+use App\Http\Recopro\ReturnPurchaseOrder\ReturnPurchaseOrderInterface;
+use App\Http\Recopro\ReturnPurchaseOrder\ReturnPurchaseOrderRepository;
+use App\Http\Recopro\ReturnPurchaseOrderDetail\ReturnPurchaseOrderDetail;
+use App\Http\Recopro\ReturnPurchaseOrderDetail\ReturnPurchaseOrderDetailInterface;
+use App\Http\Recopro\ReturnPurchaseOrderDetail\ReturnPurchaseOrderDetailRepository;
+use App\Http\Recopro\ReturnPurchaseOrderSeries\ReturnPurchaseOrderSeries;
+use App\Http\Recopro\ReturnPurchaseOrderSeries\ReturnPurchaseOrderSeriesInterface;
+use App\Http\Recopro\ReturnPurchaseOrderSeries\ReturnPurchaseOrderSeriesRepository;
 use App\Http\Recopro\View_AL_Entega_ST_Cliente\View_AL_Entega_ST_Cliente;
 use App\Http\Recopro\View_AL_Entega_ST_Cliente\View_AL_Entega_ST_ClienteInterface;
 use App\Http\Recopro\View_AL_Entega_ST_Cliente\View_AL_Entega_ST_ClienteRepository;
@@ -1098,6 +1131,18 @@ class AppServiceProvider extends ServiceProvider
         $this->registerClassificationAcquisition();
 
         $this->registerCostCenter();
+        $this->registerReceptionPurchaseOrder();
+        $this->registerReceptionPurchaseOrderDetail();
+        $this->registerReceptionPurchaseOrderSeries();
+        $this->registerReturnPurchaseOrder();
+        $this->registerReturnPurchaseOrderDetail();
+        $this->registerReturnPurchaseOrderSeries();
+
+        $this->registerPettyCashExpenseClose();
+        $this->registerConformanceServices();
+        $this->registerConformanceServicesDetail();
+        $this->registerReturnConformanceServices();
+        $this->registerReturnConformanceServicesDetail();
 
     }
 
@@ -2998,6 +3043,98 @@ class AppServiceProvider extends ServiceProvider
         $app = $this->app;
         $app->bind(CostCenterInterface::class, function ($app) {
             return new CostCenterRepository(new CostCenter());
+        });
+    }
+
+    public function registerReceptionPurchaseOrder()
+    {
+        $app = $this->app;
+        $app->bind(ReceptionPurchaseOrderInterface::class, function ($app) {
+            return new ReceptionPurchaseOrderRepository(new ReceptionPurchaseOrder());
+        });
+    }
+
+    public function registerReceptionPurchaseOrderDetail()
+    {
+        $app = $this->app;
+        $app->bind(ReceptionPurchaseOrderDetailInterface::class, function ($app) {
+            return new ReceptionPurchaseOrderDetailRepository(new ReceptionPurchaseOrderDetail());
+        });
+    }
+
+    public function registerReceptionPurchaseOrderSeries()
+    {
+        $app = $this->app;
+        $app->bind(ReceptionPurchaseOrderSeriesInterface::class, function ($app) {
+            return new ReceptionPurchaseOrderSeriesRepository(new ReceptionPurchaseOrderSeries());
+        });
+    }
+
+    public function registerReturnPurchaseOrder()
+    {
+        $app = $this->app;
+        $app->bind(ReturnPurchaseOrderInterface::class, function ($app) {
+            return new ReturnPurchaseOrderRepository(new ReturnPurchaseOrder());
+        });
+    }
+
+    public function registerReturnPurchaseOrderDetail()
+    {
+        $app = $this->app;
+        $app->bind(ReturnPurchaseOrderDetailInterface::class, function ($app) {
+            return new ReturnPurchaseOrderDetailRepository(new ReturnPurchaseOrderDetail());
+        });
+    }
+
+    public function registerReturnPurchaseOrderSeries()
+    {
+        $app = $this->app;
+        $app->bind(ReturnPurchaseOrderSeriesInterface::class, function ($app) {
+            return new ReturnPurchaseOrderSeriesRepository(new ReturnPurchaseOrderSeries());
+        });
+    }
+
+    public function registerPettyCashExpenseClose()
+    {
+        $app = $this->app;
+        $app->bind(PettyCashExpenseCloseInterface::class, function ($app) {
+            return new PettyCashExpenseCloseRepository(new PettyCashExpenseClose());
+        });
+    }
+
+    public function registerConformanceServices()
+    {
+        $app = $this->app;
+
+        $app->bind(ConformanceServicesInterface::class, function ($app) {
+            return new ConformanceServicesRepository(new ConformanceServices());
+        });
+    }
+
+    public function registerConformanceServicesDetail()
+    {
+        $app = $this->app;
+
+        $app->bind(ConformanceServicesDetailInterface::class, function ($app) {
+            return new ConformanceServicesDetailRepository(new ConformanceServicesDetail());
+        });
+    }
+
+    public function registerReturnConformanceServices()
+    {
+        $app = $this->app;
+
+        $app->bind(ReturnConformanceServicesInterface::class, function ($app) {
+            return new ReturnConformanceServicesRepository(new ReturnConformanceServices());
+        });
+    }
+
+    public function registerReturnConformanceServicesDetail()
+    {
+        $app = $this->app;
+
+        $app->bind(ReturnConformanceServicesDetailInterface::class, function ($app) {
+            return new ReturnConformanceServicesDetailRepository(new ReturnConformanceServicesDetail());
         });
     }
 

@@ -14,9 +14,10 @@ use App\Http\Recopro\Lot\LotInterface;
 use App\Http\Requests\LotRequest;
 use Carbon\Carbon;
 use DB;
+
 class LotController extends Controller
 {
-     use LotTrait;
+    use LotTrait;
 
     public function __construct()
     {
@@ -25,24 +26,23 @@ class LotController extends Controller
 
     public function all(Request $request, LotInterface $repo)
     {
-        $s = $request->input('search', '');
-        $params = ['idLote', 'Lote','fechaIngreso','FechaVencimiento','cantidad','idArticulo'];
-        return parseList($repo->search($s), $request, 'idLote', $params);
+        $params = ['idLote', 'Lote', 'fechaIngreso', 'FechaVencimiento', 'cantidad', 'idArticulo'];
+        return parseList($repo->search($request), $request, 'idLote', $params);
     }
 
     public function create(LotInterface $repo, LotRequest $request)
     {
         $data = $request->all();
-        $table="ERP_SubFamilia";
-        $id='idSubFamilia';
-        $data['idSubFamilia'] = $repo->get_consecutivo($table,$id);
+        $table = "ERP_SubFamilia";
+        $id = 'idSubFamilia';
+        $data['idSubFamilia'] = $repo->get_consecutivo($table, $id);
         $data['descripcion'] = strtoupper($data['SubFamilia']);
         $data['idFamilia'] = $data['idFamilia'];
-        $estado='A';
-        if(!isset($data['estado'])){
-            $estado='I';
+        $estado = 'A';
+        if (!isset($data['estado'])) {
+            $estado = 'I';
         };
-        $data['estado'] =  $estado;
+        $data['estado'] = $estado;
         $repo->create($data);
 
         return response()->json([
@@ -57,11 +57,11 @@ class LotController extends Controller
         $id = $data['idSubFamilia'];
         $data['descripcion'] = strtoupper($data['SubFamilia']);
         $data['idFamilia'] = $data['idFamilia'];
-        $estado='A';
-        if(!isset($data['estado'])){
-            $estado='I';
+        $estado = 'A';
+        if (!isset($data['estado'])) {
+            $estado = 'I';
         };
-        $data['estado'] =  $estado;
+        $data['estado'] = $estado;
         $repo->update($id, $data);
 
         return response()->json(['Result' => 'OK']);
@@ -89,24 +89,24 @@ class LotController extends Controller
         DB::beginTransaction();
         try {
             $data = $request->all();
-             $table="ERP_Lote";
-             $idt='idLote';
-             $data['Lote'] = strtoupper($data['lote']);
-             $data['fechaIngreso'] = $data['fech_ingreso'];
-             $data['fechaVencimiento'] =$data['fecha_vencimiento'];
-             $data['cantidad'] = $data['cantidad'];
-             $data['idArticulo'] = $data['producto'];
-             $w = $repo->findByCode($data['Lote']);
+            $table = "ERP_Lote";
+            $idt = 'idLote';
+            $data['Lote'] = strtoupper($data['lote']);
+            $data['fechaIngreso'] = $data['fech_ingreso'];
+            $data['fechaVencimiento'] = $data['fecha_vencimiento'];
+            $data['cantidad'] = $data['cantidad'];
+            $data['idArticulo'] = $data['producto'];
+            $w = $repo->findByCode($data['Lote']);
             if ($id != 0) {
                 if ($w && $w->idLote != $id) {
                     throw new \Exception('Ya existe un Lote con este código. Por favor ingrese otro código.');
                 }
                 $repo->update($id, $data);
             } else {
-                 if ($w) {
+                if ($w) {
                     throw new \Exception('Ya existe un Lote con este código. Por favor ingrese otro código.');
                 }
-                $data['idLote'] = $repo->get_consecutivo($table,$idt);
+                $data['idLote'] = $repo->get_consecutivo($table, $idt);
                 $repo->create($data);
             };
             DB::commit();
@@ -121,7 +121,8 @@ class LotController extends Controller
             ]);
         }
     }
-     public function find($id, LotInterface $repo)
+
+    public function find($id, LotInterface $repo)
     {
         try {
             $data = $repo->find($id);
@@ -136,5 +137,5 @@ class LotController extends Controller
                 'message' => $e->getMessage()
             ]);
         }
-    } 
+    }
 }

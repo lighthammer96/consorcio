@@ -1,7 +1,3 @@
-/**
- * Created by JAIR on 4/5/2017.
- */
-
 (function () {
     'use strict';
     angular.module('sys.app.registerOrdenCompras')
@@ -13,6 +9,29 @@
 
     function RegisterOrdenCompraCtrl($scope, _, RESTService)
     {
+        moment.locale('es');
+        var start = moment().startOf('month');
+        var end = moment().endOf('month');
+
+        var chk_date_range = $('#chk_date_range');
+        chk_date_range.click(function () {
+            $('#LoadRecordsButtonOC').click();
+        });
+        generateCheckBox('.chk_date_range_oc');
+
+        var reqDates = $('#reqDates');
+
+        var showDate = function (from, to) {
+            start = from;
+            end = to;
+            reqDates.find('span').html(from.format('MMM D, YYYY') + ' - ' + to.format('MMM D, YYYY'));
+            if (chk_date_range.prop('checked')) {
+                $('#LoadRecordsButtonOC').click();
+            }
+        };
+        generateDateRangePicker(reqDates, start, end, showDate);
+        showDate(start, end);
+
         var date_now = moment.tz('America/Lima').format('DD/MM/YYYY');
 
         var modalOC = $("#modalOC");
@@ -74,6 +93,26 @@
             modalOC.attr('style', 'display:block; overflow-y: auto;');
         });
 
+        var modalProvider = $('#modalProvider');
+        modalProvider.on('show.bs.modal', function (e) {
+            $('#LoadRecordsButtonProv').click();
+            modalOC.attr('style', 'display:block; z-index:2030 !important');
+        });
+        modalProvider.on('hidden.bs.modal', function (e) {
+            $('#search_prov').val('');
+            $('#LoadRecordsButtonProv').click();
+            modalOC.attr('style', 'display:block; overflow-y: auto;');
+        });
+
+        var modalRegisterProvider = $('#modalRegisterProvider');
+        modalRegisterProvider.on('show.bs.modal', function (e) {
+            modalOC.attr('style', 'display:block; z-index:2030 !important');
+        });
+        modalRegisterProvider.on('hidden.bs.modal', function (e) {
+            cleanProvider();
+            modalOC.attr('style', 'display:block; overflow-y: auto;');
+        });
+
         var oc_id = 0;
         var oc_state_id = 1;
         var oc_consecutive = $("select#oc_consecutive");
@@ -87,7 +126,11 @@
         oc_date_required.val(date_now);
         generateDatePicker(oc_date_required);
         var oc_currency = $("select#oc_currency");
-        var oc_provider = $("select#oc_provider");
+        // var oc_provider = $("select#oc_provider");
+        var oc_provider_id = '';
+        var oc_provider = $("input#oc_provider");
+        var oc_provider_btn = $("button#oc_provider_btn");
+        var oc_provider_btn_new = $("button#oc_provider_btn_new");
         var oc_payment_condition = $("select#oc_payment_condition");
         var oc_address = $("input#oc_address");
         var oc_comment = $("textarea#oc_comment");
@@ -127,6 +170,39 @@
         var oc_btn_save = $("button#oc_btn_save");
         var oc_btn_send_approval = $("button#oc_btn_send_approval");
 
+        var p_type_doc = $('select#p_type_doc');
+        var p_document = $('input#p_document');
+        p_document.keypress(function (e) {
+            var code_ = (e.keyCode ? e.keyCode : e.which);
+            if (parseInt(code_) === 13) {
+                getPersonProvider();
+            }
+        });
+        var p_type_prov = $('select#p_type_prov');
+        var p_type_doc_sale = $('select#p_type_doc_sale');
+        var p_rs = $('input#p_rs');
+        var p_address = $('input#p_address');
+        var p_contact = $('input#p_contact');
+        var p_email = $('input#p_email');
+        var p_cellphone = $('input#p_cellphone');
+        var p_phone = $('input#p_phone');
+        var p_department = $('select#p_department');
+        p_department.change(function () {
+            getProvince('', p_department.val());
+        });
+        var p_province = $('select#p_province');
+        p_province.change(function () {
+            getDistrict('', p_province.val());
+        });
+        var p_district = $('select#p_district');
+        var p_ec = $('select#p_ec');
+        var p_imp = $('input#p_imp');
+        generateCheckBox('input#p_imp');
+        var p_con = $('input#p_con');
+        generateCheckBox('input#p_con');
+        var p_act = $('input#p_act');
+        generateCheckBox('input#p_act');
+
         function cleanOC() {
             cleanRequired();
             titleOC.empty();
@@ -138,10 +214,15 @@
             oc_consecutive.prop('disabled', false);
             oc_nro_consecutive.val('');
             oc_date_register.val(date_now).prop('disabled', false);
+            oc_date_required.val(date_now).prop('disabled', false);
             oc_state.val(1);
             oc_priority.val('').prop('disabled', false);
             oc_currency.val('1').prop('disabled', false);
-            oc_provider.val('').trigger('change').prop('disabled', false);
+            // oc_provider.val('').trigger('change').prop('disabled', false);
+            oc_provider_id = '';
+            oc_provider.val('');
+            oc_provider_btn.prop('disabled', false);
+            oc_provider_btn_new.prop('disabled', false);
             oc_payment_condition.val('').prop('disabled', false);
             oc_address.val('').prop('disabled', false);
             oc_comment.val('').prop('disabled', false);
@@ -161,7 +242,27 @@
             oc_btn_save.removeClass('hide');
             oc_btn_send_approval.removeClass('hide');
 
-            $('button.btn-approval, div.div-approval').addClass('hide');
+            $('button.btn-approval, div.div-approval, button.btn-cancel, button.btn-close').addClass('hide');
+        }
+
+        function cleanProvider() {
+            p_type_doc.val('01').trigger('change');
+            p_document.val('');
+            p_type_prov.val('').trigger('change');
+            p_type_doc_sale.val('').trigger('change');
+            p_rs.val('');
+            p_address.val('');
+            p_contact.val('');
+            p_email.val('');
+            p_cellphone.val('');
+            p_phone.val('');
+            p_department.val('').trigger('change');
+            p_province.val('').trigger('change');
+            p_ec.val('');
+            p_imp.prop('checked', true).iCheck('update');
+            p_con.prop('checked', true).iCheck('update');
+            p_act.prop('checked', true).iCheck('update');
+
         }
 
         function getDataOC() {
@@ -171,12 +272,6 @@
                     _.each(response.consecutive, function (con) {
                         oc_consecutive.append('<option value="' + con + '">' + con + '</option>');
                     });
-
-                    oc_provider.html('<option value="">--Seleccionar--</option>');
-                    _.each(response.providers, function (item) {
-                        oc_provider.append('<option value="' + item.id + '">' + item.razonsocial + '</option>');
-                    });
-                    oc_provider.select2();
 
                     oc_payment_condition.html('<option value="">--Seleccionar--</option>');
                     _.each(response.payment_condition, function (item) {
@@ -192,6 +287,25 @@
                     oc_currency.val('1').trigger('change');
 
                     oc_igv_ = parseFloat(response.igv);
+
+                    _.each(response.type_doc, function (item) {
+                        p_type_doc.append('<option value="' + item.Codigo + '">' + item.TipoDocumento + '</option>');
+                    });
+
+                    p_type_prov.html('<option value="">Seleccionar</option>');
+                    _.each(response.type_prov, function (item) {
+                        p_type_prov.append('<option value="' + item.id + '">' + item.descripcion + '</option>');
+                    });
+
+                    p_type_doc_sale.append('<option value="">Seleccionar</option>');
+                    _.each(response.type_doc_sale, function (item) {
+                        p_type_doc_sale.append('<option value="' + item.IdTipoDocumento + '">' + item.Descripcion + '</option>');
+                    });
+
+                    p_department.html('<option value="" >Seleccione</option>');
+                    _.each(response.departments, function (item) {
+                        p_department.append('<option value="' + item.cDepartamento + '">' + item.cDepartamento + '</option>');
+                    });
                 }
             }, function () {
                 getDataOC();
@@ -295,7 +409,7 @@
                         'dFecRegistro': oc_date_register.val(),
                         'prioridad': oc_priority.val(),
                         'dFecRequerida': oc_date_required.val(),
-                        'idProveedor': oc_provider.val(),
+                        'idProveedor': oc_provider_id,
                         'idMoneda': oc_currency.val(),
                         'idcondicion_pago': oc_payment_condition.val(),
                         'subtotal': parseFloat(replaceAll(oc_pt_final.html(), ',', '')),
@@ -389,7 +503,11 @@
                     oc_priority.val(data_p.prioridad).prop('disabled', disabled_);
                     oc_date_required.val(data_p.fecha_requerida).prop('disabled', disabled_);
                     oc_currency.val(data_p.idMoneda).prop('disabled', disabled_);
-                    oc_provider.val(data_p.idProveedor).trigger('change').prop('disabled', disabled_);
+                    // oc_provider.val(data_p.idProveedor).trigger('change').prop('disabled', disabled_);
+                    oc_provider_id = data_p.idProveedor;
+                    oc_provider.val(data_p.provider_);
+                    oc_provider_btn.prop('disabled', disabled_);
+                    oc_provider_btn_new.prop('disabled', disabled_);
                     oc_payment_condition.val(data_p.idcondicion_pago).prop('disabled', disabled_);
                     oc_address.val(data_p.direccionEntrega).prop('disabled', disabled_);
                     oc_comment.val(data_p.comentario).prop('disabled', disabled_);
@@ -402,6 +520,7 @@
                     oc_amount_disc_total.val(parseFloat(data_p.nDescuento)).prop('disabled', disabled_);
                     oc_total.val(numberFormat(data_p.total, 2));
 
+                    oc_detail.empty();
                     _.each(data_p.detail, function (det) {
                         addArticleDetail(det);
                     });
@@ -413,6 +532,11 @@
                         oc_btn_save.addClass('hide');
                         oc_btn_send_approval.addClass('hide');
                         $('button.btn-approval, div.div-approval').removeClass('hide');
+                        if (oc_state_id === 5) {
+                            $('button.btn-close').removeClass('hide');
+                        } else if (oc_state_id === 2 || oc_state_id === 3) {
+                            $('button.btn-cancel').removeClass('hide');
+                        }
                     }
                     var txt_ = (oc_state_id > 1) ? '' : 'Editar ';
                     titleOC.html(txt_ + 'Orden de Compra');
@@ -508,7 +632,7 @@
                 }
             },
             recordsLoaded: function (event, data) {
-                table_container_oc.find('a.edit-oc').click(function (e) {
+                table_container_oc.find('a.edit-oc').off().on('click', function (e) {
                     var id = $(this).attr('data-id');
                     findOC(id);
                     e.preventDefault();
@@ -518,7 +642,10 @@
 
         generateSearchForm('frm-search-oc', 'LoadRecordsButtonOC', function () {
             table_container_oc.jtable('load', {
-                search: $('#search_oc').val()
+                search: $('#search_oc').val(),
+                check: (chk_date_range.prop('checked')),
+                from: start.format('YYYY-MM-DD'),
+                to: end.format('YYYY-MM-DD')
             });
         }, true);
 
@@ -638,6 +765,94 @@
                 consecutive: oc_con_s_,
                 date_required: oc_date_s_,
                 is_process: true
+            });
+        }, false);
+
+        var search_prov = getFormSearch('frm-search-prov', 'search_prov', 'LoadRecordsButtonProv');
+
+        var table_container_prov = $("#table_container_prov");
+
+        table_container_prov.jtable({
+            title: "Lista de Proveedores",
+            paging: true,
+            actions: {
+                listAction: base_url + '/registerOrdenCompras/listProvider'
+            },
+            toolbar: {
+                items: [{
+                    cssClass: 'buscador',
+                    text: search_prov
+                }]
+            },
+            fields: {
+                id: {
+                    key: true,
+                    create: false,
+                    edit: false,
+                    list: false
+                },
+                type_doc: {
+                    title: 'Tipo Documento'
+                },
+                type_prov: {
+                    title: 'Tipo Proveedor'
+                },
+                type_doc_v: {
+                    title: 'Tipo Documento Venta'
+                },
+                documento: {
+                    title: 'Documento',
+                },
+                razonsocial: {
+                    title: 'Razon Social',
+                },
+                contacto: {
+                    title: 'Contacto',
+                },
+                direccion: {
+                    title: 'Dirección',
+                },
+                correo_electronico: {
+                    title: 'Correo',
+                },
+                celular: {
+                    title: 'Celular',
+                },
+                district: {
+                    title: 'Distrito'
+                },
+                edit: {
+                    width: '1%',
+                    sorting: false,
+                    edit: false,
+                    create: false,
+                    listClass: 'text-center',
+                    display: function (data) {
+                        return '<a href="javascript:void(0)" class="sel-prov" data-id="' + data.record.id
+                            + '" title="Seleccionar"><i class="fa fa-check-circle fa-1-5x"></i></a>';
+                    }
+                }
+            },
+            recordsLoaded: function (event, data) {
+                table_container_prov.find('a.sel-prov').click(function (e) {
+                    var id = $(this).attr('data-id');
+                    var info = _.find(data.records, function (item) {
+                        return parseInt(item.id) === parseInt(id);
+                    });
+                    if (info) {
+                        oc_provider_id = info.id;
+                        oc_provider.val(info.documento + ' ' + info.razonsocial);
+                    }
+                    modalProvider.modal('hide');
+                    e.preventDefault();
+                });
+            }
+        });
+
+        generateSearchForm('frm-search-prov', 'LoadRecordsButtonProv', function () {
+            table_container_prov.jtable('load', {
+                search: $('#search_prov').val(),
+                active: true
             });
         }, false);
 
@@ -965,6 +1180,210 @@
                 }
             });
         }
+
+        $scope.cancelOC = function () {
+            $scope.showConfirm('', '¿Está seguro que desea cancelar la Orden de Compra?', function () {
+                RESTService.updated('registerOrdenCompras/cancel', oc_id, {}, function (response) {
+                    if (!_.isUndefined(response.status) && response.status) {
+                        $scope.showAlert('', 'La Orden de compra se canceló correctamente.', 'success');
+                        modalOC.modal('hide');
+                        $('#LoadRecordsButtonOC').click();
+                    } else {
+                        $scope.showAlert('', response.message, 'warning');
+                    }
+                });
+            });
+        };
+
+        $scope.closeOC = function () {
+            $scope.showConfirm('', '¿Está seguro que desea cerrar la Orden de Compra?', function () {
+                RESTService.updated('registerOrdenCompras/close', oc_id, {}, function (response) {
+                    if (!_.isUndefined(response.status) && response.status) {
+                        $scope.showAlert('', 'La Orden de compra se cerró correctamente.', 'success');
+                        modalOC.modal('hide');
+                        $('#LoadRecordsButtonOC').click();
+                    } else {
+                        $scope.showAlert('', response.message, 'warning');
+                    }
+                });
+            });
+        };
+
+        $scope.openProvider = function () {
+            modalProvider.modal('show');
+        };
+        $scope.newProvider = function () {
+            modalRegisterProvider.modal('show');
+        };
+        function getPersonProvider() {
+            RESTService.get('registerOrdenCompras/getProviderPerson', p_document.val(), function (response) {
+                if (!_.isUndefined(response.status) && response.status) {
+                    var data_ = response.data;
+                    if (data_.length === 0) {
+                        getDataProvider();
+                    } else {
+                        data_ = data_[0];
+                        p_type_doc.val(data_.cTipodocumento).trigger('change');
+                        p_document.val(data_.cNumerodocumento);
+
+                        var rs_ = data_.cRazonsocial;
+                        if (rs_.length === 0 || rs_ === '') {
+                            p_rs.val(data_.cNombrePersona);
+                        } else {
+                            p_rs.val(rs_);
+                        }
+                        p_address.val(data_.cDireccion);
+                        p_email.val(data_.cEmail);
+                        p_cellphone.val(data_.cCelular);
+                        p_ec.val(data_.cEstadoCivil);
+
+                        p_department.val(data_.cDepartamento);
+                        getProvince(data_.cProvincia, data_.cDepartamento);
+                        getDistrict(data_.cCodUbigeo, data_.cProvincia);
+                    }
+                } else {
+                    $scope.showAlert('', response.message, 'warning');
+                }
+            });
+        }
+        function getDataProvider() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (parseInt(this.readyState) === 4 && parseInt(this.status) === 200) {
+                    var data = JSON.parse(this.responseText);
+                    if (!_.isNull(data.nombres)) {
+                        p_rs.val(data.nombres + ' ' + data.apellidoPaterno + ' ' + data.apellidoMaterno);
+                    } else if (!_.isNull(data.razonSocial)) {
+                        p_rs.val(data.razonSocial);
+                        p_address.val(data.direccion);
+                    } else {
+                        p_rs.val('');
+                        p_address.val('');
+                        $scope.showAlert('', 'No se encontró datos del cliente', 'warning');
+                    }
+                }
+            }
+            if (p_type_doc.val() === '01') {
+                if (p_document.val().length === 8) {
+                    xhttp.open("GET", "https://dniruc.apisperu.com/api/v1/dni/" + p_document.val() +
+                        "?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InJleXNhbmdhbWE3QGdtYWlsLmNvbSJ9." +
+                        "hfobQC8FM5IyKKSaa7usUXV0aY1Y8YthAhdN8LoMlMM", true);
+                    xhttp.setRequestHeader("Content-type", "application/json");
+                    xhttp.send();
+                } else {
+                    $scope.showAlert('', 'Dígitos del documento incompletos', 'warning');
+                    p_rs.val('');
+                    p_address.val('');
+                }
+            } else {
+                if (p_document.val().length === 11) {
+                    xhttp.open("GET", "https://dniruc.apisperu.com/api/v1/ruc/" + p_document.val() +
+                        "?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InJleXNhbmdhbWE3QGdtYWlsLmNvbSJ9." +
+                        "hfobQC8FM5IyKKSaa7usUXV0aY1Y8YthAhdN8LoMlMM", true);
+                    xhttp.setRequestHeader("Content-type", "application/json");
+                    xhttp.send();
+                } else {
+                    $scope.showAlert('', 'Dígitos del documento incompletos', 'warning');
+                    p_rs.val('');
+                    p_address.val('');
+                }
+            }
+        }
+
+        function getProvince(p_id, region_id) {
+            p_province.html('<option value="">Seleccione</option>');
+            if (region_id !== '') {
+                RESTService.get('registerOrdenCompras/getProvinces', region_id, function (response) {
+                    if (!_.isUndefined(response.status) && response.status) {
+                        _.each(response.data, function (item) {
+                            var selected_ = (item.cProvincia === p_id) ? 'selected' : '';
+                            p_province.append('<option value="' + item.cProvincia + '" ' + selected_ + '>' +
+                                item.cProvincia + '</option>');
+
+                        });
+                    } else {
+                        $scope.showAlert('', response.warning, 'warning');
+                    }
+                });
+            }
+        }
+        function getDistrict(d_id, province_id) {
+            p_district.html('<option value="">Seleccione</option>');
+            if (province_id !== '') {
+                RESTService.get('registerOrdenCompras/getDistricts', province_id, function (response) {
+                    if (!_.isUndefined(response.status) && response.status) {
+                        _.each(response.data, function (item) {
+                            var selected_ = (item.cCodUbigeo === d_id) ? 'selected' : '';
+                            p_district.append('<option value="' + item.cCodUbigeo + '" ' + selected_ + '>' +
+                                item.cDistrito + '</option>');
+                        });
+                    } else {
+                        $scope.showAlert('', response.warning, 'warning');
+                    }
+                });
+            }
+        }
+
+        $scope.saveProvider = function () {
+            var b_val = true;
+            b_val = b_val && p_type_doc.required();
+            b_val = b_val && p_document.required();
+            b_val = b_val && p_type_prov.required();
+            b_val = b_val && p_type_doc_sale.required();
+            if(p_type_doc.val() === '01' && p_document.val().length !== 8){
+                $scope.showAlert('', 'Longitud de LE/DNI INCORRECTA', 'warning');
+                return;
+            }
+            if(p_type_doc.val() === '06' && p_document.val().length !== 11){
+                $scope.showAlert('', 'Longitud de RUC INCORRECTA', 'warning');
+                return;
+            }
+            if(p_type_doc.val() === '01' && p_type_doc_sale.val() === '01'){
+                $scope.showAlert('', 'Tipo de documento del proveedor debe ser R.U.C para el tipo documento venta ' +
+                    'factura', 'warning');
+                return;
+            }
+            b_val = b_val && p_rs.required();
+            b_val = b_val && p_cellphone.required();
+            b_val = b_val && p_district.required();
+            if (b_val) {
+                var params = {
+                    'tipodoc': p_type_doc.val(),
+                    'documento': p_document.val(),
+                    'id_tipoProveedor': p_type_prov.val(),
+                    'IdTipoDocumento': p_type_doc_sale.val(),
+                    'razonsocial': p_rs.val(),
+                    'direccion': p_address.val(),
+                    'contacto': p_contact.val(),
+                    'correo_electronico': p_email.val(),
+                    'celular': p_cellphone.val(),
+                    'telefono': p_phone.val(),
+                    'distrito': p_district.val(),
+                    'cEstadoCivil': p_ec.val(),
+                    'impuesto': (p_imp.prop('checked')) ? 'S' : 'N',
+                    'congelado': (p_con.prop('checked')) ? 'S' : 'N',
+                    'activo': (p_act.prop('checked')) ? 'S' : 'N',
+                    'nombresP': '',
+                    'apellidopP': '',
+                    'apellidomP': '',
+                    'idarray': '',
+                    'idBanco_array': '',
+                    'idBancoDescripcion_array': '',
+                    'idMoneda_array': '',
+                    'nrocuenta_array': '',
+                };
+                RESTService.updated('registerOrdenCompras/saveProvider', 0, params, function (response) {
+                    if (!_.isUndefined(response.status) && response.status) {
+                        oc_provider_id = response.id;
+                        oc_provider.val(p_document.val() + ' ' + p_rs.val());
+                        $scope.showAlert('', 'El proveedor se guardó correctamente', 'success');
+                        modalRegisterProvider.modal('hide');
+                    } else {
+                        $scope.showAlert('', response.warning, 'warning');
+                    }
+                });
+            }
+        };
 
         var oc_con_s_ = '';
         var oc_con_s = $('input#oc_con_s');

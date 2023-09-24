@@ -34,11 +34,11 @@ class SolicitudCompraController extends Controller
     public function all(Request $request, SolicitudCompraInterface $repo)
     {
         try {
-            $s = $request->input('search', '');
+            $filter = $request->all();
             $params = ['idMovimiento', 'cCodConsecutivo', 'nConsecutivo', 'fecha_requerida', 'fecha_registro', 'idArea',
                 'idUsuario', 'observaciones', 'estado'];
 
-            $info = parseDataList($repo->search($s), $request, 'idMovimiento', $params);
+            $info = parseDataList($repo->search($filter), $request, 'idMovimiento', $params, 'DESC');
 
             $data = $info[1];
 

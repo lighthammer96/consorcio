@@ -25,9 +25,9 @@ class AccountPay extends Model
 
     protected $table = 'ERP_Compras';
 
-    protected $fillable = ['id', 'petty_cash_expense_id', 'register_date', 'emission_date', 'expiration_date', 'accounting_period',
-        'type_change', 'currency_id', 'payment_condition_id', 'classification_acquisition_id', 'provider_id',
-        'document_type_id', 'document_number', 'operation_destination_id', 'gloss', 'state_id',
+    protected $fillable = ['id', 'petty_cash_expense_id', 'register_date', 'emission_date', 'expiration_date',
+        'accounting_period', 'type_change', 'currency_id', 'payment_condition_id', 'classification_acquisition_id',
+        'provider_id', 'document_type_id', 'document_number', 'operation_destination_id', 'gloss', 'state_id',
         'affection', 'unaffected', 'exonerated', 'igv', 'amount', 'is_igv', 'per_igv', 'IdCuenta', 'IdCentroCosto',
         'created_at', 'user_created', 'user_updated', 'user_deleted'];
 

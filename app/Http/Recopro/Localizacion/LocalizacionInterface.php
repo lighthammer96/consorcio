@@ -11,7 +11,9 @@ namespace App\Http\Recopro\Localizacion;
 
 interface LocalizacionInterface
 {
-    public function all();
-    public function create(array $attributes);
+    public function search($filter);
 
+    public function all();
+
+    public function create(array $attributes);
 }

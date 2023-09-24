@@ -74,9 +74,13 @@
                         </div>
                         <div role="tabpanel" class="tab-pane" id="documents">
                             <div class="separator"></div>
-                            <button type="button" class="btn btn-primary btn-sm" id="pce_open_doc" ng-click="openDocument()">
+                            <button type="button" class="btn btn-primary btn-sm btn-frm" ng-click="openDocument()">
                                 <span class="fa fa-plus"></span>
                                 Agregar Documento
+                            </button>
+                            <button type="button" class="btn btn-info btn-sm btn-frm" ng-click="openDocumentClose()">
+                                <span class="fa fa-plus"></span>
+                                Agregar Documento de Cierre
                             </button>
                             <div class="separator"></div>
                             <table class="table table-bordered table-striped table-hover">
@@ -85,6 +89,7 @@
                                     <th>N° Documento</th>
                                     <th>Proveedor</th>
                                     <th>Glosa</th>
+                                    <th>Cuenta</th>
                                     <th>SubTotal</th>
                                     <th>IGV</th>
                                     <th>Total</th>
@@ -93,10 +98,23 @@
                                 </thead>
                                 <tbody id="pce_detail"></tbody>
                             </table>
+                            <div class="separator"></div>
+                            <table class="table table-bordered table-striped table-hover">
+                                <thead>
+                                <tr>
+                                    <th>N° Documento Cierre</th>
+                                    <th>Glosa</th>
+                                    <th>Responsable</th>
+                                    <th>Total</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody id="pce_detail2"></tbody>
+                            </table>
                         </div>
                         <div role="tabpanel" class="tab-pane" id="vouchers">
                             <div class="separator"></div>
-                            <button type="button" class="btn btn-primary btn-sm" id="pce_open_voucher" ng-click="openVoucher()">
+                            <button type="button" class="btn btn-primary btn-sm btn-frm" ng-click="openVoucher()">
                                 <span class="fa fa-plus"></span>
                                 Agregar Vale
                             </button>
@@ -108,7 +126,12 @@
                                     <th>Fecha</th>
                                     <th>Glosa</th>
                                     <th>Responsable</th>
-                                    <th>¿Es consumido?</th>
+                                    <th>
+                                        ¿Es consumido?
+                                        <span class="pce_v_chk_content">
+                                            <input type="checkbox" id="pce_v_chk">
+                                        </span>
+                                    </th>
                                     <th>Monto</th>
                                     <th></th>
                                 </tr>
@@ -120,11 +143,11 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary btn-save" ng-click="processPCE()">
+                <button type="button" class="btn btn-primary btn-frm" ng-click="processPCE()">
                     <span class="fa fa-sign-out"></span>
                     Procesar
                 </button>
-                <button type="button" class="btn btn-success btn-save" ng-click="savePCE()">
+                <button type="button" class="btn btn-success btn-frm" ng-click="savePCE()">
                     <span class="fa fa-save"></span>
                     Guardar
                 </button>

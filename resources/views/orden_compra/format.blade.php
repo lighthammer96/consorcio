@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ORDEN DE COMPRA</title>
     @include('pdf.css')
 </head>
@@ -12,7 +14,7 @@
             <table style="width:100%;" class="table table-no-border">
                 <tr>
                     <td style="width:28%" rowspan="4" class="text-center no-pad">
-                        <img src="{{ url($company['img'])  }}" style="width:110px; border:0 !important;">
+                        <img src="{{ $company['img']  }}" style="width:110px; border:0 !important;">
                     </td>
                     <td><b>{{ $company['name'] }}</b></td>
                 </tr>

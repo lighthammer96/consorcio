@@ -177,6 +177,8 @@
         'sys.app.quality_controls',
         // Reportes
         'sys.app.stocks',
+        'sys.app.report_purchase_order',
+        'sys.app.return_conformance_services',
 
     ]).run(Run)
         .controller('OverloadCtrl', OverloadCtrl)
@@ -197,8 +199,8 @@
     function Run($rootScope, $state, $window, RESTService) {
 
         $rootScope.$on('$stateChangeStart', function (e, toState, toParams, fromState, fromParams) {
+            cleanRequired();
             if (toState.name !== 'home') {
-              
                 RESTService.all('validate', 'url=' + toState.name, function (response) {
                     if (!response.status) {
                         $state.go('home', {location: true});
@@ -628,7 +630,7 @@
                 }
             });
         };
-        $scope.loadMovimientoEntregaPDF = function (url, id) {
+        $scope.loadMovimientoEntregaPDF = function (url, id, params_ext) {
             angular.element('#show_loading').removeClass('ng-hide');
             $.ajax({
                 url: base_url + '/' + url,
@@ -638,7 +640,7 @@
                         // toDataUrl(response.img, function (base64Img) {
                         // });
                        
-                        create_pdf_movimientoEntrega(response);
+                        create_pdf_movimientoEntrega(response, params_ext);
                        
                     }
                     angular.element('#show_loading').addClass('ng-hide');

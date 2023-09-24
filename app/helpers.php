@@ -693,3 +693,18 @@ function generateDataReceptionTransfer($data, $orientation, $img, $type_pdf = 1)
     ]);
 
 }
+
+function separateNSC($number)
+{
+    $nro_doc = explode('-', $number);
+    $series = (count($nro_doc) > 1) ? substr($nro_doc[0], -5) : null;
+    $series = trim($series);
+    $series = explode(' ', $series);
+    $series = end($series);
+    $series = trim($series);
+    if (count($nro_doc) > 1) {
+        unset($nro_doc[0]);
+    }
+    $nro_doc = implode('-', $nro_doc);
+    return [$series, $nro_doc];
+}

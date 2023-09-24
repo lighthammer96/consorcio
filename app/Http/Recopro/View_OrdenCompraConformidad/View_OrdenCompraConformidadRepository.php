@@ -26,23 +26,32 @@ class View_OrdenCompraConformidadRepository implements View_OrdenCompraConformid
         return $this->model->get();
     }
 
-    public function search($s)
+    public function search($filter)
     {
-        return $this->model->where(function ($q) use ($s) {
-            $q->where('Conformidad', 'LIKE', '%' . $s . '%');
-            $q->orWhere('Codigo', 'LIKE', '%' . $s . '%');
-            $q->orWhere('Consecutivo', 'LIKE', '%' . $s . '%');
-            $q->orWhere('Usuario', 'LIKE', '%' . $s . '%');
-            $q->orWhere('EstadoAprob', 'LIKE', '%' . $s . '%');
-            $q->orWhere('Fecha', 'LIKE', '%' . $s . '%');
-            $q->orWhere('FechaReq', 'LIKE', '%' . $s . '%');
-            $q->orWhere('TipoDoc', 'LIKE', '%' . $s . '%');
-            $q->orWhere('NumeroDoc', 'LIKE', '%' . $s . '%');
-            $q->orWhere('TipoDoc', 'LIKE', '%' . $s . '%');
-            $q->orWhere('Proveedor', 'LIKE', '%' . $s . '%');
-            $q->orWhere('Moneda', 'LIKE', '%' . $s . '%');
-            $q->orWhere('Total', 'LIKE', '%' . $s . '%');
-        })
+        $s = (isset($filter['search'])) ? $filter['search'] : '';
+        return $this->model
+            ->where(function ($q) use ($s) {
+                $q->where('Conformidad', 'LIKE', '%' . $s . '%');
+                $q->orWhere('Codigo', 'LIKE', '%' . $s . '%');
+                $q->orWhere('Consecutivo', 'LIKE', '%' . $s . '%');
+                $q->orWhere('Usuario', 'LIKE', '%' . $s . '%');
+                $q->orWhere('EstadoAprob', 'LIKE', '%' . $s . '%');
+                $q->orWhere('Fecha', 'LIKE', '%' . $s . '%');
+                $q->orWhere('FechaReq', 'LIKE', '%' . $s . '%');
+                $q->orWhere('TipoDoc', 'LIKE', '%' . $s . '%');
+                $q->orWhere('NumeroDoc', 'LIKE', '%' . $s . '%');
+                $q->orWhere('TipoDoc', 'LIKE', '%' . $s . '%');
+                $q->orWhere('Proveedor', 'LIKE', '%' . $s . '%');
+                $q->orWhere('Moneda', 'LIKE', '%' . $s . '%');
+                $q->orWhere('Total', 'LIKE', '%' . $s . '%');
+            })
+            ->where(function ($q) use ($filter) {
+                if (isset($filter['check']) && $filter['check'] == 'true') {
+                    $from = $filter['from'] . ' 00:00:00';
+                    $to = $filter['to'] . ' 23:59:59';
+                    $q->whereBetween('Fecha', [$from, $to]);
+                }
+            })
             ->where('IdUsuario', auth()->id());
 
     }

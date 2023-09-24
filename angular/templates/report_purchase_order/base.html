@@ -1,0 +1,280 @@
+<div class="panel panel-danger-admin">
+    <div class="panel-heading">
+        Reporte de Orden de Compra
+    </div>
+    <div class="panel-body">
+        <div class="form-inline">
+            <div class="form-group">
+                <button type="button" class="btn btn-warning btn-sm" ng-click="showFilters()">
+                    <span class="fa fa-list"></span>
+                    Filtros
+                </button>
+            </div>
+            <div class="form-group">
+                <div class="date_range_div" style="margin-top:0">
+                    <div id="datesRep">
+                        <i class="fa fa-calendar"></i>&nbsp;
+                        <span></span> <b class="caret"></b>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-success btn-sm" ng-click="generateReport()">
+                    <span class="fa fa-sign-in"></span>
+                    Generar Lista
+                </button>
+                &nbsp;&nbsp;
+                <button type="button" class="btn btn-primary btn-sm" ng-click="generateReportExcel()">
+                    <span class="fa fa-file-excel-o"></span>
+                    Generar Excel
+                </button>
+            </div>
+        </div>
+        <div class="separator"></div>
+        <div class="table-responsive hide" id="table_1">
+            <table class="table table-bordered table-hovered table-striped">
+                <thead>
+                <tr>
+                    <th class="table-active text-center">Item</th>
+                    <th class="table-active text-center">Nro Orden Compra</th>
+                    <th class="table-active text-center">Fecha Compra</th>
+                    <th class="table-active text-center">Fecha Requerida</th>
+                    <th class="table-active text-center">Proveedor</th>
+                    <th class="table-active text-center">Condición Pago</th>
+                    <th class="table-active text-center">Comprador</th>
+                    <th class="table-active text-center">Moneda</th>
+                    <th class="table-active text-center">Monto</th>
+                    <th class="table-active text-center">Estado</th>
+                </tr>
+                </thead>
+                <tbody id="r_list1"></tbody>
+            </table>
+        </div>
+        <div class="table-responsive hide" id="table_2">
+            <table class="table table-bordered table-hovered table-striped">
+                <thead>
+                <tr>
+                    <th class="table-active text-center">Item</th>
+                    <th class="table-active text-center">Nro Orden Compra</th>
+                    <th class="table-active text-center">Fecha Compra</th>
+                    <th class="table-active text-center">Fecha Requerida</th>
+                    <th class="table-active text-center">Proveedor</th>
+                    <th class="table-active text-center">Condición Pago</th>
+                    <th class="table-active text-center">Comprador</th>
+                    <th class="table-active text-center">Moneda</th>
+                    <th class="table-active text-center">Monto</th>
+                    <th class="table-active text-center">Estado</th>
+                    <th class="table-active text-center">Categoria de Articulo</th>
+                    <th class="table-active text-center">Codigo Articulo</th>
+                    <th class="table-active text-center">Articulo</th>
+                    <th class="table-active text-center">Cantidad Recibida</th>
+                    <th class="table-active text-center">Cantidad Pendiente</th>
+                </tr>
+                </thead>
+                <tbody id="r_list2"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="modal" id="modalFilter" role="dialog" data-keyboard="false">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Filtros</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="r_type">Tipo</label>
+                    <select id="r_type" class="form-control input-sm">
+                        <option value="1" selected>Resumido</option>
+                        <option value="2">Detallado</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="r_state">Estado</label>
+                    <select id="r_state" class="form-control input-sm">
+                        <option value="">--Seleccione--</option>
+                        <option value="1">Registrado</option>
+                        <option value="2">Por Aprobar</option>
+                        <option value="3">Aprobado</option>
+                        <option value="4">Recibido</option>
+                        <option value="5">Backorder</option>
+                        <option value="6">Cerrado</option>
+                        <option value="7">Cancelado</option>
+                        <option value="8">Rechazado</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="r_currency">Moneda</label>
+                    <select id="r_currency" class="form-control input-sm">
+                        <option value="">--Seleccione--</option>
+                        <option value="1">SOLES</option>
+                        <option value="2">DOLARES</option>
+                        <option value="3">EUROS</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="r_nro_oc">Nro Orden Compra</label>
+                    <input type="text" id="r_nro_oc" class="form-control input-sm" />
+                </div>
+                <div class="form-group">
+                    <label for="r_provider">Proveedor</label>
+                    <div class="input-group">
+                        <input type="text" id="r_provider" class="form-control input-sm" readonly />
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-primary btn-sm" title="Buscar" ng-click="openProvider()">
+                                <span class="fa fa-search-plus"></span>
+                            </button>
+                            <button type="button" class="btn btn-success btn-sm" title="Quitar" ng-click="cleanProvider()">
+                                <span class="fa fa-refresh"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="r_buyer">Comprador</label>
+                    <div class="input-group">
+                        <input type="text" id="r_buyer" class="form-control input-sm" readonly />
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-primary btn-sm" title="Buscar" ng-click="openBuyer()">
+                                <span class="fa fa-search-plus"></span>
+                            </button>
+                            <button type="button" class="btn btn-success btn-sm" title="Quitar" ng-click="cleanBuyer()">
+                                <span class="fa fa-refresh"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group r_detail_show hide">
+                    <label for="r_category">Categoria</label>
+                    <div class="input-group">
+                        <input type="text" id="r_category" class="form-control input-sm" readonly />
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-primary btn-sm" title="Buscar" ng-click="openCategory()">
+                                <span class="fa fa-search-plus"></span>
+                            </button>
+                            <button type="button" class="btn btn-success btn-sm" title="Quitar" ng-click="cleanCategory()">
+                                <span class="fa fa-refresh"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group r_detail_show hide">
+                    <label for="r_product">Articulo</label>
+                    <div class="input-group">
+                        <input type="text" id="r_product" class="form-control input-sm" readonly />
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-primary btn-sm" title="Buscar" ng-click="openProduct()">
+                                <span class="fa fa-search-plus"></span>
+                            </button>
+                            <button type="button" class="btn btn-success btn-sm" title="Quitar" ng-click="cleanProduct()">
+                                <span class="fa fa-refresh"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group r_detail_show hide">
+                    <label for="r_pending">Solo Pendientes</label>
+                    <select id="r_pending" class="form-control input-sm">
+                        <option value="0">NO</option>
+                        <option value="1">SI</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-sm" ng-click="resetFilter()">
+                    <span class="fa fa-power-off"></span> Resetear Filtros
+                </button>
+                <button type="button" class="btn btn-success btn-sm" ng-click="saveFilter()">
+                    <span class="fa fa-check"></span> Generar
+                </button>
+                <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">
+                    <span class="fa fa-times"></span> Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="modalProvider" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Proveedores</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="table_container_prov" class="table-responsive"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="modalBuyer" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Compradores</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="table_container_buyer" class="table-responsive"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="modalCategory" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Categorias</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="table_container_cat" class="table-responsive"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="modalProduct" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Articulos</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="table_container_prod" class="table-responsive"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>

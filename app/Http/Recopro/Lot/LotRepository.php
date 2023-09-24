@@ -22,14 +22,22 @@ class LotRepository implements LotInterface
     {
         return $this->model->get();
     }
-     public function search($s)
+     public function search($filter)
     {
-        return $this->model->where(function($q) use ($s){
-            $q->where('Lote', 'LIKE', '%'.$s.'%')->orderByRaw('created_at DESC');
-            $q->orWhere('fechaIngreso', 'LIKE', '%'.$s.'%');
-            $q->orWhere('FechaVencimiento', 'LIKE', '%'.$s.'%');
-            $q->orWhere('cantidad', 'LIKE', '%'.$s.'%');
-        });
+        $s = (isset($filter['search'])) ? $filter['search'] : '';
+        return $this->model
+            ->where(function($q) use ($s){
+                $q->where('Lote', 'LIKE', '%'.$s.'%')->orderByRaw('created_at DESC');
+                $q->orWhere('fechaIngreso', 'LIKE', '%'.$s.'%');
+                $q->orWhere('FechaVencimiento', 'LIKE', '%'.$s.'%');
+                $q->orWhere('cantidad', 'LIKE', '%'.$s.'%');
+            })
+            ->where(function ($q) use ($filter) {
+                $product = (isset($filter['product'])) ? $filter['product'] : '';
+                if ($product != '') {
+                    $q->where('idArticulo', $product);
+                }
+            });
 
     }
      public function create(array $attributes)

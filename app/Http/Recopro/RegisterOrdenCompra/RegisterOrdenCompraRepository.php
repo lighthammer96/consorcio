@@ -30,6 +30,11 @@ class RegisterOrdenCompraRepository implements RegisterOrdenCompraInterface
                 $q->orWhere('iEstado', 'LIKE', '%' . $s . '%');
             })
             ->where(function ($q) use ($filter) {
+                if (isset($filter['check']) && $filter['check'] == 'true') {
+                    $from = $filter['from'] . ' 00:00:00';
+                    $to = $filter['to'] . ' 23:59:59';
+                    $q->whereBetween('dFecRegistro', [$from, $to]);
+                }
                 $state = (isset($filter['state'])) ? $filter['state'] : '';
                 if ($state == 'reception') {
                     $q->where(function ($q1) use ($state) {
@@ -38,6 +43,14 @@ class RegisterOrdenCompraRepository implements RegisterOrdenCompraInterface
                     });
                     $q->whereHas('detailArticle', function ($det) {
                         $det->where('cantidadPendiente', '>', 0);
+                    });
+                }
+                $type = (isset($filter['type'])) ? $filter['type'] : '';
+                if ($type != '') {
+                    $q->whereHas('detailArticle', function ($det) use ($type) {
+                        $det->whereHas('article', function ($art) use ($type) {
+                            $art->where('type_id', $type);
+                        });
                     });
                 }
             });
@@ -472,6 +485,64 @@ where er.id='$id'");
     {
         $mostrar = DB::select("select * from ERP_Movimiento_Articulo where id=$id");
         return $mostrar;
+    }
+
+    public function getDataByReport($filter)
+    {
+        return $this->model
+            ->where(function ($q) use ($filter) {
+                $from = (isset($filter['start_date'])) ? $filter['start_date'] . ' 00:00:00' : '';
+                $to = (isset($filter['end_date'])) ? $filter['end_date'] . ' 23:59:59' : '';
+                if ($from != '' && $to != '') {
+                    $q->whereBetween('dFecRegistro', [$from, $to]);
+                }
+                $type = (isset($filter['type'])) ? $filter['type'] : 1;
+                $state = (isset($filter['state'])) ? $filter['state'] : '';
+                $category = (isset($filter['category'])) ? $filter['category'] : '';
+                $product = (isset($filter['product'])) ? $filter['product'] : '';
+                $pending = (isset($filter['pending'])) ? $filter['pending'] : 0;
+                if ($type == 1) {
+                    if ($state != '') {
+                        $q->where('iEstado', $state);
+                    }
+                } else {
+                    if ($state != '' || $category != '' || $product != '' || $pending != '0') {
+                        $q->whereHas('detailArticle', function ($det) use ($state, $category, $product, $pending) {
+                            if ($state != '') {
+                                $det->where('iEstado', $state);
+                            }
+                            if ($category != '') {
+                                $det->whereHas('article', function ($art) use ($category) {
+                                    $art->where('idCategoria', $category);
+                                });
+                            }
+                            if ($product != '') {
+                                $det->where('idArticulo', $product);
+                            }
+                            if ($pending == '1') {
+                                $det->where('cantidadPendiente', '>', 0);
+                            }
+                        });
+                    }
+                }
+                $currency = (isset($filter['currency'])) ? $filter['currency'] : '';
+                if ($currency != '') {
+                    $q->where('idMoneda', $currency);
+                }
+                $number_oc = (isset($filter['number_oc'])) ? $filter['number_oc'] : '';
+                if ($number_oc != '') {
+                    $q->whereRaw("CONCAT(cCodConsecutivo, '-', nConsecutivo) = ?", [$number_oc]);
+                }
+                $provider = (isset($filter['provider'])) ? $filter['provider'] : '';
+                if ($provider != '') {
+                    $q->where('idProveedor', $provider);
+                }
+                $buyer = (isset($filter['buyer'])) ? $filter['buyer'] : '';
+                if ($buyer != '') {
+                    $q->where('buyer_id', $buyer);
+                }
+            })
+            ->get();
     }
 
 }

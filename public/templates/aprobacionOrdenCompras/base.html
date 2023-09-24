@@ -6,6 +6,15 @@
 </style>
 <div class="panel panel-danger-admin">
     <div class="panel-heading">
+        <div class="pull-right date_range_div resize-pull">
+            <label class="checkbox-inline i-checks">
+                <input type="checkbox" checked class="chk_date_range_oc" id="chk_date_range"/>
+            </label>
+            <div id="reqDates" class="">
+                <i class="fa fa-calendar"></i>&nbsp;
+                <span></span> <b class="caret"></b>
+            </div>
+        </div>
         Gestión de Aprobación de Ordenes de Compra
     </div>
     <div class="panel-body">
@@ -131,22 +140,22 @@
                                         <th width="160px">Estado</th>
                                     </tr>
                                     </thead>
-                                    <tbody id="oc_detail"></tbody>
+                                    <tbody id="oc_detail_a"></tbody>
                                     <tfoot>
                                     <tr>
                                         <th></th>
-                                        <th id="oc_q_final" class="text-right">0.00</th>
+                                        <th id="oc_q_final_a" class="text-right">0.00</th>
                                         <th></th>
                                         <th></th>
                                         <th></th>
                                         <th></th>
-                                        <th id="oc_pt_final" class="text-right"></th>
+                                        <th id="oc_pt_final_a" class="text-right"></th>
                                         <th></th>
                                         <th></th>
-                                        <th id="oc_vc_final" class="text-right"></th>
-                                        <th id="oc_vcd_final" class="text-right"></th>
-                                        <th id="oc_imp_final" class="text-right"></th>
-                                        <th id="oc_st_final" class="text-right"></th>
+                                        <th id="oc_vc_final_a" class="text-right"></th>
+                                        <th id="oc_vcd_final_a" class="text-right"></th>
+                                        <th id="oc_imp_final_a" class="text-right"></th>
+                                        <th id="oc_st_final_a" class="text-right"></th>
                                         <th></th>
                                         <th></th>
                                     </tr>
@@ -181,7 +190,7 @@
 
                                     <label class="col-sm-1 control-label">Total</label>
                                     <div class="col-sm-2">
-                                        <input id="oc_total" class="form-control input-sm text-right" readonly value="0.00"/>
+                                        <input id="oc_total_a" class="form-control input-sm text-right" readonly value="0.00"/>
                                     </div>
                                 </div>
                             </div>

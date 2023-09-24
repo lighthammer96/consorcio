@@ -18,3 +18,5 @@ Route::post('petty_cash_expense/providersList', 'EntityController@providers');
 Route::post('petty_cash_expense/getCC', 'PlanAccountController@all');
 Route::post('petty_cash_expense/getCCe', 'CostCenterController@all');
 Route::get('petty_cash_expense/excel/{id}', 'PettyCashExpenseController@excel');
+Route::put('petty_cash_expense/saveDocumentClose/{id}', 'PettyCashExpenseCloseController@createUpdate');
+Route::get('petty_cash_expense/findDocumentClose/{id}', 'PettyCashExpenseCloseController@find');

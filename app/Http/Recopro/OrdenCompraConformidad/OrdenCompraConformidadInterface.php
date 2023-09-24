@@ -15,4 +15,6 @@ interface OrdenCompraConformidadInterface
     public function destroy($id);
 
     public function findBy($cod_id, $nro);
+
+    public function findByUser($cod_id, $nro, $user);
 }

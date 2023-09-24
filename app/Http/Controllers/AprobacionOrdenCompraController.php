@@ -23,10 +23,10 @@ class AprobacionOrdenCompraController extends Controller
     public function all(Request $request, View_OrdenCompraConformidadInterface $repo)
     {
         try {
-            $s = $request->input('search', '');
+            $filter = $request->all();
             $params = ['idOrdenCompra', 'Conformidad', 'Codigo', 'Consecutivo', 'IdUsuario', 'Usuario', 'EstadoAprob',
                 'Fecha', 'FechaReq', 'TipoDoc', 'NumeroDoc', 'Proveedor', 'Moneda', 'Total', 'EstadoOC'];
-            $info = parseDataList($repo->search($s), $request, 'Codigo', $params);
+            $info = parseDataList($repo->search($filter), $request, 'Codigo', $params, 'DESC');
 
             $data = $info[1];
 
@@ -91,7 +91,14 @@ class AprobacionOrdenCompraController extends Controller
             $comment = $request->input('aprobaComentario', '');
             $option = $request->input('iEstado', '');
 
-            $occRepo->update($nro_con, [
+            $oc = $ocRepo->find($id);
+
+            $occ = $occRepo->findByUser($oc->cCodConsecutivo, $oc->nConsecutivo, auth()->id());
+            if (!$occ) {
+                throw new \Exception('No tiene permisos para aprobar/rechazar la orden');
+            }
+
+            $occRepo->update($occ->nIdConformidad, [
                 'iEstado' => $option,
                 'cObservacion' => $comment
             ]);

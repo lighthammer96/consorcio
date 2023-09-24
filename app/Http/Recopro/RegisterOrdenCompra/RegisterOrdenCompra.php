@@ -1,5 +1,6 @@
 <?php namespace App\Http\Recopro\RegisterOrdenCompra;
 
+use App\Http\Recopro\Buyer\Buyer;
 use App\Http\Recopro\Consecutive\Consecutive;
 use App\Http\Recopro\Currency\Currency;
 use App\Http\Recopro\Entity\Entity;
@@ -33,7 +34,7 @@ class RegisterOrdenCompra extends Model
     protected $fillable = ['id', 'cCodConsecutivo', 'nConsecutivo', 'dFecRegistro', 'prioridad', 'dFecRequerida',
         'idProveedor', 'idMoneda', 'idcondicion_pago', 'subtotal', 'nDescuento', 'nPorcDescuento', 'nIdDscto',
         'valorCompra', 'nImpuesto', 'total', 'direccionEntrega', 'iEstado', 'impuesto', 'comentario', 'comentarioAprobacion',
-        'valorCompraDescuento',
+        'valorCompraDescuento', 'buyer_id',
         'user_created', 'created_at', 'user_updated', 'updated_at'];
 
     public function user_c()
@@ -84,6 +85,11 @@ class RegisterOrdenCompra extends Model
     public function conformidad()
     {
         return $this->hasMany(OrdenCompraConformidad::class, 'idOrden');
+    }
+
+    public function buyer()
+    {
+        return $this->belongsTo(Buyer::class, 'buyer_id');
     }
 
 }

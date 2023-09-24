@@ -12,6 +12,14 @@ Route::put('registerOrdenCompras/save/{id}', 'RegisterOrdenCompraController@crea
 Route::post('registerOrdenCompras/delete', 'RegisterOrdenCompraController@destroy');
 Route::get('registerOrdenCompras/format/{id}', 'RegisterOrdenCompraController@format');
 Route::get('registerOrdenCompras/getApprovers/{id}', 'AprobacionOrdenCompraController@getApprovers');
+Route::put('registerOrdenCompras/cancel/{id}', 'RegisterOrdenCompraController@cancelOC');
+Route::put('registerOrdenCompras/close/{id}', 'RegisterOrdenCompraController@closeOC');
+
+Route::post('registerOrdenCompras/listProvider', 'ProveedorController@all');
+Route::get('registerOrdenCompras/getProviderPerson/{id}', 'Orden_servicioController@get_cliente_persona');
+Route::get('registerOrdenCompras/getProvinces/{id}', 'UbigeoController@TraerProvincias');
+Route::get('registerOrdenCompras/getDistricts/{id}', 'UbigeoController@TraerDistritos');
+Route::put('registerOrdenCompras/saveProvider/{id}', 'ProveedorController@createUpdate');
 
 Route::put('registerOrdenCompras/cambiarEstado/{id}', 'RegisterOrdenCompraController@cambiarEstadoTotal');
 

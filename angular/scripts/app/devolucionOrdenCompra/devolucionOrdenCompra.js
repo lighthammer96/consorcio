@@ -1,7 +1,3 @@
-/**
- * Created by JAIR on 4/5/2017.
- */
-
 (function () {
     'use strict';
     angular.module('sys.app.devolucionOrdenCompras')
@@ -9,2827 +5,206 @@
         .controller('DevolucionOrdenCompraCtrl', DevolucionOrdenCompraCtrl);
 
     Config.$inject = ['$stateProvider', '$urlRouterProvider'];
-    DevolucionOrdenCompraCtrl.$inject = ['$scope', '_', 'RESTService', 'AlertFactory'];
+    DevolucionOrdenCompraCtrl.$inject = ['$scope', '_', 'RESTService'];
 
-    function DevolucionOrdenCompraCtrl($scope, _, RESTService, AlertFactory) {
+    function DevolucionOrdenCompraCtrl($scope, _, RESTService)
+    {
+        moment.locale('es');
+        var start = moment().startOf('month');
+        var end = moment().endOf('month');
 
-        var proformas_completas;
-        var ordenes_completas;
-        var codigo_actual; //variable para identificar en que fila voy a gregar lotes o series 
-        var cCodConsecutivoOS = $("#cCodConsecutivoOS");
-        var nConsecutivoOS = $("#nConsecutivoOS");
-        var aartML = []; //arrays para guardas los datos de lotes
-        var acodigos = [];//arrays de codigos;
-        var alotML = [];
-        var afinML = [];
-        var avenML = [];
-        var tipoCompra; //variable que contendrá los tipos de  compras
-        var aartMK = []; //arrays de id kits 
-        var aartMLE = [];//arrays lotes exis
-        var naturalezaGeneral;
-        var aartMSN = [];//ARRAY DE series nueva
-        var aartMSE = [];//array series  exis 
-        var acantMS = [];
-        var achasis = [];
-        var acolor = [];
-        var aaniomodelo = [];
-        var aaniofabricacion = [];
-        var aaserie = [];
-        var idMovimientoDelete = $("#idMovimientoDelete");
-        var aartMN = [];//arrays de nada 
-        var costoMK = $("#costoMK");
-        var costoNa = $("#costoNa");
-        var costoAS = $("#costoAS");
-        var costoAL = $("#costoAL");
-        var idTransferenciaProcesar = $("#idTransferenciaProcesar");
-        var LocalizacionesSele;//variable para guardar localizaciones del almacen
-        var AlmacenesSele;//variable para guardar almacenes
-        var AlmacenesTodos;//variable para guardar todos los almacenes
-        var btnguardarMovimiento = $("#btn-guardarMovimiento");//btn pata guardar cabecera del movimiento
-        var titlemodalMovimieto = $("#titlemodalMovimieto");
-        var modalMovimieto = $("#modalMovimieto");
-        var idMovimiento = $("#idMovimiento");
-        var idTipoOperacion = $("#idTipoOperacion");
-        var operacionid;
-        var naturalezaid;
-        var modalDeleteMovimiento = $("#modalDeleteMovimiento");
-        var idMoneda = $("#idMoneda");
-        var idAlmacen = $("#idAlmacen");
-        var observaciones = $("#observaciones");
-        var p_state = $("#p_state");
-        var fecha_registro = $("#fecha_registro");
-        var modalMovimietoArticulo = $("#modalMovimietoArticulo");
-        var titlemodalMovimietoArticulo = $("#titlemodalMovimietoArticulo");
-        var modalLote = $("#modalLote");
-        var modalSerie = $("#modalSerie");
-        var modalKit = $("#modalKit");
-        var modalNada = $("#modalNada");
-        var articulo_mov_det = $("#articulo_mov_det");
-        var modalAlmacenArticulo = $("#modalAlmacenArticulo")
-        var idLoteML = $("#idLoteML");
-        var idProductoML = $("#idProductoML");
-        var desProductoML = $("#desProductoML");
-        var cantProductoML = $("#cantProductoML");
-        var lotProductoML = $("#lotProductoML");
-        var fIngrePrML = $("#fIngrePrML");
-        var fVenPrML = $("#fVenPrML");
-        var idNaturaleza = $("#idNaturaleza");
-        var tablekitdetM = $("#tablekitdetM");
-        var cantProductoMK = $("#cantProductoMK");
-        var desProductoMK = $("#desProductoMK")
-        var idProductoMK = $("#idProductoMK");
-        var ident_detalle = $("#ident_detalle");//identificador de cambio en el detalle
-        var idSerieMS = $("#idSerieMS");
-        var idProductoMS = $("#idProductoMS");
-        var desProductoMS = $("#desProductoMS");
-        var cantProductoMS = $("#cantProductoMS");
-        var colorMS = $("#colorMS");
-        var chasisMS = $("#chasisMS");
-        var motorMS = $("#motorMS");
-        var procesarTransfBoton = $("#ProcesarTransferenciaBoton");
-        var anio_modeloMS = $("#anio_modeloMS");
-        var anio_fabricacionMS = $("#anio_fabricacionMS");
-        var articulo_serie_det = $("#articulo_serie_det");
-        var idLoteML2 = $("#idLoteML2");
-        var idArtSerie = $("#idArtSerie");
-        var cantArtSerie = $("#cantArtSerie");
-        var desArtSerie = $("#desArtSerie");
-        var s_serie = $(".s_serie");
-        var table_container_cc2;
-        var table_container_cc22;
-        var idProductoMN = $("#idProductoMN");
-        var desProductoMN = $("#desProductoMN");
-        var cantProductoMN = $("#cantProductoMN");
-        var msg_cont_EliminarMovimiento = $("#msg_cont_EliminarMovimiento");
-        var tabla_articulo_movi = $("#tabla_articulo_movi");
-        var idProductoMll = $("#idProductoMll");
-        var desProductoMll = $("#desProductoMll");
-        var cantProductoMll = $("#cantProductoMll");
-        var modalLoteR = $("#modalLoteR");
-        var codigoLoteMll = $("#codigoLoteMll");
-        var fechaVl = $("#fechaVl");
-        var modalSerieR = $("#modalSerieR");
-        var idProductoMss = $("#idProductoMss");
-        var desProductoMss = $("#desProductoMss");
-        var codigoSerieMss = $("#codigoSerieMss");
-        var btn_Lotd = $("#btn_Lotd");
-        var cantProductoMss = $("#cantProductoMss");
-        var table_container_Series_Articulo = $("#table_container_Series_Articulo");
-        var table_serie_cabecera = $("#table_serie_cabecera");
-        var articulo_serie_det = $("#articulo_serie_det");
-        var btnAgreSer = $("#btnAgreSer");
-        var identiSelec = "I";
-        var table_container_cc4;
-        var btn_serC = $("#btn_serC");
-        var cont_check = 0;
-        var cont_table = 0;
-        var idLoteMll = $("#idLoteMll");
-        var idLoteMll2 = $("#idLoteMll2");
-        var identSerAr = $("#identSerAr");//identificador para modificar el array de series esxisten
-        var btnSeleSerie = $("#btnSeleSerie");
-        var idenifcador_table_art = $("#idenifcador_table_art");
-        var idenifcador_table_art2 = $("#idenifcador_table_art");
-        var btn_movimiento_detalle = $("#btn_movimiento_detalle");
-        var modalProcesarTransferencia = $("#modalProcesarTransferencia");
-        var msg_cont_ProcesarTransferencia = $("#msg_cont_ProcesarTransferencia");
-        var btn_imprimirMovimiento = $("#btn_imprimirMovimiento");
-        $('.i-checks').iCheck({
-            checkboxClass: 'icheckbox_square-green'
-        }).on('ifChanged', function (event) {
-            $(event.target).click();
-            $scope.chkState();
+        var chk_date_range = $('#chk_date_range');
+        chk_date_range.click(function () {
+            $('#LoadRecordsButtonDev').click();
         });
-        cCodConsecutivoOS.select2(); 
-        $.fn.modal.Constructor.prototype.enforceFocus = function () { };
-        // function getDataForProforma() {
-        //     RESTService.all('devolucionOrdenCompras/data_formProfor', '', function (response) {
-        //         if (!_.isUndefined(response.status) && response.status) {
-        //             proformas_completas = response.proformas_entrega;
-        //         }
-        //     }, function () {
-        //         getDataForProforma();
-        //     });
-        // }
-        // getDataForProforma();
+        generateCheckBox('.chk_date_range_r');
 
-         function getDataForOrdeCompra() {
-            RESTService.all('devolucionOrdenCompras/data_formOrdenCompra', '', function (response) {
+        var reqDates = $('#reqDates');
+
+        var showDate = function (from, to) {
+            start = from;
+            end = to;
+            reqDates.find('span').html(from.format('MMM D, YYYY') + ' - ' + to.format('MMM D, YYYY'));
+            if (chk_date_range.prop('checked')) {
+                $('#LoadRecordsButtonDev').click();
+            }
+        };
+        generateDateRangePicker(reqDates, start, end, showDate);
+        showDate(start, end);
+
+        var modalDev = $("#modalDev");
+        modalDev.on('hidden.bs.modal', function (e) {
+            clearDev();
+        });
+        var titleDev = $("#titleDev");
+        var modalRec = $('#modalRec');
+        modalRec.on('show.bs.modal', function (e) {
+            $('#LoadRecordsButtonRec').click();
+            modalDev.attr('style', 'display:block; z-index:2030 !important');
+        });
+        modalRec.on('hidden.bs.modal', function (e) {
+            $('#search_rec').val('');
+            $('#LoadRecordsButtonRec').click();
+            modalDev.attr('style', 'display:block; overflow-y: auto;');
+        });
+        var modalSeriesProduct = $('#modalSeriesProduct');
+        modalSeriesProduct.on('show.bs.modal', function (e) {
+            modalDev.attr('style', 'display:block; z-index:2030 !important');
+        });
+        modalSeriesProduct.on('hidden.bs.modal', function (e) {
+            cleanSeries();
+            modalDev.attr('style', 'display:block; overflow-y: auto;');
+        });
+        var modalSeries = $('#modalSeries');
+        modalSeries.on('show.bs.modal', function (e) {
+            $('#LoadRecordsButtonSer').click();
+            modalSeriesProduct.attr('style', 'display:block; z-index:2030 !important');
+        });
+        modalSeries.on('hidden.bs.modal', function (e) {
+            $('#search_ser').val('');
+            $('#LoadRecordsButtonSer').click();
+            modalSeriesProduct.attr('style', 'display:block; overflow-y: auto;');
+        });
+
+        var d_id = 0;
+        var d_mov = '';
+        var d_state_id = 1;
+        var d_code = $("input#d_code");
+        var d_reception_id = '';
+        var d_reception = $('input#d_reception');
+        var d_reception_btn = $('button#d_reception_btn');
+        var d_date = $('input#d_date');
+        generateDatePicker(d_date);
+        var d_warehouse = $("input#d_warehouse");
+        var d_operation = $('select#d_operation');
+        var d_currency = $('input#d_currency');
+        var d_observations = $('textarea#d_observations');
+        var d_detail = $('tbody#d_detail');
+        var d_detail_selected_ = '';
+        var d_detail_product_ = '';
+        var d_data_series = [];
+        var d_series_text = $("input#d_series_text");
+        var d_series_q = $("input#d_series_q");
+        var d_series_detail = $("tbody#d_series_detail");
+
+        function clearDev() {
+            cleanRequired();
+            titleDev.empty();
+            d_id = 0;
+            d_state_id = 1;
+            d_code.val('');
+            d_reception_id = '';
+            d_reception.val('');
+            d_reception_btn.prop('disabled', false);
+            d_date.val('').prop('disabled', false);
+            d_warehouse.val('');
+            d_currency.val('');
+            d_observations.val('').prop('disabled', false);
+            d_detail.empty();
+            d_detail_selected_ = '';
+            d_detail_product_ = '';
+            d_data_series = [];
+
+            $('button.btn-save, button.btn-frm').removeClass('hide');
+            $('button.btn-print').addClass('hide');
+        }
+
+        function cleanSeries() {
+            d_detail_selected_ = '';
+            d_detail_product_ = '';
+            d_series_text.val('');
+            d_series_q.val('');
+            d_series_detail.empty();
+        }
+
+        function getDataDev() {
+            RESTService.all('devolucionOrdenCompras/data_form', '', function (response) {
                 if (!_.isUndefined(response.status) && response.status) {
-                    ordenes_completas = response.dataOrdenesDevolucion;
+                    d_operation.empty();
+                    _.each(response.operations, function (item) {
+                        if (parseInt(item.IdTipoOperacion) === 10) {
+                            d_operation.append('<option value="' + item.IdTipoOperacion + '">' + item.descripcion + '</option>');
+                        }
+                    });
                 }
             }, function () {
-                getDataForOrdeCompra();
+                getDataDev();
             });
         }
-        getDataForOrdeCompra();
+        getDataDev();
 
-        function cargar_ordenCompra(){
-            
-             cCodConsecutivoOS.html('');
-             cCodConsecutivoOS.append('<option value="">Seleccionar</option>');
-                     _.each(ordenes_completas, function(item) {
-                        cCodConsecutivoOS.append('<option data-idOrden="'+item.idOrden+'" value="'+item.cCodConsecutivo+'*'+item.nConsecutivo+'*'+item.IdMoneda+'">'+item.cCodConsecutivo+' '+item.nConsecutivo+' '+item.razonSocialProveedor+'</option>');
-                    });
-            
-        }
-
-        $(document).on("change", "#idventa", function () {
-            var idventa = $(this).val();
-            var documento =  $('#idventa').find(':selected').data('documento');
-            var idmoneda =  $('#idventa').find(':selected').data('idmoneda');
-            // alert(idmoneda);
-            idMoneda.val(idmoneda);
-            // alert(documento);
-            var bval=true;
-            console.log(idventa,"venta  val");
-            if(idventa == "" || idventa==null ) {
-                bval=false;
-            }
-            if(bval){
-                $("#documento").val(documento);
-           
-            console.log("ide venta totototot");
-            RESTService.get('devolucionOrdenCompras/get_venta_detalle_devolucionDevol', idventa, function (response) {
-                if (!_.isUndefined(response.status) && response.status) {
-                    var data = response.data;
-                    var cont = 0;
-                    if (idMovimiento.val() == '') {
-                        articulo_mov_det.html("");
-
-                        data.map(function (index) {
-                            var ver = 'A';
-                            var tipo = 'NA';
-                            var codl = "";
-                            var datl = "";
-                            if (index.serie == '1') {
-                                ver = 'N';
-                            }
-                            if (index.serie == '1') {
-                                tipo = 'SE';
-                            } else if (index.lote == '1') {
-                                tipo = 'LE';
-                                codl = index.idLote;
-                            }
-                            var codl = "";
-                            var datl = "";
-                            var idAlmacen = "";
-                            var idLocalizacion = "";
-                            var costo = costoAS.val();
-                            var costo_total = "";
-                            var precio = "";
-                            var precioTotal = "";
-                            // add 
-                            cont = cont + 1;
-                            var idDetalle=0;
-                            // console.log("entro287");
-                            addArticuloTable(idDetalle,index.idProducto,
-                                index.description, Math.trunc(index.cantidad),
-                                ver, index.idDetalleRepues, tipo, codl,
-                                datl, idAlmacen,
-                                idLocalizacion,
-                                index.costo,
-                                costo_total,
-                                index.precio_unitario,
-                                precioTotal, Math.trunc(index.cantidad));
-
-                        })
-                    }
-
-                } else {
-                    AlertFactory.textType({
-                        title: '',
-                        message: 'Hubo un error . Intente nuevamente.',
-                        type: 'info'
-                    });
-                }
-            });
-            }
-        });
-
-        cCodConsecutivoOS.change(function () {
-                
-                var id = $(this).find(':selected').attr('data-idOrden');
-                if(cCodConsecutivoOS.val()!=''){
-                    console.log("entra consecutivo");
-                    var val=cCodConsecutivoOS.val();
-                    var totRep=val.split('*');
-                    nConsecutivoOS.val(totRep[1]);
-                    idMoneda.val(totRep[2]);
-                    // console.log(id,"console.log")  
-                    RESTService.get('recepcionOrdenCompras/getDetalle_ordenCompra', id, function(response) {
-                     if (!_.isUndefined(response.status) && response.status) {
-                          var data=response.data;
-                          var cont=0;
-                          if(idMovimiento.val()==''){
-                            articulo_mov_det.html("");
-                            
-                           data.map(function(index) {
-                            var ver='A';
-                            var tipo='NA';
-                            var codl="";
-                            var datl="";
-                            if(index.serie=='1'){
-                                ver='N';
-                            }
-                            if(index.serie=='1'){
-                                tipo='SE';
-                            }else if(index.lote=='1'){
-                                tipo='LE';
-                                codl=index.idLote;
-                            }
-                            var codl="";
-                                var datl="";
-                                var idAlmacen="";
-                                var idLocalizacion="";
-                                var costo=costoAS.val();
-                                var costo_total="";
-                                var precio="";
-                                var precioTotal="";
-                                // add 
-                                cont=cont+1;
-                                   // console.log("ejeci _7");
-                                var idDetalle=0;   
-                                addArticuloTable(idDetalle,index.idProducto,
-                                    index.description,Math.trunc(index.cantidad),
-                                    ver,index.idDetalleOc,tipo,codl,
-                                    datl,idAlmacen,
-                                    idLocalizacion,
-                                    Number(index.costo),
-                                    costo_total,
-                                    index.precioUnitario,
-                                    precioTotal,Math.trunc(index.cantidadDevuelta));
-                              
-                            })
-                          }
-                            
-                        }else {
-                            AlertFactory.textType({
-                                title: '',
-                                message: 'Hubo un error . Intente nuevamente.2',
-                                type: 'info'
-                            });
-                        }
-                    });
-                }
-        });
-
-        // cCodConsecutivoOS.change(function () {
-           
-        //     var val = cCodConsecutivoOS.val();
-        //     // alert(typeof val);   
-        //     if(val == null) {
-        //         return false;
-        //     }
-        //     var totRep = val.split('*');
-        //     nConsecutivoOS.val(totRep[1]);
-        //     idMoneda.val(totRep[2]);
-
-        //     if (cCodConsecutivoOS.val() != '') {
-        //         var id = totRep[0] + '_' + totRep[1];
-        //         RESTService.get('devolucionOrdenCompras/getDetalle_entradaDevol', id, function (response) {
-        //             if (!_.isUndefined(response.status) && response.status) {
-        //                 var data = response.data;
-        //                 var cont = 0;
-        //                 if (idMovimiento.val() == '') {
-        //                     articulo_mov_det.html("");
-
-        //                     data.map(function (index) {
-        //                         var ver = 'A';
-        //                         var tipo = 'NA';
-        //                         var codl = "";
-        //                         var datl = "";
-        //                         if (index.serie == '1') {
-        //                             ver = 'N';
-        //                         }
-        //                         if (index.serie == '1') {
-        //                             tipo = 'SE';
-        //                         } else if (index.lote == '1') {
-        //                             tipo = 'LE';
-        //                             codl = index.idLote;
-        //                         }
-        //                         var codl = "";
-        //                         var datl = "";
-        //                         var idAlmacen = "";
-        //                         var idLocalizacion = "";
-        //                         var costo = costoAS.val();
-        //                         var costo_total = "";
-        //                         var precio = "";
-        //                         var precioTotal = "";
-        //                         // add 
-        //                         cont = cont + 1;
-        //                         console.log("entro287");
-        //                         var idDetalle=0;
-        //                         addArticuloTable(idDetalle,index.idProducto,
-        //                             index.description, Math.trunc(index.nCant),
-        //                             ver, index.idDetalleRepues, tipo, codl,
-        //                             datl, idAlmacen,
-        //                             idLocalizacion,
-        //                             index.costo,
-        //                             costo_total,
-        //                             index.nPrecioUnitario,
-        //                             precioTotal, Math.trunc(index.nCantidadPendienteDevolver));
-        //                         //fin
-        //                         //  addArticuloTable(idProductoMss.val(),desProductoMss.val(),cantProductoMss.val(),ver,codigoLr,tipoArtLr,codl,datl,idAlmacen,idLocalizacion,costo,costo_total,precio,precioTotal);
-        //                         // addArticuloTable(index.idArticulo,index.description,Math.trunc(index.cantidad),ver,index.consecutivo,tipo,codl,datl,index.idAlmacen,index.idLocalizacion,index.costo2,index.costo_total,index.precio,index.precio_total);                      
-        //                     })
-        //                 }
-
-        //             } else {
-        //                 AlertFactory.textType({
-        //                     title: '',
-        //                     message: 'Hubo un error . Intente nuevamente.',
-        //                     type: 'info'
-        //                 });
-        //             }
-        //         });
-        //     }
-        // });
-        btn_imprimirMovimiento.click(function (e) {
-            // var data = {
-            //                     referral_guide_id:1,
-
-            // };
-            // // window.open(base_url + '/templates/register_transfers/reporte.html', 'name'); 
-            // localStorage.setItem('Nombre', 'Miguel Antonio')
-            //  $scope.loadTransferPDF('referral_guides/referralGuidePDF', data);
-            var id = idMovimiento.val();
-            if (id != '') {
-                var data = {
-                    id: id,
-
-                };
-                $scope.loadMovimientoPDF('devolucionOrdenCompras/pdfDevol', data);
-            }
-        });
-
-        modalMovimietoArticulo.on('hidden.bs.modal', function (e) {
-            cleanMovimientoArticulo();
-        });
-
-        modalMovimieto.on('hidden.bs.modal', function (e) {
-            cleanMovimiento();
-        });
-        modalLote.on('hidden.bs.modal', function (e) {
-            cleanArtLote();
-        });
-        modalKit.on('hidden.bs.modal', function (e) {
-            cleanArtKit();
-        });
-        // modalSerie.on('hidden.bs.modal', function (e) {
-        //     cleanArtSerie();
-        // });  
-        modalNada.on('hidden.bs.modal', function (e) {
-            cleanArtNada();
-        });
-        modalSerieR.on('hidden.bs.modal', function (e) {
-            cleanArtSeriess();
-        });
-        modalLoteR.on('hidden.bs.modal', function (e) {
-            cleanArtLotell();
-        });
-
-        modalDeleteMovimiento.on('hidden.bs.modal', function (e) {
-            cleanDeleteMovimiento();
-        });
-
-        btnguardarMovimiento.click(function (e) {
-            saveMovimientoCab();
-        });
-
-        function cleanmodalProcesarTransferencia() {
-
-            idTransferenciaProcesar.val("");
-            msg_cont_ProcesarTransferencia.removeClass('show')
-            $("#msg_cont_ProcesarTransferencia p").html("");
-
-        }
-
-        function activar_inputs() {
-            $("input[name='tipo']").removeAttr("disabled");
-            $("#fecha_registro").removeAttr("disabled");
-            $("#observaciones").removeAttr("disabled");
-            $(".m_articulo_idAlm").removeAttr("disabled");
-            $(".m_articulo_idLoc").removeAttr("disabled");
-            $(".m_articulo_costo ").removeAttr("disabled");
-           
-            // $("#ProcesarTransferenciaBoton").removeAttr("disabled");
-            $(".verUpdate").removeAttr("disabled");
-            //$("#btn_movimiento_detalle").removeAttr("disabled");
-            if($("#p_state").val()=='0'){
-                 $("#ProcesarTransferenciaBoton").prop('disabled',false);
-            }else{
-                  $("#ProcesarTransferenciaBoton").prop('disabled',true);
-            }
-             if($("#p_state").val()=='1'){
-                  $("#btn_movimiento_detalle").prop('disabled',true);
-            }else{
-                   $("#btn_movimiento_detalle").prop('disabled',false);
-            }
-
-        }
-
-        function desactivar_inputs() {
-
-            $("input[name='tipo']").attr("disabled", "disabled");
-            $("#fecha_registro").attr("disabled", "disabled");
-            $("#observaciones").attr("disabled", "disabled");
-            $(".m_articulo_idAlm").attr("disabled", "disabled");
-            $(".m_articulo_idLoc").attr("disabled", "disabled");
-            $(".m_articulo_costo ").attr("disabled", "disabled");
-            //$("#ProcesarTransferenciaBoton").attr("disabled", "disabled");
-            $(".verUpdate").attr("disabled", "disabled");
-            //$("#btn_movimiento_detalle").attr("disabled", "disabled");
-            //  if($("#p_state").val()==0){
-            //     $("#ProcesarTransferenciaBoton").prop('disabled',false);
-            // }else{
-            //     $("#ProcesarTransferenciaBoton").prop('disabled',true);
-            // }
-           
-            if($("#p_state").val()=='0'){
-                 $("#ProcesarTransferenciaBoton").prop('disabled',false);
-            }else{
-                  $("#ProcesarTransferenciaBoton").prop('disabled',true);
-            }
-             if($("#p_state").val()=='1'){
-                  $("#btn_movimiento_detalle").prop('disabled',true);
-            }else{
-                   $("#btn_movimiento_detalle").prop('disabled',false);
-            }
-        }
-
-        function findRegister_movement(id)
-        {   
-            titlemodalMovimieto.html('Editar Devolución');
-          
-            RESTService.get('devolucionOrdenCompras/findDevol', id, function(response) {
-
-                if (!_.isUndefined(response.status) && response.status) {
-                    // console.log("a1");
-                    aartMLE=[];
-                    aartMSE=[];
-                    var verProforma='ED';
-                    // cargar_proformas(verProforma);
-                      // console.log("a2"); 
-                    var data_p = response.data;
-                    var data_compraMovimiento = response.data_compraMovimiento;
-                     console.log(data_compraMovimiento);
-                    console.log("data_movimiento_info");
-                    var mov_ar='';
-                    var cons=data_p.cCodConsecutivo+'*'+data_p.nConsecutivo+'*'+data_p.idMoneda;
-                    idMovimiento.val(data_p.idMovimiento);
-                     cCodConsecutivoOS.html("");
-                    cCodConsecutivoOS.append('<option  value="'+data_p.cCodConsecutivo+'*'+data_p.nConsecutivo+'*'+data_p.idMoneda+'">'+data_p.cCodConsecutivo+' '+data_p.nConsecutivo+' '+data_compraMovimiento[0].proveedor+'</option>');
-                    cCodConsecutivoOS.val(cons);
-                    nConsecutivoOS.val(data_p.nConsecutivo);
-                    mov_ar=response.data_movimiento_Articulo_recepcionCompra;
-                   console.log(mov_ar);
-                     
-                    $("#idventa").prop('disabled',true);
-                    cCodConsecutivoOS.prop('disabled',true);
-                    $('input[name=tipo]').attr("disabled",true);
-                    titlemodalMovimieto.html('Editar Devolución '+'['+ data_p.idMovimiento+ ']');
-                    var lotE=response.data_movimiento_lote;
-                    var serE=response.data_movimiento_serie;
-                   
-                    btn_movimiento_detalle.prop('disabled',false);
-                    btn_movimiento_detalle.trigger('change');
-                    ident_detalle.val("A");
-                  
-                    naturalezaGeneral=data_p.naturaleza;
-                    if(lotE!=''){
-                         console.log("a9");
-                         lotE.map(function(index) {
-                                var grubLE={
-                               'identificador': index.consecutivo,
-                               'idProducto':index.idArticulo,
-                               'idLote':index.idLote,
-                               'fecha_vencimiento':index.fechaVencimiento,
-                               'codig_lote': index.Lote,
-                               }
-                              aartMLE.push(grubLE);
-                         });
-                    }
-                    if(serE!=''){
-                        serE.map(function(index) {
-                             var grubSE={
-                                       'identificador': index.identificador,
-                                       'idProducto':index.idArticulo,
-                                       'serie':index.nombreSerie,
-                                       'idSerie': index.idSerie,
-                                       'cantidad':index.cantiTotal,
-                                    }
-                            aartMSE.push(grubSE);
-                        });
-                    }
-                    console.log(serE);
-                    console.log("serey");
-                    console.log("a10");
-                    console.log(data_p.idTipoOperacion,data_p.naturaleza,'operacion');
-                    idTipoOperacion.val(data_p.idTipoOperacion+'*'+data_p.naturaleza).trigger('change');
-                      console.log("a11a");
-                    idTipoOperacion.prop('disabled',true);
-                    console.log("a12");
-                    idTipoOperacion.trigger('change');
-                  
-                    idMoneda.val(data_p.idMoneda).trigger('change');
-                    fecha_registro.val(data_p.fecha_registro);
-                    observaciones.val(data_p.observaciones);
-                    console.log("a11");
-                    if(data_p.estado==0){
-                        p_state.val(0).trigger("change");
-                    }
-                    if(data_p.estado==1){
-                             p_state.val(1).trigger("change");
-                    }
-                    if(p_state.val()==1){
-                            procesarTransfBoton.prop('disabled',true);
-                            procesarTransfBoton.trigger('change');
-                            btnguardarMovimiento.prop('disabled',true);
-                            btnguardarMovimiento.trigger('change');
-                            btn_movimiento_detalle.prop('disabled',true);
-                            btn_movimiento_detalle.trigger('change');
-                    }else{
-                           procesarTransfBoton.prop('disabled',false);
-                            procesarTransfBoton.trigger('change');
-                            btnguardarMovimiento.prop('disabled',false);
-                            btnguardarMovimiento.trigger('change');
-                            btn_movimiento_detalle.prop('disabled',false);
-                            btn_movimiento_detalle.trigger('change');
-                    }
-                  
-                   
-                    if(p_state.val()==0){
-                        procesarTransfBoton.prop('disabled',false);
-                        procesarTransfBoton.trigger('change');
-                    }else{
-                        procesarTransfBoton.prop('disabled',true);
-                        procesarTransfBoton.trigger('change');
-                    } 
-
-                    modalMovimieto.modal("show");
-                     articulo_mov_det.html("");
-                    console.log(mov_ar);
-                    console.log("ahahhahahahahahh");
-                    var conta=0;
-                     mov_ar.map(function(index) {
-                        conta=conta+1;
-                        var ver='A';
-                        var tipo='NA';
-                        var codl="";
-                        var datl="";
-                        if(index.serie=='1'){
-                            ver='N';
-                        }
-                        if(index.serie=='1'){
-                            tipo='SE';
-                        }else if(index.lote=='1'){
-                            tipo='LE';
-                            codl=index.idLote;
-                        }
-                        var idLoteEnviar=index.idLote;
-                        if(index.idLote==null){
-                            idLoteEnviar='';
-                        }
-                        var idCodLoteEnviar=index.cod_lote;
-                        if(index.cod_lote==null){
-                            idCodLoteEnviar='';
-                        }
-                         console.log(idCodLoteEnviar);
-                        console.log(idLoteEnviar);
-                      
-                       
-                       
-                        addArticuloTable(index.consecutivo,index.idArticulo,
-                                index.description,Math.trunc(index.cantidad),
-                                ver,index.consecutivo,tipo,idLoteEnviar,
-                                idCodLoteEnviar,
-                                index.idAlmacen,
-                                index.idLocalizacion,
-                                index.costo2,
-                                index.costo_total,
-                                index.precio,
-                                index.precio_total,
-                                Math.trunc(index.nCantidadPendienteDevolver));                      
-                      })
-
-
-                    
-                    
-                   
-                } else {
-                    AlertFactory.textType({
-                        title: '',
-                        message: 'Hubo un error al obtener el Artículo. Intente nuevamente.',
-                        type: 'error'
-                    });
-                }
-            });
-        }
-        function cleanArtLote() {
-            idLoteML.val('');
-            idLoteML2.val('');
-            idProductoML.val('');
-            desProductoML.val('');
-            cantProductoML.val('');
-            lotProductoML.val('');
-            fIngrePrML.val('');
-            fVenPrML.val('');
-        }
-        function cleanArtNada() {
-            idProductoMN.val("");
-            desProductoMN.val("");
-            cantProductoMN.val("");
-
-        }
-        function cleanArtLotell() {
-            idProductoMll.val("");
-            desProductoMll.val("");
-            cantProductoMll.val("");
-            codigoLoteMll.val("");
-            fechaVl.val("");
-            btn_Lotd.prop('disabled', true);
-            btn_Lotd.trigger('change');
-            codigoLoteMll.prop("readonly", false);
-            codigoLoteMll.trigger('change');
-            idLoteMll.val("");
-            idLoteMll2.val("");
-        }
-        function cleanDeleteMovimiento() {
-
-            idMovimientoDelete.val("");
-            msg_cont_EliminarMovimiento.removeClass('show')
-            $("#msg_cont_EliminarMovimiento p").html("");
-
-        }
-        function cleanArtSeriess() {
-            idProductoMss.val("");
-            desProductoMss.val("");
-            cantProductoMss.val("");
-            btnSeleSerie.prop('disabled', false);
-            btnSeleSerie.trigger('change');
-            identSerAr.val("");
-            if (identiSelec == "A") {
-                table_container_cc4.jtable('destroy');
-                identiSelec = "I";
-            }
-            table_serie_cabecera.html("");
-            articulo_serie_det.html("");
-            btn_serC.prop('disabled', true);
-            btn_serC.trigger('change');
-
-        }
-        function cleanArtSerie() {
-            idSerieMS.val('');
-            idProductoMS.val('');
-            desProductoMS.val('');
-            cantProductoMS.val('');
-            colorMS.val('');
-            chasisMS.val('');
-            motorMS.val('');
-            anio_modeloMS.val('');
-            anio_fabricacionMS.val('');
-        }
-        function cleanArtKit() {
-            tablekitdetM.html("");
-            cantProductoMK.val('');
-            desProductoMK.val('');
-            idProductoMK.val('');
-        }
-        function cleanMovimiento() {
-            cleanRequired();
-            cCodConsecutivoOS.val("");
-            nConsecutivoOS.val("");
-            titlemodalMovimieto.html('');
-            idMovimiento.val('');
-            idMoneda.val('');
-            ident_detalle.val('');
-            aartML = [];
-            acodigos = [];
-            aartMK = [];
-            aartMLE = [];
-            aartMSN = [];
-            aartMSE = [];
-            aartMN = [];
-            observaciones.val('');
-            $("#documento").val("");
-            idNaturaleza.val('');
-            fecha_registro.val('');
-            p_state.val('');
-            articulo_mov_det.html('');
-            cCodConsecutivoOS.prop('disabled', false);
-              $("#idventa").prop('disabled',false);
-            btnguardarMovimiento.prop('disabled', false);
-            btn_movimiento_detalle.prop('disabled', false);
-            btnguardarMovimiento.trigger('change');
-            procesarTransfBoton.prop('disabled', true);
-            procesarTransfBoton.trigger('change');
-            var verProforma = 'CR';
-            cargar_ordenCompra();
-        }
-        function cleanMovimientoArticulo() {
-            articulo_serie_det.html('');
-            idArtSerie.val('');
-            cantArtSerie.val('');
-            desArtSerie.val('');
-
-
-        }
-        modalProcesarTransferencia.on('hidden.bs.modal', function (e) {
-            cleanmodalProcesarTransferencia();
-        });
-
-
-        codigoLoteMll.keypress(function (e) {
-
-            var code = (e.keyCode ? e.keyCode : e.which);
-            if (code == 13) {
-                if (idLoteMll2.val() == "") {
-
-                    getlotes();
-                }
-
-            }
-        });
-        cantProductoMK.keypress(function (e) {
-            var code = (e.keyCode ? e.keyCode : e.which);
-            if (code == 13) {
-                addArtkit();
-            }
-        });
-        cantProductoMN.keypress(function (e) {
-            var code = (e.keyCode ? e.keyCode : e.which);
-            if (code == 13) {
-                addArtNada();
-            }
-        });
-        function getlotes() {
-            var id = codigoLoteMll.val();
-            if (id != '') {
-                RESTService.get('devolucionOrdenCompras/validateLoteDevol', id, function (response) {
-                    if (!_.isUndefined(response.status) && response.status) {
-                        if (response.data == "N") {
-                            if (naturalezaGeneral == "S" || naturalezaGeneral == 'R') {
-                                AlertFactory.textType({
-                                    title: '',
-                                    message: 'No existe Lote . Intente nuevamente.',
-                                    type: 'info'
-                                });
-                            } else {
-                                lotProductoML.val(codigoLoteMll.val());
-                                idProductoML.val(idProductoMll.val());
-                                desProductoML.val(desProductoMll.val());
-                                modalLote.modal("show");
-
-                            }
-                        } else {
-
-                            $("#idLEn" + codigo_actual).val(response.codigol);
-
-                            fechaVl.val(response.fecha);
-                            idLoteMll.val(response.codigol);
-                            btn_Lotd.prop('disabled', false);
-                            // codigoLoteMll.prop("readonly",true);
-                            codigoLoteMll.trigger('change');
-                            btn_Lotd.trigger('change');
-                            $("#btn_ver" + codigo_actual).attr('data-lote', codigoLoteMll.val());
-                            $("#id_check" + codigo_actual).prop("checked", true);
-                            $('.i-checks').iCheck({
-                                checkboxClass: 'icheckbox_square-green'
-                            }).on('ifChanged', function (event) {
-                                $(event.target).click();
-
-                            });
-                            // addArticuloTable(idProductoMll.val(),desProductoMll.val(),cantProductoMll.val(),ver,codigoLr,tipoArtLr,codl,datl,idAlmacen,idLocalizacion,costo,costo_total,precio,precioTotal);
-                            modalLoteR.modal('hide');
-                            modalMovimietoArticulo.modal('hide');
-
-                        }
-
-                    } else {
-                        AlertFactory.textType({
-                            title: '',
-                            message: 'Hubo un error . Intente nuevamente.',
-                            type: 'info'
-                        });
-                    }
-
-                });
-            }
-
-        }
-        $('#ProcesarTransferenciaBoton').click(function (e) {
-            var id = idMovimiento.val();
-            if (articulo_mov_det.html() != "") {
-                RESTService.get('devolucionOrdenCompras/validaDetalleDevol', id, function (response) {
-                    if (!_.isUndefined(response.status) && response.status) {
-                        var ide = idMovimiento.val();
-                        idTransferenciaProcesar.val(ide);
-                        modalProcesarTransferencia.modal("show");
-
-                        e.preventDefault();
-                    } else {
-                        var msg_ = (_.isUndefined(response.message)) ?
-                            'No se pudo guardar el movimiento. Intente nuevamente.' : response.message;
-                        AlertFactory.textType({
-                            title: '',
-                            message: msg_,
-                            type: 'info'
-                        });
-                    }
-
-                });
-
-            } else {
-                AlertFactory.textType({
-                    title: '',
-                    message: 'Debe registrar Articulos en este movimiento. Intente nuevamente.',
-                    type: 'info'
-                });
-
-            }
-
-        });
-        $scope.ProcesarTransferencia = function () {
-            var id = idTransferenciaProcesar.val();
-            RESTService.get('devolucionOrdenCompras/procesarTransferenciaDevo', id, function (response) {
-                if (!_.isUndefined(response.status) && response.status) {
-                    var dta = response.data;
-                    if (dta[0]['Mensaje'] == "OK") {
-                        AlertFactory.textType({
-                            title: '',
-                            message: 'El registro se procesó con exitó',
-                            type: 'success'
-                        });
-                        p_state.val(1);
-                        procesarTransfBoton.prop('disabled', true);
-                        procesarTransfBoton.trigger('change');
-                        btnguardarMovimiento.prop('disabled', true);
-                        btnguardarMovimiento.trigger('change');
-                        btn_movimiento_detalle.prop('disabled', true);
-                        btn_movimiento_detalle.trigger('change');
-                        modalProcesarTransferencia.modal("hide");
-                        LoadRecordsButtonRegister_Movement.click();
-                    } else {
-                        AlertFactory.textType({
-                            title: '',
-                            message: dta[0]['Mensaje'],
-                            type: 'info'
-                        });
-                        modalProcesarTransferencia.modal("hide");
-
-                    }
-
-                }
-            });
-
-
-
-
-        }
-        function seleccionarModal(codigo, descripcionArt, idTipoArt, serie, lote, costo) {
-            if (idTipoArt == '3') {
-                modalKit.modal('show');
-                $('#cantProductoMK').attr('onkeypress', 'return soloNumeros(event)');
-                desProductoMK.val(descripcionArt);
-                idProductoMK.val(codigo);
-                costoMK.val(costo);
-            } else if (serie == '1') {
-                // $('#cantProductoMS').attr('onkeypress','return soloNumeros(event)');
-                // $('#anio_modeloMS').attr('onkeypress','return soloNumeros(event)');
-                // $('#anio_fabricacionMS').attr('onkeypress','return soloNumeros(event)');
-                desProductoMss.val(descripcionArt);
-                idProductoMss.val(codigo);
-                var str2 = idTipoOperacion.val();
-                // alert(str2);
-                var complet2 = str2.split("*");
-                var nat2 = complet2[1];
-                costoAS.val(costo);
-                if (nat2 == 'S') {
-
-                    btnAgreSer.prop('disabled', true);
-                    btnAgreSer.trigger('change');
-                } else {
-                    btnAgreSer.prop('disabled', false);
-                    btnAgreSer.trigger('change');
-                }
-
-                modalSerieR.modal('show');
-            } else if (lote == '1') {
-                modalLoteR.modal('show');
-                idProductoMll.val(codigo);
-                desProductoMll.val(descripcionArt);
-                costoAL.val(costo);
-            } else {
-                $('#cantProductoMN').attr('onkeypress', 'return soloNumeros(event)');
-                idProductoMN.val(codigo);
-                desProductoMN.val(descripcionArt);
-                modalNada.modal('show');
-                costoNa.val(costo);
-
-            }
-
-        }
-        function addToKit(idArticulo, descripcion, cantidad) {
-
-            var tr = $('<tr id="tr_idArticulo' + idArticulo + '"></tr>');
-            var td1 = $('<td>' + descripcion + '</td>');
-            var td2 = $('<td class="text-center" >' + cantidad + '</td>');
-            tr.append(td1).append(td2);
-            tablekitdetM.append(tr);
-        }
-        function getkitDet(codigo) {
-            RESTService.get('register_movements/getKit', codigo, function (response) {
-                if (!_.isUndefined(response.status) && response.status) {
-                    var data_p = response.data;
-                    _.each(data_p, function (c) {
-                        addToKit(c.idArticulo, c.description, Math.trunc(c.cantidad));
-                    });
-                } else {
-                    AlertFactory.textType({
-                        title: '',
-                        message: 'Hubo un error . Intente nuevamente.',
-                        type: 'error'
-                    });
-                }
-
-            });
-        }
-        function getLocalizacion(idAlmacen) {
-            var id = idAlmacen;
-            RESTService.get('devolucionOrdenCompras/getLocalizacionSelecDevol', id, function (response) {
-                if (!_.isUndefined(response.status) && response.status) {
-                    LocalizacionesSele = response.data;
-                } else {
-                    AlertFactory.textType({
-                        title: '',
-                        message: 'No se pudo  obtener las Localizaciones. Intente nuevamente.',
-                        type: 'info'
-                    });
-                }
-
-            });
-        }
-        function addlocSele(codigo) {
-            var idLocali = $("#" + codigo);
-            idLocali.append('<option value="" selected>Seleccionar</option>');
-            _.each(LocalizacionesSele, function (item) {
-                idLocali.append('<option value="' + item.idLocalizacion + '" >' + item.descripcion + '</option>');
-            });
-
-        }
-        function addAlmaSelec(codigo) {
-            // alert("con usuario");
-            var idAlmacenSele = $("#Al_" + codigo);
-            idAlmacenSele.append('<option value="" selected>Seleccionar</option>');
-            _.each(AlmacenesSele, function (item) {
-                idAlmacenSele.append('<option value="' + item.idAlmacen + '" >' + item.descripcion + '</option>');
-            });
-        }
-
-        function addAlmaTodos(codigo) {
-            var idAlmacenSele = $("#Al_" + codigo);
-            // alert("todos");
-            idAlmacenSele.append('<option value="" selected>Seleccionar</option>');
-            _.each(AlmacenesTodos, function (item) {
-                idAlmacenSele.append('<option value="' + item.idAlmacen + '" >' + item.descripcion + '</option>');
-            });
-        }
-        // function getStock(idl,idAl){
-        //      var id=idl+','+idAl;
-        //      RESTService.get('register_movements/getStockLoc', id, function(response) {
-        //          if (!_.isUndefined(response.status) && response.status) {
-        //             console.log(response.data);
-        //             var stock = Math.trunc(response.data);
-        //             $('#tr_idArticulo'+ idAl).find("td:eq(2)").children("p").text(stock);
-        //          }else {
-        //             AlertFactory.textType({
-        //                 title: '',
-        //                 message: 'Hubo un error al obtener el Stock. Intente nuevamente.',
-        //                 type: 'error'
-        //             });
-        //         }
-
-        //        });
-        // }
-        function getLocaStock(idl, ident, idPrAl, idLocalizacion) {
-            var idLocali = $("#" + ident);
-            var id = idl;
-            console.log(idLocali,"id Localizaciones"); 
-            console.log(naturalezaGeneral,"id algo");
-            RESTService.get('devolucionOrdenCompras/getLocaStockDevol', id, function (response) {
-                if (!_.isUndefined(response.status) && response.status) {
-
-                    idLocali.html('');
-                    idLocali.append('<option value="" selected>Seleccionar</option>');
-                    _.each(response.LocalizacionAlmacen, function (itemdos) {
-                        var stock = 0;
-                        _.each(response.data, function (item) {
-                            if (idPrAl == item.idArticulo && itemdos.idLocalizacion == item.idLocalizacion) {
-                                stock = Math.trunc(item.disponible);
-                            }
-                        });
-                        
-                        console.log(naturalezaGeneral+" <=> "+stock);
-
-                        if (naturalezaGeneral == "S" || naturalezaGeneral == "D" ) { 
-                            console.log("entro validar");
-                            if($("#cCodConsecutivoOS").val() != "") {
-                                if (stock > 0) {
-                                    console.log("entro validar2");
-                                    if (itemdos.idLocalizacion == idLocalizacion) {
-                                        idLocali.append('<option selected value="' + itemdos.idLocalizacion + '" >' + itemdos.descripcion + ' / ' + stock + '</option>');
-                                    } else {
-                                        idLocali.append('<option value="' + itemdos.idLocalizacion + '" >' + itemdos.descripcion + ' / ' + stock + '</option>');
-                                    }
-                                }
-                            }
-                           
-                            // if($("#idventa").val() != "") {
-                               
-                            //     if (itemdos.idLocalizacion == idLocalizacion) {
-                            //         idLocali.append('<option selected value="' + itemdos.idLocalizacion + '" >' + itemdos.descripcion + ' / ' + stock + '</option>');
-                            //     } else {
-                            //         idLocali.append('<option value="' + itemdos.idLocalizacion + '" >' + itemdos.descripcion + ' / ' + stock + '</option>');
-                            //     }
-                                
-                            // }
-                           
-                        } else {
-                            if (itemdos.idLocalizacion == idLocalizacion) {
-
-                                idLocali.append('<option selected value="' + itemdos.idLocalizacion + '" >' + itemdos.descripcion + ' / ' + stock + '</option>');
-                            } else {
-
-                                idLocali.append('<option value="' + itemdos.idLocalizacion + '" >' + itemdos.descripcion + ' / ' + stock + '</option>');
-                            }
-                        }
-                    });
-                } else {
-                    if (naturalezaGeneral != 'C') {
-
-                        AlertFactory.textType({
-                            title: '',
-                            message: 'No se pudo obtener las Localizaciones. Intente nuevamente.',
-                            type: 'info'
-                        });
-                    }
-                }
-
-            });
-        }
-        // function cargar_ordenCompra(esta) {
-        //     if (esta == 'ED') {
-        //         cCodConsecutivoOS.html('');
-        //         cCodConsecutivoOS.append('<option value="">Seleccionar</option>');
-        //         _.each(proformas_completas, function (item) {
-        //             cCodConsecutivoOS.append('<option value="' + item.cCodConsecutivo + '*' + item.nConsecutivo + '*' + item.IdMoneda + '">' + item.cCodConsecutivo + ' ' + item.nConsecutivo + ' ' + item.razonsocial_cliente + ' ' + item.cPlacaVeh + '</option>');
-        //         });
-        //     } else {
-        //         cCodConsecutivoOS.html('');
-        //         cCodConsecutivoOS.append('<option value="">Seleccionar</option>');
-        //         _.each(proformas_completas, function (item) {
-        //             if (item.est == '2' || item.est == '3') {
-        //                 cCodConsecutivoOS.append('<option value="' + item.cCodConsecutivo + '*' + item.nConsecutivo + '*' + item.IdMoneda + '">' + item.cCodConsecutivo + ' ' + item.nConsecutivo + ' ' + item.razonsocial_cliente + ' ' + item.cPlacaVeh + '</option>');
-        //             }
-        //         });
-        //     }
-
-        // }
-        $scope.guardarMovimientoDetalle = function () {
-            var bval = true;
-            if($("#tipo").val() == "P") {
-
-                bval = bval && cCodConsecutivoOS.required();
-            }
-
-            if($("#tipo").val() == "N") {
-
-                bval = bval && $("#idventa").required();
-            }
-            bval = bval && fecha_registro.required();
-            var iChe = 'I';
-            var cont_se = 0;//contador de check de lotes y series 
-            var cont_che = 0;// contador de check selecionados 
-            $(".check_val").each(function () {
-                cont_se = cont_se + 1
-                if ($(this).prop('checked')) {
-                    cont_che = cont_che + 1;
-                }
-            });
-
-            if (bval && articulo_mov_det.html() === '') {
-                AlertFactory.showWarning({
-                    title: '',
-                    message: 'Debe agregar mínimo 1 Artículo'
-                });
-                return false;
-            }
-
-            // alert("bval 1 => "+bval);
-
-            if (naturalezaGeneral == "C") {
-                acodigos.forEach(function (val, index) {
-                    var cosr = $('#cosMs_' + val);
-                    bval = bval && cosr.required();
-                });
-            } else {
-                acodigos.forEach(function (val, index) {
-                    var idAr = $('#Al_' + val);
-                    var idLr = $('#' + val);
-                    var canr = $('#canMs_' + val);
-                    var cosr = $('#cosMs_' + val);
-                    bval = bval && idAr.required();
-                    bval = bval && idLr.required();
-                    bval = bval && canr.required();
-                    bval = bval && cosr.required();
-                });
-            }
-            // alert("bval => "+bval);
-            var precirIn = 'A';
-            if (naturalezaGeneral == "S" || naturalezaGeneral == "A") {
-                acodigos.forEach(function (val, index) {
-                    var preM = $('#preMs_' + val);
-                    bval = bval && preM.required();
-                    console.log("bval => ");
-                    console.log(bval);
-                });
-
-
-                acodigos.forEach(function (val, index) {
-                    var cosr = $('#preMs_' + val).val();
-                    if (cosr <= 0) {
-                        precirIn = 'I';
-                    }
-
-                })
-            };
-           
-            if (precirIn == 'I') {
-                AlertFactory.showWarning({
-                    title: '',
-                    message: 'El precio de los artículos no puede ser menor cero'
-                });
-                precirIn = 'A';
-                return false;
-            }
-            var cosrIn = 'A';
-            acodigos.forEach(function (val, index) {
-                var cosr = $('#cosMs_' + val).val();
-                if (cosr <= 0) {
-                    cosrIn = 'I';
-                }
-
-            })
-            if (cosrIn == 'I') {
-                AlertFactory.showWarning({
-                    title: '',
-                    message: 'El costo de los artículos no puede ser menor cero'
-                });
-                cosrIn = 'A';
-                return false;
-            }
-            var cantrIn = 'A';
-            if (naturalezaGeneral != "C") {
-                acodigos.forEach(function (val, index) {
-                    var cantEn = $('#canMs_' + val).val();
-                    if (cantEn < 1) {
-                        cantrIn = 'I';
-                    }
-
-                });
-            };
-            if (cantrIn == 'I') {
-                AlertFactory.showWarning({
-                    title: '',
-                    message: 'La cantidad de los Articulos no puede ser cero'
-                });
-                cantrIn = 'A';
-                return false;
-            }
-
-            if (cont_che != cont_se) {
-                bval = false;
-                AlertFactory.showWarning({
-                    title: '',
-                    message: 'Debe seleccionar serie o lote para los productos'
-                });
-                return false;
-
-            };
-
-            acodigos.forEach(function (val, index) {
-                var cantP = $('#canMs_' + val).val();
-                var CantV = $('#id_pendi' + val).val();
-                console.log("*****___");
-                console.log(cantP, CantV);
-                console.log("*****___");
-                if (Number(cantP) > Number(CantV)) {
-                    console.log("-------------");
-                    console.log(cantP, CantV);
-                    console.log("-------------");
-                    AlertFactory.showWarning({
-                        title: '',
-                        message: 'La cantidad ingresada no puede ser mayor a la cantidad pendiente',
-                    });
-                    bval = false;
-                }
-            });
-
-
-            if (bval) {
-
-                var idartEnv = [];
-                $.each($('.m_articulo_id'), function (idx, item) {
-                    idartEnv[idx] = $(item).val();
-                });
-
-                idartEnv = idartEnv.join(',');
-                var idalmaEnv = [];
-                $.each($('.m_articulo_idAlm '), function (idx, item) {
-                    idalmaEnv[idx] = $(item).val();
-                });
-
-                idalmaEnv = idalmaEnv.join(',');
-                var idalLocEnv = [];
-                $.each($('.m_articulo_idLoc'), function (idx, item) {
-                    idalLocEnv[idx] = $(item).val();
-                });
-
-                idalLocEnv = idalLocEnv.join(',');
-                var idalcantEnv = [];
-                $.each($('.m_articulo_cantidad'), function (idx, item) {
-                    idalcantEnv[idx] = $(item).val();
-                });
-
-                var identificador_serie_bd = [];
-                $.each($('.identificador_serie_bd'), function (idx, item) {
-                    identificador_serie_bd[idx] = $(item).val();
-                });
-
-                identificador_serie_bd = identificador_serie_bd.join(',');
-
-                idalcantEnv = idalcantEnv.join(',');
-                var idalcostEnv = [];
-                $.each($('.m_articulo_costo'), function (idx, item) {
-                    idalcostEnv[idx] = $(item).val();
-                });
-
-                idalcostEnv = idalcostEnv.join(',');
-                var idalcostotalEnv = [];
-                $.each($('.m_articulo_costoTotal'), function (idx, item) {
-                    idalcostotalEnv[idx] = $(item).val();
-                });
-
-                idalcostotalEnv = idalcostotalEnv.join(',');
-
-                var idalpretEnv = [];
-                $.each($('.m_articulo_precio'), function (idx, item) {
-                    idalpretEnv[idx] = $(item).val();
-                });
-
-                idalpretEnv = idalpretEnv.join(',');
-
-                var idalPrtolEnv = [];
-                $.each($('.m_articulo_precioTotal'), function (idx, item) {
-                    idalPrtolEnv[idx] = $(item).val();
-                });
-
-                idalPrtolEnv = idalPrtolEnv.join(',');
-
-                var idloteEnvi = [];
-                $.each($('.m_codigo_lote'), function (idx, item) {
-                    idloteEnvi[idx] = $(item).val();
-                });
-
-                idloteEnvi = idloteEnvi.join(',');
-
-                var datloteEnvi = [];
-                $.each($('.m_dato_lote'), function (idx, item) {
-                    datloteEnvi[idx] = $(item).val();
-                });
-
-                datloteEnvi = datloteEnvi.join(',');
-                var idProductoSe = [];
-                var serieSe = [];
-                var idSerieSe = [];
-                var cont = 0;
-                var ident_serie_bd_serie = [];
-                aartMSE.map(function (index) {
-                    ident_serie_bd_serie[cont] = index.identificador;
-                    idProductoSe[cont] = index.idProducto;
-                    serieSe[cont] = index.serie;
-                    idSerieSe[cont] = index.idSerie;
-                    cont = cont + 1;
-                })
-                ident_serie_bd_serie = ident_serie_bd_serie.join(",");
-                idProductoSe = idProductoSe.join(',');
-                serieSe = serieSe.join(',');
-                idSerieSe = idSerieSe.join(',');
-
-
-
-                var serieNenv = [];
-                var idProductoSeN = [];
-                var chasiNs = [];
-                var motorNs = [];
-                var anioNFs = [];
-                var anioNVs = [];
-                var colorNs = [];
-                var idTipoCompraVenta = [];
-                var nPoliza = [];
-                var nLoteCompra = [];
-                var cont2 = 0;
-                var ident_serie_bd_serie2 = [];
-                aartMSN.map(function (index) {
-                    ident_serie_bd_serie2[cont2] = index.identificador;
-                    serieNenv[cont2] = index.serie;
-                    idProductoSeN[cont2] = index.idProducto;
-                    chasiNs[cont2] = index.chasis;
-                    motorNs[cont2] = index.motor;
-                    anioNFs[cont2] = index.anio_fabricacion;
-                    anioNVs[cont2] = index.anio_modelo;
-                    colorNs[cont2] = index.color;
-                    idTipoCompraVenta[cont2] = index.idTipoCompraVenta;
-                    nPoliza[cont2] = index.nPoliza;
-                    nLoteCompra[cont2] = index.nLoteCompra;
-                    cont2 = cont2 + 1;
-                })
-                serieNenv = serieNenv.join(',');
-                idProductoSeN = idProductoSeN.join(',');
-                chasiNs = chasiNs.join(',');
-                motorNs = motorNs.join(',');
-                anioNFs = anioNFs.join(',');
-                anioNVs = anioNVs.join(',');
-                colorNs = colorNs.join(',');
-                idTipoCompraVenta = idTipoCompraVenta.join(',');
-                nPoliza = nPoliza.join(',');
-                nLoteCompra = nLoteCompra.join(',');
-                ident_serie_bd_serie2 = ident_serie_bd_serie2.join(",");
-                var ident_det = "";
-                if (articulo_mov_det.html() != '') {
-                    ident_det = "A";
-                };
-
-                var params = {
-                    'art_nada': aartMN,
-                    'idArticulo': idartEnv,
-                    'idAlmacen': idalmaEnv,
-                    'idLocalizacion': idalLocEnv,
-                    'cantidad': idalcantEnv,
-                    'costo': idalcostEnv,
-                    'costo_total': idalcostotalEnv,
-                    'precio': idalpretEnv,
-                    'precio_total': idalPrtolEnv,
-                    'idLote': idloteEnvi,
-                    'dataLote': datloteEnvi,
-
-                    'idProductoSe': idProductoSe,
-                    'serieSe': serieSe,
-                    'idSerieSe': idSerieSe,
-                    'serieNenv': serieNenv,
-                    'idProductoSeN': idProductoSeN,
-                    'chasiNs': chasiNs,
-                    'motorNs': motorNs,
-                    'anioNFs': anioNFs,
-                    'anioNVs': anioNVs,
-                    'colorNs': colorNs,
-                    'ident_detalle': ident_det,
-                    'idTipoCompraVenta': idTipoCompraVenta,
-                    'nPoliza': nPoliza,
-                    'nLoteCompra': nLoteCompra,
-                    'identificador_serie_bd': identificador_serie_bd,
-                    'ident_serie_bd_serie2': ident_serie_bd_serie2,
-                    'ident_serie_bd_serie': ident_serie_bd_serie,
-                    'naturaleza': naturalezaGeneral,
-                };
-
-                var str = idTipoOperacion.val();
-                // alert(str);
-                var complet = str.split("*");
-                var idTO = complet[0];
-                var nat = complet[1];
-                naturalezaGeneral = nat;
-                var val = cCodConsecutivoOS.val();
-                // alert(": "+val);
-                var totRep = val.split('*');
-                var paramsCabezera = {
-                    'idMovimiento': idMovimiento.val(),
-                    'estado': 0,
-                    'fecha_registro': fecha_registro.val(),
-                    'idMoneda': idMoneda.val(),
-                    'observaciones': observaciones.val(),
-                    'idTipoOperacion': idTO,
-                    'nConsecutivo': totRep[1],
-                    'cCodConsecutivo': totRep[0],
-                    'art_nada': aartMN,
-                    'idArticulo': idartEnv,
-                    'idAlmacen': idalmaEnv,
-                    'idLocalizacion': idalLocEnv,
-                    'cantidad': idalcantEnv,
-                    'costo': idalcostEnv,
-                    'costo_total': idalcostotalEnv,
-                    'precio': idalpretEnv,
-                    'precio_total': idalPrtolEnv,
-                    'idLote': idloteEnvi,
-                    'dataLote': datloteEnvi,
-
-                    'idProductoSe': idProductoSe,
-                    'serieSe': serieSe,
-                    'idSerieSe': idSerieSe,
-                    'serieNenv': serieNenv,
-                    'idProductoSeN': idProductoSeN,
-                    'chasiNs': chasiNs,
-                    'motorNs': motorNs,
-                    'anioNFs': anioNFs,
-                    'anioNVs': anioNVs,
-                    'colorNs': colorNs,
-                    'ident_detalle': ident_det,
-                    'idTipoCompraVenta': idTipoCompraVenta,
-                    'nPoliza': nPoliza,
-                    'nLoteCompra': nLoteCompra,
-                    'identificador_serie_bd': identificador_serie_bd,
-                    'ident_serie_bd_serie2': ident_serie_bd_serie2,
-                    'ident_serie_bd_serie': ident_serie_bd_serie,
-                    'naturaleza': naturalezaGeneral,
-                    'documento': $("#documento").val(),
-                };
-                var movimiento_id = (idMovimiento.val() === '') ? 0 : idMovimiento.val();
-                
-                RESTService.updated('devolucionOrdenCompras/saveEntrega', movimiento_id, paramsCabezera, function (response) {
-                    if (!_.isUndefined(response.status) && response.status) {
-                        titlemodalMovimieto.html('Nueva Devolución ' + '[' + response.code + ']');
-                        AlertFactory.textType({
-                            title: '',
-                            message: 'El registro se guardó correctamente',
-                            type: 'success'
-                        });
-                        cCodConsecutivoOS.prop('disabled', true);
-                        procesarTransfBoton.prop('disabled', false);
-                        procesarTransfBoton.trigger('change');
-
-                        var natudata = idTipoOperacion.val();
-                        // alert(natudata);
-
-                        var co = natudata.split('*');
-                        var na = co[1];
-                        idNaturaleza.val(na);
-                        idMovimiento.val(response.code);
-                        p_state.val(response.estado).trigger('change');
-                        btn_movimiento_detalle.prop('disabled', false);
-                        btn_movimiento_detalle.trigger('change');
-                        findRegister_movement(response.code);
-                        LoadRecordsButtonRegister_Movement.click();
-                    } else {
-                        var msg_ = (_.isUndefined(response.message)) ?
-                            'No se pudo guardar el movimiento. Intente nuevamente.' : response.message;
-                        AlertFactory.textType({
-                            title: '',
-                            message: msg_,
-                            type: 'info'
-                        });
-                    }
-                });
-
-                // var id_Movimiento = (idMovimiento.val() === '') ? 0 : idMovimiento.val();
-                // RESTService.updated('register_movements/saveMovimientArticulo',id_Movimiento, params, function(response) {
-                //     if (!_.isUndefined(response.status) && response.status) {
-                //         AlertFactory.textType({
-                //             title: '',
-                //             message: 'El registro se guardó correctamente',
-                //             type: 'success'
-                //         });
-                //         procesarTransfBoton.prop('disabled',false);
-                //         procesarTransfBoton.trigger('change');
-                //          LoadRecordsButtonRegister_Movement.click();
-                //     } else {
-                //         var msg_ = (_.isUndefined(response.message)) ?
-                //             'No se pudo guardar el movimiento. Intente nuevamente.' : response.message;
-                //         AlertFactory.textType({
-                //             title: '',
-                //             message: msg_,
-                //             type: 'info'
-                //         });
-                //     }
-                // });
-
-            }
-        }
-
-        function addArticuloTable(idDetalle,idProducto, desProducto, cantProducto, ver, codigo, tipo, codl, datl, idAlmacen, idLocalizacion, costo, costo_total, precio, presio_total, cantidaPD) {
-            acodigos.push(codigo);
-            console.log(idProducto, desProducto, cantProducto, ver, codigo, tipo, codl, datl, idAlmacen, idLocalizacion, costo, costo_total, precio, presio_total, cantidaPD,'data articulo');
-
-            var costonew = 0;
-            var precionew = 0;
-
-            if (costo != 0 || costo != "") {
-                costonew = Number(costo);
-            };
-            if (precio != 0 || precio != "") {
-                precionew = Number(precio);
-            };
-
-            var impor = Number(cantProducto) * Number(costonew);
-            var pretotal = Number(cantProducto) * Number(precionew);
-            if (naturalezaGeneral == "C") {
-                impor = 0;
-            }
-            var tr = $('<tr id="tr_idArticulo' + codigo + '"></tr>');
-            var td1 = $('<td>' + desProducto + '</td>');
-
-
-            var td3;
-            var inp3;
-            if (naturalezaGeneral == "S" || naturalezaGeneral == 'R' || naturalezaGeneral == "A") {
-                var tdpr = $('<td></td>');
-                var inpr = $('<input type="number" id="preMs_' + codigo + '" min="1" class="m_articulo_precio form-control input-sm" value="' + precionew + '" readonly/>');
-            } else {
-                precionew = "";
-                var tdpr = $('<td><p>' + precionew + '</p></td>');
-                var inpr = $('<input type="hidden" id="preMs_' + codigo + '" min="1" class="m_articulo_precio form-control input-sm" value="' + precionew + '" />');
-            }
-
-            if (naturalezaGeneral == "E" || naturalezaGeneral == "C") {
-                var td4 = $('<td></td>');
-                var inp4 = $('<input type="number" id="cosMs_' + codigo + '" min="1" class="m_articulo_costo form-control input-sm" value="' + costonew + '" />');
-            } else {
-                var td4 = $('<td><p>' + costonew + '</p></td>');
-                var inp4 = $('<input type="hidden" id="cosMs_' + codigo + '" min="1" class="m_articulo_costo form-control input-sm" value="' + costonew + '" />');
-            }
-
-            if (naturalezaGeneral == "C") {
-                var tdy = $('<td></td>');
-                var td2 = $('<td></td>');
-                var inpy = $('<select  data-arts="' + idProducto + '" id="Al_' + codigo + '" data-idAraAl="' + codigo + '" class="m_articulo_idAlm form-control input-sm" disabled></select>');
-                var inpl = $('<select id="' + codigo + '" data-idArl="' + idProducto + '" class="m_articulo_idLoc form-control input-sm" disabled ></select>');
-                var td3 = $('<td><p></p></td>');
-                var inp3 = $('<input type="hidden" id="canMs_' + codigo + '" class="m_articulo_cantidad" value="0" />');
-            } else {
-                if (ver == 'A') {
-                    var td3 = $('<td class="text-center"></td>');
-                    var inp3 = $('<input type="text" id="canMs_' + codigo + '" onkeypress="return soloNumeros(event)" class="m_articulo_cantidad form-control input-sm" value="' + cantProducto + '" />');
-                } else {
-                    var td3 = $('<td><p>' + cantProducto + '</p></td>');
-                    var inp3 = $('<input type="hidden" id="canMs_' + codigo + '" class="m_articulo_cantidad" value="' + cantProducto + '" />');
-                }
-                var td2 = $('<td></td>');
-                var tdy = $('<td></td>');
-                var inpy = $('<select  data-arts="' + idProducto + '" id="Al_' + codigo + '" data-idAraAl="' + codigo + '" class="m_articulo_idAlm form-control input-sm"></select>');
-                var inpl = $('<select id="' + codigo + '" data-idArl="' + idProducto + '" class="m_articulo_idLoc form-control input-sm"></select>');
-
-            }
-
-
-            var td5 = $('<td><p>' + impor.toFixed(2) + '</p></td>');
-            // var tdpreT = $('<td><p>'+pretotal.toFixed(2) +'</p></td>');
-            var tdCantPen = $('<td><p>' + cantidaPD + '</p></td>');
-            var inp = $('<input type="hidden" class="m_articulo_id" value="' + idProducto + '" />');
-            var inPendiente = $('<input type="hidden" id="id_pendi' + codigo + '" class="" value="' + cantidaPD + '" />');
-            var inp5 = $('<input type="hidden" class="m_articulo_costoTotal" value="' + impor.toFixed(2) + '" />');
-            var inpPreTo = $('<input type="hidden" class="m_articulo_precioTotal" value="' + pretotal.toFixed(2) + '" />');
-            var inpPend = $('<input type="hidden" class="m_pendiente_entregar" value="' + pretotal.toFixed(2) + '" />');
-            var checkeado = '';
-            if (tipo == 'NA' || idAlmacen != '') {
-                checkeado = 'checked';
-            };
-            var tdCheck = $('<td><label class="checkbox-inline i-checks idRevision"><input id="" class="id_RevisionDet"  type="hidden" value="0" ><input id="id_check' + codigo + '" class="check_val"  type="checkbox" ' + checkeado + ' disabled></label></td>');
-            var op = $('<option value="" selected>Seleccione</option>');
-            var fclt = $('<input type="hidden" id="idLEn' + codigo + '"  class="m_codigo_lote" value="' + codl + '" />');
-            var fdlt = $('<input type="hidden" class="m_dato_lote" value="' + datl + '" />');
-            var identificador_serie_bd = $('<input type="hidden" class="identificador_serie_bd" value="' + codigo + '" />');
-            td1.append(inp).append(fclt).append(fdlt).append(identificador_serie_bd);;
-            td2.append(inpy);
-            tdy.append(inpl);
-            td3.append(inp3);
-            td4.append(inp4);
-            td5.append(inp5);
-            tdpr.append(inpr).append(inpPreTo);
-            tdCantPen.append(inpPend).append(inPendiente);
-            // tdpreT
-            var td6 = $('<td class="text-center"></td>');
-            var btn1 = $('<button class="btn btn-info btn-xs verUpdate" id="btn_ver' + codigo + '" title="añadir" data-cantiShow="' + cantProducto + '" data-descrip="' + desProducto + '" data-idProducto="' + idProducto + '" data-tShow="' + tipo + '" data-idv="' + codigo + '" data-lote="' + datl + '" type="button"><span class="fa fa-eye"></span></button>');
-            var td8 = $('<td class="text-center"></td>');
-            var btn3 = $('<button class="btn btn-danger btn-xs delMovPro" data-idDetalle="' + idDetalle + '" data-tipo="' + tipo + '" title="Eliminar" data-id="' + codigo + '" type="button"><span class="fa fa-trash"></span></button>');
-            td6.append(btn1);
-            td8.append(btn3);
-            tr.append(td1).append(td2).append(tdy).append(td3).append(tdCantPen).append(td4).append(td5).append(tdpr).append(tdCheck).append(td6).append(td8);
-            articulo_mov_det.append(tr);
-
-            // console.log($("#cCodConsecutivoOS").val()+"<=>"+$("#idventa").val());
-            // if($("#cCodConsecutivoOS").val() != "") {
-            //     addAlmaSelec(codigo);
-            // }
-           
-            // if($("#idventa").val() != "") {
-            //     addAlmaTodos(codigo);
-            // }
-           
-            // addlocSele(codigo);
-
-            addAlmaSelec(codigo);
-            addlocSele(codigo);
-
-            $('.i-checks').iCheck({
-                checkboxClass: 'icheckbox_square-green'
-            }).on('ifChanged', function (event) {
-                $(event.target).click();
-
-            }); 
-
-            $('.verUpdate').click(function (e) {
-                var tipShow = $(this).attr('data-tShow');
-                var codeShow = $(this).attr('data-idv');
-                var idProduc = $(this).attr('data-idProducto');
-                var descrip = $(this).attr('data-descrip');
-                var cantshow = $(this).attr('data-cantiShow');
-                var data_lote = $(this).attr('data-lote');
-
-                if (tipShow == "SE") {
-
-                    cantProductoMss.val($("#tr_idArticulo" + codeShow).find("td:eq(3)").children("input").val());
-                    desProductoMss.val(descrip);
-                    idProductoMss.val(idProduc);
-                    // btnAgreSer.prop('disabled',true);
-                    btnAgreSer.trigger('change');
-                    btn_serC.prop('disabled', false);
-                    btn_serC.trigger('change');
-                    identSerAr.val(codeShow);
-                    if (identiSelec == "A") {
-                        table_container_cc4.jtable('destroy');
-                    }
-                    codigo_actual = codeShow;
-
-                    cargarTableSerie(idProduc, aartMSE);
-
-                    modalSerieR.modal('show');
-
-                } else if (tipShow == "SN") {
-                    cantProductoMss.val($("#tr_idArticulo" + codeShow).find("td:eq(3)").children("input").val());
-                    desProductoMss.val(descrip);
-                    idProductoMss.val(idProduc);
-                    btnSeleSerie.prop('disabled', true);
-                    btnSeleSerie.trigger('change');
-                    btn_serC.prop('disabled', false);
-                    btn_serC.trigger('change');
-                    create_caTableSer();
-                    identSerAr.val(codeShow);
-                    addSerieTable(idProductoMss.val(), desProductoMss.val(), cantProductoMss.val(), colorMS, chasisMS, motorMS, anio_modeloMS, anio_fabricacionMS)
-                    modalSerieR.modal('show');
-                } else if (tipShow == "LE") {
-                    codigo_actual = codeShow;
-                    codigoLoteMll.val(data_lote);
-                    if ($('#id_check' + codigo_actual).prop('checked')) {
-                        console.log("che");
-                    } else {
-                        getlotes();
-                    }
-
-                    modalLoteR.modal('show');
-                    idProductoMll.val(idProduc);
-                    desProductoMll.val(descrip);
-                    cantProductoMll.val(cantshow);
-                    // idLoteMll2.val("");
-                    // // codigoLoteMll.prop("readonly",true);
-                    // codigoLoteMll.trigger('change');
-                    // aartMLE.map(function(index) {
-                    //     if(index.identificador==codeShow){
-                    //          codigoLoteMll.val(index.codig_lote);
-                    //          fechaVl.val(index.fecha_vencimiento);
-                    //          cantProductoMll.val($("#tr_idArticulo"+codeShow).find("td:eq(3)").children("input").val());
-                    //     }
-
-                    // })
-                    // console.log(aartMLE);
-
-                } else if (tipShow == "LN") {
-                    idProductoML.val(idProduc);
-                    desProductoML.val(descrip);
-                    idLoteML2.val(codeShow);
-                    aartML.map(function (index) {
-                        if (index.identificador == codeShow) {
-                            lotProductoML.val(index.lote);
-                            fIngrePrML.val(index.fecha_ingreso);
-                            cantProductoML.val($("#tr_idArticulo" + codeShow).find("td:eq(3)").children("input").val());
-                            fVenPrML.val(index.fecha_vencimiento);
-                        }
-                    })
-                    modalLote.modal("show");
-                }
-
-            });
-
-            $('.delMovPro').click(function (e) {
-                var code = $(this).attr('data-id');
-                var tip = $(this).attr('data-tipo');
-                var idDetalle = $(this).attr('data-idDetalle');
-                 if($("#p_state").val()!=0){
-                     AlertFactory.textType({
-                                title: '',
-                                message: 'Solo se puede eliminar artículos de una devolución en estado registrado',
-                                type: 'info'
-                        });
-                    return false; 
-                 }
-                AlertFactory.confirm({
-                    title: '',
-                    message: '¿Está seguro que desea quitar este Artículo?',
-                    confirm: 'Si',
-                    cancel: 'No'
-                }, function () {
-                    if (tip == "NA") {
-                        var arrTna = aartMN.filter(function (car) {
-                            return car.identificador !== code;
-                        })
-                        aartMN = arrTna;
-                    } else if (tip == "K") {
-                        var arrTK = aartMK.filter(function (car) {
-                            return car.identificador !== code;
-                        })
-                        aartMK = arrTK;
-                    } else if (tip == "LE") {
-                        var arrTLE = aartMLE.filter(function (car) {
-                            return car.identificador !== code;
-                        })
-                        aartMLE = arrTLE;
-                    } else if (tip == "LN") {
-                        var arrTLN = aartML.filter(function (car) {
-                            return car.identificador !== code;
-                        })
-                        aartML = arrTLN;
-                    } else if (tip == "SN") {
-                        var arrTSN = aartMSN.filter(function (car) {
-                            return car.identificador !== code;
-                        })
-                        aartMSN = arrTSN;
-                    } else if (tip == "SE") {
-                        var arrTSE = aartMSE.filter(function (car) {
-                            return car.identificador !== code;
-                        })
-                        aartMSE = arrTSE;
-                    }
-                    console.log("gggggggggggggg");
-                    console.log(idMovimiento.val());
-                    console.log(idDetalle);
-                    console.log("gggggggggggggg");
-                    if(idMovimiento.val()!='' && idDetalle!=0){
-                        var id=idMovimiento.val()+'_'+idDetalle;
-                        RESTService.get('devolucionOrdenCompras/deleteDetalleST', id, function(response) {
-                        if (!_.isUndefined(response.status) && response.status) {
-                                   AlertFactory.textType({
-                                    title: '',
-                                    message: 'El Articulo se eliminó correctamente',
-                                    type: 'success'
-                                });
-                            }else {
-                                var msg_ = (_.isUndefined(response.message)) ?
-                                'No se pudo eliminar. Intente nuevamente.' : response.message;
-                                    AlertFactory.textType({
-                                        title: '',
-                                        message: msg_,
-                                        type: 'error'
-                                    });
-                            }
-                        });
-                    }
-                    $('#tr_idArticulo' + code).remove();
-
-                });
-                e.preventDefault();
-            });
-            $('.addMovPro').click(function (e) {
-                var idArticuloAl = $(this).attr('data-ida');
-                modalAlmacenArticulo.modal('show');
-                $('#search_cc3').val('');
-                $('#LoadRecordsButtonCC3').click();
-                e.preventDefault();
-            });
-            // $('.m_articulo_idLoc').change(function (e) {
-            //     var idl = $(this).val();
-            //     var idAl=$(this).attr('data-idArl');
-            //     var stock=getStock(idl,idAl);
-            //     e.preventDefault();
-            // });
-            $('.m_articulo_idAlm').change(function (e) {
-                var idl = $(this).val();
-                var ident = $(this).attr('data-idAraAl');
-                var idPrAl = $(this).attr('data-arts');
-
-                getLocaStock(idl, ident, idPrAl, idLocalizacion);
-                e.preventDefault();
-            });
-            $('.m_articulo_cantidad').keyup(function (e) {
-
-                var cantidap = $(this).val();
-                var costo = $(this).closest("tr").find("td:eq(5)").children("input").val();
-                console.log(costo);
-                var importe = Number(cantidap) * Number(costo);
-                $(this).closest("tr").find("td:eq(6)").children("p").text(importe.toFixed(2));
-                $(this).closest("tr").find("td:eq(6)").children("input").val(importe.toFixed(2));
-                if (naturalezaGeneral == "S" || naturalezaGeneral == "A") {
-                    // var preciUni = $(this).closest("tr").find("td:eq(6)").children("input").val();
-                    // var precioTotal = Number(cantidap) * Number(preciUni);
-                    // $(this).closest("tr").find("td:eq(7)").children("p").text(precioTotal.toFixed(2));
-                    // $(this).closest("tr").find("td:eq(7)").children("input").val(precioTotal.toFixed(2));
-                }
-            })
-            $('.m_articulo_precio').keyup(function (e) {
-                var preciop = $(this).val();
-                var cantidad = $(this).closest("tr").find("td:eq(3)").children("input").val();
-                var precioTotal = Number(cantidad) * Number(preciop);
-                $(this).closest("tr").find("td:eq(7)").children("p").text(precioTotal.toFixed(2));
-                $(this).closest("tr").find("td:eq(7)").children("input").val(precioTotal.toFixed(2));
-            })
-
-            $('.m_articulo_precio').change(function (e) {
-                var preciop = $(this).val();
-                var cantidad = $(this).closest("tr").find("td:eq(3)").children("input").val();
-                var precioTotal = Number(cantidad) * Number(preciop);
-                $(this).closest("tr").find("td:eq(7)").children("p").text(precioTotal.toFixed(2));
-                $(this).closest("tr").find("td:eq(7)").children("input").val(precioTotal.toFixed(2));
-            })
-
-            $('.m_articulo_costo').keyup(function (e) {
-                var costop = $(this).val();
-                var cantidad = $(this).closest("tr").find("td:eq(3)").children("input").val();
-                var importe = Number(cantidad) * Number(costop);
-                $(this).closest("tr").find("td:eq(5)").children("p").text(importe.toFixed(2));
-                $(this).closest("tr").find("td:eq(5)").children("input").val(importe.toFixed(2));
-            })
-            $('#cosMs_' + codigo).change(function (e) {
-                var costop = $(this).val();
-                var cantidad = $(this).closest("tr").find("td:eq(3)").children("input").val();
-                var importe = Number(cantidad) * Number(costop);
-                $(this).closest("tr").find("td:eq(5)").children("p").text(importe.toFixed(2));
-                $(this).closest("tr").find("td:eq(5)").children("input").val(importe.toFixed(2));
-            })
-            if (idAlmacen != "") {
-                $("#Al_" + codigo).val(idAlmacen).trigger('change');
-                $("#" + codigo).val(idLocalizacion).trigger('change');
-
-                $("#cosMs_" + codigo).val(Number(costo));
-                var cos = Number(costo_total);
-                $("#tr_idArticulo" + codigo).find("td:eq(5)").children("p").text(cos);
-                $("#tr_idArticulo" + codigo).find("td:eq(5)").children("input").val(cos);
-            };
-
-        }
-        $scope.addtableSerie = function () {
-            if (identiSelec == "A") {
-                table_container_cc4.jtable('destroy');
-            }
-            identiSelec = "I";
-            var bval = true;
-            bval = bval && cantProductoMss.required();
-            if (bval) {
-                create_caTableSer();
-                addSerieTable(idProductoMss.val(), desProductoMss.val(), cantProductoMss.val(), colorMS, chasisMS, motorMS, anio_modeloMS, anio_fabricacionMS)
-            }
-        }
-        function create_caTableSer() {
-            table_serie_cabecera.html("");
-            btn_serC.prop('disabled', false);
-            btn_serC.trigger('change');
-            var html = "<tr>";
-            html += "<th width='250px'>Artículo</th>";
-            html += "<th width='250px' height='20px'>Nr° Serie</th>";
-            html += " <th width='250px' height='20px'>Chasis</th>";
-            html += "<th width='200px' height='20px'>Motor</th>";
-            html += "<th width='100px' height='20px'>Color</th>";
-            html += "<th width='100px' height='20px'>Año fabricación</th>";
-            html += "<th width='100px' height='20px'>Año Modelo</th>";
-            html += "<th width='200px' height='20px'>Tipo Compra</th>";
-            html += "<th width='100px' height='20px'>N° Poliza</th>";
-            html += "<th width='100px' height='20px'>N° Lote</th>";
-            html += "</tr>";
-            table_serie_cabecera.append(html);
-        }
-        $scope.addSerieCompleTab = function () {
-            var bval = true;
-            var cant = cantProductoMss.val();
-            bval = bval && cantProductoMss.required();
-
-            if (bval) {
-
-                if (identiSelec == "A") {
-                    var conta1 = 0;
-                    $(".valcheck:checked").each(function () {
-                        conta1 = conta1 + 1
-                    });
-                    if (cant == conta1) {
-                        if (identSerAr.val() != "") {
-                            var updteSe = aartMSE.filter(function (car) {
-                                return car.identificador !== identSerAr.val();
-                            })
-                            aartMSE = updteSe;
-                            $(".check:checkbox:checked").each(function () {
-                                var grubSE = {
-                                    'identificador': identSerAr.val(),
-                                    'idProducto': idProductoMss.val(),
-                                    'serie': $(this).attr('data-code'),
-                                    'idSerie': $(this).attr('data_idSerie'),
-                                    'cantidad': cantProductoMss.val(),
-                                }
-                                aartMSE.push(grubSE);
-                            });
-
-                            $("#id_check" + codigo_actual).prop("checked", true);
-
-                            $('.i-checks').iCheck({
-                                checkboxClass: 'icheckbox_square-green'
-                            }).on('ifChanged', function (event) {
-                                $(event.target).click();
-
-                            });
-                            $("#tr_idArticulo" + identSerAr.val()).find("td:eq(3)").children("p").text(cantProductoMss.val());
-                            $("#tr_idArticulo" + identSerAr.val()).find("td:eq(3)").children("input").val(cantProductoMss.val());
-                            modalSerieR.modal("hide");
-                            modalMovimietoArticulo.modal("hide");
-                        } else {
-                            var vers = 'N';
-                            var codigoLSr = Math.random().toString(36).substr(2, 18);
-                            var tipoArtLSr = 'SE';
-                            $(".check:checkbox:checked").each(function () {
-                                var grubSE = {
-                                    'identificador': codigoLSr,
-                                    'idProducto': idProductoMss.val(),
-                                    'serie': $(this).attr('data-code'),
-                                    'idSerie': $(this).attr('data_idSerie'),
-                                    'cantidad': cantProductoMss.val(),
-                                }
-                                aartMSE.push(grubSE);
-                            });
-                            var codl = "";
-                            var datl = "";
-                            var idAlmacen = "";
-                            var idLocalizacion = "";
-                            var costo = costoAS.val();
-                            var costo_total = "";
-                            var precio = "";
-                            var precioTotal = "";
-                            var idDetalle=0;
-                            addArticuloTable(idDetalle,idProductoMss.val(), desProductoMss.val(), cantProductoMss.val(), vers, codigoLSr, tipoArtLSr, codl, datl, idAlmacen, idLocalizacion, costo, costo_total, precio, precioTotal);
-                            modalSerieR.modal("hide");
-                            modalMovimietoArticulo.modal("hide");
-
-                        }
-                    } else {
-                        AlertFactory.textType({
-                            title: '',
-                            message: 'Las series seleccionadas debe ser igual a la cantidad AV',
-                            type: 'info'
-                        });
-                    }
-                }
-                else {
-
-
-                    var camposunicos = [];
-                    var vali = "";
-
-                    for (var i = 0; i < cant; i++) {
-                        var ident = "#s_serie" + i;
-                        var ident = $(ident);
-                        bval = bval && ident.required();
-                    }
-                    for (var i = 0; i < cant; i++) {
-                        var ident = "#s_serie" + i;
-                        var ident = $(ident).val();
-                        camposunicos.push(ident);
-                    }
-                    for (var i = 0; i < cant; i++) {
-                        var ident = "#s_serie" + i;
-                        var ident = $(ident).val();
-                        var ctr = 0;
-                        for (var e in camposunicos) {
-                            if (camposunicos[e] == ident) {
-                                ctr = ctr + 1;
-                                if (ctr == 2) {
-                                    vali = ident;
-                                    break;
-                                }
-                            }
-
-                        }
-                    }
-
-
-                    if (vali != "") {
-                        AlertFactory.textType({
-                            title: '',
-                            message: 'La serie ' + vali + ' ya existe en esta lista',
-                            type: 'info'
-                        });
-                        return false;
-                    }
-
-                    // var validaSerie="";
-                    // var val="";
-                    // for (var i = 0; i < cant ; i++) {
-                    //         var ident="#s_serie"+i;
-                    //         var ident=$(ident);
-
-                    //         validaSerie= aartMSN.map(function(index) {
-                    //          if(identSerAr.val()!=''){
-
-                    //             if(index.serie==ident.val()){
-
-                    //                   if(index.identificador!=identSerAr.val()){
-
-                    //                         if(val==""){
-
-                    //                             val=index.serie;
-                    //                         }
-                    //                   }
-                    //             }
-                    //          }else{
-                    //              if(index.serie==ident.val()){
-                    //                if(val==""){
-
-                    //                     val=index.serie;
-                    //                 }
-                    //              }
-                    //          }   
-
-                    //       })
-                    // } 
-                    // if(val!=""){
-                    //  AlertFactory.textType({
-                    //                 title: '',
-                    //                 message: 'La serie ' +val+ ' ya existe en este movimiento',
-                    //                 type: 'info'
-                    //     });
-                    //  return false;
-                    // }; 
-
-                    if (bval) {
-
-                        camposunicos = camposunicos.join(',');
-
-
-                        RESTService.get('devolucionOrdenCompras/valida_series_serveDevo', camposunicos, function (response) {
-                            if (!_.isUndefined(response.status) && response.status) {
-
-                                if (cant == cont_table) {
-                                    var nombreSerie = [];
-                                    var chasis = [];
-                                    var motor = [];
-                                    var anio_fabricacion = [];
-                                    var anio_modelo = [];
-                                    var color = [];
-                                    var idTipoCompraVenta = [];
-                                    var nPoliza = [];
-                                    var nLoteCompra = [];
-                                    for (var i = 0; i < cant; i++) {
-                                        nombreSerie[i] = $("#s_serie" + i).val();
-                                        chasis[i] = $("#s_chasis" + i).val();
-                                        motor[i] = $("#s_motor" + i).val();
-                                        anio_fabricacion[i] = $("#s_aniof" + i).val();
-                                        anio_modelo[i] = $("#s_aniom" + i).val();
-                                        color[i] = $("#s_color" + i).val();
-                                        idTipoCompraVenta[i] = $("#s_tipoCompra" + i).val();
-                                        nPoliza[i] = $("#s_nroPoliza" + i).val();
-                                        nLoteCompra[i] = $("#s_nroLote" + i).val();
-                                    };
-
-
-                                    nombreSerie = nombreSerie.join(',');
-                                    chasis = chasis.join(',');
-
-                                    motor = motor.join(',');
-
-                                    anio_fabricacion = anio_fabricacion.join(',');
-
-                                    anio_modelo = anio_modelo.join(',');
-
-                                    color = color.join(',');
-
-                                    idTipoCompraVenta = idTipoCompraVenta.join(',');
-                                    nPoliza = nPoliza.join(',');
-
-                                    nLoteCompra = nLoteCompra.join(',');
-                                    var params = {
-                                        'nombreSerie': nombreSerie,
-                                        'idArticulo': idProductoMss.val(),
-                                        'chasis': chasis,
-                                        'motor': motor,
-                                        'anio_fabricacion': anio_fabricacion,
-                                        'anio_modelo': anio_modelo,
-                                        'color': color,
-                                        'idTipoCompraVenta': idTipoCompraVenta,
-                                        'nPoliza': nPoliza,
-                                        'nLoteCompra': nLoteCompra,
-                                    };
-
-                                    var loteIde_id = 0;
-                                    RESTService.updated('devolucionOrdenCompras/createserie_variosDevolu', loteIde_id, params, function (response) {
-                                        if (!_.isUndefined(response.status) && response.status) {
-                                            var idSeries = response.idSeries;
-                                            var cod_series = response.cod_series;
-                                            console.log("----");
-                                            console.log(idSeries, cod_series, identSerAr.val(), cant, idProductoMss.val());
-                                            console.log("----");
-                                            var updteSe = aartMSE.filter(function (car) {
-                                                return car.identificador !== identSerAr.val();
-                                            })
-                                            aartMSE = updteSe;
-                                            console.log("entrastotal1");
-                                            for (var i = 0; i < idSeries; i++) {
-                                                console.log("dd");
-                                                var grubSE = {
-                                                    'identificador': identSerAr.val(),
-                                                    'idProducto': idProductoMss.val(),
-                                                    'serie': cod_series[i],
-                                                    'idSerie': idSeries[i],
-                                                    'cantidad': cant,
-                                                }
-                                                aartMSE.push(grubSE);
-                                            };
-                                            console.log("entrastotal1");
-                                            $("#id_check" + codigo_actual).prop("checked", true);
-
-                                            $('.i-checks').iCheck({
-                                                checkboxClass: 'icheckbox_square-green'
-                                            }).on('ifChanged', function (event) {
-                                                $(event.target).click();
-
-                                            });
-                                            $("#tr_idArticulo" + identSerAr.val()).find("td:eq(3)").children("p").text(cantProductoMss.val());
-                                            $("#tr_idArticulo" + identSerAr.val()).find("td:eq(3)").children("input").val(cantProductoMss.val());
-                                            modalSerieR.modal("hide");
-                                            modalMovimietoArticulo.modal("hide");
-                                        } else {
-                                            AlertFactory.textType({
-                                                title: '',
-                                                message: 'Hubo un error al guardar las series. Intente nuevamente.',
-                                                type: 'error'
-                                            });
-                                        }
-                                    });
-
-                                } else {
-                                    AlertFactory.textType({
-                                        title: '',
-                                        message: 'Las series  debe ser igual a la cantidad A',
-                                        type: 'info'
-                                    });
-                                }
-                            } else {
-                                var msg_ = (_.isUndefined(response.message)) ?
-                                    'No se pudo guardar la Serie. Intente nuevamente.' : response.message;
-                                AlertFactory.textType({
-                                    title: '',
-                                    message: msg_,
-                                    type: 'info'
-                                });
-
-                            }
-                        });
-
-
-                    }
-                }
-            }
-
-
-        }
-        $scope.addLoteExi = function () {
-            var bval = true;
-            // bval = bval && cantProductoMll.required();
-            bval = bval && codigoLoteMll.required();
-            if (bval) {
-                // var ver ='A';
-                // var codigoLr=Math.random().toString(36).substr(2, 18);
-                // var tipoArtLr='LE';
-                // var grubLE={
-                //        'identificador': codigoLr,
-                //        'idProducto':idProductoMll.val(),
-                //        'idLote':idLoteMll .val(),
-                //        'fecha_vencimiento':fechaVl.val(),
-                //        'codig_lote': codigoLoteMll.val(),
-                // }
-                // aartMLE.push(grubLE);
-                // var codl=idLoteMll.val();
-                // var datl="";
-                // var datl="";
-                // var idAlmacen="";
-                // var idLocalizacion="";
-                // var costo=costoAL.val();
-                // var costo_total="";
-                // var precio="";
-                // var precioTotal="";
-                // console.log(aartMLE);
-
-                $("#btn_ver" + codigo_actual).attr('data-lote', codigoLoteMll.val());
-                $("#id_check" + codigo_actual).prop("checked", true);
-                $('.i-checks').iCheck({
-                    checkboxClass: 'icheckbox_square-green'
-                }).on('ifChanged', function (event) {
-                    $(event.target).click();
-
-                });
-                // addArticuloTable(idProductoMll.val(),desProductoMll.val(),cantProductoMll.val(),ver,codigoLr,tipoArtLr,codl,datl,idAlmacen,idLocalizacion,costo,costo_total,precio,precioTotal);
-                modalLoteR.modal('hide');
-                modalMovimietoArticulo.modal('hide');
-            }
-
-        }
-        $scope.EliminarMovimiento = function () {
-            var id = idMovimientoDelete.val();
-            RESTService.get('devolucionOrdenCompras/deleteDevol', id, function (response) {
-                if (!_.isUndefined(response.status) && response.status) {
-                    var dta = response.data;
-                    if (dta[0]['Mensaje'] != "") {
-                        AlertFactory.textType({
-                            title: '',
-                            message: dta[0]['Mensaje'],
-                            type: 'info'
-                        });
-                        modalDeleteMovimiento.modal("hide");
-                    } else {
-                        AlertFactory.textType({
-                            title: '',
-                            message: 'El registro se eliminó correctamente',
-                            type: 'success'
-                        });
-                        modalDeleteMovimiento.modal("hide");
-                        LoadRecordsButtonRegister_Movement.click();
-                    }
-
-
-                }
-            });
-
-
-
-
-        }
-        $scope.addSeleccSerie = function () {
-            table_serie_cabecera.html("");
-            articulo_serie_det.html("");
-
-            var bval = true;
-            bval = bval && cantProductoMss.required();
-            if (bval) {
-                var id = idProductoMss.val() + '*' + cantProductoMss.val();
-                RESTService.get('devolucionOrdenCompras/validateCantSerieDevol', id, function (response) {
-                    if (!_.isUndefined(response.status) && response.status) {
-                        if (response.data == 'N') {
-                            AlertFactory.textType({
-                                title: '',
-                                message: 'No hay series de este Artículo ',
-                                type: 'info'
-                            });
-                        }
-                        else if (response.data == 'S') {
-                            AlertFactory.textType({
-                                title: '',
-                                message: 'Existen solo ' + response.cantidad + ' series de este Artículo . Ingrese Nueva cantidad.',
-                                type: 'info'
-                            });
-                        } else {
-                            identiSelec = "A";
-                            cargarTableSerie(idProductoMss.val(), aartMSE);
-                            btn_serC.prop('disabled', false);
-                            btn_serC.trigger('change');
-
-                        }
-                    } else {
-                        AlertFactory.textType({
-                            title: '',
-                            message: 'Nose pudo obtener las Series . Intente nuevamente.',
-                            type: 'info'
-                        });
-                    }
-                });
-
-
-            }
-        }
-        function addArtNada() {
-            var bval = true;
-            bval = bval && cantProductoMN.required();
-            if (bval) {
-                var codigo = Math.random().toString(36).substr(2, 18);
-                var grubNa = {
-                    'identificador': codigo,
-                    'idProducto': idProductoMN.val(),
-                }
-                aartMN.push(grubNa);
-                var ver = 'A';
-                var tipoArt = 'NA';
-                var codl = "";
-                var datl = "";
-                var idAlmacen = "";
-                var idLocalizacion = "";
-                var costo = costoNa.val();
-                var costo_total = "";
-                var precio = "";
-                var precioTotal = "";
-                var idDetalle=0;
-                addArticuloTable(idDetalle,idProductoMN.val(), desProductoMN.val(), cantProductoMN.val(), ver, codigo, tipoArt, codl, datl, idAlmacen, idLocalizacion, costo, costo_total, precio, precioTotal);
-                modalNada.modal('hide');
-                modalMovimietoArticulo.modal('hide');
-            }
-
-        }
-
-        $scope.addArtLote = function () {
-            var bval = true;
-            bval = bval && cantProductoML.required();
-            bval = bval && lotProductoML.required();
-            bval = bval && fIngrePrML.required();
-            bval = bval && fVenPrML.required();
-            if (bval) {
-                var params = {
-                    'producto': idProductoML.val(),
-                    'lote': lotProductoML.val(),
-                    'cantidad': cantProductoML.val(),
-                    'fech_ingreso': fIngrePrML.val(),
-                    'fecha_vencimiento': fVenPrML.val(),
-                };
-                var loteIde_id = 0;
-                RESTService.updated('devolucionOrdenCompras/createLoteDevol', loteIde_id, params, function (response) {
-                    if (!_.isUndefined(response.status) && response.status) {
-
-                        $("#idLEn" + codigo_actual).val(response.codigol);
-
-                        fechaVl.val(response.fecha);
-                        idLoteMll.val(response.codigol);
-                        btn_Lotd.prop('disabled', false);
-
-                        codigoLoteMll.trigger('change');
-                        btn_Lotd.trigger('change');
-                        $("#btn_ver" + codigo_actual).attr('data-lote', lotProductoML.val());
-                        $("#id_check" + codigo_actual).prop("checked", true);
-                        $('.i-checks').iCheck({
-                            checkboxClass: 'icheckbox_square-green'
-                        }).on('ifChanged', function (event) {
-                            $(event.target).click();
-
-                        });
-                        modalLote.modal('hide');
-
-                        modalLoteR.modal('hide');
-                        modalMovimietoArticulo.modal('hide');
-
-                    } else {
-                        AlertFactory.textType({
-                            title: '',
-                            message: 'Hubo un error al guardar el Lote. Intente nuevamente.',
-                            type: 'error'
-                        });
-                    }
-                });
-                // if(idLoteML2.val()==""){
-                //      var validaLote= aartML.map(function(index) {
-                //         if(index.lote==lotProductoML.val()){
-                //              return index.lote;
-                //         }
-
-                //     })
-                //     if(validaLote!=""){
-                //      AlertFactory.textType({
-                //                     title: '',
-                //                     message: 'El lote ' +validaLote+ ' ya existe en este movimiento',
-                //                     type: 'info'
-                //         });
-                //      return false;
-                //     };
-                //     var codigoLtr=Math.random().toString(36).substr(2, 18);
-                //     var grubLN={
-                //            'identificador': codigoLtr,
-                //            'idProducto':idProductoML.val(),
-                //            'cantidad':cantProductoML.val(),
-                //            'lote':lotProductoML.val(),
-                //            'fecha_ingreso':fIngrePrML.val(),
-                //            'fecha_vencimiento':fVenPrML.val(),
-                //     }
-                //     aartML.push(grubLN);
-                //     var ver='A';
-                //     var tipolr='LN';
-                //     var codl="";
-                //     var idAlmacen="";
-                //     var idLocalizacion="";
-                //     var costo=costoAL.val();
-                //     var costo_total="";
-                //     var datl=idProductoML.val()+'*'+cantProductoML.val()+'*'+lotProductoML.val()+'*'+fIngrePrML.val()+'*'+fVenPrML.val();
-                //     var precio="";
-                //     var precioTotal="";
-                //     addArticuloTable(idProductoML.val(),desProductoML.val(),cantProductoML.val(),ver,codigoLtr,tipolr,codl,datl,idAlmacen,idLocalizacion,costo,costo_total,precio,precioTotal);
-                //     modalLote.modal('hide');
-                //     modalLoteR.modal('hide');
-                //     modalMovimietoArticulo.modal('hide');
-                // }else{
-                //      var updteSLN = aartML.filter(function(car) {
-                //              return car.identificador !==idLoteML2.val(); 
-                //             })
-                //     aartML=updteSLN;
-                //     var grubLN={
-                //            'identificador': idLoteML2.val(),
-                //            'idProducto':idProductoML.val(),
-                //            'cantidad':cantProductoML.val(),
-                //            'lote':lotProductoML.val(),
-                //            'fecha_ingreso':fIngrePrML.val(),
-                //            'fecha_vencimiento':fVenPrML.val(),
-                //     }
-                //     aartML.push(grubLN);
-                //     var datl=idProductoML.val()+'*'+cantProductoML.val()+'*'+lotProductoML.val()+'*'+fIngrePrML.val()+'*'+fVenPrML.val();
-                //     $("#tr_idArticulo"+idLoteML2.val()).find("td:eq(0)").children(".m_dato_lote").val(datl);
-                //     $("#tr_idArticulo"+idLoteML2.val()).find("td:eq(3)").children(".m_articulo_cantidad").val(cantProductoML.val());
-                //     modalLote.modal('hide');
-                //     modalLoteR.modal('hide');
-                //     modalMovimietoArticulo.modal('hide');
-
-                // }
-
-
-            }
-
-        }
-
-        function addArtkit() {
-            var bval = true;
-            bval = bval && cantProductoMK.required();
-            if (bval) {
-                var ver = 'A';
-                var codigo = Math.random().toString(36).substr(2, 18);
-                var tipo = "K";
-                var grubkit = {
-                    'identificador': codigo,
-                    'idProducto': idProductoMK.val(),
-                }
-                aartMK.push(grubkit);
-                var codl = "";
-                var datl = "";
-                var idAlmacen = "";
-                var idLocalizacion = "";
-                var costo = costoMK.val();
-                var costo_total = "";
-                var precio = "";
-                var precioTotal = "";
-                var idDetalle=0;
-                addArticuloTable(idDetalle,idProductoMK.val(), desProductoMK.val(), cantProductoMK.val(), ver, codigo, tipo, codl, datl, idAlmacen, idLocalizacion, costo, costo_total, precio, precioTotal);
-                modalKit.modal('hide');
-                modalMovimietoArticulo.modal('hide');
-            }
-        }
-        function addSerieTable(idProductoMS, desProductoMS, cantProductoMS, colorMS, chasisMS, motorMS, anio_modeloMS, anio_fabricacionMS) {
-            articulo_serie_det.html('');
-            if (identSerAr.val() != "") {
-                cont_table = 0;
-                var contfila = 0;
-                aartMSN.map(function (index) {
-                    if (index.identificador == identSerAr.val()) {
-                        contfila = contfila + 1;
-                    }
-                });
-
-                if (cantProductoMss.val() != contfila) {
-                    if (cantProductoMss.val() != 0) {
-
-                        crearTableSerie2(cantProductoMS, idProductoMS, desProductoMS);
-                    } else {
-                        crearTableSerie();
-                    }
-                } else if (cantProductoMS == contfila) {
-                    crearTableSerie();
-                }
-            } else {
-                crearTableSerie2(cantProductoMS, idProductoMS, desProductoMS);
-            }
-        }
-        function crearTableSerie2(cantProductoMS, idProductoMS, desProductoMS) {
-            cont_table = 0;
-            for (var i = 0; i < cantProductoMS; i++) {
-                var html2 = "<tr id='tr_idArticulo_" + idProductoMS + "' ></tr>";
-                html2 += "<td>" + desProductoMS + "</td>";
-                html2 += "<td><input type='text' id='s_serie" + i + "' class='s_serie form-control input-sm'/></td>";
-                html2 += "<td><input type='text' id='s_chasis" + i + "' class='s_chasis form-control input-sm'/></td>";
-                html2 += "<td><input type='text' id='s_motor" + i + "' class='s_motor form-control input-sm'/></td>";
-                html2 += "<td><input type='text' id='s_color" + i + "' class='s_color form-control input-sm'/></td>";
-                html2 += "<td><input type='text' id='s_aniof" + i + "' class='s_aniof form-control input-sm' onkeypress='return soloNumeros(event)' maxlength='4' /></td>";
-                html2 += "<td><input type='text' id='s_aniom" + i + "' class='s_aniom form-control input-sm' onkeypress='return soloNumeros(event)' maxlength='4'/></td>";
-                html2 += "<td><select id='s_tipoCompra" + i + "' class='form-control input-sm'></select></td>";
-                html2 += "<td><input type='text' id='s_nroPoliza" + i + "' class='s_motor form-control input-sm'/></td>";
-                html2 += "<td><input type='text' id='s_nroLote" + i + "' class='s_color form-control input-sm'/></td>";
-                html2 += "</tr>";
-                articulo_serie_det.append(html2);
-                cont_table = cont_table + 1;
-                $("#s_tipoCompra" + i).append('<option value="" selected>Seleccionar</option>');
-                _.each(tipoCompra, function (item) {
-                    $("#s_tipoCompra" + i).append('<option value="' + item.idTipoCompraVenta + '">' + item.descripcion + '</option>');
-                });
-            }
-
-        }
-        function crearTableSerie() {
-            var contuni = 0;
-            aartMSN.map(function (index) {
-                if (index.identificador == identSerAr.val()) {
-                    var html2 = "<tr id='tr_idArticulo_" + idProductoMss.val() + "' ></tr>";
-                    html2 += "<td>" + desProductoMss.val() + "</td>";
-                    html2 += "<td><input type='text' id='s_serie" + contuni + "' class='s_serie form-control input-sm' value='" + index.serie + "'/></td>";
-                    html2 += "<td><input type='text' id='s_chasis" + contuni + "' class='s_chasis form-control input-sm' value='" + index.chasis + "'/></td>";
-                    html2 += "<td><input type='text' id='s_motor" + contuni + "' class='s_motor form-control input-sm' value='" + index.motor + "'/></td>";
-                    html2 += "<td><input type='text' id='s_color" + contuni + "' class='s_color form-control input-sm' value='" + index.color + "'/></td>";
-                    html2 += "<td><input type='text' id='s_aniof" + contuni + "' class='s_aniof form-control input-sm' value='" + index.anio_fabricacion + "' onkeypress='return soloNumeros(event)' maxlength='4' /></td>";
-                    html2 += "<td><input type='text' id='s_aniom" + contuni + "' class='s_aniom form-control input-sm' value='" + index.anio_modelo + "' onkeypress='return soloNumeros(event)' maxlength='4'/></td>";
-
-                    html2 += "<td><select id='s_tipoCompra" + contuni + "' class='form-control input-sm'></select></td>";
-
-
-                    html2 += "<td><input type='text' id='s_nroPoliza" + contuni + "' class='s_motor form-control input-sm' value='" + index.nPoliza + "'/></td>";
-                    html2 += "<td><input type='text' id='s_nroLote" + contuni + "' class='s_color form-control input-sm' value='" + index.nLoteCompra + "'/></td>";
-                    html2 += "</tr>";
-
-                    articulo_serie_det.append(html2);
-                    $("#s_tipoCompra" + contuni).append('<option value="" selected>Seleccionar</option>');
-                    _.each(tipoCompra, function (item) {
-                        $("#s_tipoCompra" + contuni).append('<option value="' + item.idTipoCompraVenta + '">' + item.descripcion + '</option>');
-                    });
-                    $("#s_tipoCompra" + contuni).val(index.idTipoCompraVenta).trigger('change');
-                    cont_table = cont_table + 1;
-                    contuni = contuni + 1;
-
-
-
-                }
-            });
-        }
-        function saveMovimientoCab() {
-            var bval = true;
-            // alert("sss");
-            bval = bval && idTipoOperacion.required();
-            bval = bval && fecha_registro.required();
-            if (!idMoneda.prop("disabled")) {
-                bval = bval && idMoneda.required();
-            }
-
-            if (bval) {
-                var str = idTipoOperacion.val();
-                // alert(str);
-                var complet = str.split("*");
-                var idTO = complet[0];
-                var nat = complet[1];
-                naturalezaGeneral = nat;
-                var params = {
-                    'idMovimiento': idMovimiento.val(),
-                    'estado': 0,
-                    'fecha_registro': fecha_registro.val(),
-                    'idMoneda': idMoneda.val(),
-                    'observaciones': observaciones.val(),
-                    'idTipoOperacion': idTO,
-                };
-                var movimiento_id = (idMovimiento.val() === '') ? 0 : idMovimiento.val();
-
-                RESTService.updated('devolucionOrdenCompras/saveMovimientoDevo', movimiento_id, params, function (response) {
-                    if (!_.isUndefined(response.status) && response.status) {
-                        titlemodalMovimieto.html('Nueva Devolución ' + '[' + response.code + ']');
-                        AlertFactory.textType({
-                            title: '',
-                            message: 'El registro se guardó correctamente',
-                            type: 'success'
-                        });
-                        var natudata = idTipoOperacion.val();
-                        // alert(natudata);
-                        var co = natudata.split('*');
-                        var na = co[1];
-                        idNaturaleza.val(na);
-                        idMovimiento.val(response.code);
-                        if (response.estado == 0) {
-                            p_state.val("REGISTRADO");
-                        } else {
-                            p_state.val("PROCESADO");
-                        };
-                        idTipoOperacion.prop('disabled', true);
-                        idTipoOperacion.trigger('change');
-                        btn_movimiento_detalle.prop('disabled', false);
-                        btn_movimiento_detalle.trigger('change');
-                        LoadRecordsButtonRegister_Movement.click();
-                    } else {
-                        AlertFactory.textType({
-                            title: '',
-                            message: 'Hubo un error al guardar el artículo. Intente nuevamente.',
-                            type: 'error'
-                        });
-                    }
-                });
-            }
-
+        $scope.openReception = function () {
+            modalRec.modal('show');
         };
 
-        function cargar_notas(id) {
-            $.post("devolucionOrdenCompras/get_notas_devolucionDevol", {},
-                function (data, textStatus, jqXHR) {
-                    $("#idventa").html('');
-                    $("#idventa").append('<option value="">Seleccionar</option>');
-                    _.each(data, function (item) {
-                        if(typeof id != "undefined" && id == item.serie_comprobante + '*' + item.numero_comprobante+ '*'+item.idmoneda) {
-                            $("#idventa").append('<option selected="selected" data-documento="'+item.serie_comprobante + '-' + item.numero_comprobante+'" data-idmoneda="'+item.idmoneda+'" value="' + item.serie_comprobante + '*' + item.numero_comprobante+ '*'+item.idmoneda+'">' + item.serie_comprobante + ' ' + item.numero_comprobante + ' ' + item.cliente + '</option>');
-                        } else {
-                            $("#idventa").append('<option data-documento="'+item.serie_comprobante + '-' + item.numero_comprobante+'" data-idmoneda="'+item.idmoneda+'" value="' + item.serie_comprobante + '*' + item.numero_comprobante+ '*'+item.idmoneda+'">' + item.serie_comprobante + ' ' + item.numero_comprobante + ' ' + item.cliente + '</option>');
-                        }
-                       
-                    });
-                    $("#idventa").select2();
-                },
-                "json"
-            );
-        }
-        function cargar_notas_find(id) {
-
-            $.post("devolucionOrdenCompras/get_notas_devolucion_find",{idt:id},
-                function (data, textStatus, jqXHR) {
-                    console.log(data,"data nota");
-                    $("#idventa").html('');
-                    $("#idventa").append('<option value="">Seleccionar</option>');
-                    _.each(data, function (item) {
-                        if(typeof id != "undefined" && id == item.serie_comprobante + '*' + item.numero_comprobante+ '*'+item.idmoneda) {
-                            $("#idventa").append('<option selected="selected" data-documento="'+item.serie_comprobante + '-' + item.numero_comprobante+'" data-idmoneda="'+item.idmoneda+'" value="' + item.serie_comprobante + '*' + item.numero_comprobante+ '*'+item.idmoneda+'">' + item.serie_comprobante + ' ' + item.numero_comprobante + ' ' + item.cliente + '</option>');
-                        } else {
-                            $("#idventa").append('<option data-documento="'+item.serie_comprobante + '-' + item.numero_comprobante+'" data-idmoneda="'+item.idmoneda+'" value="' + item.serie_comprobante + '*' + item.numero_comprobante+ '*'+item.idmoneda+'">' + item.serie_comprobante + ' ' + item.numero_comprobante + ' ' + item.cliente + '</option>');
-                        }
-                       var documento = item.serie_comprobante + '-' + item.numero_comprobante;
-                    $("#documento").val(documento);
-                    });
-                    $("#idventa").select2();
-
-                },
-                "json"
-            );
-        }
-
-        function newMovimiento() {
-            activar_inputs();
-            titlemodalMovimieto.html('Nueva Devolución');
-            modalMovimieto.modal('show');
-            var verProforma = 'CR';
-            cargar_ordenCompra();
-        }
-
-
-
-        $scope.addArticulo = function () {
-            var bval = true;
-            bval = bval && idTipoOperacion.required();
-            bval = bval && fecha_registro.required();
-            if (!idMoneda.prop("disabled")) {
-                bval = bval && idMoneda.required();
-            }
-            if (bval) {
-                if (idMovimiento.val() == "") {
-                    saveMovimientoCab();
+        $scope.printDev = function () {
+            if (d_id !== 0) {
+                if (d_state_id < 2) {
+                    $scope.showAlert('', 'Solo se puede imprimir cuando la devolución este procesada', 'warning');
+                    return false;
                 }
-                titlemodalMovimietoArticulo.html('Nuevo Articulo');
-                var str = idTipoOperacion.val();
-                // alert(str);
-                var complet = str.split("*");
-                var idTO = complet[0];
-                var nat = complet[1];
+                var data = {
+                    id: d_mov,
+                    idtipoOpe: d_operation.val(),
+                    option: 'ret'
+                };
+                var params_ext = {
+                    'title': 'DEVOLUCIÓN DE ORDEN DE COMPRA',
+                    'client_txt': 'PROVEEDOR: ',
+                    'user_txt': 'COMPRADOR: '
+                };
+                $scope.loadMovimientoEntregaPDF('devolucionOrdenCompras/pdf', data, params_ext);
+            }
+        };
 
-                if (nat == 'E' || nat == 'A' || nat == 'C') {
-                    if (idenifcador_table_art.val() != 'I') {
+        function newDev() {
+            titleDev.html('Nueva Devolución');
+            modalDev.modal('show');
+        }
 
-                        table_container_cc2.jtable('destroy');
+        function findDev(id) {
+            RESTService.get('devolucionOrdenCompras/find', id, function (response) {
+                if (!_.isUndefined(response.status) && response.status) {
+                    d_id = id;
+                    var data_ = response.data;
+                    d_mov = data_.mov_id;
+                    d_state_id = parseInt(data_.state_id);
+                    var disabled_ = (d_state_id > 1);
+                    d_code.val(data_.code);
+                    d_reception_id = data_.reception_id;
+                    d_reception.val(data_.reception_);
+                    d_reception_btn.prop('disabled', disabled_);
+                    d_date.val(data_.date).prop('disabled', disabled_);
+                    d_warehouse.val(data_.warehouse_);
+                    d_operation.val(data_.operation_id);
+                    d_currency.val(data_.currency_);
+                    d_observations.val(data_.observation).prop('disabled', disabled_);
+                    _.each(data_.detail_, function (det) {
+                        addDetailRet(det);
+                    });
+                    $('button.btn-print').removeClass('hide');
+                    if (disabled_) {
+                        $('button.btn-save, button.btn-frm').addClass('hide');
                     }
-                    cargartableMovAr2();
-                    idenifcador_table_art.val("A");
+                    var txt_ = (d_state_id > 1) ? 'Ver' : 'Editar';
+                    titleDev.html(txt_ + ' Devolución');
+                    modalDev.modal("show");
                 } else {
-                    if (idenifcador_table_art.val() != 'I') {
-                        table_container_cc2.jtable('destroy');
-                    }
-                    cargartableMovAr();
-                    idenifcador_table_art.val("A");
+                    $scope.showAlert('', response.message, 'warning');
                 }
-
-
-                modalMovimietoArticulo.modal('show');
-
-                $('#search_cc2').val('');
-                $('#LoadRecordsButtonCC2').click();
-                $('#search_cc22').val('');
-                $('#LoadRecordsButtonCC22').click();
-                $("#table_container_Register_Articulo .jtable-main-container .jtable-bottom-panel .jtable-left-area .jtable-goto-page select ").val("1").trigger("change");
-            }
-
-
-
-        }
-        idTipoOperacion.change(function () {
-            var natudata = idTipoOperacion.val();
-            
-            // alert(natudata);
-            var co = natudata.split('*');
-            var na = co[1];
-
-            if (na == 'S') {
-                idMoneda.prop("disabled", true);
-                idMoneda.trigger('change');
-                idMoneda.val('1').trigger('change');
-
-            } else {
-                // idMoneda.prop("disabled", false);
-                idMoneda.trigger('change');
-
-            }
-        }); 
-        function getDataFormMovement() {
-            RESTService.all('devolucionOrdenCompras/data_formDevol', '', function (response) {
-                if (!_.isUndefined(response.status) && response.status) {
-                    idTipoOperacion.append('<option value="" >Seleccionar</option>');
-                    _.each(response.operaciones_devue, function (item) {
-                        var opera = '10' + '*' + 'S';
-                        naturalezaGeneral = 'S';
-                        // idTipoOperacion.append('<option value="' + opera + '" selected>DESRESERVA ST</option>');
-                        if(item.IdTipoOperacion == 10) {
-                            idTipoOperacion.append('<option selected="selected" value="' + item.IdTipoOperacion + '*'+item.idNaturaleza+'">'+item.descripcion+'</option>');
-                        } else {
-                            idTipoOperacion.append('<option value="' + item.IdTipoOperacion + '*'+item.idNaturaleza+'">'+item.descripcion+'</option>');
-                        }
-                    });
-                    idMoneda.append('<option value="" selected>Seleccionar</option>');
-                    _.each(response.moneda, function (item) {
-                        idMoneda.append('<option  value="' + item.Value + '">' + item.DisplayText + '</option>');
-                    });
-                    AlmacenesSele = response.almacen_usuario;
-                    AlmacenesTodos = response.almacen_todos;
-                    // idAlmacen.append('<option value="" selected>Seleccionar</option>');
-                    //  _.each(response.almacen, function(item) {
-                    //     idAlmacen.append('<option value="'+item.Value+'">'+item.DisplayText+'</option>');
-                    // }); 
-
-                }
-            }, function () {
-                getDataFormMovement();
             });
         }
-        getDataFormMovement();
-        function getDataFormSerie() {
-            RESTService.all('devolucionOrdenCompras/data_formDevolSeri', '', function (response) {
-                if (!_.isUndefined(response.status) && response.status) {
-                    tipoCompra = response.tipoCompra
-                    //  _.each(response.tipoCompra, function(item) {
-                    //     tipoCompra.append('<option value="'+item.idTipoCompraVenta+'">'+item.descripcion+'</option>');
-                    // });
 
-                }
-            }, function () {
-                getDataFormSerie();
-            });
-        }
-        getDataFormSerie();
+        var search = getFormSearch('frm-search-dev', 'search_dev', 'LoadRecordsButtonDev');
 
-        var search = getFormSearch('frm-search-Register_Movement', 'search_b', 'LoadRecordsButtonRegister_Movement');
+        var table_container_dev = $("#table_container_dev");
 
-        var table_container_Register_Movement = $("#table_container_Register_Movement");
-        
-
-        table_container_Register_Movement.jtable({
-            title: "Lista de devolución de Orden de Compra",
+        table_container_dev.jtable({
+            title: "Lista de devolución de ordenes de compra",
             paging: true,
-            sorting: false,
             actions: {
                 listAction: base_url + '/devolucionOrdenCompras/list',
+                deleteAction: base_url + '/devolucionOrdenCompras/delete'
             },
             toolbar: {
                 items: [{
@@ -2837,417 +212,21 @@
                     text: search
                 }, {
                     cssClass: 'btn-primary',
-                    text: '<i class="fa fa-file-excel-o"></i> Exportar a Excel',
+                    text: '<i class="fa fa-file-excel-o"></i> Exportar',
                     click: function () {
-                        $scope.openDoc('devolucionOrdenCompras/excel', {});
+                        $scope.openDoc('devolucionOrdenCompras/excel', {
+                            search: $('#search_dev').val(),
+                            check: (chk_date_range.prop('checked')),
+                            from: start.format('YYYY-MM-DD'),
+                            to: end.format('YYYY-MM-DD')
+                        });
                     }
                 }, {
                     cssClass: 'btn-danger-admin',
-                    text: '<i class="fa fa-plus"></i> Nueva Devolución',
+                    text: '<i class="fa fa-plus"></i> Devolución',
                     click: function () {
-                        newMovimiento();
+                        newDev();
                     }
-                }]
-            },
-            fields: {
-                idMovimiento: {
-                    title: '#',
-                    key: true,
-                    list: true,
-                    create: false,
-                },
-                idTipoOperacion: {
-                    title: 'Tipo Operación',
-                    options: base_url + '/devolucionOrdenCompras/getAllOper'
-                },
-                idUsuario: {
-                    title: 'Usuario',
-                    options: base_url + '/devolucionOrdenCompras/getAllUser'
-                },
-                estado: {
-                    title: 'Estado',
-                    values: { '0': 'Registrado', '1': 'Procesado' },
-                    type: 'checkbox',
-                    defaultValue: 'A',
-
-                }, edit: {
-                    width: '1%',
-                    sorting: false,
-                    edit: false,
-                    create: false,
-                    listClass: 'text-center',
-                    display: function (data) {
-                        return '<a href="javascript:void(0)" class="edit-serie" data-id="' + data.record.idMovimiento
-                            + '" title="Editar"><i class="fa fa-edit fa-1-5x"></i></a>';
-                    }
-                }, Eliminar: {
-                    width: '1%',
-                    sorting: false,
-                    edit: false,
-                    create: false,
-                    listClass: 'text-center',
-                    display: function (data) {
-                        return '<a data-target="#"  data-ide="' + data.record.idMovimiento + '"   title="Eliminar" class="jtable-command-button eliminar-movimiento"><i class="fa fa-trash fa-1-5x fa-red"><span>Eliminar</span></i></a>';
-                    }
-
-                }
-
-            },
-            recordsLoaded: function (event, data) {
-                $('.edit-serie').click(function (e) {
-                    var id = $(this).attr('data-id');
-                    findRegister_movement(id);
-                    e.preventDefault();
-                });
-                $('.eliminar-movimiento').click(function (e) {
-                    var ide = $(this).attr('data-ide');
-                    idMovimientoDelete.val(ide);
-                    modalDeleteMovimiento.modal("show");
-                    e.preventDefault();
-                });
-            }
-
-        });
-
-        generateSearchForm('frm-search-Register_Movement', 'LoadRecordsButtonRegister_Movement', function () {
-            table_container_Register_Movement.jtable('load', {
-                search: $('#search_b').val()
-            });
-        }, true);
-
-        function cargartableMovAr() {
-            var search_cc2 = getFormSearch('frm-search-cc2', 'search_cc2', 'LoadRecordsButtonCC2');
-            table_container_cc2 = $("#table_container_Register_Articulo");
-            table_container_cc2.jtable({
-                title: "Lista de Articulos",
-                paging: true,
-                sorting: true,
-                cache: false,
-                actions: {
-                    listAction: base_url + '/devolucionOrdenCompras/getArticulosSelectDevolu'
-                },
-                toolbar: {
-                    items: [{
-                        cssClass: 'buscador',
-                        text: search_cc2
-                    }]
-                },
-                fields: {
-                    id: {
-                        key: true,
-                        create: false,
-                        edit: false,
-                        list: false
-                    },
-                    type_id: {
-                        create: false,
-                        edit: false,
-                        list: false
-                    },
-                    serie: {
-                        create: false,
-                        edit: false,
-                        list: false
-                    },
-                    lote: {
-                        create: false,
-                        edit: false,
-                        list: false
-                    },
-                    code_article: {
-                        title: 'Código'
-
-                    },
-                    description: {
-                        title: 'Articulos'
-
-                    },
-                    costo: {
-                        title: 'costo'
-
-                    },
-                    select: {
-                        width: '1%',
-                        sorting: false,
-                        edit: false,
-                        create: false,
-                        listClass: 'text-center',
-                        display: function (data) {
-                            return '<a href="javascript:void(0)" title="Seleccionar" class="select_cc" data-costo="' + data.record.costo + '" data-name="' +
-                                data.record.description + '" data-type="' + data.record.type_id + '"  data-serie="' + data.record.serie + '" data-lote="' + data.record.lote + '" data-code="' + data.record.id + '"><i class="fa fa-' +
-                                icon_select + ' fa-1-5x"></i></a>';
-                        }
-                    }
-                },
-                recordsLoaded: function (event, data) {
-                    $('.select_cc').click(function (e) {
-                        var codigo = $(this).attr('data-code');
-                        var descripcionArt = $(this).attr('data-name');
-                        var idTipoArt = $(this).attr('data-type');
-                        var serie = $(this).attr('data-serie');
-                        var lote = $(this).attr('data-lote');
-                        var costo = $(this).attr('data-costo');
-                        seleccionarModal(codigo, descripcionArt, idTipoArt, serie, lote, costo);
-                        e.preventDefault();
-                    });
-                }
-            });
-
-            generateSearchForm('frm-search-cc2', 'LoadRecordsButtonCC2', function () {
-                table_container_cc2.jtable('load', {
-                    search: $('#search_cc2').val()
-                });
-            }, false);
-
-        }
-
-        function cargartableMovAr2() {
-            var search_cc22 = getFormSearch('frm-search-cc22', 'search_cc22', 'LoadRecordsButtonCC22');
-            table_container_cc2 = $("#table_container_Register_Articulo");
-            table_container_cc2.jtable({
-                title: "Lista de Articulos",
-                paging: true,
-                sorting: true,
-                cache: false,
-                actions: {
-                    listAction: base_url + '/devolucionOrdenCompras/getArticulosMinKitDevol'
-                },
-                toolbar: {
-                    items: [{
-                        cssClass: 'buscador',
-                        text: search_cc22
-                    }]
-                },
-                fields: {
-                    id: {
-                        key: true,
-                        create: false,
-                        edit: false,
-                        list: false
-                    },
-                    type_id: {
-                        create: false,
-                        edit: false,
-                        list: false
-                    },
-                    serie: {
-                        create: false,
-                        edit: false,
-                        list: false
-                    },
-                    lote: {
-                        create: false,
-                        edit: false,
-                        list: false
-                    },
-                    code_article: {
-                        title: 'Código'
-
-                    },
-                    description: {
-                        title: 'Articulos'
-
-                    },
-
-                    costo: {
-                        title: 'costo'
-
-                    },
-                    select: {
-                        width: '1%',
-                        sorting: false,
-                        edit: false,
-                        create: false,
-                        listClass: 'text-center',
-                        display: function (data) {
-                            return '<a href="javascript:void(0)" title="Seleccionar" class="select_cc" data-costo="' + data.record.costo + '" data-name="' +
-                                data.record.description + '" data-type="' + data.record.type_id + '"  data-serie="' + data.record.serie + '" data-lote="' + data.record.lote + '" data-code="' + data.record.id + '"><i class="fa fa-' +
-                                icon_select + ' fa-1-5x"></i></a>';
-                        }
-                    }
-                },
-                recordsLoaded: function (event, data) {
-                    $('.select_cc').click(function (e) {
-                        var codigo = $(this).attr('data-code');
-                        var descripcionArt = $(this).attr('data-name');
-                        var idTipoArt = $(this).attr('data-type');
-                        var serie = $(this).attr('data-serie');
-                        var lote = $(this).attr('data-lote');
-                        var costo = $(this).attr('data-costo');
-                        seleccionarModal(codigo, descripcionArt, idTipoArt, serie, lote, costo);
-                        e.preventDefault();
-                    });
-                }
-            });
-
-            generateSearchForm('frm-search-cc22', 'LoadRecordsButtonCC22', function () {
-                table_container_cc2.jtable('load', {
-                    search: $('#search_cc22').val()
-                });
-            }, false);
-
-        }
-
-
-
-        function cargarTableSerie(idProducto, aarraySe) {
-            cont_check = 0;
-            identiSelec = "A";
-            var search_cc4 = getFormSearch('frm-search-cc4', 'search_cc4', 'LoadRecordsButtonCC4');
-            table_container_cc4 = $("#table_container_Series_Articulo");
-            var url = 'getProductoSerie';
-            if (naturalezaGeneral == "S") {
-                url = 'getProductoSerieStock';
-            };
-            table_container_cc4.jtable({
-                title: "Lista de Series",
-                paging: true,
-                sorting: true,
-                actions: {
-                    listAction: function (postData, jtParams) {
-                        return $.Deferred(function ($dfd) {
-                            $.ajax({
-                                url: base_url + '/devolucionOrdenCompras/' + url,
-                                type: 'POST',
-                                dataType: 'json',
-                                data: { postData: postData, idProducto: idProducto },
-                                success: function (data) {
-                                    $dfd.resolve(data);
-                                },
-                                error: function () {
-                                    $dfd.reject();
-                                }
-                            });
-                        });
-                    }
-                },
-                toolbar: {
-                    items: [{
-                        cssClass: 'buscador',
-                        text: search_cc4
-                    }]
-                },
-                fields: {
-                    idSerie: {
-                        key: true,
-                        create: false,
-                        edit: false,
-                        list: false
-                    },
-                    serie: {
-                        create: false,
-                        edit: false,
-                        title: 'N° Serie'
-                    },
-                    chasis: {
-                        create: false,
-                        edit: false,
-                        title: 'Chasis'
-
-                    },
-                    motor: {
-                        create: false,
-                        edit: false,
-                        title: 'Motor'
-
-                    },
-                    anio_fabricacion: {
-                        title: 'Año de Fabricación'
-                    },
-                    anio_modelo: {
-                        title: 'Año de Modelo'
-                    },
-                    select: {
-                        width: '1%',
-                        sorting: false,
-                        edit: false,
-                        create: false,
-                        listClass: 'text-center',
-                        display: function (data) {
-                            var ichc = 'N';
-                            if (identSerAr.val() != "") {
-
-                                aartMSE.map(function (index) {
-                                    if (data.record.serie == index.serie && identSerAr.val() == index.identificador) {
-                                        ichc = 'A';
-                                    }
-                                });
-                                if (ichc == 'A') {
-                                    cont_check = cont_check + 1;
-                                    ichc = 'N';
-                                    return '<label class="checkbox-inline i-checks"> <input class="check valcheck" type="checkbox" id="p_state" data_idSerie="' + data.record.idSerie + '" data-code="' + data.record.serie + '" checked ></label>';
-                                } else {
-                                    return '<label class="checkbox-inline i-checks"> <input class="check valcheck" type="checkbox" id="p_state" data_idSerie="' + data.record.idSerie + '" data-code="' + data.record.serie + '"  ></label>';
-                                }
-                            } else {
-                                return '<label class="checkbox-inline i-checks"> <input class="check valcheck" type="checkbox" id="p_state" data_idSerie="' + data.record.idSerie + '" data-code="' + data.record.serie + '"  ></label>';
-                            }
-
-
-                        }
-                    }
-                },
-                recordsLoaded: function (event, data) {
-                    // $('.select_cc').click(function(e){
-                    //     var codigo = $(this).attr('data-code');
-                    //     var descripcionArt = $(this).attr('data-name');
-                    //     var idTipoArt = $(this).attr('data-type');
-                    //     var serie = $(this).attr('data-serie');
-                    //     var lote = $(this).attr('data-lote');
-                    //     e.preventDefault();
-                    // });
-
-                    $('.i-checks').iCheck({
-                        checkboxClass: 'icheckbox_square-green'
-                    }).on('ifChanged', function (event) {
-                        if ($(this).prop('checked')) {
-                            cont_check = cont_check + 1
-                        } else {
-                            cont_check = cont_check - 1;
-                        };
-                        var codigo = $(this).attr('data-code');
-
-                        // $(event.target).click();
-                    });
-
-                }
-            });
-
-            generateSearchForm('frm-search-cc4', 'LoadRecordsButtonCC4', function () {
-                table_container_cc4.jtable('load', {
-                    search: $('#search_cc4').val()
-                });
-            }, true);
-        }
-
-        var search_cc3 = getFormSearch('frm-search-cc3', 'search_cc3', 'LoadRecordsButtonCC3');
-        var table_container_cc3 = $("#table_container_Almacen_Articulo");
-        table_container_cc3.jtable({
-            title: "Lista de Articulos",
-            paging: true,
-            sorting: true,
-            actions: {
-                listAction: function (postData, jtParams) {
-                    return $.Deferred(function ($dfd) {
-                        $.ajax({
-                            url: base_url + '/lots/getArticulosSelect?jtStartIndex=' + jtParams.jtStartIndex + '&jtPageSize=' + jtParams.jtPageSize + '&jtSorting=' + jtParams.jtSorting,
-                            type: 'POST',
-                            dataType: 'json',
-                            data: postData,
-                            success: function (data) {
-                                $dfd.resolve(data);
-                            },
-                            error: function () {
-                                $dfd.reject();
-                            }
-                        });
-                    });
-                },
-            },
-            toolbar: {
-                items: [{
-                    cssClass: 'buscador',
-                    text: search_cc3
                 }]
             },
             fields: {
@@ -3257,92 +236,531 @@
                     edit: false,
                     list: false
                 },
-                type_id: {
-                    create: false,
-                    edit: false,
-                    list: false
+                code: {
+                    title: 'Código',
+                    listClass: 'text-center'
                 },
-                serie: {
-                    create: false,
-                    edit: false,
-                    list: false
+                reception_: {
+                    title: 'Recepción',
+                    listClass: 'text-center'
                 },
-                lote: {
-                    create: false,
-                    edit: false,
-                    list: false
+                date: {
+                    title: 'Fecha',
+                    listClass: 'text-center'
                 },
-                description: {
-                    title: 'Articulos'
-
+                wh: {
+                    title: 'Almacén',
+                    listClass: 'text-center'
                 },
-                select: {
+                currency_: {
+                    title: 'Moneda',
+                    listClass: 'text-center'
+                },
+                total: {
+                    title: 'Total',
+                    listClass: 'text-center'
+                },
+                state: {
+                    title: 'Estado',
+                    listClass: 'text-center'
+                },
+                edit: {
                     width: '1%',
                     sorting: false,
                     edit: false,
                     create: false,
                     listClass: 'text-center',
                     display: function (data) {
-                        return '<a href="javascript:void(0)" title="Seleccionar" class="select_cc" data-name="' +
-                            data.record.description + '" data-type="' + data.record.type_id + '"  data-serie="' + data.record.serie + '" data-lote="' + data.record.lote + '" data-code="' + data.record.id + '"><i class="fa fa-' +
-                            icon_select + ' fa-1-5x"></i></a>';
+                        return '<a href="javascript:void(0)" class="edit-dev" data-code="' + data.record.id
+                            + '" title="Editar"><i class="fa fa-edit fa-1-5x"></i></a>';
                     }
                 }
             },
             recordsLoaded: function (event, data) {
-                $('.select_cc').click(function (e) {
-                    var codigo = $(this).attr('data-code');
-                    var descripcionArt = $(this).attr('data-name');
-                    var idTipoArt = $(this).attr('data-type');
-                    var serie = $(this).attr('data-serie');
-                    var lote = $(this).attr('data-lote');
-                    var costo = $(this).attr('data-lote');
-                    if (idArtSerie.val() != '') {
-                        AlertFactory.textType({
-                            title: '',
-                            message: 'Ya seleccionó un artículo serie',
-                            type: 'error'
-                        });
-                    } else {
-                        seleccionarModal(codigo, descripcionArt, idTipoArt, serie, lote, costo);
-                    }
-
+                table_container_dev.find('a.edit-dev').click(function (e) {
+                    var code_ = $(this).attr('data-code');
+                    findDev(code_);
                     e.preventDefault();
                 });
             }
         });
 
-        generateSearchForm('frm-search-cc3', 'LoadRecordsButtonCC3', function () {
-            table_container_cc3.jtable('load', {
-                search: $('#search_cc3').val()
+        generateSearchForm('frm-search-dev', 'LoadRecordsButtonDev', function () {
+            table_container_dev.jtable('load', {
+                search: $('#search_dev').val(),
+                check: (chk_date_range.prop('checked')),
+                from: start.format('YYYY-MM-DD'),
+                to: end.format('YYYY-MM-DD')
+            });
+        }, true);
+
+        var search_rec = getFormSearch('frm-search-rec', 'search_rec', 'LoadRecordsButtonRec');
+
+        var table_container_rec = $("#table_container_rec");
+
+        table_container_rec.jtable({
+            title: "Recepciones de Ordenes de Compra",
+            paging: true,
+            actions: {
+                listAction: base_url + '/devolucionOrdenCompras/listRec'
+            },
+            toolbar: {
+                items: [{
+                    cssClass: 'buscador',
+                    text: search_rec
+                }]
+            },
+            fields: {
+                id: {
+                    key: true,
+                    create: false,
+                    edit: false,
+                    list: false
+                },
+                code: {
+                    title: 'Código',
+                    listClass: 'text-center'
+                },
+                oc: {
+                    title: 'OC',
+                    listClass: 'text-center'
+                },
+                date: {
+                    title: 'Fecha',
+                    listClass: 'text-center'
+                },
+                wh: {
+                    title: 'Almacén',
+                    listClass: 'text-center'
+                },
+                currency_: {
+                    title: 'Moneda',
+                    listClass: 'text-center'
+                },
+                total: {
+                    title: 'Total',
+                    listClass: 'text-center'
+                },
+                state: {
+                    title: 'Estado',
+                    listClass: 'text-center'
+                },
+                edit: {
+                    width: '1%',
+                    sorting: false,
+                    edit: false,
+                    create: false,
+                    listClass: 'text-center',
+                    display: function (data) {
+                        return '<a href="javascript:void(0)" class="sel-rec" data-id="' + data.record.id
+                            + '" title="Editar"><i class="fa fa-check-circle fa-1-5x"></i></a>';
+                    }
+                }
+            },
+            recordsLoaded: function (event, data) {
+                table_container_rec.find('a.sel-rec').click(function (e) {
+                    var id = $(this).attr('data-id');
+                    var info = _.find(data.records, function (item) {
+                        return parseInt(item.id) === parseInt(id);
+                    });
+                    if (info) {
+                        if (parseInt(d_reception_id) !== parseInt(info.id)) {
+                            d_detail.empty();
+                        }
+                        d_reception_id = info.id;
+                        d_reception.val(info.code).removeClass('border-red');
+                        d_currency.val(info.currency_);
+                        d_warehouse.val(info.wh);
+                        _.each(info.detail_, function (item) {
+                            addDetailRet(item);
+                        });
+                    }
+                    modalRec.modal('hide');
+                    e.preventDefault();
+                });
+            }
+        });
+
+        generateSearchForm('frm-search-rec', 'LoadRecordsButtonRec', function () {
+            table_container_rec.jtable('load', {
+                search: $('#search_rec').val(),
+                return_valid: true,
+                no_associated_return: true,
+                showDetail: true
             });
         }, false);
 
-        $(document).on("change", "input[name='tipo']", function () {
-            var tipo = $(this).val();
-           
-            // proforma
-            if (tipo == "P") {
-                $("#idventa").val("");
-                $("#idventa").trigger("change");
-                $("#documento").val("");
-                $(".nota").hide();
-                $(".proforma").show();
-                
-                $("#idTipoOperacion").val("8*D");
-            }
-            // nota
-            if (tipo == "N") {
-                $("#cCodConsecutivoOS").val("");
-                $("#cCodConsecutivoOS").trigger("change");
-                $("#nConsecutivoOS").val("");
+        var search_ser = getFormSearch('frm-search-ser', 'search_ser', 'LoadRecordsButtonSer');
 
-                $("#idTipoOperacion").val("9*E");
-                
-                $(".proforma").hide();
-                $(".nota").show();
+        var table_container_series = $("#table_container_series");
+
+        table_container_series.jtable({
+            title: "Lista de Series",
+            paging: true,
+            actions: {
+                listAction: base_url + '/devolucionOrdenCompras/listSeries'
+            },
+            toolbar: {
+                items: [{
+                    cssClass: 'buscador',
+                    text: search_ser
+                }]
+            },
+            fields: {
+                idSerie: {
+                    key: true,
+                    create: false,
+                    edit: false,
+                    list: false
+                },
+                serie: {
+                    title: 'N° Serie'
+                },
+                chasis: {
+                    title: 'Chasis'
+                },
+                motor: {
+                    title: 'Motor'
+                },
+                anio_fabricacion: {
+                    title: 'Año de Fabricación'
+                },
+                anio_modelo: {
+                    title: 'Año de Modelo'
+                },
+                select: {
+                    width: '1%',
+                    listClass: 'text-center',
+                    display: function (data) {
+                        var tr_ser_ = d_series_detail.find('tr[data-series=' + data.record.idSerie + ']');
+                        var chk_ = (tr_ser_.length > 0) ? 'checked' : '';
+                        return '<input class="chk_ser" type="checkbox" data-code="' + data.record.idSerie + '" ' + chk_ + ' />';
+                    }
+                }
+            },
+            recordsLoaded: function (event, data) {
+                table_container_series.find('input.chk_ser').click(function (e) {
+                    var ser_id = $(this).attr('data-code');
+                    var info = _.find(data.records, function (item) {
+                        return parseInt(item.idSerie) === parseInt(ser_id);
+                    });
+                    if (info) {
+                        var chk_ = table_container_series.find('input.chk_ser[data-code=' + ser_id + ']');
+                        var is_chk_ = (chk_.prop('checked'));
+                        if (is_chk_) {
+                            var max_ = parseFloat(d_series_q.val());
+                            var q_det_ = d_series_detail.find('tr').length;
+                            var pending_ = (parseInt(max_ - q_det_) > 0) ? parseInt(max_ - q_det_) : 0;
+                            if (pending_ > 0) {
+                                addSeriesToList(info, 0);
+                            } else {
+                                $scope.showAlert('', 'Ya se agregó la cantidad maxima de series', 'warning');
+                                setTimeout(function () {
+                                    chk_.prop('checked', false).iCheck('update');
+                                });
+                            }
+                        } else {
+                            d_series_detail.find('tr[data-series=' + ser_id + ']').remove();
+                        }
+                    }
+                    e.preventDefault();
+                });
+                generateCheckBox('input.chk_ser');
             }
         });
+
+        generateSearchForm('frm-search-ser', 'LoadRecordsButtonSer', function () {
+            table_container_series.jtable('load', {
+                search: $('#search_ser').val(),
+                product_id: d_detail_product_,
+                rod_id: d_detail_selected_,
+                rod_active: true
+            });
+        }, false);
+
+        $scope.saveDev= function (type) {
+            saveDev(type);
+        };
+
+        function saveDev(type_) {
+            var b_val = true;
+            b_val = b_val && d_reception.required();
+            b_val = b_val && d_date.required();
+            if (b_val && d_detail.html() === '') {
+                $scope.showAlert('', 'Debe seleccionar mínimo 1 artículo', 'warning');
+                return false;
+            }
+            if (b_val) {
+                var det_ = [], valid_ = true;
+                _.each(d_detail.find('tr'), function (tr) {
+                    var max_ = parseFloat($(tr).attr('data-q-max'));
+                    var q_ = $(tr).find('input.d_return').val();
+                    q_ = (q_ === '') ? 0 : parseFloat(q_);
+                    var series_ = [];
+                    if (parseInt($(tr).attr('data-is-serie')) === 1) {
+                        series_ = getDataSeries($(tr).attr('data-product'));
+                        if (type_ === 2 && q_ > 0 && q_ !== series_.length) {
+                            $scope.showAlert('', 'La cantidad de series para el artículo ' + $(tr).find('td:first').text() +
+                                ' no es igual a la cantidad por devolver', 'warning');
+                            valid_ = false;
+                            return false;
+                        }
+                    }
+                    det_.push({
+                        'code': $(tr).attr('data-code'),
+                        'product_id': $(tr).attr('data-product'),
+                        'lote_id': $(tr).attr('data-lote'),
+                        'localization': $(tr).attr('data-localization'),
+                        'q': q_,
+                        'series': series_
+                    });
+                    // if (type_ === 2 && $(tr).attr('data-localization') === '') {
+                    //     $scope.showAlert('', 'Debe seleccionar localización para cada artículo', 'warning');
+                    //     valid_ = false;
+                    //     return false;
+                    // }
+                    if (q_ === 0) {
+                        $scope.showAlert('', 'La cantidad ingresada debe ser mayor que cero', 'warning');
+                        valid_ = false;
+                        return false;
+                    }
+                    if (q_ > max_) {
+                        $scope.showAlert('', 'Debe ingresar una cantidad menor o igual a la cantidad disponible', 'warning');
+                        valid_ = false;
+                        return false;
+                    }
+                });
+                if (!valid_) {
+                    return;
+                }
+                var d_operation_ = d_operation.val();
+                var params = {
+                    'state_id': type_,
+                    'reception_id': d_reception_id,
+                    'date': d_date.val(),
+                    'operation_id': d_operation.val(),
+                    'observation': d_observations.val(),
+                    'detail': det_
+                };
+                var txt_ = (type_ === 1) ? 'guardar' : 'procesar';
+                $scope.showConfirm('', '¿Está seguro que desea ' + txt_ + ' la devolución?', function () {
+                    RESTService.updated('devolucionOrdenCompras/save', d_id, params, function (response) {
+                        if (!_.isUndefined(response.status) && response.status) {
+                            txt_ = (type_ === 1) ? 'guardó' : 'procesó';
+                            if (type_ === 1) {
+                                $scope.showAlert('', 'La Devolución se ' + txt_ + ' correctamente.', 'success');
+                            } else {
+                                var mov_id_ = response.mov;
+                                $scope.showConfirm('', 'La Devolución se ' + txt_ + ' correctamente. ¿Desea imprimirla?', function () {
+                                    var data = {
+                                        id: mov_id_,
+                                        idtipoOpe: d_operation_,
+                                        option: 'ret'
+                                    };
+                                    var params_ext = {
+                                        'title': 'DEVOLUCIÓN DE ORDEN DE COMPRA',
+                                        'client_txt': 'PROVEEDOR: ',
+                                        'user_txt': 'COMPRADOR: '
+                                    };
+                                    $scope.loadMovimientoEntregaPDF('devolucionOrdenCompras/pdf', data, params_ext);
+                                });
+                            }
+                            modalDev.modal('hide');
+                            $("#LoadRecordsButtonDev").click();
+                        } else {
+                            $scope.showAlert('', response.message, 'warning');
+                        }
+                    });
+                });
+            }
+        }
+
+        function addDetailRet(info)
+        {
+            var code_ = info.rd_id;
+            var price_ = parseFloat(info.price);
+            var quantity_ = parseFloat(info.reception);
+            var pending_ = parseFloat(info.pending);
+            var return_ = (_.isUndefined(info.return)) ? 0 : parseFloat(info.return);
+            var localization_id_ = (_.isUndefined(info.localization_id)) ? '' : info.localization_id;
+            var localization_ = (_.isUndefined(info.localization)) ? '' : info.localization;
+            var lote_id_ = (_.isUndefined(info.lote_id)) ? '' : info.lote_id;
+            var lote_ = (_.isUndefined(info.lote)) ? '' : info.lote;
+            var info_series_ = (_.isUndefined(info.data_series)) ? [] : info.data_series;
+            verifySeries(1, info.product_id, info_series_);
+
+            var tr_ = $('<tr data-code="' + code_ + '" data-product="' + info.product_id + '" data-lote="' + lote_id_ + '" ' +
+                'data-q-max="' + pending_ + '" data-localization="' + localization_id_ + '" data-is-serie="' +
+                info.is_serie + '" data-is-lote="' + info.is_lote + '"></tr>');
+            tr_.append('<td>' + info.description + '</td>');
+            tr_.append('<td class="text-center">' + localization_ + '</td>');
+            tr_.append('<td class="text-center">' + lote_ + '</td>');
+            tr_.append('<td class="text-right">' + price_ + '</td>');
+            tr_.append('<td class="text-right">' + quantity_ + '</td>');
+            tr_.append('<td class="text-right">' + pending_ + '</td>');
+
+            var td_ = $('<td class="text-right"></td>');
+            if (d_state_id === 1) {
+                td_.append('<input type="text" class="form-control input-xs text-right d_return" ' +
+                    'onclick="this.select()"' + ' onkeypress="return validDecimals(event, this, 3)" ' +
+                    'onblur="return roundDecimals(this, 2)" value="' + return_ + '">');
+            } else {
+                td_.append('<span class="d_return">' + numberFormat(return_, 2) + '</span>');
+            }
+            tr_.append(td_);
+
+            td_ = $('<td class="text-center"></td>');
+            if (info.is_serie === 1) {
+                td_.append('<button class="btn btn-info btn-xs btn-info-ser" title="Series" ' +
+                    'type="button"><span class="fa fa-eye"></span></button>');
+            }
+            tr_.append(td_);
+
+            td_ = $('<td class="text-center"></td>');
+            if (d_state_id === 1) {
+                td_.append('<button class="btn btn-danger btn-xs del_" title="Eliminar" type="button">' +
+                    '<span class="fa fa-trash"></span></button>');
+            }
+            tr_.append(td_);
+            d_detail.append(tr_);
+
+            if (d_state_id === 1) {
+                d_detail.find('input.d_return').off().on('blur', function (e) {
+                    var that = $(this);
+                    var tr_ = that.closest('tr');
+                    var q_max_ = parseFloat(tr_.attr('data-q-max'));
+                    if (that.val() === '' || that.val() > q_max_) {
+                        $scope.showAlert('', 'Debe ingresar una cantidad menor o igual a la cantidad pendiente', 'warning');
+                        that.val(q_max_);
+                        that.select();
+                    }
+                });
+                d_detail.find('button.del_').off().on('click', function (e) {
+                    var tr_ = $(this).closest('tr');
+                    $scope.showConfirm('', '¿Está seguro que desea quitar este artículo?', function () {
+                        tr_.remove();
+                    });
+                    e.preventDefault();
+                });
+            }
+            d_detail.find('button.btn-info-ser').off().on('click', function (e) {
+                var tr_ = $(this).closest('tr');
+                var code_ = tr_.attr('data-code');
+                var product_id_ = tr_.attr('data-product');
+                var text_ = tr_.find('td:first').text();
+                d_detail_selected_ = code_;
+
+                var q_ = (d_state_id === 1) ? tr_.find('input.d_return').val() : tr_.find('span.d_return').html();
+                q_ = (q_ === '') ? 0 : parseFloat(q_);
+                if (q_ === 0) {
+                    $scope.showAlert('', 'Debe ingresar cantidad mayor a 0', 'warning');
+                    return;
+                }
+                d_series_q.val(q_);
+                d_series_text.val(text_);
+                d_detail_product_ = product_id_;
+                loadDataSeries();
+                modalSeriesProduct.modal('show');
+            });
+        }
+
+        function verifySeries(option, prod_id, data) {
+            var isset = false;
+            _.each(d_data_series, function (ser) {
+                if (parseInt(ser.product) === parseInt(prod_id)) {
+                    isset = true;
+                }
+            });
+            if (isset) {
+                d_data_series = _.reject(d_data_series, {product: prod_id});
+            }
+            if (option === 1) {
+                d_data_series.push({
+                    'product': prod_id,
+                    'detail': data
+                })
+            }
+        }
+
+        function getDataSeries(prod_id) {
+            var data_ = [];
+            _.each(d_data_series, function (ser) {
+                if (parseInt(ser.product) === parseInt(prod_id)) {
+                    data_ = ser.detail;
+                }
+            });
+            return data_;
+        }
+
+        function loadDataSeries() {
+            var data_ = getDataSeries(d_detail_product_);
+            _.each(data_, function (d, idx) {
+                addSeriesToList(d, idx);
+            });
+        }
+
+        function addSeriesToList(info, idx) {
+            var code_temp_ = codeUniqueTime() + idx;
+            var tr_ = $('<tr data-code="' + code_temp_ + '" data-series="' + info.idSerie + '"></tr>');
+            tr_.append('<td>' + d_series_text.val() + '</td>');
+            tr_.append('<td class="text-center s_serie">' + info.serie + '</td>');
+            tr_.append('<td class="text-center s_chasis">' + info.chasis + '</td>');
+            tr_.append('<td class="text-center s_motor">' + info.motor + '</td>');
+            tr_.append('<td class="text-center s_color">' + info.color + '</td>');
+            tr_.append('<td class="text-center s_year_f">' +
+                ((_.isNull(info.anio_fabricacion)) ? '' : info.anio_fabricacion) + '</td>');
+            tr_.append('<td class="text-center s_year_m">' +
+                ((_.isNull(info.anio_modelo)) ? '' : info.anio_modelo) + '</td>');
+            tr_.append('<td class="text-center s_type_c">' +
+                ((_.isNull(info.tipo_compra_venta)) ? '' : info.tipo_compra_venta) + '</td>');
+            tr_.append('<td class="text-center s_nro_pol">' +
+                ((_.isNull(info.nPoliza)) ? '' : info.nPoliza) + '</td>');
+            tr_.append('<td class="text-center s_nro_lote">' +
+                ((_.isNull(info.nLoteCompra)) ? '' : info.nLoteCompra) + '</td>');
+            d_series_detail.append(tr_);
+        }
+
+        $scope.addSeriesProduct = function () {
+            var max_ = parseFloat(d_series_q.val());
+            var q_det_ = d_series_detail.find('tr').length;
+            var pending_ = (parseInt(max_ - q_det_) > 0) ? parseInt(max_ - q_det_) : 0;
+            if (pending_ > 0) {
+                $scope.showAlert('', 'Debe ingresar cantidad de series igual a la cantidad a devolver', 'warning');
+                return false;
+            }
+            var data_ = [], valid_ = true;
+            _.each(d_series_detail.find('tr'), function (tr) {
+                if (!valid_) {
+                    return;
+                }
+                tr = $(tr);
+                data_.push({
+                    'idSerie': tr.attr('data-series'),
+                    'serie': tr.find('td.s_serie').html(),
+                    'chasis': tr.find('td.s_chasis').html(),
+                    'motor': tr.find('td.s_motor').html(),
+                    'color': tr.find('td.s_color').html(),
+                    'anio_fabricacion': tr.find('td.s_year_f').html(),
+                    'anio_modelo': tr.find('td.s_year_m').html(),
+                    'tipo_compra_venta': tr.find('td.s_type_c').html(),
+                    'nPoliza': tr.find('td.s_nro_pol').html(),
+                    'nLoteCompra': tr.find('td.s_nro_lote').html(),
+                });
+            });
+            if (!valid_) {
+                return false;
+            }
+            _.each(d_data_series, function (ser, idx) {
+                if (parseInt(ser.product) === parseInt(d_detail_product_)) {
+                    d_data_series[idx]['detail'] = data_;
+                }
+            });
+            modalSeriesProduct.modal('hide');
+        }
+
+        $scope.selectSeries = function () {
+            modalSeries.modal('show');
+        }
     }
 
     function Config($stateProvider, $urlRouterProvider) {
@@ -3357,4 +775,4 @@
         $urlRouterProvider.otherwise('/');
     }
 })
-    ();
+();

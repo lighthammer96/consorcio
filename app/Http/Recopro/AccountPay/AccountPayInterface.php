@@ -13,4 +13,6 @@ interface AccountPayInterface
     public function destroy($id);
 
     public function deleteByPettyCashExpense($id, array $pce_id);
+
+    public function getByDocumentAndTypeProvider($provider, $document, $type);
 }

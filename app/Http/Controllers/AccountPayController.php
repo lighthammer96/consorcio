@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Recopro\AccountPay\AccountPayInterface;
+use App\Http\Recopro\AccountPay\AccountPayTrait;
+use App\Http\Recopro\DocumentType\DocumentTypeInterface;
+use App\Http\Recopro\Entity\EntityInterface;
 use App\Http\Recopro\Param\ParamInterface;
 use App\Http\Recopro\Periodo\PeriodoInterface;
 use App\Http\Recopro\PettyCashExpense\PettyCashExpenseInterface;
@@ -13,8 +16,11 @@ use Illuminate\Http\Request;
 
 class AccountPayController extends Controller
 {
+    use AccountPayTrait;
+
     public function createUpdate($id, Request $request, AccountPayInterface $apRepo, TypeChangeInterface $tcRepo,
-                                 ParamInterface $parRepo, PeriodoInterface $peRepo, PettyCashExpenseInterface $pceRepo)
+                                 ParamInterface $parRepo, PeriodoInterface $peRepo, PettyCashExpenseInterface $pceRepo,
+                                 DocumentTypeInterface $dtRepo, EntityInterface $entRepo)
     {
         DB::beginTransaction();
         try {
@@ -50,13 +56,13 @@ class AccountPayController extends Controller
             }
             $data['accounting_period'] = $period->periodo;
             $data['is_igv'] = $is_igv_;
-            if ($id != 0) {
-                $ap_ = $apRepo->update($id, $data);
-            } else {
-                $data['state_id'] = 1;
-                $ap_ = $apRepo->create($data);
-                $id = $ap_->id;
+
+            $apV = $apRepo->getByDocumentAndTypeProvider($data['provider_id'], $data['document_number'],
+                $data['document_type_id']);
+            if ($apV && $apV->id != $id) {
+                throw new \Exception('Ya existe un documento con el mismo número y proveedor');
             }
+
             $affection = $request->input('affection', 0);
             $unaffected = $request->input('unaffected', 0);
             $exonerated = $request->input('exonerated', 0);
@@ -70,6 +76,30 @@ class AccountPayController extends Controller
                 $per_igv_ = 0;
             }
             $amount = $affection + $unaffected + $exonerated + $igv;
+
+            $dt_ = $dtRepo->find($data['document_type_id']);
+            if (in_array($dt_->EquivalenciaSunat, ['01', '03'])) {
+                $ent_ = $entRepo->find($data['provider_id']);
+                $ruc = trim($ent_->Documento);
+                $dt = trim($dt_->EquivalenciaSunat);
+
+                $document_number = trim($data['document_number']);
+                $sn = separateNSC($document_number);
+                $series = trim($sn[0]); $nro_doc = trim($sn[1]);
+
+                $date = Carbon::parse($data['emission_date'])->toDateString();
+
+                $total = (float)$amount;
+                $this->verifySunat($ruc, $dt, $series, $nro_doc, $date, $total);
+            }
+
+            if ($id != 0) {
+                $ap_ = $apRepo->update($id, $data);
+            } else {
+                $data['state_id'] = 1;
+                $ap_ = $apRepo->create($data);
+                $id = $ap_->id;
+            }
 
             $ap_ = $apRepo->update($id, [
                 'affection' => $affection,

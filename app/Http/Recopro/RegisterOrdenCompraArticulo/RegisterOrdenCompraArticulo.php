@@ -1,8 +1,10 @@
 <?php namespace App\Http\Recopro\RegisterOrdenCompraArticulo;
+
 use App\Http\Recopro\Product\Product;
 use App\Http\Recopro\User\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
 /**
  * Created by PhpStorm.
  * User: Jair Vasquez
@@ -11,7 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class RegisterOrdenCompraArticulo extends Model
 {
-  
+
     protected $table = 'ERP_OrdenCompraArticulo';
 
     public $timestamps = true;
@@ -20,11 +22,12 @@ class RegisterOrdenCompraArticulo extends Model
 
     public $incrementing = false;
 
-    protected $fillable = ['id', 'idArticulo','idOrden','cantidad','cantidadPendiente','cantidadRecibida','cantidadDevuelta',
-        'precioUnitario','precioTotal','nImpuesto','nIdDscto','nDescuento','codSolicitud','nPorcDescuento','valorCompra',
-        'total','dFecRequerida','iEstado','user_created','user_updated', 'valorCompraDescuento'];
-    
-     public function user_c()
+    protected $fillable = ['id', 'idArticulo', 'idOrden', 'cantidad', 'cantidadPendiente', 'cantidadRecibida',
+        'cantidadDevuelta', 'precioUnitario', 'precioTotal', 'nImpuesto', 'nIdDscto', 'nDescuento', 'codSolicitud',
+        'nPorcDescuento', 'valorCompra', 'total', 'dFecRequerida', 'iEstado', 'user_created', 'user_updated',
+        'valorCompraDescuento'];
+
+    public function user_c()
     {
         return $this->belongsTo(User::class, 'user_created');
     }

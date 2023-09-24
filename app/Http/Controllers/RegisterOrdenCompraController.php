@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Recopro\Buyer\BuyerInterface;
 use App\Http\Recopro\Compania\CompaniaInterface;
 use App\Http\Recopro\ConfigJerarquiaCompra\ConfigJerarquiaCompraInterface;
 use App\Http\Recopro\Consecutive\ConsecutiveInterface;
@@ -17,6 +18,7 @@ use App\Http\Recopro\Param\ParamInterface;
 use App\Http\Recopro\Proforma\ProformaInterface;
 use App\Http\Recopro\RegisterOrdenCompra\RegisterOrdenCompraTrait;
 use App\Http\Recopro\SolicitudCompra\SolicitudCompraInterface;
+use App\Http\Recopro\Ubigeo\UbigeoInterface;
 use Illuminate\Http\Request;
 use App\Http\Recopro\RegisterOrdenCompra\RegisterOrdenCompraInterface;
 use App\Http\Recopro\Currency\CurrencyInterface;
@@ -48,10 +50,11 @@ class RegisterOrdenCompraController extends Controller
     {
         try {
             $filter = $request->all();
+            $type_ = $request->input('type', '');
             $s = $request->input('search', '');
             $params = ['id', 'cCodConsecutivo', 'nConsecutivo', 'dFecRegistro', 'dFecRequerida', 'idProveedor',
                 'idMoneda', 'idcondicion_pago', 'total', 'iEstado', 'comentario'];
-            $info = parseDataList($repo->search($filter), $request, 'id', $params);
+            $info = parseDataList($repo->search($filter), $request, 'id', $params, 'DESC');
 
             $data = $info[1];
 
@@ -80,7 +83,26 @@ class RegisterOrdenCompraController extends Controller
                 }
                 $d->state = $state;
                 $d->comentario = (is_null($d->comentario)) ? '' : $d->comentario;
-                unset($d->provider, $d->idProveedor, $d->currency, $d->idMoneda);
+                if ($request->has('showDetail')) {
+                    $detail_ = [];
+                    foreach ($d->detailArticle as $det) {
+                        if ((float)$det->cantidadPendiente > 0) {
+                            $article = $det->article;
+                            $detail_[] = [
+                                'ocd_id' => $det->id,
+                                'product_id' => $det->idArticulo,
+                                'price' => (float)$det->precioUnitario,
+                                'quantity' => (float)$det->cantidad,
+                                'pending' => (float)$det->cantidadPendiente,
+                                'description' => $article->description,
+                                'is_serie' => (int)$article->serie,
+                                'is_lote' => (int)$article->lote,
+                            ];
+                        }
+                    }
+                    $d->detail = $detail_;
+                }
+                unset($d->provider, $d->idProveedor, $d->currency, $d->paymentCondition, $d->detailArticle);
             }
             return response()->json([
                 'Result' => 'OK',
@@ -95,13 +117,13 @@ class RegisterOrdenCompraController extends Controller
         }
     }
 
-    public function data_form(RegisterOrdenCompraInterface $moventRepo, CurrencyInterface $currencyRepo,
-                              Orden_servicioInterface $osRepo, ConsecutiveInterface $conRepo, ParamInterface $parRepo)
+    public function data_form(CurrencyInterface $currencyRepo, Orden_servicioInterface $osRepo,
+                              ConsecutiveInterface $conRepo, ParamInterface $parRepo, ProveedorInterface $provRepo,
+                              UbigeoInterface $ubRepo)
     {
         try {
             $user_id = auth()->id();
             $currency = parseSelectOnly($currencyRepo->allActive(), 'IdMoneda', 'Descripcion');
-            $providers = $moventRepo->getProveedor();
             $discounts = $osRepo->get_descuentos($user_id);
             $payment_condition = $osRepo->getcondicion_pago();
             $data_con = [];
@@ -114,8 +136,12 @@ class RegisterOrdenCompraController extends Controller
                 'payment_condition' => $payment_condition,
                 'currency' => $currency,
                 'consecutive' => $data_con,
-                'providers' => $providers,
+//                'providers' => $providers,
                 'igv' => $parRepo->getByDescription('Impuesto General a las Ventas (IGV)', 18),
+                'type_doc' => $provRepo->gte_tipo_doc(),
+                'type_prov' => $provRepo->tipo_proveedor(),
+                'type_doc_sale' => $provRepo->tipoc_doc_venta(),
+                'departments' => $ubRepo->TraerDepartamentos(),
             ]);
         } catch (\Exception $e) {
             return response()->json([
@@ -128,7 +154,7 @@ class RegisterOrdenCompraController extends Controller
     public function createUpdate($id, Request $request, RegisterOrdenCompraInterface $ocRepo, ConsecutiveInterface $conRepo,
                                  RegisterOrdenCompraArticuloInterface $ocaRepo, SolicitudCompraArticuloInterface $scaRepo,
                                  SolicitudCompraInterface $scRepo, ConfigJerarquiaCompraInterface $cjcRepo,
-                                 OrdenCompraConformidadInterface $occRepo)
+                                 OrdenCompraConformidadInterface $occRepo, BuyerInterface $buRepo)
     {
         ini_set('max_execution_time', 6000);
         DB::beginTransaction();
@@ -142,13 +168,12 @@ class RegisterOrdenCompraController extends Controller
             $data['dFecRequerida'] = $date_required;
             $state = $request->input('state', 1);
             $data['iEstado'] = $state;
-            if ($id != 0) {
-                $oc = $ocRepo->find($id);
-                if ($oc && $oc->iEstado != 1) {
-                    throw new \Exception('No puede modificar esta orden');
-                }
-            }
             if ($id == 0) {
+                $buy_ = $buRepo->getActiveByUser(auth()->id());
+                if (!$buy_) {
+                    throw new \Exception('El usuario no tiene comprador activo');
+                }
+                $data['buyer_id'] = $buy_->id;
                 $number_con = $conRepo->getIDByConsecutive($data['cCodConsecutivo']);
                 $data['nConsecutivo'] = $number_con;
                 $oc = $ocRepo->create($data);
@@ -157,6 +182,17 @@ class RegisterOrdenCompraController extends Controller
                     'nConsecutivo' => $number_con
                 ]);
             } else {
+                $oc = $ocRepo->find($id);
+                if ($oc && $oc->iEstado != 1) {
+                    throw new \Exception('No puede modificar esta orden');
+                }
+                $buy_ = $buRepo->getActiveByUser(auth()->id());
+                if (!$buy_) {
+                    throw new \Exception('El usuario no tiene comprador activo');
+                }
+                if ($oc->buyer_id != $buy_->id) {
+                    throw new \Exception('El comprador no es el mismo que creo la Orden de Compra');
+                }
                 $oc = $ocRepo->update($id, $data);
             }
             $detail = $request->input('detail', []);
@@ -194,17 +230,24 @@ class RegisterOrdenCompraController extends Controller
                         'estado' => 2
                     ]);
                     $sc = $sca->movement;
-                    if ($sc->estado > 2) {
-                        $scRepo->update($sc->idMovimiento, [
-                            'estado' => 2
-                        ]);
+                    $sc_state = 2;
+                    foreach ($sc->articles as $sca_) {
+                        if ($sca_->estado != 2) {
+                            $sc_state = 1;
+                        }
                     }
+                    $scRepo->update($sc->idMovimiento, [
+                        'estado' => $sc_state
+                    ]);
                 }
             }
             foreach ($ocaRepo->getExcept($id, $det_ids) as $oca) {
                 $sol_id = $oca->codSolicitud;
                 if (!is_null($sol_id) && $sol_id != '') {
-                    $scaRepo->update($sol_id, [
+                    $sca = $scaRepo->update($sol_id, [
+                        'estado' => 1
+                    ]);
+                    $scRepo->update($sca->idMovimiento, [
                         'estado' => 1
                     ]);
                 }
@@ -280,10 +323,12 @@ class RegisterOrdenCompraController extends Controller
             $data->nDescuento = (is_null($data->nDescuento)) ? 0 : (float)$data->nDescuento;
             $data->total = (is_null($data->total)) ? 0 : (float)$data->total;
 
+            $provider_ = $data->provider;
+            $data->provider_ = ($provider_) ? $provider_->documento . ' ' . $provider_->razonsocial : '';
+
             $detail = [];
             foreach ($data->detailArticle as $det) {
                 $article = $det->article;
-
                 $detail[] = [
                     'id' => $det->idArticulo,
                     'sol_id' => (is_null($det->codSolicitud)) ? '' : $det->codSolicitud,
@@ -328,7 +373,7 @@ class RegisterOrdenCompraController extends Controller
                 unset($data->currency, $data->provider, $data->paymentCondition);
             }
 
-            unset ($data->detailArticle);
+            unset ($data->detailArticle, $data->provider);
 
             return response()->json([
                 'status' => true,
@@ -430,7 +475,7 @@ class RegisterOrdenCompraController extends Controller
                     'ruc' => ($company) ? $company->Ruc : '',
                     'address' => ($company) ? $company->Direccion : '',
                     'phone' => ($company) ? $company->Telefono1 : '',
-                    'img' => ($company) ? $company->ruta_logo : '',
+                    'img' => ($company) ? public_path($company->ruta_logo) : '',
                 ],
                 'order' => [
                     'code' => $oc->cCodConsecutivo . ' ' . $oc->nConsecutivo,
@@ -459,11 +504,71 @@ class RegisterOrdenCompraController extends Controller
                     'total' => (float)$oc->total
                 ]
             ];
-//            dd($data);
-            $pdf = PDF::loadView('orden_compra.format', $data)->setPaper('a4');
-            return $pdf->stream();
+//            dd($data, public_path($data['company']['img']));
+            $pdf = PDF::loadView('orden_compra.format', $data);
+            return $pdf->stream('orden_compra.pdf');
         } catch (\Exception $e) {
             return $e->getMessage();
+        }
+    }
+
+    public function cancelOC($id, Request $request, RegisterOrdenCompraInterface $ocRepo,
+                             RegisterOrdenCompraArticuloInterface $ocaRepo)
+    {
+        DB::beginTransaction();
+        try {
+            $oc = $ocRepo->find($id);
+            if (!in_array($oc->iEstado, [2, 3])) {
+                throw new \Exception('No se puede cancelar la Orden');
+            }
+            foreach ($oc->detailArticle as $det) {
+                $ocaRepo->update($det->id, [
+                    'iEstado' => 7
+                ]);
+            }
+            $ocRepo->update($id, [
+                'iEstado' => 7
+            ]);
+            DB::commit();
+            return response()->json([
+                'status' => true
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
+
+    public function closeOC($id, Request $request, RegisterOrdenCompraInterface $ocRepo,
+                            RegisterOrdenCompraArticuloInterface $ocaRepo)
+    {
+        DB::beginTransaction();
+        try {
+            $oc = $ocRepo->find($id);
+            if (!in_array($oc->iEstado, [5])) {
+                throw new \Exception('No se puede cerrar la Orden');
+            }
+            foreach ($oc->detailArticle as $det) {
+                $ocaRepo->update($det->id, [
+                    'iEstado' => 6
+                ]);
+            }
+            $ocRepo->update($id, [
+                'iEstado' => 6
+            ]);
+            DB::commit();
+            return response()->json([
+                'status' => true
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
         }
     }
 
