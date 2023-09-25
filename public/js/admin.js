@@ -9507,9 +9507,9 @@ function create_pdf_Querymovimiento(response) {
 
 }
 function create_pdf_movimientoEntrega(response, params) {
-    var title_ = (_.isUndefined(params.title)) ? '' : params.title;
-    var client_txt_ = (_.isUndefined(params.client_txt)) ? '' : params.client_txt;
-    var user_txt_ = (_.isUndefined(params.user_txt)) ? '' : params.user_txt;
+    var title_ = (!_.isUndefined(params) && !_.isUndefined(params.title)) ? params.title : '';
+    var client_txt_ = (!_.isUndefined(params) && !_.isUndefined(params.client_txt)) ? params.client_txt : '';
+    var user_txt_ = (!_.isUndefined(params) && !_.isUndefined(params.user_txt)) ? params.user_txt : '';
     var data_compania = response.data_compania;
     var data_p = response.data;
     var operacion = response.data_movimientoEntrega;
