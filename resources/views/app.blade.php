@@ -4,9 +4,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-    <meta http-equiv="Pragma" content="no-cache" />
-    <meta http-equiv="Expires" content="0" />
     <base href="/">
 
     <title>CONSORCIO & ASOCIADOS</title>
@@ -110,8 +107,8 @@
 <![endif]-->
 
 <!-- Scripts -->
-<script src="{{ url('js/pdf/pdfmake.min.js') }}"></script>
-<script src="{{ url('js/pdf/vfs_fonts.js') }}"></script>
+<script src="{{ url('js/pdf/pdfmake.min.js') }}?v={{ filemtime('js/pdf/pdfmake.min.js') }}"></script>
+<script src="{{ url('js/pdf/vfs_fonts.js') }}?v={{ filemtime('js/pdf/vfs_fonts.js') }}"></script>
 <script src="{{ url('js/inspinia.js') }}"></script>
 <script src="{{ url('js/select2.min.js') }}"></script>
 <script src="{{ url('js/select2.es.js') }}"></script>
