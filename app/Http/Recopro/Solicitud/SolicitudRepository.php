@@ -14,35 +14,59 @@ use Illuminate\Support\Facades\DB;
 class SolicitudRepository implements SolicitudInterface
 {
     protected $model;
+
     private static $_ACTIVE = 'A';
+
     public function __construct(Solicitud $model)
     {
         $this->model = $model;
     }
 
-    public function search($s)
+    public function search($filter)
     {
-        return $this->model->where(function ($q) use ($s) {
-            $q->where('cCodConsecutivo', 'LIKE', '%' . $s . '%');
-            $q->orWhere('nConsecutivo', 'LIKE', "%" . $s . "%");
-            $q->orWhere('numero_documento', 'LIKE',  '%' . $s . '%');
-            $q->orWhere('fecha_solicitud', 'LIKE', '%' . $s . '%');
-            $q->orWhere('tipo_solicitud', 'LIKE', '%' . $s . '%');
-            $q->orWhere('cliente', 'LIKE', '%' . $s . '%');
-        })->orderBy('fecha_solicitud', 'DESC');
+        $s = (isset($filter['search'])) ? $filter['search'] : '';
+
+        return $this->model
+            ->where(function ($q) use ($s) {
+                $q->where('cCodConsecutivo', 'LIKE', '%' . $s . '%');
+                $q->orWhere('nConsecutivo', 'LIKE', "%" . $s . "%");
+                $q->orWhere('numero_documento', 'LIKE', '%' . $s . '%');
+                $q->orWhere('fecha_solicitud', 'LIKE', '%' . $s . '%');
+                $q->orWhere('tipo_solicitud', 'LIKE', '%' . $s . '%');
+                $q->orWhere('cliente', 'LIKE', '%' . $s . '%');
+            })
+            ->where(function ($q) use ($filter) {
+                if (isset($filter['check']) && $filter['check'] == 'true') {
+                    $from = $filter['from'] . ' 00:00:00';
+                    $to = $filter['to'] . ' 23:59:59';
+                    $q->whereBetween('fecha_solicitud', [$from, $to]);
+                }
+            })
+            ->orderBy('fecha_solicitud', 'DESC');
     }
 
-    public function search_ventas($s)
+    public function search_ventas($filter)
     {
-        // 
-        return $this->model->whereIn('estado', [2, 4])->where(function ($q) use ($s) {
-            $q->where('cCodConsecutivo', 'LIKE', '%' . $s . '%');
-            $q->orWhere('nConsecutivo', 'LIKE', '%' . $s . '%');
-            $q->orWhere('cliente', 'LIKE', '%' . $s . '%');
-            $q->orWhere('fecha_solicitud', 'LIKE', '%' . $s . '%');
-            $q->orWhere('tipo_solicitud', 'LIKE', '%' . $s . '%');
-            $q->orWhere('numero_documento', 'LIKE', '%' . $s . '%');
-        })->orderBy('fecha_solicitud', 'DESC');
+        $s = (isset($filter['search'])) ? $filter['search'] : '';
+
+        return $this->model
+            ->whereIn('estado', [2, 4])
+            ->where(function ($q) use ($s) {
+                $q->where('cCodConsecutivo', 'LIKE', '%' . $s . '%');
+                $q->orWhere('nConsecutivo', 'LIKE', '%' . $s . '%');
+                $q->orWhere('cliente', 'LIKE', '%' . $s . '%');
+                $q->orWhere('fecha_solicitud', 'LIKE', '%' . $s . '%');
+                $q->orWhere('tipo_solicitud', 'LIKE', '%' . $s . '%');
+                $q->orWhere('numero_documento', 'LIKE', '%' . $s . '%');
+            })
+            ->where(function ($q) use ($filter) {
+                if (isset($filter['check']) && $filter['check'] == 'true') {
+                    $from = $filter['from'] . ' 00:00:00';
+                    $to = $filter['to'] . ' 23:59:59';
+                    $q->whereBetween('fecha_solicitud', [$from, $to]);
+                }
+            })
+            ->orderBy('fecha_solicitud', 'DESC');
     }
 
     public function search_solicitudes_refinanciamiento($s)
@@ -72,7 +96,6 @@ class SolicitudRepository implements SolicitudInterface
 // >>>>>>> 4870a79d0dc412d8e5cb96175d98abd570e4358d
 
 
-
     public function all()
     {
         return $this->model->all();
@@ -85,6 +108,7 @@ class SolicitudRepository implements SolicitudInterface
         // print_r($attributes); exit;
         return $this->model->create($attributes);
     }
+
     public function allActive()
     {
 
@@ -95,7 +119,7 @@ class SolicitudRepository implements SolicitudInterface
     {
         // print_r($attributes); exit;
         $attributes['user_updated'] = auth()->id();
-        $model                      = $this->model->findOrFail($id);
+        $model = $this->model->findOrFail($id);
         $model->update($attributes);
     }
 
@@ -106,9 +130,9 @@ class SolicitudRepository implements SolicitudInterface
 
     public function destroy($id)
     {
-        $attributes                 = [];
+        $attributes = [];
         $attributes['user_deleted'] = auth()->id();
-        $model                      = $this->model->findOrFail($id);
+        $model = $this->model->findOrFail($id);
         $model->update($attributes);
         $model->delete();
     }
@@ -123,7 +147,7 @@ class SolicitudRepository implements SolicitudInterface
     public function get_consecutivo($cCodConsecutivo)
     {
         $mostrar = DB::select("select nConsecutivo from ERP_Consecutivos WHERE cCodConsecutivo = '{$cCodConsecutivo}'");
-        $actu    = 0;
+        $actu = 0;
         if (!$mostrar) {
             $actu = 0;
         } else {
@@ -378,8 +402,6 @@ class SolicitudRepository implements SolicitudInterface
     }
 
 
-
-
     public function get_formas_pago()
     {
 
@@ -387,7 +409,8 @@ class SolicitudRepository implements SolicitudInterface
         return $mostrar3;
     }
 
-    public function mostrar_aprobaciones($cCodConsecutivo, $nConsecutivo) {
+    public function mostrar_aprobaciones($cCodConsecutivo, $nConsecutivo)
+    {
 
         $sql = "SELECT sc.*, u.name AS nombre_usuario, /*a.nombre_aprobacion,*/ FORMAT(sc.dFecReg, 'dd/MM/yyyy') AS dFecReg, u.username AS usuario, CASE WHEN sc.iEstado = 1 THEN 'Aprobado'  WHEN sc.iEstado = 2 THEN 'Rechazado' ELSE 'Pendiente' END AS iEstado, FORMAT(sc.updated_at, 'dd/MM/yyyy') AS updated_at, ISNULL(sc.cObservacion, '') AS cObservacion
         FROM ERP_SolicitudConformidad AS sc
@@ -401,7 +424,8 @@ class SolicitudRepository implements SolicitudInterface
 
     }
 
-    public function update_saldos_solicitud($data) {
+    public function update_saldos_solicitud($data)
+    {
         $sql_update = "UPDATE ERP_Solicitud SET 
         saldo = ISNULL(saldo, 0) - {$data["monto_pagar_credito"]},
         pagado = ISNULL(pagado, 0) + {$data["monto_pagar_credito"]}, 
@@ -416,7 +440,8 @@ class SolicitudRepository implements SolicitudInterface
         return $result;
     }
 
-    public function update_saldos_solicitud_solo_credito($data) {
+    public function update_saldos_solicitud_solo_credito($data)
+    {
         $sql_update = "UPDATE ERP_Solicitud SET 
         saldo = ISNULL(saldo, 0) - {$data["monto_pagar_credito"]},
         pagado = ISNULL(pagado, 0) + {$data["monto_pagar_credito"]}
@@ -429,7 +454,8 @@ class SolicitudRepository implements SolicitudInterface
     }
 
 
-    public function update_montos_mora($data) {
+    public function update_montos_mora($data)
+    {
         $sql_update = "UPDATE ERP_SolicitudCronograma SET 
        
 
@@ -445,7 +471,8 @@ class SolicitudRepository implements SolicitudInterface
         return $result;
     }
 
-    public function update_reprogramacion($data) {
+    public function update_reprogramacion($data)
+    {
         $sql_update = "UPDATE ERP_SolicitudCronograma SET 
 
         fecha_vencimiento = '{$data["fecha_vencimiento"]}', 
@@ -460,7 +487,8 @@ class SolicitudRepository implements SolicitudInterface
     }
 
 
-    public function update_solicitud_cronograma($data) {
+    public function update_solicitud_cronograma($data)
+    {
         $sql_update = "UPDATE ERP_SolicitudCronograma SET 
         monto_pago = monto_pago + {$data["monto_pago"]},
         saldo_cuota = {$data["saldo_cuota"]}, 
@@ -474,7 +502,8 @@ class SolicitudRepository implements SolicitudInterface
         return $result;
     }
 
-    public function validar_serie($idserie) {
+    public function validar_serie($idserie)
+    {
         $sql = "SELECT * FROM ERP_Solicitud AS s
         INNER JOIN ERP_SolicitudArticulo AS sa ON(sa.cCodConsecutivo=s.cCodConsecutivo AND sa.nConsecutivo=s.nConsecutivo)
         INNER JOIN ERP_SolicitudDetalle AS sd ON(sa.id=sd.id_solicitud_articulo AND sa.cCodConsecutivo=sd.cCodConsecutivo AND sa.nConsecutivo=sd.nConsecutivo)
@@ -485,7 +514,8 @@ class SolicitudRepository implements SolicitudInterface
 
     }
 
-    public function copiar_solicitud($cCodConsecutivo, $nConsecutivo) {
+    public function copiar_solicitud($cCodConsecutivo, $nConsecutivo)
+    {
         $sql = "
         DECLARE	@return_value int,
 		@sMensaje varchar(250)
@@ -506,7 +536,8 @@ class SolicitudRepository implements SolicitudInterface
         return $res;
     }
 
-    public function obtener_separaciones($cCodConsecutivo, $nConsecutivo) {
+    public function obtener_separaciones($cCodConsecutivo, $nConsecutivo)
+    {
         $sql = "SELECT ss.*, v.*, FORMAT(v.fecha_emision, 'yyyy-MM-dd') AS fecha_emision_server, cl.* , m.*
         FROM dbo.ERP_SolicitudSeparacion AS ss 
         INNER JOIN dbo.ERP_Venta AS v ON(ss.idventa=v.idventa)
@@ -518,7 +549,8 @@ class SolicitudRepository implements SolicitudInterface
         return $result;
     }
 
-    public function obtener_series($id_solicitud_articulo) {
+    public function obtener_series($id_solicitud_articulo)
+    {
         $sql = "SELECT * FROM ERP_SolicitudDetalle  AS sd 
         INNER JOIN ERP_Serie AS s ON(s.idSerie=sd.idSerie)
         WHERE sd.id_solicitud_articulo={$id_solicitud_articulo}";

@@ -85,9 +85,6 @@
                 Serie: {
                     title: 'Serie'
                 },
-                Serie: {
-                    title: 'Serie'
-                },
                 tipoCompraVenta: {
                     title: 'Tipo Compra Venta',
                     listClass: 'text-right',
@@ -181,9 +178,8 @@
                 filtro_idAlm: $('#filtro_idAlm').val(),
                 filtro_idLoc: $('#filtro_idLoc').val(),
                 filtro_cate: $('#filtro_cate').val(),
-
             });
-        }, true);
+        }, false);
 
         getDataFiltro();
         $('#filtro_art').select2();

@@ -93,14 +93,13 @@ class Entrega_servicesTecnicoController extends Controller
         ]);
     }
 
-    // public function all(Request $request, Register_movementInterface $repo)
     public function all(Request $request, View_AL_Entega_ST_ClienteInterface $repo)
     {
-        $s = $request->input('search', '');
+        $filter = $request->all();
         // $params = ['idTipoOperacion', 'idUsuario', 'estado', 'idMovimiento'];
         $params = ['nro', 'fecha', 'tipooperacion', 'Usuario', 'estado', 'documento', 'cliente'];
         // return parseList($repo->search_entrega($s), $request, '', $params);
-        return parseList($repo->search($s), $request, '', $params);
+        return parseList($repo->search($filter), $request, '', $params);
     }
 
     public function excel(Register_movementInterface $repo)

@@ -1,7 +1,3 @@
-/**
- * Created by JAIR on 4/5/2017.
- */
-
 (function () {
     'use strict';
     angular.module('sys.app.movimientoCajas')
@@ -11,16 +7,55 @@
     Config.$inject = ['$stateProvider', '$urlRouterProvider'];
     movimientoCajaCtrl.$inject = ['$scope', '_', 'RESTService', 'AlertFactory', 'Notify', 'Helpers'];
 
-    function movimientoCajaCtrl($scope, _, RESTService, AlertFactory, Notify, Helpers) {
-        // Helpers.saludo();
-        // var modalMovCaj=$("#modalMovCaj");
-        // var titleModalMovCaj=$("#titleModalMovCaj");
+    function movimientoCajaCtrl($scope, _, RESTService, AlertFactory, Notify, Helpers)
+    {
+        moment.locale('es');
 
-        // function newMovimiCaja()
-        // {
-        //     titleModalMovCaj.html('Nuevo Movimiento de caja');
-        //     modalMovCaj.modal('show');
-        // }
+        var start_sol = moment().subtract(6, 'days');
+        var end_sol = moment();
+
+        var chk_date_range_sol = $('#chk_date_range_sol');
+        chk_date_range_sol.click(function () {
+            $('#LoadRecordsButtonSolicitud').click();
+        });
+        generateCheckBox('#chk_date_range_sol');
+
+        var solDates = $('#solDates');
+
+        var showDateSol = function (from, to) {
+            start_sol = from;
+            end_sol = to;
+            solDates.find('span').html(from.format('MMM D, YYYY') + ' - ' + to.format('MMM D, YYYY'));
+            if (chk_date_range_sol.prop('checked')) {
+                $('#LoadRecordsButtonSolicitud').click();
+            }
+        };
+        generateDateRangePicker(solDates, start_sol, end_sol, showDateSol);
+        showDateSol(start_sol, end_sol);
+
+        var start_com = moment().subtract(6, 'days');
+        var end_com = moment();
+
+
+        var chk_date_range_com = $('#chk_date_range_com');
+        chk_date_range_com.click(function () {
+            $('#LoadRecordsButtonComprobantes').click();
+        });
+        generateCheckBox('#chk_date_range_com');
+
+        var comDates = $('#comDates');
+
+        var showDateCom = function (from, to) {
+            start_com = from;
+            end_com = to;
+            comDates.find('span').html(from.format('MMM D, YYYY') + ' - ' + to.format('MMM D, YYYY'));
+            if (chk_date_range_com.prop('checked')) {
+                $('#LoadRecordsButtonComprobantes').click();
+            }
+        };
+        generateDateRangePicker(comDates, start_com, end_com, showDateCom);
+        showDateCom(start_com, end_com);
+
         var cuentas_bancarias;
         var nrOperacion = $("#nrOperacion");
         var banco = $("#banco");
@@ -142,7 +177,7 @@
                             $('#table_container_comprMovimiento').jtable('openChildTable',
                                 $img.closest('tr'), //Parent row
                                 {
-                                    title:'VENTAS',
+                                    title: 'VENTAS',
                                     actions: {
                                         listAction: base_url + '/movimientoCajas/listComDetalle?IdTipoDocumento=' + studentData.record.IdTipoDocumento,
                                     },
@@ -162,7 +197,7 @@
                                         monto: {
                                             title: 'Monto',
                                             display: function (data) {
-                                                return(addCommas(redondeodecimale(data.record.monto).toFixed(2)));
+                                                return (addCommas(redondeodecimale(data.record.monto).toFixed(2)));
                                             }
                                         },
                                     }
@@ -179,7 +214,7 @@
                 monto: {
                     title: 'TOTAL',
                     display: function (data) {
-                        return(addCommas(redondeodecimale(data.record.monto).toFixed(2)));
+                        return (addCommas(redondeodecimale(data.record.monto).toFixed(2)));
                     }
                 },
             },
@@ -193,10 +228,9 @@
             }
         });
 
-        generateSearchForm('frm-search-comprMovimiento', 'LoadRecordsButtoncomprMovimiento', function(){
+        generateSearchForm('frm-search-comprMovimiento', 'LoadRecordsButtoncomprMovimiento', function () {
             table_container_bancos.jtable('load');
         }, true);
-
 
 
         ///
@@ -235,7 +269,7 @@
                             $('#table_container_comprMovimientoDol').jtable('openChildTable',
                                 $img.closest('tr'), //Parent row
                                 {
-                                    title:'VENTAS',
+                                    title: 'VENTAS',
                                     actions: {
                                         listAction: base_url + '/movimientoCajas/listComDetalleDol?IdTipoDocumento=' + studentData.record.IdTipoDocumento,
                                     },
@@ -255,7 +289,7 @@
                                         monto: {
                                             title: 'Monto',
                                             display: function (data) {
-                                                return(addCommas(redondeodecimale(data.record.monto).toFixed(2)));
+                                                return (addCommas(redondeodecimale(data.record.monto).toFixed(2)));
                                             }
 
                                         },
@@ -273,7 +307,7 @@
                 monto: {
                     title: 'TOTAL',
                     display: function (data) {
-                        return(addCommas(redondeodecimale(data.record.monto).toFixed(2)));
+                        return (addCommas(redondeodecimale(data.record.monto).toFixed(2)));
                     }
                 },
             },
@@ -287,15 +321,15 @@
             }
         });
         //
-        generateSearchForm('frm-search-comprMovimiento', 'LoadRecordsButtoncomprMovimiento', function(){
+        generateSearchForm('frm-search-comprMovimiento', 'LoadRecordsButtoncomprMovimiento', function () {
             table_container_bancos_2.jtable('load');
         }, true);
 
         table_container_bancos.jtable('load');
 
-        montoAdd.keyup(function(e) {
+        montoAdd.keyup(function (e) {
             var monto = parseFloat(montoAdd.val());
-            if(isNaN(monto)) {
+            if (isNaN(monto)) {
                 monto = 0;
             }
             // console.log(monto);
@@ -339,11 +373,11 @@
         btn_imprimirCaja.click(function (e) {
             var data = {id: '0',};
             if (estadoMc.val() != '') {
-                if($("#estadReporte").val()==1){
+                if ($("#estadReporte").val() == 1) {
                     $scope.loadMovimientoCajaPDF('movimientoCajas/pdf', data);
-                }else if($("#estadReporte").val()==2){
+                } else if ($("#estadReporte").val() == 2) {
                     $scope.loadMovimientoCuadreCajaPDF('movimientoCajas/Cuadrepdf', data);
-                }else if($("#estadReporte").val()==3){
+                } else if ($("#estadReporte").val() == 3) {
                     // $scope.loadMovimientoEmisionComproPDF('movimientoCajas/EmisionComprpdf', data);
                     // alert($("#idCajaDiaria").val());
                     window.open("movimientoCajas/reporte_EmisionComprpdf/-1");
@@ -355,16 +389,17 @@
             checkboxClass: 'icheckbox_square-green'
         }).on('ifChanged', function (event) {
             $(event.target).click();
-            if(event.target.value == 'S'){
+            if (event.target.value == 'S') {
                 $("#emitir_comprobante").val("N");
                 $(".i-checks span").text("NO");
                 $(".datos-comprobante").hide();
 
-            }else{
+            } else {
                 $(".datos-comprobante").show();
                 $("#emitir_comprobante").val("S");
                 $(".i-checks span").text("SI");
-            };
+            }
+            ;
 
         });
 
@@ -429,6 +464,7 @@
 
             // }
         });
+
         function findCajaDiariaMc(id) {
             titlemodalAperturaCaja.html('Cerrar Caja');
             RESTService.get('movimientoCajas/find', id, function (response) {
@@ -486,8 +522,10 @@
                 }
             });
         }
+
         idUsuario.select2();
         idCaja.select2();
+
         function Fecha_actual() {
             var hoy = new Date();
             var hAnio = hoy.getFullYear();
@@ -571,6 +609,7 @@
                 }
             });
         }
+
         banco.change(function (e) {
             cargarCuentasBancarias();
         });
@@ -637,7 +676,9 @@
                 getDataFormCajaInicio();
             });
         }
+
         getDataFormCajaInicio();
+
         function getDataFormDescuento() {
             RESTService.all('movimientoCajas/data_formUsu', '', function (response) {
                 if (!_.isUndefined(response.status) && response.status) {
@@ -651,21 +692,23 @@
                 getDataFormDescuento();
             });
         }
+
         getDataFormDescuento();
         Fecha_actual();
+
         function getDataFormCajaDiaria() {
             RESTService.all('movimientoCajas/data_form_caja_diaria', '', function (response) {
                 if (!_.isUndefined(response.status) && response.status) {
                     console.log(response.cajas);
 
-                    var cajasusu=response.cajas;
+                    var cajasusu = response.cajas;
                     idCaja.append('<option value="">Seleccionar</option>');
                     _.each(response.cajas, function (item) {
                         idCaja.append('<option value="' + item.idcaja + '">' + item.nombre_caja + '</option>');
                     });
                     idUsuario.val(response.usuario).trigger("change");
                     usuarioActual = response.usuario;
-                    if(cajasusu.length==0){
+                    if (cajasusu.length == 0) {
                         AlertFactory.textType({
                             title: '',
                             message: 'El usuario actual no tiene asignado ninguna caja',
@@ -726,6 +769,7 @@
 
             });
         }
+
         function sumar_cantidades() {
             console.log("sumando");
             var totalt = 0;
@@ -757,6 +801,7 @@
                 totalEfectivoDol.val(totalD.toFixed(2));
             }
         }
+
         function generarTablaApertura() {
             table_demoninacionesSoles.html("");
             table_demoninacionesDolares.html("");
@@ -805,7 +850,7 @@
             var td3 = $('<td></td>');
             var iddenominacion = $('<input type="hidden" name="idDenominacionS[]" class="idDenominacionS form-control input-sm"  value="' + idDenominacion + '"  />');
             var cantidad = $('<input type="text" name="cantidadS[]" class="cantidadS form-control input-sm"  value="' + cantidad + '"   tabindex="' + tabs + '" onkeypress="return soloNumeros(event)" ' + estadoCant + '/>');
-            var monto = $('<input type="text" name="montoS[]" class="montoS form-control input-sm" data-montoEsta="'+monto+'" value="' + monto + '"  disabled/>');
+            var monto = $('<input type="text" name="montoS[]" class="montoS form-control input-sm" data-montoEsta="' + monto + '" value="' + monto + '"  disabled/>');
             var montest = $('<input type="hidden" class="montoSt form-control input-sm"  value="' + monto + '"  disabled/>');
             td1.append(iddenominacion);
             td2.append(cantidad);
@@ -840,12 +885,14 @@
             // });
 
         }
+
         $(document).on("keyup", ".cantidadS", function () {
             sumar_cantidades();
         });
         $(document).on("keyup", ".cantidadD", function () {
             sumar_cantidades();
         });
+
         function addDenominacionDolar(idDenominacion, denominacion, cantidad, monto, estadoCant, tabs) {
             var tr = $('<tr id="tr_b_' + idDenominacion + '"></tr>');
             var td1 = $('<td>' + denominacion + '</td>');
@@ -853,7 +900,7 @@
             var td3 = $('<td></td>');
             var iddenominacion = $('<input type="hidden" name="idDenominacionD[]" class="idDenominacionD form-control input-sm"  value="' + idDenominacion + '"  />');
             var cantidad = $('<input type="text" name="cantidadD[]" class="cantidadD form-control input-sm"  value="' + cantidad + '"  tabindex="' + tabs + '" onkeypress="return soloNumeros(event)" ' + estadoCant + '/>');
-            var monto = $('<input type="text" name="montoD[]" class="montoD form-control input-sm" data-montoEsta="'+monto+'" value="' + monto + '"  disabled/>');
+            var monto = $('<input type="text" name="montoD[]" class="montoD form-control input-sm" data-montoEsta="' + monto + '" value="' + monto + '"  disabled/>');
             td1.append(iddenominacion);
             td2.append(cantidad);
             td3.append(monto);
@@ -878,6 +925,7 @@
             });
 
         }
+
         function cleanAperturaCaja() {
             cleanRequired();
             titlemodalAperturaCaja.html('');
@@ -912,18 +960,20 @@
             var txt_state2 = (w_state.prop('checked')) ? 'Activo' : 'Inactivo';
             state_state.html(txt_state2);
         };
+
         function newAperturaCaja() {
             titlemodalAperturaCaja.html('Nueva Apertura de Caja');
             modalAperturaCaja.modal('show');
         }
+
         $scope.saveAddMovimientoCaja = function () {
 
             var emitir_comprobante = (($("#emitir_comprobante").prop('checked')) ? 'S' : 'N');
             if (tipoMovimientoAdd.val() == 'SEP' || tipoMovimientoAdd.val() == 'TPL' || tipoMovimientoAdd.val() == 'ALQ') {
                 var monto_mov = $("#monto_mov").val();
-                if(monto_mov != "") {
+                if (monto_mov != "") {
 
-                    if(monto_mov != 0) {
+                    if (monto_mov != 0) {
                         AlertFactory.textType({
                             title: '',
                             message: 'Las formas de pago no suman el monto total a pagar',
@@ -948,7 +998,7 @@
             }
             if (tipoMovimientoAdd.val() != 'BCO') {
                 bval = bval && conceptoAdd.required();
-                if($("#idcliente_m").val() == "") {
+                if ($("#idcliente_m").val() == "") {
                     bval = bval && $("#documento_cliente").required();
                     bval = bval && $("#razonsocial_cliente_m").required();
                 }
@@ -966,7 +1016,7 @@
             }
 
             var monto_mov = parseFloat($("#monto_mov").val());
-            if(monto_mov != 0 && $("#detalle-formas-pago-mov").html() == "" && (tipoMovimientoAdd.val() == 'SEP' || tipoMovimientoAdd.val() == 'TPL' || tipoMovimientoAdd.val() == 'ALQ')) {
+            if (monto_mov != 0 && $("#detalle-formas-pago-mov").html() == "" && (tipoMovimientoAdd.val() == 'SEP' || tipoMovimientoAdd.val() == 'TPL' || tipoMovimientoAdd.val() == 'ALQ')) {
                 AlertFactory.textType({
                     title: '',
                     message: 'Debe ingresar al menos 1 registro al detalle',
@@ -1006,7 +1056,7 @@
                 // +"&nrOperacion="+nrOperacion.val()+"&bancoText="+$("#banco option:selected").text()+"&idBanco="+banco.val()+"&idCuenta="+toCuenta[0]+"&numero_cuenta="+toCuenta[1]+"&serie_comprobante="+$("#serie_comprobante_m").val()+"&numero_comprobante="+$("#numero_comprobante_m").val()+"&IdTipoDocumento="+$("#tipo_doc_venta").val()+"&idcliente="+$("#idcliente_m").val()+"&emitir_comprobante="+$("#emitir_comprobante").val()
 
                 $("#btn_saveAddMovimientoCaja").attr("disabled", "disabled");
-                $.post('movimientoCajas/saveMovimientoCaja', $("#formMovimientoCaja").serialize()+"&id="+id+"&IdTipoDocumento="+$("#tipo_doc_venta").val()+"&serie_comprobante="+$("#serie_comprobante_m").val()+"&numero_comprobante="+$("#numero_comprobante_m").val()+"&idcliente="+$("#idcliente_m").val()+"&emitir_comprobante="+$("#emitir_comprobante").val()+"&formaPagoAdd="+formaPagoAdd.val(),
+                $.post('movimientoCajas/saveMovimientoCaja', $("#formMovimientoCaja").serialize() + "&id=" + id + "&IdTipoDocumento=" + $("#tipo_doc_venta").val() + "&serie_comprobante=" + $("#serie_comprobante_m").val() + "&numero_comprobante=" + $("#numero_comprobante_m").val() + "&idcliente=" + $("#idcliente_m").val() + "&emitir_comprobante=" + $("#emitir_comprobante").val() + "&formaPagoAdd=" + formaPagoAdd.val(),
                     function (data, textStatus, jqXHR) {
                         console.log(data);
                         $("#btn_saveAddMovimientoCaja").removeAttr("disabled");
@@ -1023,12 +1073,12 @@
                             LoadRecordsButtonComprobantes.click();
                             // alert(response.idventa+" "+response.tipoMovimientoAdd);
                             var id = "";
-                            if(response.idventa != "") {
+                            if (response.idventa != "") {
                                 id = "0|0|" + response.idventa;
 
-                                if(response.tipoMovimientoAdd == "SEP" || response.tipoMovimientoAdd == "TPL" || response.tipoMovimientoAdd == "ALQ") {
+                                if (response.tipoMovimientoAdd == "SEP" || response.tipoMovimientoAdd == "TPL" || response.tipoMovimientoAdd == "ALQ") {
 
-                                    if(emitir_comprobante == "S") {
+                                    if (emitir_comprobante == "S") {
 
                                         window.open("movimientoCajas/imprimir_comprobante/" + id);
                                     }
@@ -1038,8 +1088,8 @@
 
                             }
 
-                            if(response.idventa_ticket != "") {
-                                id =  "0|0|" + response.idventa_ticket;
+                            if (response.idventa_ticket != "") {
+                                id = "0|0|" + response.idventa_ticket;
                                 window.open("movimientoCajas/imprimir_ticket_movimiento_caja/" + id);
                             }
 
@@ -1133,7 +1183,8 @@
                 //     }
 
                 // });
-            };
+            }
+            ;
 
         }
 
@@ -1320,16 +1371,19 @@
 
             }
         }
+
         function convertDateFormat(string) {
             var info = string.split('-');
             return info[2] + '/' + info[1] + '/' + info[0];
         }
+
         function cerrarCaja(id) {
             console.log(id);
             titlemodalAperturaCaja.html('Cierre de Caja');
             findCajaDiariaMc(id);
             generarTablaApertura();
         }
+
         function addTableEfecSol(codigoTipo, tipotext, monto, tipoSum) {
             //  if ($('#tr_b_' + codigoTipo).length > 0) {
             //     var tota=Number($('#tr_b_' + codigoTipo).find("td:eq(2)").children("p").text());
@@ -1355,6 +1409,7 @@
             //      sumar_cantidades();
             // });
         }
+
         function addTableEfecDolar(codigoTipo, tipotext, monto, tipoSum) {
             //  if ($('#tr_bd_' + codigoTipo).length > 0) {
             //     var tota=Number($('#tr_bd_' + codigoTipo).find("td:eq(2)").children("p").text());
@@ -1380,6 +1435,7 @@
             //      sumar_cantidades();
             // });
         }
+
         function calcularTotalEfect(tipoSumX, totalefecdb) {
             var totalEfectivo = 0;
             var totalForma = 0;
@@ -1416,6 +1472,7 @@
 
 
         }
+
         function calcularTotalEfectDola(tipoSumX, totalefecdb) {
             var totalEfectivo = 0;
             var totalForma = 0;
@@ -1467,23 +1524,23 @@
             var id = Fecha_actual();
             RESTService.get('movimientoCajas/data_form', id, function (response) {
                 if (!_.isUndefined(response.status) && response.status) {
-                    var total_compro=response.data_comproTotal;
-                    var totsolCom=0;
-                    var totDolCom=0;
+                    var total_compro = response.data_comproTotal;
+                    var totsolCom = 0;
+                    var totDolCom = 0;
                     // console.log(total_compro);
                     total_compro.map(function (index) {
-                        if(index.idmoneda=='1'){
-                            totsolCom=totsolCom+Number(index.monto);
-                        }else{
-                            totDolCom=totsolCom+Number(index.monto);
+                        if (index.idmoneda == '1') {
+                            totsolCom = totsolCom + Number(index.monto);
+                        } else {
+                            totDolCom = totsolCom + Number(index.monto);
                         }
                     });
-                    var totsumsol=addCommas(redondeodecimale(totsolCom).toFixed(2));
-                    var totsumdol=addCommas(redondeodecimale(totDolCom).toFixed(2));
+                    var totsumsol = addCommas(redondeodecimale(totsolCom).toFixed(2));
+                    var totsumdol = addCommas(redondeodecimale(totDolCom).toFixed(2));
                     $("#total_comprobante_solA").html("");
-                    $("#total_comprobante_solA").append("<tr><th width='10px'></th><th style='text-align: left' width='25px'>TOTAL COMPROBANTES</th><th style='text-align: left' width='61px'>"+totsumsol+"</th></tr>");
+                    $("#total_comprobante_solA").append("<tr><th width='10px'></th><th style='text-align: left' width='25px'>TOTAL COMPROBANTES</th><th style='text-align: left' width='61px'>" + totsumsol + "</th></tr>");
                     $("#total_comprobante_dolA").html("");
-                    $("#total_comprobante_dolA").append("<tr><th width='10px'></th><th style='text-align: left'  width='25px'>TOTAL COMPROBANTES</th><th style='text-align: left' width='61px'>"+totsumdol+"</th></tr>");
+                    $("#total_comprobante_dolA").append("<tr><th width='10px'></th><th style='text-align: left'  width='25px'>TOTAL COMPROBANTES</th><th style='text-align: left' width='61px'>" + totsumdol + "</th></tr>");
                     var fecha_caja = response.fechacA;
                     var dataCajaDetForSol = response.dataCajaDetForSol;
                     var dataCajaDetEfeSol = response.dataCajaDetEfeSol;
@@ -1613,11 +1670,13 @@
                         // console.log("hdhdd");
                         if (dataCaja[0].estado == 1) {
                             btn_Mapertura.prop('disabled', true);
-                        };
+                        }
+                        ;
                         if (dataCaja[0].estado == 0) {
                             btn_Mapertura.prop('disabled', true);
                             btn_Mcierra.prop('disabled', true);
-                        };
+                        }
+                        ;
                     }
                     // console.log(response.data_tipo);
                     // console.log("response tipo");
@@ -1662,6 +1721,7 @@
                 getDataFormMovementCaja();
             });
         }
+
         getDataFormMovementCaja();
         var table_container_movimientoCaja = $("#table_container_movimientoCaja");
 
@@ -1729,7 +1789,6 @@
                 },
 
 
-
             },
 
 
@@ -1748,7 +1807,8 @@
                     } else {
                         $("#Edit-estado").val("A");
                         $(".i-checks span").text("Activo");
-                    };
+                    }
+                    ;
                 });
             },
             formSubmitting: function (event, data) {
@@ -1775,7 +1835,8 @@
         // ######################### SOLICITUD / VENTA ######################### //
         // ##################################################################### //
 
-        var search_solicitud = getFormSearch('frm-search-solicitud', 'search_b_solicitud', 'LoadRecordsButtonSolicitud');
+        var search_solicitud = getFormSearch('frm-search-solicitud', 'search_b_solicitud',
+            'LoadRecordsButtonSolicitud');
 
         var table_container_solicitud = $("#table_container_solicitud");
 
@@ -1786,28 +1847,11 @@
             actions: {
                 listAction: base_url + '/movimientoCajas/list_ventas',
             },
-            // messages: {
-            //     addNewRecord: 'Nueva Caja',
-            //     editRecord: 'Editar Caja'
-            // },
             toolbar: {
                 items: [{
                     cssClass: 'buscador',
                     text: search_solicitud
                 }
-                    // , {
-                    //     cssClass: 'btn-primary',
-                    //     text: '<i class="fa fa-file-excel-o"></i> Exportar a Excel',
-                    //     click: function () {
-                    //         $scope.openDoc('solicitud/excel', {});
-                    //     }
-                    // }, {
-                    //     cssClass: 'btn-danger-admin',
-                    //     text: '<i class="fa fa-plus"></i> Nueva Solicitud',
-                    //     click: function () {
-                    //         newSolicitud();
-                    //     }
-                    // }
                 ]
             },
             fields: {
@@ -1820,8 +1864,6 @@
                 },
                 nConsecutivo: {
                     title: 'Nro',
-
-
                 },
 
                 fecha_solicitud: {
@@ -1829,53 +1871,49 @@
                     display: function (data) {
                         return moment(data.record.fecha_solicitud).format('DD/MM/YYYY');
                     }
-
                 },
                 tipo_solicitud: {
                     title: 'Tipo Solicitud',
-                    options: { '1': 'Contado', '2': 'Crédito Directo', '3': 'Crédito Financiero', '4': 'Crédito' },
-
+                    options: {'1': 'Contado', '2': 'Crédito Directo', '3': 'Crédito Financiero', '4': 'Crédito'},
                 },
                 tipo_documento: {
                     title: 'Tipo Doc.',
-
-
                 },
                 numero_documento: {
                     title: 'N° Documento',
-
                 },
                 cliente: {
                     title: 'Cliente',
                 },
                 moneda: {
                     title: 'Moneda',
-
-
                 },
                 t_monto_total: {
                     title: 'Monto',
-
-
                 },
                 pagado: {
                     title: 'Pagado',
-
-
                 },
                 saldo: {
                     title: 'Saldo',
-
-
                 },
                 facturado: {
                     title: 'Facturado',
-
-
                 },
                 estado: {
                     title: 'Estado',
-                    options: { '1': 'Registrado', '2': 'Vigente', '3': 'Por Aprobar', '4': 'Aprobado', '5': 'Rechazado', '6': 'Facturado', '7': 'Despachado', '8': 'Despachado Parcial', '9': 'Refinanciado', '10': 'Anulado' },
+                    options: {
+                        '1': 'Registrado',
+                        '2': 'Vigente',
+                        '3': 'Por Aprobar',
+                        '4': 'Aprobado',
+                        '5': 'Rechazado',
+                        '6': 'Facturado',
+                        '7': 'Despachado',
+                        '8': 'Despachado Parcial',
+                        '9': 'Refinanciado',
+                        '10': 'Anulado'
+                    },
                 },
                 edit: {
                     width: '1%',
@@ -1888,9 +1926,7 @@
                             + '" data-id="' + data.record.cCodConsecutivo
                             + '_' + data.record.nConsecutivo + '" title="Emitir Comprobante"><i class="fa fa-money fa-1-5x"></i></a>';
                     }
-
                 }
-
             },
             recordsLoaded: function (event, data) {
                 $('.emitir-comprobante').click(function (e) {
@@ -1948,12 +1984,12 @@
                     } else {
                         $("#Edit-activo").val("S");
                         $(".i-checks span").text("Activo");
-                    };
+                    }
+                    ;
                 });
             },
             formSubmitting: function (event, data) {
                 var bval = true;
-
                 bval = bval && data.form.find('input[name="nombre_caja"]').required();
                 bval = bval && data.form.find('input[name="usuario"]').required();
                 bval = bval && data.form.find('input[name="activo"]').required();
@@ -1963,7 +1999,10 @@
 
         generateSearchForm('frm-search-solicitud', 'LoadRecordsButtonSolicitud', function () {
             table_container_solicitud.jtable('load', {
-                search: $('#search_b_solicitud').val()
+                search: $('#search_b_solicitud').val(),
+                check: (chk_date_range_sol.prop('checked')),
+                from: start_sol.format('YYYY-MM-DD'),
+                to: end_sol.format('YYYY-MM-DD')
             });
         }, true);
 
@@ -2093,7 +2132,6 @@
                         }
 
 
-
                     } else {
                         total = t_monto_subtotal - cuota_inicial;
                         if (t_impuestos > 0) {
@@ -2103,11 +2141,14 @@
                     }
                 }
                 // alert( cuota_inicial);
-                if((cuota_inicial > 0 && pagado == 0)|| $("#tipo_solicitud").val() == "1") {
-                    $.post("movimientoCajas/obtener_totales_separaciones", { cCodConsecutivo: cCodConsecutivo.val(), nConsecutivo: nConsecutivo.val() },
+                if ((cuota_inicial > 0 && pagado == 0) || $("#tipo_solicitud").val() == "1") {
+                    $.post("movimientoCajas/obtener_totales_separaciones", {
+                            cCodConsecutivo: cCodConsecutivo.val(),
+                            nConsecutivo: nConsecutivo.val()
+                        },
                         function (data, textStatus, jqXHR) {
                             var t_monto_total = parseFloat(data[0].t_monto_total);
-                            if(isNaN(t_monto_total)) {
+                            if (isNaN(t_monto_total)) {
                                 t_monto_total = 0;
                             }
 
@@ -2136,14 +2177,14 @@
                 $.post("movimientoCajas/obtener_consecutivo_comprobante_mc", {},
                     function (data, textStatus, jqXHR) {
                         // console.log(data);
-                        if(data.length > 0) {
+                        if (data.length > 0) {
                             select_comprobante(data);
 
                             $("#serie_comprobante").trigger("change");
 
 
                             var monto_pagar = sumar_montos_pago();
-                            if(monto_pagar == 0) {
+                            if (monto_pagar == 0) {
                                 AlertFactory.textType({
                                     title: '',
                                     message: 'El monto a pagar esta en cero!',
@@ -2155,13 +2196,13 @@
                             var check_cuota = $(".check-cuota");
                             var checks = 0;
                             for (var ii = 0; ii < check_cuota.length; ii++) {
-                                if($(check_cuota[ii]).is(":checked")) {
+                                if ($(check_cuota[ii]).is(":checked")) {
                                     checks++;
                                 }
 
                             }
 
-                            if(checks <= 0) {
+                            if (checks <= 0) {
                                 AlertFactory.textType({
                                     title: '',
                                     message: 'Debe Seleccionar al menos una cuota a pagar!',
@@ -2192,12 +2233,12 @@
             }
 
             // PARA DOCUMENTOS PENDIENTES
-            if($("#modalDocumentosPendientes").is(":visible")) {
+            if ($("#modalDocumentosPendientes").is(":visible")) {
                 var monto_pagar_dp = parseFloat($("#monto_pagar_dp").val());
-                if(isNaN(monto_pagar_dp)) {
+                if (isNaN(monto_pagar_dp)) {
                     monto_pagar_dp = 0;
                 }
-                if(monto_pagar_dp == 0 || monto_pagar_dp == "") {
+                if (monto_pagar_dp == 0 || monto_pagar_dp == "") {
                     $("#monto_pagar_dp").focus();
                     return false;
                 }
@@ -2205,11 +2246,10 @@
                 $.post("movimientoCajas/obtener_consecutivo_comprobante_mc", {},
                     function (data, textStatus, jqXHR) {
                         // console.log(data);
-                        if(data.length > 0) {
+                        if (data.length > 0) {
                             select_comprobante(data);
 
                             $("#serie_comprobante").trigger("change");
-
 
 
                             $("#total_pagar").val(monto_pagar_dp.toFixed(2));
@@ -2244,7 +2284,7 @@
                 $("#forma_pago").html("");
                 $("#forma_pago").append('<option value="">Seleccionar</option>');
                 _.each(data_formas_pago, function (item) {
-                    if(item.codigo_formapago != "ACR" ) {
+                    if (item.codigo_formapago != "ACR") {
                         $("#forma_pago").append('<option value="' + item.codigo_formapago + '">' + item.descripcion_subtipo + '</option>');
                     } else {
 
@@ -2308,7 +2348,7 @@
                 $("#moneda").val($("#idMonedaAdd").val());
             }
 
-            if(bval) {
+            if (bval) {
                 $(".clean-monto").val(0);
                 $("#noperacion").val("");
                 $("#tarjeta").val("");
@@ -2324,7 +2364,7 @@
         $(document).on("change", "#id_tipoDoc_Venta_or", function (event, serie_comprobante) {
             // console.log(IdTipoDocumento, serie_comprobante);
             var tipo_documento = $(this).val();
-            $.post("movimientoCajas/obtener_consecutivo_comprobante", { tipo_documento: tipo_documento },
+            $.post("movimientoCajas/obtener_consecutivo_comprobante", {tipo_documento: tipo_documento},
                 function (data, textStatus, jqXHR) {
                     select_comprobante(data);
 
@@ -2338,12 +2378,12 @@
         $(document).on("change", "#idventa", function (event) {
             var idventa = $(this).val();
             var tipo = $(this).attr("tipo");
-            var monto_venta = parseFloat($(this).find("option[value="+idventa+"]").attr("t_monto_total"));
-            var devolucion_producto = $(this).find("option[value="+idventa+"]").attr("devolucion_producto");
+            var monto_venta = parseFloat($(this).find("option[value=" + idventa + "]").attr("t_monto_total"));
+            var devolucion_producto = $(this).find("option[value=" + idventa + "]").attr("devolucion_producto");
             // alert(idventa);
 
 
-            if(tipo == "separacion") {
+            if (tipo == "separacion") {
 
                 $("#idventa_separacion").val(idventa);
                 $("#devolucion_producto").val(devolucion_producto);
@@ -2352,7 +2392,7 @@
                 $("#monto_aplicar").val(monto_venta.toFixed(2));
             }
 
-            if(tipo == "nota_credito") {
+            if (tipo == "nota_credito") {
                 $("#idventa_nota").val(idventa);
                 $("#devolucion_producto").val(devolucion_producto);
                 $("#idventa_separacion").val("");
@@ -2372,26 +2412,24 @@
             $("#idventa").removeAttr("tipo");
             $(".deposito").hide();
             // alert(forma_pago);
-            if(forma_pago == "DEP" || forma_pago == "TRA") {
+            if (forma_pago == "DEP" || forma_pago == "TRA") {
                 $(".deposito").show();
             }
 
-            if(forma_pago == "SEP") {
-                $.post("ventas/get_venta_separacion", { idcliente: idcliente },
+            if (forma_pago == "SEP") {
+                $.post("ventas/get_venta_separacion", {idcliente: idcliente},
                     function (data, textStatus, jqXHR) {
                         // console.log(data);
-                        if(data.length > 0) {
+                        if (data.length > 0) {
                             $(".venta").show();
                             $("#idventa").attr("tipo", "separacion");
                             var html = '<option value="">Seleccione</option>';
 
                             for (var index = 0; index < data.length; index++) {
-                                html += '<option t_monto_total="'+data[index].t_monto_total+'" devolucion_producto="'+data[index].devolucion_producto+'" value="'+data[index].idventa+'">'+data[index].serie_comprobante+'-'+data[index].numero_comprobante+'</option>';
+                                html += '<option t_monto_total="' + data[index].t_monto_total + '" devolucion_producto="' + data[index].devolucion_producto + '" value="' + data[index].idventa + '">' + data[index].serie_comprobante + '-' + data[index].numero_comprobante + '</option>';
 
                             }
                             $("#idventa").html(html);
-
-
 
 
                         } else {
@@ -2407,17 +2445,17 @@
                 );
             } else {
 
-                if(forma_pago == "NCR") {
-                    $.post("ventas/get_venta_nota", { idcliente: idcliente },
+                if (forma_pago == "NCR") {
+                    $.post("ventas/get_venta_nota", {idcliente: idcliente},
                         function (data, textStatus, jqXHR) {
                             // console.log(data);
-                            if(data.length > 0) {
+                            if (data.length > 0) {
                                 $(".venta").show();
                                 $("#idventa").attr("tipo", "nota_credito");
                                 var html = '<option value="">Seleccione</option>';
 
                                 for (var index = 0; index < data.length; index++) {
-                                    html += '<option t_monto_total="'+data[index].t_monto_total+'" devolucion_producto="'+data[index].devolucion_producto+'" value="'+data[index].idventa+'">'+data[index].serie_comprobante+'-'+data[index].numero_comprobante+'</option>';
+                                    html += '<option t_monto_total="' + data[index].t_monto_total + '" devolucion_producto="' + data[index].devolucion_producto + '" value="' + data[index].idventa + '">' + data[index].serie_comprobante + '-' + data[index].numero_comprobante + '</option>';
 
                                 }
                                 $("#idventa").html(html);
@@ -2445,12 +2483,12 @@
                     var existe_sep = false;
                     $.each($("input[name='codigo_formapago[]']"), function (indexInArray, valueOfElement) {
                         //  console.log(valueOfElement.value);
-                        if(valueOfElement.value == "SEP") {
+                        if (valueOfElement.value == "SEP") {
                             existe_sep = true;
                         }
                     });
                     // alert(existe_sep);
-                    if(!existe_sep) {
+                    if (!existe_sep) {
                         $("#idventa_separacion").val("");
                         $("#idventa_nota").val("");
                         $("#devolucion_producto").val("");
@@ -2474,7 +2512,7 @@
             // console.log(IdTipoDocumento, serie_comprobante);
             var tipo_documento = $(this).val();
             // console.log(tipo_documento);
-            $.post("movimientoCajas/obtener_consecutivo_comprobante", { tipo_documento: tipo_documento },
+            $.post("movimientoCajas/obtener_consecutivo_comprobante", {tipo_documento: tipo_documento},
                 function (data, textStatus, jqXHR) {
                     select_comprobante_m(data);
 
@@ -2527,8 +2565,8 @@
             var vuelto_real = parseFloat($("#vuelto_real").val());
             bval = bval && $("#forma_pago").required();
             // alert($("#forma_pago").val()+" "+$("#monto_vuelto").val());
-            if($("#forma_pago").val() != "EFE" && $("#monto_vuelto").val() > 0) {
-                alert("TIENE UN EXCENDENTE DE "+$("#monto_vuelto").val()+", EL VUELTO SOLO SE PUEDE EFECTUAR EN LA FORMA DE PAGO <<EFECTIVO>>");
+            if ($("#forma_pago").val() != "EFE" && $("#monto_vuelto").val() > 0) {
+                alert("TIENE UN EXCENDENTE DE " + $("#monto_vuelto").val() + ", EL VUELTO SOLO SE PUEDE EFECTUAR EN LA FORMA DE PAGO <<EFECTIVO>>");
 
                 $("#monto_vuelto").val(0);
                 $("#monto_local").val(0);
@@ -2541,7 +2579,7 @@
                 bval = bval && $("#tarjeta").required();
             }
 
-            if($("#forma_pago").val() == "DEP" ) {
+            if ($("#forma_pago").val() == "DEP") {
                 bval = bval && $("#banco_fp").required();
                 bval = bval && $("#cuentaBancaria_fp").required();
             }
@@ -2586,7 +2624,7 @@
             var numero_cuenta = "";
             var array_cuenta_bancaria = [];
 
-            if(cuentaBancaria != "" && cuentaBancaria != null) {
+            if (cuentaBancaria != "" && cuentaBancaria != null) {
                 array_cuenta_bancaria = cuentaBancaria.split("*");
                 numero_cuenta = array_cuenta_bancaria[0];
             }
@@ -2676,7 +2714,7 @@
 
             $("#emitir-comprobante").attr("disabled", "disabled");
             $("#cerrar-emitir-comprobante").attr("disabled", "disabled");
-            $.post("movimientoCajas/guardar_comprobante", $("#formulario-emitir-comprobante").serialize() + "&cCodConsecutivo=" + $("#cCodConsecutivo").val() + "&nConsecutivo=" + $("#nConsecutivo").val() + "&IdTipoDocumento=" + $("#id_tipoDoc_Venta_or").val() + "&idventa_separacion=" + $("#idventa_separacion").val()+ "&idventa_nota=" + $("#idventa_nota").val(),
+            $.post("movimientoCajas/guardar_comprobante", $("#formulario-emitir-comprobante").serialize() + "&cCodConsecutivo=" + $("#cCodConsecutivo").val() + "&nConsecutivo=" + $("#nConsecutivo").val() + "&IdTipoDocumento=" + $("#id_tipoDoc_Venta_or").val() + "&idventa_separacion=" + $("#idventa_separacion").val() + "&idventa_nota=" + $("#idventa_nota").val(),
                 function (data, textStatus, jqXHR) {
                     $("#emitir-comprobante").removeAttr("disabled");
                     $("#cerrar-emitir-comprobante").removeAttr("disabled");
@@ -2684,7 +2722,7 @@
 
                         // $("#id_tipoDoc_Venta_or").val(data.datos[0].IdTipoDocumento).trigger("change", [data.datos[0].serie_comprobante]);
                         var msg = "";
-                        if($("#devolucion_producto").val() == 1) {
+                        if ($("#devolucion_producto").val() == 1) {
                             msg = "¡Importante! Se debe ingresar a almacén los articulos devueltos de la Nota de Crédito aplicada.";
                         }
 
@@ -2738,7 +2776,7 @@
             $("#emitir-comprobante").attr("disabled", "disabled");
             $("#cerrar-emitir-comprobante").attr("disabled", "disabled");
 
-            $.post("movimientoCajas/guardar_pago_cuotas_credito", $("#formulario-emitir-comprobante").serialize() + "&cCodConsecutivo=" + $("#cCodConsecutivo_credito").val() + "&nConsecutivo=" + $("#nConsecutivo_credito").val() + "&IdTipoDocumento=12&"+$("#formulario-solicitud-credito").serialize() + "&idventa_separacion=" + $("#idventa_separacion").val()+ "&idventa_nota=" + $("#idventa_nota").val(),
+            $.post("movimientoCajas/guardar_pago_cuotas_credito", $("#formulario-emitir-comprobante").serialize() + "&cCodConsecutivo=" + $("#cCodConsecutivo_credito").val() + "&nConsecutivo=" + $("#nConsecutivo_credito").val() + "&IdTipoDocumento=12&" + $("#formulario-solicitud-credito").serialize() + "&idventa_separacion=" + $("#idventa_separacion").val() + "&idventa_nota=" + $("#idventa_nota").val(),
                 function (data, textStatus, jqXHR) {
                     $("#emitir-comprobante").removeAttr("disabled");
                     $("#cerrar-emitir-comprobante").removeAttr("disabled");
@@ -2780,7 +2818,7 @@
 
             $("#emitir-comprobante").attr("disabled", "disabled");
             $("#cerrar-emitir-comprobante").attr("disabled", "disabled");
-            $.post("movimientoCajas/guardar_pago_documentos_pendientes", $("#formulario-emitir-comprobante").serialize() + "&IdTipoDocumento=12&"+$("#formulario-documentos-pendientes").serialize() + "&idventa_separacion=" + $("#idventa_separacion").val()+ "&idventa_nota=" + $("#idventa_nota").val(),
+            $.post("movimientoCajas/guardar_pago_documentos_pendientes", $("#formulario-emitir-comprobante").serialize() + "&IdTipoDocumento=12&" + $("#formulario-documentos-pendientes").serialize() + "&idventa_separacion=" + $("#idventa_separacion").val() + "&idventa_nota=" + $("#idventa_nota").val(),
                 function (data, textStatus, jqXHR) {
                     $("#emitir-comprobante").removeAttr("disabled");
                     $("#cerrar-emitir-comprobante").removeAttr("disabled");
@@ -2793,7 +2831,6 @@
                         $("#formulario-emitir-comprobante").trigger("reset");
                         $("#formulario-formas-pago").trigger("reset");
                         $("#detalle-formas-pago").html("");
-
 
 
                         LoadRecordsButtonComprobantesPendientes.click();
@@ -2829,7 +2866,7 @@
 
             var monto = parseFloat($("#monto").val());
 
-            if(monto != 0) {
+            if (monto != 0) {
                 AlertFactory.textType({
                     title: '',
                     message: 'Las formas de pago no suman el monto total a pagar',
@@ -2839,12 +2876,11 @@
             }
 
 
-
             if (bval) {
                 if ($('#modalSolicitud').is(':visible')) {
 
 
-                    if(monto != 0 && $("#detalle-formas-pago").html() == "") {
+                    if (monto != 0 && $("#detalle-formas-pago").html() == "") {
                         AlertFactory.textType({
                             title: '',
                             message: 'Debe ingresar al menos 1 registro al detalle',
@@ -2916,7 +2952,7 @@
             var tipo_solicitud = $(this).val();
             // alert("change " + tipo_solicitud);
             $(".condicion_pago").hide();
-            if(tipo_solicitud == "4") {
+            if (tipo_solicitud == "4") {
 
                 $(".condicion_pago").show();
             }
@@ -3042,7 +3078,6 @@
                     DescuentosSele = response.descuentos;
 
 
-
                 }
             }, function () {
                 obtener_data_for_solicitud();
@@ -3058,10 +3093,10 @@
             // todas las formas de pago menos "a credito" y 'DSCTO PLANILLA'
             $("#forma_pago").html("");
             // alert(tipo);
-            if(tipo == 1) {
+            if (tipo == 1) {
                 $("#forma_pago").append('<option value="">Seleccionar</option>');
                 _.each(data_formas_pago, function (item) {
-                    if(item.codigo_formapago != "ACR" && item.codigo_formapago != "PLA") {
+                    if (item.codigo_formapago != "ACR" && item.codigo_formapago != "PLA") {
                         $("#forma_pago").append('<option value="' + item.codigo_formapago + '">' + item.descripcion_subtipo + '</option>');
                     } else {
 
@@ -3071,10 +3106,10 @@
             }
 
             // solo las formas de pago 'a credito' y 'DSCTO PLANILLA'
-            if(tipo == 2) {
+            if (tipo == 2) {
                 $("#forma_pago").append('<option value="">Seleccionar</option>');
                 _.each(data_formas_pago, function (item) {
-                    if(!(item.codigo_formapago != "ACR" && item.codigo_formapago != "PLA")) {
+                    if (!(item.codigo_formapago != "ACR" && item.codigo_formapago != "PLA")) {
                         $("#forma_pago").append('<option value="' + item.codigo_formapago + '">' + item.descripcion_subtipo + '</option>');
                     } else {
 
@@ -3084,10 +3119,10 @@
                 });
             }
             // todo lo que tiene al contado pero sin separacion para la cuota inicial
-            if(tipo == 3) {
+            if (tipo == 3) {
                 $("#forma_pago").append('<option value="">Seleccionar</option>');
                 _.each(data_formas_pago, function (item) {
-                    if(item.codigo_formapago != "ACR" && item.codigo_formapago != "PLA" && item.codigo_formapago != "SEP") {
+                    if (item.codigo_formapago != "ACR" && item.codigo_formapago != "PLA" && item.codigo_formapago != "SEP") {
                         $("#forma_pago").append('<option value="' + item.codigo_formapago + '">' + item.descripcion_subtipo + '</option>');
                     } else {
 
@@ -3101,13 +3136,14 @@
         obtener_data_for_solicitud();
         var titleModalClientes = $('#titleModalClientes');
         var modaClientes = $('#modaClientes');
+
         function getCliente(movimiento_caja) {
             var bval = true;
-            if(typeof movimiento_caja != "undefined") {
+            if (typeof movimiento_caja != "undefined") {
 
                 documento_or = $("#documento_cliente");
                 razonsocial_cliente_or = $("#razonsocial_cliente_m");
-            }  else {
+            } else {
                 documento_or = $("#documento_or");
                 razonsocial_cliente_or = $("#razonsocial_cliente_or");
             }
@@ -3144,12 +3180,12 @@
                             // id_cliente_tipo_or.val("")
                             // llenarServicios();
                         } else {
-                            if(datos[0].tipodoc == "01") { // dni
+                            if (datos[0].tipodoc == "01") { // dni
                                 $("#tipo_doc_venta option[value='01']").hide();
                                 $("#tipo_doc_venta option[value='03']").show();
                             }
 
-                            if(datos[0].tipodoc == "06") { // ruc
+                            if (datos[0].tipodoc == "06") { // ruc
                                 $("#tipo_doc_venta option[value='03']").hide();
                                 $("#tipo_doc_venta option[value='01']").show();
 
@@ -3190,6 +3226,7 @@
                 });
             }
         }
+
         var tipodoc = $("#tipodoc");
 
         function getDataFormCustomer() {
@@ -3237,12 +3274,13 @@
                 getDataFormCustomer();
             });
         }
+
         getDataFormCustomer();
 
         var departamento = $('#departamento');
         var provincia = $('#provincia');
         var distrito = $('#distrito');
-        var idsector=$("#idsector");
+        var idsector = $("#idsector");
 
         function getDepartamento(bandera) {
             var id = "0";
@@ -3256,7 +3294,8 @@
                             departamento.append('<option value="' + item.cDepartamento + '"  >' + item.cDepartamento + '</option>');
                         } else {
                             departamento.append('<option value="' + item.cDepartamento + '" >' + item.cDepartamento + '</option>');
-                        };
+                        }
+                        ;
 
                     });
 
@@ -3270,6 +3309,7 @@
 
             });
         }
+
         departamento.change(function () {
             var bandera = 'xxxxxx';
             var id = departamento.val();
@@ -3309,6 +3349,7 @@
             getDistrito(bandera, id);
 
         });
+
         function getDistrito(bandera, id) {
             RESTService.get('movimientoCajas/TraerDistritos', id, function (response) {
                 if (!_.isUndefined(response.status) && response.status) {
@@ -3337,28 +3378,28 @@
         }
 
         distrito.change(function () {
-            var bandera='xxxxxx';
-            var id=distrito.val();
-            getSector(bandera,id);
+            var bandera = 'xxxxxx';
+            var id = distrito.val();
+            getSector(bandera, id);
         });
 
-        function getSector(bandera,id){
-            RESTService.get('movimientoCajas/traerSectorOrd', id, function(response) {
+        function getSector(bandera, id) {
+            RESTService.get('movimientoCajas/traerSectorOrd', id, function (response) {
                 if (!_.isUndefined(response.status) && response.status) {
                     var data_p = response.data;
                     console.log(data_p);
                     idsector.html('');
                     idsector.append('<option value="" >Seleccione</option>');
-                    _.each(response.data, function(item) {
-                        if(item.id==bandera){
-                            idsector.append('<option value="'+item.id+'" selected>'+item.descripcion+'</option>');
-                        }else{
-                            idsector.append('<option value="'+item.id+'">'+item.descripcion+'</option>');
+                    _.each(response.data, function (item) {
+                        if (item.id == bandera) {
+                            idsector.append('<option value="' + item.id + '" selected>' + item.descripcion + '</option>');
+                        } else {
+                            idsector.append('<option value="' + item.id + '">' + item.descripcion + '</option>');
                         }
 
                     });
 
-                }else {
+                } else {
                     AlertFactory.textType({
                         title: '',
                         message: 'Hubo un error al obtener el Artículo. Intente nuevamente.',
@@ -3391,7 +3432,8 @@
                     type: 'info'
                 });
                 bval = false;
-            };
+            }
+            ;
             if (tipodoc.val() == '06' && documento.val().length != 11) {
                 AlertFactory.textType({
                     title: '',
@@ -3399,7 +3441,8 @@
                     type: 'info'
                 });
                 bval = false;
-            };
+            }
+            ;
             // alert(bval);
             if (bval) {
                 var params = {
@@ -3415,10 +3458,10 @@
                     'id_tipocli': id_tipocli.val(),
                     'IdTipoDocumento': id_tipoDoc_Venta.val(),
                     'cEstadoCivil': cEstadoCivil.val(),
-                    'idsector':idsector.val(),
-                    'cNombres':$("#cNombres_c").val(),
-                    'cApepat':$("#cApepat_c").val(),
-                    'cApemat':$("#cApemat_c").val(),
+                    'idsector': idsector.val(),
+                    'cNombres': $("#cNombres_c").val(),
+                    'cApepat': $("#cApepat_c").val(),
+                    'cApemat': $("#cApemat_c").val(),
 
                 };
                 var cli_id = (cliente_id.val() === '') ? 0 : cliente_id.val();
@@ -3495,6 +3538,7 @@
                 });
             }
         });
+
         function getDatosCliente() {
             // RESTService.get("https://dniruc.apisperu.com/api/v1/dni/71980490?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InJleXNhbmdhbWE3QGdtYWlsLmNvbSJ9.hfobQC8FM5IyKKSaa7usUXV0aY1Y8YthAhdN8LoMlMM", '', function(response) {
             //            console.log(response);
@@ -3526,7 +3570,8 @@
                             type: 'info'
                         });
                         $('#show_loading').addClass('ng-hide');
-                    };
+                    }
+                    ;
                     $('#show_loading').addClass('ng-hide');
                 }
             };
@@ -3611,7 +3656,7 @@
 
                 $(".simbolo-moneda-2").text(simbolo);
 
-                $.post("movimientoCajas/obtener_tipo_cambio_venta", { idmoneda: idmoneda },
+                $.post("movimientoCajas/obtener_tipo_cambio_venta", {idmoneda: idmoneda},
                     function (data, textStatus, jqXHR) {
                         if (data.length > 0) {
                             var tipo_cambio = 1;
@@ -3641,7 +3686,6 @@
                             vuelto = monto_convertido - monto_aplicar;
 
 
-
                             if (vuelto < 0) {
                                 vuelto = 0;
                             }
@@ -3650,7 +3694,7 @@
 
                             //alert(monto_convertido +"<"+ monto);
 
-                            if(monto_convertido < monto) {
+                            if (monto_convertido < monto) {
                                 $("#monto_aplicar").val(monto_convertido.toFixed(2));
                             } else {
                                 $("#monto_aplicar").val(monto.toFixed(2));
@@ -3660,7 +3704,7 @@
                             $("#monto_vuelto").val(vuelto.toFixed(2));
 
 
-                            if(tipo_cambio > 0) {
+                            if (tipo_cambio > 0) {
 
                             } else {
 
@@ -3730,10 +3774,10 @@
             $("#formulario-creditos").find("input").attr("readonly", "readonly");
             $("#formulario-creditos").find("select").attr("disabled", "disabled");
 
-            $.post("movimientoCajas/find_solicitud", { id: id },
+            $.post("movimientoCajas/find_solicitud", {id: id},
                 function (data, textStatus, jqXHR) {
 
-                    if(data.solicitud.length > 0 && data.solicitud[0].estado == 10) { // anulado
+                    if (data.solicitud.length > 0 && data.solicitud[0].estado == 10) { // anulado
                         AlertFactory.textType({
                             title: '',
                             message: 'La solicitud se encuentra anulada por favor recargue la página!',
@@ -3746,10 +3790,10 @@
                     var pagado = 0;
                     var cuota_inicial = 0;
                     var tipo_solicitud = 0;
-                    if(data.solicitud.length > 0) {
+                    if (data.solicitud.length > 0) {
                         // alert(isNaN(pagado));
                         pagado = parseFloat(data.solicitud[0].pagado);
-                        if(isNaN(pagado)) {
+                        if (isNaN(pagado)) {
                             pagado = 0;
                         }
                         tipo_solicitud = data.solicitud[0].tipo_solicitud;
@@ -3795,10 +3839,10 @@
                     }
                     // alert(cuota_inicial+" "+pagado);
 
-                    if(tipo_solicitud == 1) {
+                    if (tipo_solicitud == 1) {
                         change_formas_pago(1);
                     } else {
-                        if(cuota_inicial > 0 && pagado == 0) {
+                        if (cuota_inicial > 0 && pagado == 0) {
                             change_formas_pago(3);
                         } else {
 
@@ -3843,12 +3887,12 @@
             );
         }
 
-//COMPROBANTES
+        // COMPROBANTES
 
+        var search_comprobantes = getFormSearchComp('frm-search-comprobantes', 'search_b_comprobantes',
+            'LoadRecordsButtonComprobantes');
 
-        var search_comprobantes = getFormSearchComprobantes('frm-search-comprobantes', 'search_b_comprobantes', 'LoadRecordsButtonComprobantes');
-
-        var table_container_comprobantes= $("#table_container_comprobantes");
+        var table_container_comprobantes = $("#table_container_comprobantes");
 
         table_container_comprobantes.jtable({
             title: "Lista de Comprobantes",
@@ -3862,17 +3906,18 @@
                 items: [{
                     cssClass: 'buscador',
                     text: search_comprobantes
-                },{
+                }, {
                     cssClass: 'btn-primary',
                     text: '<i class="fa fa-file-excel-o"></i> Exportar a Excel',
                     click: function () {
                         var data_excel = {
                             search: $('#search_b_comprobantes').val(),
-                            FechaInicioFiltro: $('#FechaInicioFiltro').val(),
-                            FechaFinFiltro: $('#FechaFinFiltro').val(),
                             idClienteFiltro: $('#idClienteFiltro').val(),
                             id_tipo_doc: $('#id_tipo_doc').val(),
                             estado_cpe: $('#estado_cpe').val(),
+                            check: (chk_date_range_com.prop('checked')),
+                            from: start_com.format('YYYY-MM-DD'),
+                            to: end_com.format('YYYY-MM-DD')
                         };
 
                         // var string = Object.keys(data_excel).map(function (k) {
@@ -3995,7 +4040,7 @@
                 },
                 anulado: {
                     title: 'Anulado',
-                    values: { 'S': 'SI', 'N': 'NO', 'null': 'NO' },
+                    values: {'S': 'SI', 'N': 'NO', 'null': 'NO'},
                     type: 'checkbox',
                 },
                 estado_cpe: {
@@ -4030,12 +4075,12 @@
                     var tipo_solicitud = $(this).attr('data-tipo_solicitud');
                     var idtipodocumento = $(this).attr('data-idtipodocumento');
                     var estado = $(this).attr('data-estado');
-                    $.post("ventas/validar_ticket_pago_cuota", { id: id },
+                    $.post("ventas/validar_ticket_pago_cuota", {id: id},
                         function (data, textStatus, jqXHR) {
                             // console.log(data);
-                            if(data.length <= 0) {
+                            if (data.length <= 0) {
                                 if (idtipodocumento == "12") {
-                                    if(tipo_solicitud != "null") {
+                                    if (tipo_solicitud != "null") {
 
                                         window.open("movimientoCajas/imprimir_ticket/" + id);
                                     } else {
@@ -4058,7 +4103,6 @@
                     );
 
 
-
                     e.preventDefault();
                 });
 
@@ -4068,19 +4112,18 @@
         generateSearchForm('frm-search-comprobantes', 'LoadRecordsButtonComprobantes', function () {
             table_container_comprobantes.jtable('load', {
                 search: $('#search_b_comprobantes').val(),
-                FechaInicioFiltro: $('#FechaInicioFiltro').val(),
-                FechaFinFiltro: $('#FechaFinFiltro').val(),
                 idClienteFiltro: $('#idClienteFiltro').val(),
                 id_tipo_doc: $('#id_tipo_doc').val(),
                 estado_cpe: $('#estado_cpe').val(),
                 anulado: $('#anulado').val(),
+                check: (chk_date_range_com.prop('checked')),
+                from: start_com.format('YYYY-MM-DD'),
+                to: end_com.format('YYYY-MM-DD')
             });
         }, true);
 
         $(document).on("click", '#limpiar-filtro-comprobantes', function () {
-            $('#FechaInicioFiltro').val(""),
-                $('#FechaFinFiltro').val(""),
-                $('#idClienteFiltro').val("").trigger("change"),
+            $('#idClienteFiltro').val("").trigger("change"),
                 $("#idClienteFiltro").select2("val", "");
             $('#search_b_comprobantes').val(""),
                 // $('#idClienteFiltro').val(""),
@@ -4229,7 +4272,7 @@
                             // console.log();
                             if (data.length > 0) {
 
-                                $.post("ventas/find_documento", { idventa: id },
+                                $.post("ventas/find_documento", {idventa: id},
                                     function (data, textStatus, jqXHR) {
 
                                         if (data.documento.length > 0) {
@@ -4284,7 +4327,7 @@
             var value = parseFloat($(this).val());
             var saldo = parseFloat($("#saldo_capital_dp").val());
 
-            if(value > saldo) {
+            if (value > saldo) {
                 $(this).val(saldo.toFixed(2));
             }
 
@@ -4292,7 +4335,7 @@
 
         function find_solicitud_credito(id) {
 
-            $.post("movimientoCajas/find_solicitud", { id: id },
+            $.post("movimientoCajas/find_solicitud", {id: id},
                 function (data, textStatus, jqXHR) {
 
                     if (data.solicitud.length > 0) {
@@ -4331,29 +4374,28 @@
                             var saldo_pagar = parseFloat(data.solicitud_cronograma[index].saldo_cuota);
 
                             html += '<tr>';
-                            html += '<td><span class="inputs-hidden" nrocuota="'+data.solicitud_cronograma[index].nrocuota+'" ></span>'+data.solicitud_cronograma[index].fecha_vencimiento+'</td>';
-                            html += '<input type="hidden" class="subtotal-pagar" value="'+saldo_pagar.toFixed(2)+'" >';
-                            html += '<td class="valor-cuota">'+parseFloat(data.solicitud_cronograma[index].valor_cuota).toFixed(2)+'</td>';
-                            html += '<td class="int-moratorio">'+parseFloat(data.solicitud_cronograma[index].int_moratorio).toFixed(2)+'</td>';
+                            html += '<td><span class="inputs-hidden" nrocuota="' + data.solicitud_cronograma[index].nrocuota + '" ></span>' + data.solicitud_cronograma[index].fecha_vencimiento + '</td>';
+                            html += '<input type="hidden" class="subtotal-pagar" value="' + saldo_pagar.toFixed(2) + '" >';
+                            html += '<td class="valor-cuota">' + parseFloat(data.solicitud_cronograma[index].valor_cuota).toFixed(2) + '</td>';
+                            html += '<td class="int-moratorio">' + parseFloat(data.solicitud_cronograma[index].int_moratorio).toFixed(2) + '</td>';
 
-                            html += '<td>'+parseFloat(data.solicitud_cronograma[index].monto_pago).toFixed(2)+'</td>';
+                            html += '<td>' + parseFloat(data.solicitud_cronograma[index].monto_pago).toFixed(2) + '</td>';
 
 
-
-                            if(parseFloat(data.solicitud_cronograma[index].saldo_cuota) == 0) {
+                            if (parseFloat(data.solicitud_cronograma[index].saldo_cuota) == 0) {
                                 disabled = 'disabled="disabled"';
                                 checked = 'checked="checked"';
                                 $("#monto_pagar_credito").attr("cont", index);
                             }
                             var saldo_mora = parseFloat(data.solicitud_cronograma[index].saldo_mora);
-                            if(isNaN(saldo_mora)) {
+                            if (isNaN(saldo_mora)) {
                                 saldo_mora = 0;
                             }
 
-                            html += '<td><center><input '+disabled+' '+checked+' saldo_pagar="'+saldo_pagar.toFixed(2)+'" saldo_mora="'+saldo_mora.toFixed(2)+'"  type="checkbox" nrocuota="'+data.solicitud_cronograma[index].nrocuota+'" class="check-cuota" /></center></td>';
+                            html += '<td><center><input ' + disabled + ' ' + checked + ' saldo_pagar="' + saldo_pagar.toFixed(2) + '" saldo_mora="' + saldo_mora.toFixed(2) + '"  type="checkbox" nrocuota="' + data.solicitud_cronograma[index].nrocuota + '" class="check-cuota" /></center></td>';
                             html += '<td class="monto-pagar-cuota"></td>';
-                            html += '<td>'+data.solicitud_cronograma[index].nrocuota+'</td>';
-                            html += '<td class="saldo-pagar">'+saldo_pagar.toFixed(2)+'</td>';
+                            html += '<td>' + data.solicitud_cronograma[index].nrocuota + '</td>';
+                            html += '<td class="saldo-pagar">' + saldo_pagar.toFixed(2) + '</td>';
                             html += '</tr>';
 
                         }
@@ -4379,17 +4421,17 @@
             var nuevo_saldo_cuota = 0;
 
             var html = "";
-            if((nrocuota-1) > 0 && !$(".check-cuota[nrocuota='"+(nrocuota-1)+"']").is(":checked")) {
+            if ((nrocuota - 1) > 0 && !$(".check-cuota[nrocuota='" + (nrocuota - 1) + "']").is(":checked")) {
                 e.preventDefault();
                 e.stopPropagation();
                 return false;
             }
 
-            var next_nrocuota = (nrocuota+1);
+            var next_nrocuota = (nrocuota + 1);
             // console.log(next_nrocuota);
             // console.log($(".check-cuota[nrocuota='"+(next_nrocuota)+"']").is(":checked"));
 
-            if($(".check-cuota[nrocuota='"+(next_nrocuota)+"']").is(":checked")) {
+            if ($(".check-cuota[nrocuota='" + (next_nrocuota) + "']").is(":checked")) {
                 // alert("check");
                 e.preventDefault();
                 e.stopPropagation();
@@ -4397,13 +4439,12 @@
             }
 
 
-
-            if($(this).is(":checked")) {
+            if ($(this).is(":checked")) {
                 $(this).parent("center").parent("td").siblings(".monto-pagar-cuota").text(saldo_pagar.toFixed(2));
                 $(this).parent("center").parent("td").siblings(".saldo-pagar").text("0.00");
                 nuevo_saldo_cuota = 0;
-                if(saldo_mora > 0) {
-                    if(saldo_pagar > saldo_mora) { // se paga primero la mora
+                if (saldo_mora > 0) {
+                    if (saldo_pagar > saldo_mora) { // se paga primero la mora
                         nuevo_saldo_mora = 0;
                         pagado_mora = saldo_mora;
 
@@ -4414,26 +4455,26 @@
                     }
                 }
 
-                html += '<input type="hidden" name="nrocuota[]" value="'+nrocuota+'" />';
-                html += '<input type="hidden" name="saldo_cuota[]" value="'+nuevo_saldo_cuota.toFixed(2)+'" />';
-                html += '<input type="hidden" name="monto_pago_cuota[]" value="'+saldo_pagar.toFixed(2)+'" />';
+                html += '<input type="hidden" name="nrocuota[]" value="' + nrocuota + '" />';
+                html += '<input type="hidden" name="saldo_cuota[]" value="' + nuevo_saldo_cuota.toFixed(2) + '" />';
+                html += '<input type="hidden" name="monto_pago_cuota[]" value="' + saldo_pagar.toFixed(2) + '" />';
 
-                html += '<input type="hidden" name="pagado_mora[]" value="'+pagado_mora.toFixed(2)+'" />';
-                html += '<input type="hidden" name="saldo_mora[]" value="'+nuevo_saldo_mora.toFixed(2)+'" />';
+                html += '<input type="hidden" name="pagado_mora[]" value="' + pagado_mora.toFixed(2) + '" />';
+                html += '<input type="hidden" name="saldo_mora[]" value="' + nuevo_saldo_mora.toFixed(2) + '" />';
 
             } else {
                 $(this).parent("center").parent("td").siblings(".monto-pagar-cuota").text("0.00");
                 $(this).parent("center").parent("td").siblings(".saldo-pagar").text(saldo_pagar.toFixed(2));
             }
 
-            $(".inputs-hidden[nrocuota='"+nrocuota+"']").html(html);
+            $(".inputs-hidden[nrocuota='" + nrocuota + "']").html(html);
             var monto_pagar = sumar_montos_pago();
             $("#monto_pagar_credito").val(monto_pagar.toFixed(2));
         });
 
         $(document).on("keyup", "#monto_pagar_credito", function () {
             var monto_pagar_credito = parseFloat($(this).val());
-            if(isNaN(monto_pagar_credito)) {
+            if (isNaN(monto_pagar_credito)) {
                 monto_pagar_credito = 0;
             }
             var resto = monto_pagar_credito;
@@ -4459,11 +4500,11 @@
 
                 $(".monto-pagar-cuota").eq(check).text("");
                 $(".saldo-pagar").eq(check).text(saldo_pagar.toFixed(2));
-                $(".inputs-hidden[nrocuota='"+nrocuota+"']").html("");
+                $(".inputs-hidden[nrocuota='" + nrocuota + "']").html("");
             }
 
             // ahora si empezamos a descontar cuota por cuota
-            while(resto > 0) {
+            while (resto > 0) {
                 // alert(resto);
                 pagado_mora = 0;
                 saldo_mora = 0;
@@ -4478,14 +4519,14 @@
                 saldo_mora = parseFloat($(".check-cuota").eq(cont).attr("saldo_mora"));
 
 
-                if(resto >= 0) {
+                if (resto >= 0) {
 
                     $(".check-cuota").eq(cont).prop("checked", true);
                     $(".monto-pagar-cuota").eq(cont).text(saldo_pagar.toFixed(2));
                     $(".saldo-pagar").eq(cont).text("0.00");
                     nuevo_saldo_cuota = 0
-                    if(saldo_mora > 0) {
-                        if(saldo_pagar > saldo_mora) { // se paga primero la mora
+                    if (saldo_mora > 0) {
+                        if (saldo_pagar > saldo_mora) { // se paga primero la mora
                             nuevo_saldo_mora = 0;
                             pagado_mora = saldo_mora;
 
@@ -4496,18 +4537,18 @@
                         }
                     }
 
-                    html += '<input type="hidden" name="nrocuota[]" value="'+nrocuota+'" />';
-                    html += '<input type="hidden" name="saldo_cuota[]" value="'+nuevo_saldo_cuota.toFixed(2)+'" />';
-                    html += '<input type="hidden" name="monto_pago_cuota[]" value="'+saldo_pagar.toFixed(2)+'" />';
+                    html += '<input type="hidden" name="nrocuota[]" value="' + nrocuota + '" />';
+                    html += '<input type="hidden" name="saldo_cuota[]" value="' + nuevo_saldo_cuota.toFixed(2) + '" />';
+                    html += '<input type="hidden" name="monto_pago_cuota[]" value="' + saldo_pagar.toFixed(2) + '" />';
 
-                    html += '<input type="hidden" name="pagado_mora[]" value="'+pagado_mora.toFixed(2)+'" />';
-                    html += '<input type="hidden" name="saldo_mora[]" value="'+nuevo_saldo_mora.toFixed(2)+'" />';
+                    html += '<input type="hidden" name="pagado_mora[]" value="' + pagado_mora.toFixed(2) + '" />';
+                    html += '<input type="hidden" name="saldo_mora[]" value="' + nuevo_saldo_mora.toFixed(2) + '" />';
 
-                    $(".inputs-hidden[nrocuota='"+nrocuota+"']").html(html);
-                    cont ++;
+                    $(".inputs-hidden[nrocuota='" + nrocuota + "']").html(html);
+                    cont++;
                 }
 
-                if(resto < 0) {
+                if (resto < 0) {
                     monto_pagar_credito_final = saldo_pagar - Math.abs(resto);
 
                     $(".check-cuota").eq(cont).prop("checked", true);
@@ -4515,8 +4556,8 @@
                     $(".saldo-pagar").eq(cont).text(Math.abs(resto).toFixed(2));
 
                     nuevo_saldo_cuota = Math.abs(resto);
-                    if(saldo_mora > 0) {
-                        if(monto_pagar_credito_final > saldo_mora) { // se paga primero la mora
+                    if (saldo_mora > 0) {
+                        if (monto_pagar_credito_final > saldo_mora) { // se paga primero la mora
                             nuevo_saldo_mora = 0;
                             pagado_mora = saldo_mora;
 
@@ -4527,23 +4568,22 @@
                         }
                     }
 
-                    html += '<input type="hidden" name="nrocuota[]" value="'+nrocuota+'" />';
-                    html += '<input type="hidden" name="saldo_cuota[]" value="'+nuevo_saldo_cuota.toFixed(2)+'" />';
-                    html += '<input type="hidden" name="monto_pago_cuota[]" value="'+Math.abs(monto_pagar_credito_final).toFixed(2)+'" />';
+                    html += '<input type="hidden" name="nrocuota[]" value="' + nrocuota + '" />';
+                    html += '<input type="hidden" name="saldo_cuota[]" value="' + nuevo_saldo_cuota.toFixed(2) + '" />';
+                    html += '<input type="hidden" name="monto_pago_cuota[]" value="' + Math.abs(monto_pagar_credito_final).toFixed(2) + '" />';
 
-                    html += '<input type="hidden" name="pagado_mora[]" value="'+pagado_mora.toFixed(2)+'" />';
-                    html += '<input type="hidden" name="saldo_mora[]" value="'+nuevo_saldo_mora.toFixed(2)+'" />';
+                    html += '<input type="hidden" name="pagado_mora[]" value="' + pagado_mora.toFixed(2) + '" />';
+                    html += '<input type="hidden" name="saldo_mora[]" value="' + nuevo_saldo_mora.toFixed(2) + '" />';
 
-                    $(".inputs-hidden[nrocuota='"+nrocuota+"']").html(html);
+                    $(".inputs-hidden[nrocuota='" + nrocuota + "']").html(html);
 
-                    cont ++;
+                    cont++;
                 }
 
             }
 
 
         })
-
 
 
         function sumar_montos_pago() {
@@ -4554,7 +4594,7 @@
             for (var i = 0; i < montos_pago.length; i++) {
                 // console.log(montos_pago[i].textContent);
                 monto = parseFloat(montos_pago[i].textContent);
-                if(isNaN(monto)) {
+                if (isNaN(monto)) {
                     monto = 0;
                 }
                 // console.log(monto);
@@ -4621,7 +4661,7 @@
                 },
                 tipo_solicitud: {
                     title: 'Tipo Solicitud',
-                    options: { '1': 'Contado', '2': 'Crédito Directo', '3': 'Crédito Financiero', '4': 'Crédito' },
+                    options: {'1': 'Contado', '2': 'Crédito Directo', '3': 'Crédito Financiero', '4': 'Crédito'},
 
                 },
                 tipo_documento: {
@@ -4664,15 +4704,26 @@
                 },
                 estado: {
                     title: 'Estado',
-                    options: { '1': 'Registrado', '2': 'Vigente', '3': 'Por Aprobar', '4': 'Aprobado', '5': 'Rechazado', '6': 'Facturado', '7': 'Despachado', '8': 'Despachado Parcial', '9': 'Refinanciado', '10': 'Anulado' },
+                    options: {
+                        '1': 'Registrado',
+                        '2': 'Vigente',
+                        '3': 'Por Aprobar',
+                        '4': 'Aprobado',
+                        '5': 'Rechazado',
+                        '6': 'Facturado',
+                        '7': 'Despachado',
+                        '8': 'Despachado Parcial',
+                        '9': 'Refinanciado',
+                        '10': 'Anulado'
+                    },
                 },
-                cuota:{
+                cuota: {
                     title: 'Cuota',
                 },
-                documento:{
+                documento: {
                     title: 'Documento',
                 },
-                serie:{
+                serie: {
                     title: 'Serie',
                 },
                 edit: {
@@ -4746,12 +4797,11 @@
                     } else {
                         $("#Edit-activo").val("S");
                         $(".i-checks span").text("Activo");
-                    };
+                    }
                 });
             },
             formSubmitting: function (event, data) {
                 var bval = true;
-
                 bval = bval && data.form.find('input[name="nombre_caja"]').required();
                 bval = bval && data.form.find('input[name="usuario"]').required();
                 bval = bval && data.form.find('input[name="activo"]').required();
@@ -4764,13 +4814,7 @@
                 search: $('#search_b_solicitud_creditos').val()
             });
         }, true);
-
-
-
-
     }
-
-
 
     function Config($stateProvider, $urlRouterProvider) {
         $stateProvider

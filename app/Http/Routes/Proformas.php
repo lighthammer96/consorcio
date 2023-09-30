@@ -6,12 +6,12 @@
  * Time: 6:59 PM 
  */
 
-Route::post('proformas/list', ['as' => 'proformas.list', 'uses' => 'ProformaController@all']);
+Route::post('proformas/list', 'ProformaController@all');
 Route::post('proformas/create', ['as' => 'proformas.create', 'uses' => 'ProformaController@create']);
 
 Route::post('proformas/update', ['as' => 'proformas.update', 'uses' => 'ProformaController@update']);
 Route::get('proformas/excel', ['as' => 'proformas.excel', 'uses' => 'ProformaController@excel']);
-Route::get('proformas/data_form', ['as' => 'proformas.data_form', 'uses' => 'ProformaController@data_form']);
+Route::get('proformas/data_form', 'ProformaController@data_form');
 
 Route::put('proformas/createProforma/{id}', ['as' => 'proformas.createProforma', 'uses' => 'ProformaController@createUpdate']);
 
@@ -36,6 +36,3 @@ Route::get('proformas/pdf', 'ProformaController@pdf');
 
 Route::get('proformas/get_precios_listProfor/{id}', ['as' => 'proformas.get_precios_listProfor', 'uses' => 'Orden_servicioController@get_precios_list']); 
 
-Route::get('proformas/data_formProforOrden', ['as' => 'proformas.data_formProforOrden', 'uses' => 'Orden_servicioController@data_form']);
-
-Route::get('proformas/data_formProfClien', ['as' => 'proformas.data_formProfClien', 'uses' => 'CustomerController@data_form']);

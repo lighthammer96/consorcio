@@ -1,7 +1,3 @@
-/**
- * Created by JAIR on 4/5/2017.
- */
-
 (function () {
     'use strict';
     angular.module('sys.app.solicitud')
@@ -11,9 +7,31 @@
     Config.$inject = ['$stateProvider', '$urlRouterProvider'];
     SolicitudCtrl.$inject = ['$scope', '_', 'RESTService', 'AlertFactory', 'Helpers'];
 
-    function SolicitudCtrl($scope, _, RESTService, AlertFactory, Helpers) {
+    function SolicitudCtrl($scope, _, RESTService, AlertFactory, Helpers)
+    {
+        moment.locale('es');
 
+        var start_sol = moment().subtract(6, 'days');
+        var end_sol = moment();
 
+        var chk_date_range_sol = $('#chk_date_range_sol');
+        chk_date_range_sol.click(function () {
+            $('#LoadRecordsButtonSolicitud').click();
+        });
+        generateCheckBox('#chk_date_range_sol');
+
+        var solDates = $('#solDates');
+
+        var showDateSol = function (from, to) {
+            start_sol = from;
+            end_sol = to;
+            solDates.find('span').html(from.format('MMM D, YYYY') + ' - ' + to.format('MMM D, YYYY'));
+            if (chk_date_range_sol.prop('checked')) {
+                $('#LoadRecordsButtonSolicitud').click();
+            }
+        };
+        generateDateRangePicker(solDates, start_sol, end_sol, showDateSol);
+        showDateSol(start_sol, end_sol);
 
         var modalSolicitud = $('#modalSolicitud');
         var titlemodalSolicitud = $('#titleModalSolicitud');
@@ -4254,7 +4272,12 @@
                     cssClass: 'btn-primary',
                     text: '<i class="fa fa-file-excel-o"></i> Exportar a Excel',
                     click: function () {
-                        $scope.openDoc('solicitud/excel', {});
+                        $scope.openDoc('solicitud/excel', {
+                            search: $('#search_b_solicitud').val(),
+                            check: (chk_date_range_sol.prop('checked')),
+                            from: start_sol.format('YYYY-MM-DD'),
+                            to: end_sol.format('YYYY-MM-DD')
+                        });
                     }
                 }, {
                     cssClass: 'btn-danger-admin',
@@ -4442,15 +4465,14 @@
 
         generateSearchForm('frm-search-solicitud', 'LoadRecordsButtonSolicitud', function () {
             table_container_solicitud.jtable('load', {
-                search: $('#search_b_solicitud').val()
+                search: $('#search_b_solicitud').val(),
+                check: (chk_date_range_sol.prop('checked')),
+                from: start_sol.format('YYYY-MM-DD'),
+                to: end_sol.format('YYYY-MM-DD')
             });
         }, true);
 
-
-
     }
-
-
 
     function Config($stateProvider, $urlRouterProvider) {
         $stateProvider

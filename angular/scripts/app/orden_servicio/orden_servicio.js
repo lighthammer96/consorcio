@@ -1,7 +1,3 @@
-/**
- * Created by JAIR on 4/5/2017.
- */
-
 (function () {
     'use strict';
     angular.module('sys.app.orden_servicios')
@@ -11,7 +7,31 @@
     Config.$inject = ['$stateProvider', '$urlRouterProvider'];
     Orden_ServicioCtrl.$inject = ['$scope', '_', 'RESTService', 'AlertFactory'];
 
-    function Orden_ServicioCtrl($scope, _, RESTService, AlertFactory) {
+    function Orden_ServicioCtrl($scope, _, RESTService, AlertFactory)
+    {
+        moment.locale('es');
+        var start = moment().startOf('month');
+        var end = moment().endOf('month');
+
+        var chk_date_range = $('#chk_date_range');
+        chk_date_range.click(function () {
+            $('#LoadRecordsButtonOrden_Servicio').click();
+        });
+        generateCheckBox('.chk_date_range_os');
+
+        var reqDates = $('#reqDates');
+
+        var showDate = function (from, to) {
+            start = from;
+            end = to;
+            reqDates.find('span').html(from.format('MMM D, YYYY') + ' - ' + to.format('MMM D, YYYY'));
+            if (chk_date_range.prop('checked')) {
+                $('#LoadRecordsButtonOrden_Servicio').click();
+            }
+        };
+        generateDateRangePicker(reqDates, start, end, showDate);
+        showDate(start, end);
+
         var cambCan;
         var cambioChe;
         var cambioDes;
@@ -2000,21 +2020,6 @@
 
         }
 
-        function getDataForProforma() {
-            RESTService.all('orden_servicios/data_formOrden', '', function (response) {
-                if (!_.isUndefined(response.status) && response.status) {
-                    igv = response.igv[0].value;
-                    dataServicioGeneral = response.data_servicioGeneral[0].value;
-                    //   articulos_repuestos.append('<option value="">Seleccionar</option>');
-                    //  _.each(response.articulos_repuestos, function(item) {
-                    //     articulos_repuestos.append('<option value="'+item.id+'*'+item.nPrecio+'">'+item.code_article+' '+item.description+'</option>');
-                    // });
-                }
-            }, function () {
-                getDataForProforma();
-            });
-        }
-        getDataForProforma();
         function calcular_total_MO() {
             var totalt = 0;
             var operacionGratuita = 0;
@@ -3195,52 +3200,7 @@
                     }
                 });
             }
-
-        };
-
-        function getDataFormCustomer() {
-            RESTService.all('orden_servicios/data_formCliOrden', '', function (response) {
-                if (!_.isUndefined(response.status) && response.status) {
-                    var tip = response.tipoc_doc;
-                    var tipo_clie = response.tipo_clie;
-                    tip.map(function (index) {
-                        tipodoc.append('<option value="' + index.Codigo + '">' + index.TipoDocumento + '</option>');
-                    });
-
-                    id_tipocli.append('<option value="">Seleccionar</option>');
-                    tipo_clie.map(function (index) {
-                        id_tipocli.append('<option value="' + index.id + '">' + index.descripcion + '</option>');
-                    });
-
-                    id_cliente_tipo_or.append('<option value="">Seleccionar</option>');
-                    tipo_clie.map(function (index) {
-                        id_cliente_tipo_or.append('<option value="' + index.id + '">' + index.descripcion + '</option>');
-                    });
-                }
-            }, function () {
-                getDataFormCustomer();
-            });
         }
-        getDataFormCustomer();
-
-        function getDataFormOrden() {
-            var id = 0;
-            RESTService.get('orden_servicios/get_Placa', id, function (response) {
-                if (!_.isUndefined(response.status) && response.status) {
-                    idTipoVehi_add.append('<option value="" selected>Seleccionar</option>');
-                    _.each(response.tipo_ve, function (item) {
-                        idTipoVehi_add.append('<option value="' + item.id + '" >' + item.descripcion + '</option>');
-                    });
-                } else {
-                    AlertFactory.textType({
-                        title: '',
-                        message: 'Hubo un error . Intente nuevamente.',
-                        type: 'info'
-                    });
-                }
-            });
-        }
-        getDataFormOrden();
 
         var tipos_doc_venta = [];
 
@@ -3252,15 +3212,10 @@
                     redondeo = response.dataredondeo;
                     decimales_redondeo = response.decimales_redondeo;
 
-                    console.log("redondeo");
-                    console.log(redondeo);
-
                     $("#idmarca").append('<option value="" selected>Seleccionar</option>');
                     _.each(response.marca, function (item) {
                         $("#idmarca").append('<option value="' + item.Value + '">' + item.DisplayText + '</option>');
                     });
-
-
 
                     var hoy = new Date();
                     var hAnio = hoy.getFullYear();
@@ -3343,6 +3298,30 @@
                     descuentosTotales = response.descuentos;
 
                     tipos_doc_venta = response.tipo_document_venta;
+
+                    igv = response.igv[0].value;
+                    dataServicioGeneral = response.data_servicioGeneral[0].value;
+
+                    var tip = response.tipoc_doc;
+                    var tipo_clie = response.tipo_clie;
+                    tip.map(function (index) {
+                        tipodoc.append('<option value="' + index.Codigo + '">' + index.TipoDocumento + '</option>');
+                    });
+
+                    id_tipocli.append('<option value="">Seleccionar</option>');
+                    tipo_clie.map(function (index) {
+                        id_tipocli.append('<option value="' + index.id + '">' + index.descripcion + '</option>');
+                    });
+
+                    id_cliente_tipo_or.append('<option value="">Seleccionar</option>');
+                    tipo_clie.map(function (index) {
+                        id_cliente_tipo_or.append('<option value="' + index.id + '">' + index.descripcion + '</option>');
+                    });
+
+                    idTipoVehi_add.append('<option value="" selected>Seleccionar</option>');
+                    _.each(response.tipo_ve, function (item) {
+                        idTipoVehi_add.append('<option value="' + item.id + '" >' + item.descripcion + '</option>');
+                    });
                 }
             }, function () {
                 getDataForOrdenServicio();
@@ -3514,7 +3493,10 @@
 
         generateSearchForm('frm-search-Orden_Servicio', 'LoadRecordsButtonOrden_Servicio', function () {
             table_container_Orden_Servicio.jtable('load', {
-                search: $('#search_b').val()
+                search: $('#search_b').val(),
+                check: (chk_date_range.prop('checked')),
+                from: start.format('YYYY-MM-DD'),
+                to: end.format('YYYY-MM-DD')
             });
         }, true);
 

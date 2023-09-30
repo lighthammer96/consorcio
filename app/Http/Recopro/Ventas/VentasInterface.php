@@ -11,7 +11,7 @@ namespace App\Http\Recopro\Ventas;
 
 interface VentasInterface
 {
-    public function search($s);
+    public function search($filter);
 
     public function all();
 

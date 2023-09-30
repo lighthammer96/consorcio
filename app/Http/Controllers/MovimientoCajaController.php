@@ -1092,7 +1092,7 @@ class MovimientoCajaController extends Controller
     public function excel_comprobantes(VentasInterface $repo, Request $request)
     {
         $filter = $request->all();
-        $data = $repo->search_comprobantes($filter)->get();
+        $data = $repo->search($filter)->get();
         // echo "<pre>";
         // print_r($data); exit;
         return generateExcel($this->generateDataComprobantesExcel($data), 'LISTA DE COMPROBANTES', 'Comprobantes');
@@ -2651,10 +2651,13 @@ class MovimientoCajaController extends Controller
 
     public function list_comprobantes(Request $request, VentasInterface $repo)
     {
-        $s = $request->input('search', '');
-        $params = ['idventa', 'serie_comprobante', 'numero_comprobante', 'fecha_emision', 'tipo_documento', 'numero_documento', 'moneda', 'cliente', 't_monto_total', 'pagado', 'saldo', 'cCodConsecutivo_solicitud', 'nConsecutivo_solicitud', 'tipo_solicitud', "estado", 'IdTipoDocumento', 'anticipo', 'estado_cpe','comprobante', 'formapago', 'idcliente', 'anulado'];
+        $filter = $request->all();
+        $params = ['idventa', 'serie_comprobante', 'numero_comprobante', 'fecha_emision', 'tipo_documento',
+            'numero_documento', 'moneda', 'cliente', 't_monto_total', 'pagado', 'saldo', 'cCodConsecutivo_solicitud',
+            'nConsecutivo_solicitud', 'tipo_solicitud', "estado", 'IdTipoDocumento', 'anticipo', 'estado_cpe',
+            'comprobante', 'formapago', 'idcliente', 'anulado'];
         // print_r($repo->search($s)); exit;
-        return parseList($repo->search($s), $request, 'idventa', $params);
+        return parseList($repo->search($filter), $request, 'idventa', $params);
     }
 
     public function list_comprobantes_pendientes(Request $request, VentasInterface $repo)

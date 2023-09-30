@@ -6,7 +6,7 @@
  * Time: 6:59 PM
  */
 
-Route::post('entrega_servicesTecnicos/list', ['as' => 'entrega_servicesTecnicos.list', 'uses' => 'Entrega_servicesTecnicoController@all']);
+Route::post('entrega_servicesTecnicos/list', 'Entrega_servicesTecnicoController@all');
 Route::post('entrega_servicesTecnicos/create', ['as' => 'entrega_servicesTecnicos.create', 'uses' => 'Entrega_servicesTecnicoController@create']);
 Route::post('entrega_servicesTecnicos/delete', ['as' => 'entrega_servicesTecnicos.delete', 'uses' => 'Entrega_servicesTecnicoController@destroy']);
 Route::post('entrega_servicesTecnicos/update', ['as' => 'entrega_servicesTecnicos.update', 'uses' => 'Entrega_servicesTecnicoController@update']);

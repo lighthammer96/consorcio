@@ -40,26 +40,17 @@ class SolicitudController extends Controller
 
     public function all(Request $request, SolicitudInterface $repo)
     {
-        // $dias_del_mes = date( 't', strtotime( "2022-10-1" ) );
-
-        // echo $dias_del_mes;
-        // $date1 = new DateTime("2015-02-14");
-        // $date2 = new DateTime("2015-02-10");
-        // $diff = $date1->diff($date2);
-        // print_r($diff->days);
-        // exit;
-        $s = $request->input('search', '');
+        $filter = $request->all();
         $params = ['cCodConsecutivo', 'nConsecutivo', 'fecha_solicitud', 'tipo_solicitud', 'idconvenio', 'tipo_documento', 'numero_documento', 'moneda', 't_monto_total', 'pagado', 'saldo', 'facturado', 'estado', 'cliente'];
-        // print_r($s); exit;
-        return parseList($repo->search($s), $request, 'cCodConsecutivo', $params);
+        return parseList($repo->search($filter), $request, 'cCodConsecutivo', $params);
     }
 
     public function list_ventas(Request $request, SolicitudInterface $repo)
     {
-        $s = $request->input('search', '');
+        $filter = $request->all();
         $params = ['cCodConsecutivo', 'nConsecutivo', 'fecha_solicitud', 'tipo_solicitud', 'idconvenio', 'tipo_documento', 'numero_documento', 'cliente', 'moneda', 't_monto_total', 'pagado', 'saldo', 'facturado', 'estado'];
         // print_r($repo->search($s)); exit;
-        return parseList($repo->search_ventas($s), $request, 'cCodConsecutivo', $params);
+        return parseList($repo->search_ventas($filter), $request, 'cCodConsecutivo', $params);
     }
 
 

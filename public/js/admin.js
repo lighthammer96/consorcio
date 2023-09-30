@@ -1,15 +1,17 @@
 /**
-* Created by JAIR on 7/9/2016.
-*/
+ * Created by JAIR on 7/9/2016.
+ */
 
 var cargando = '<div class="text-center" style="color:#fff;padding:1em"><i class="fa fa-spinner fa-spin"></i></div>';
 
 var icon_select = 'circle-o';
+
 function redondeodecimale(numer) {
     var value = parseFloat(numer);
     value = Math.round(value * 100) / 100;
     return (value);
 }
+
 function createTarjetaCobranzaPDF(response) {
 
     var data_cronograma = response.data_cronograma;
@@ -52,14 +54,14 @@ function createTarjetaCobranzaPDF(response) {
         }
     };
     var cabeceraTabla = [
-        { fontSize: 8, text: "LETRAS", bold: true },
-        { fontSize: 8, text: "VENCIMIENTO", bold: true },
-        { fontSize: 8, text: "IMPORTE", bold: true },
-        { fontSize: 8, text: "F.PAGO", bold: true },
-        { fontSize: 8, text: "A CUENTA", bold: true },
-        { fontSize: 8, text: "SALDO", bold: true },
-        { fontSize: 8, text: "N° RECIBO", bold: true },
-        { fontSize: 8, text: "COMPROMISO", bold: true },
+        {fontSize: 8, text: "LETRAS", bold: true},
+        {fontSize: 8, text: "VENCIMIENTO", bold: true},
+        {fontSize: 8, text: "IMPORTE", bold: true},
+        {fontSize: 8, text: "F.PAGO", bold: true},
+        {fontSize: 8, text: "A CUENTA", bold: true},
+        {fontSize: 8, text: "SALDO", bold: true},
+        {fontSize: 8, text: "N° RECIBO", bold: true},
+        {fontSize: 8, text: "COMPROMISO", bold: true},
     ];
     data_cabecera.push(cabeceraTabla);
     for (var i = 0; i < response.data_cronograma.length; i++) {
@@ -69,14 +71,14 @@ function createTarjetaCobranzaPDF(response) {
         valor = valor.toFixed(2);
         valor = addCommas(valor);
         var cabeceraTabla = [
-            { fontSize: 8, text: data_cronograma[i].nrocuota, margin: [0, 3, 0, 3], },
-            { fontSize: 8, text: fecha, margin: [0, 3, 0, 3], },
-            { fontSize: 8, text: data_cliente[0].simbolo + " " + valor, margin: [0, 3, 0, 3], },
-            { fontSize: 8, text: "", margin: [0, 3, 0, 3], },
-            { fontSize: 8, text: "", margin: [0, 3, 0, 3], },
-            { fontSize: 8, text: "", margin: [0, 3, 0, 3], },
-            { fontSize: 8, text: "", margin: [0, 3, 0, 3], },
-            { fontSize: 8, text: "", margin: [0, 3, 0, 3], },
+            {fontSize: 8, text: data_cronograma[i].nrocuota, margin: [0, 3, 0, 3],},
+            {fontSize: 8, text: fecha, margin: [0, 3, 0, 3],},
+            {fontSize: 8, text: data_cliente[0].simbolo + " " + valor, margin: [0, 3, 0, 3],},
+            {fontSize: 8, text: "", margin: [0, 3, 0, 3],},
+            {fontSize: 8, text: "", margin: [0, 3, 0, 3],},
+            {fontSize: 8, text: "", margin: [0, 3, 0, 3],},
+            {fontSize: 8, text: "", margin: [0, 3, 0, 3],},
+            {fontSize: 8, text: "", margin: [0, 3, 0, 3],},
         ];
         data_cabecera.push(cabeceraTabla);
     }
@@ -121,10 +123,7 @@ function createTarjetaCobranzaPDF(response) {
                                 }
                             },
                             ],
-                            [{
-
-
-                            },
+                            [{},
 
                             ],
                             [{
@@ -133,17 +132,16 @@ function createTarjetaCobranzaPDF(response) {
                                 height: 60,
                                 alignment: 'center'
                             },
-                            {
-                                fontSize: 11,
+                                {
+                                    fontSize: 11,
 
-                                text: "TAREJETA DE COBRANZA",
-                                normal: 'Times-Roman',
-                                bold: 'Times-Bold',
-                                bolditalics: 'Times-BoldItalic',
-                                alignment: 'center'
-                            },
+                                    text: "TAREJETA DE COBRANZA",
+                                    normal: 'Times-Roman',
+                                    bold: 'Times-Bold',
+                                    bolditalics: 'Times-BoldItalic',
+                                    alignment: 'center'
+                                },
                             ],
-
 
 
                         ],
@@ -174,7 +172,6 @@ function createTarjetaCobranzaPDF(response) {
                             },
 
                             ],
-
 
 
                         ],
@@ -307,7 +304,6 @@ function createTarjetaCobranzaPDF(response) {
                                     ]
 
                                 },
-
 
 
                             ],
@@ -774,28 +770,28 @@ function createTarjetaCobranzaPDF(response) {
                                                 fontSize: 8,
                                                 text: "",
                                             },
-                                            {
-                                                margin: [3, 3, 3, 3],
-                                                fontSize: 8,
-                                                text: "",
-                                                border: [false, false, false, false],
-                                            },
-                                            {
-                                                margin: [15, 10, 15, 10],
-                                                fontSize: 8,
-                                                text: "",
-                                            },
-                                            {
-                                                margin: [3, 3, 3, 3],
-                                                fontSize: 8,
-                                                text: "",
-                                                border: [false, false, false, false],
-                                            },
-                                            {
-                                                margin: [15, 10, 15, 10],
-                                                fontSize: 8,
-                                                text: "",
-                                            },],
+                                                {
+                                                    margin: [3, 3, 3, 3],
+                                                    fontSize: 8,
+                                                    text: "",
+                                                    border: [false, false, false, false],
+                                                },
+                                                {
+                                                    margin: [15, 10, 15, 10],
+                                                    fontSize: 8,
+                                                    text: "",
+                                                },
+                                                {
+                                                    margin: [3, 3, 3, 3],
+                                                    fontSize: 8,
+                                                    text: "",
+                                                    border: [false, false, false, false],
+                                                },
+                                                {
+                                                    margin: [15, 10, 15, 10],
+                                                    fontSize: 8,
+                                                    text: "",
+                                                },],
                                             [
                                                 {
                                                     margin: [3, 3, 3, 3],
@@ -833,28 +829,28 @@ function createTarjetaCobranzaPDF(response) {
                                                 fontSize: 8,
                                                 text: "",
                                             },
-                                            {
-                                                margin: [3, 3, 3, 3],
-                                                fontSize: 8,
-                                                text: "",
-                                                border: [false, false, false, false],
-                                            },
-                                            {
-                                                margin: [15, 10, 15, 10],
-                                                fontSize: 8,
-                                                text: "",
-                                            },
-                                            {
-                                                margin: [3, 3, 3, 3],
-                                                fontSize: 8,
-                                                text: "",
-                                                border: [false, false, false, false],
-                                            },
-                                            {
-                                                margin: [15, 10, 15, 10],
-                                                fontSize: 8,
-                                                text: "",
-                                            },],
+                                                {
+                                                    margin: [3, 3, 3, 3],
+                                                    fontSize: 8,
+                                                    text: "",
+                                                    border: [false, false, false, false],
+                                                },
+                                                {
+                                                    margin: [15, 10, 15, 10],
+                                                    fontSize: 8,
+                                                    text: "",
+                                                },
+                                                {
+                                                    margin: [3, 3, 3, 3],
+                                                    fontSize: 8,
+                                                    text: "",
+                                                    border: [false, false, false, false],
+                                                },
+                                                {
+                                                    margin: [15, 10, 15, 10],
+                                                    fontSize: 8,
+                                                    text: "",
+                                                },],
                                             [
                                                 {
                                                     margin: [3, 3, 3, 3],
@@ -892,28 +888,28 @@ function createTarjetaCobranzaPDF(response) {
                                                 fontSize: 8,
                                                 text: "",
                                             },
-                                            {
-                                                margin: [3, 3, 3, 3],
-                                                fontSize: 8,
-                                                text: "",
-                                                border: [false, false, false, false],
-                                            },
-                                            {
-                                                margin: [15, 10, 15, 10],
-                                                fontSize: 8,
-                                                text: "",
-                                            },
-                                            {
-                                                margin: [3, 3, 3, 3],
-                                                fontSize: 8,
-                                                text: "",
-                                                border: [false, false, false, false],
-                                            },
-                                            {
-                                                margin: [15, 10, 15, 10],
-                                                fontSize: 8,
-                                                text: "",
-                                            },],
+                                                {
+                                                    margin: [3, 3, 3, 3],
+                                                    fontSize: 8,
+                                                    text: "",
+                                                    border: [false, false, false, false],
+                                                },
+                                                {
+                                                    margin: [15, 10, 15, 10],
+                                                    fontSize: 8,
+                                                    text: "",
+                                                },
+                                                {
+                                                    margin: [3, 3, 3, 3],
+                                                    fontSize: 8,
+                                                    text: "",
+                                                    border: [false, false, false, false],
+                                                },
+                                                {
+                                                    margin: [15, 10, 15, 10],
+                                                    fontSize: 8,
+                                                    text: "",
+                                                },],
 
                                         ]
                                     }
@@ -946,7 +942,6 @@ function createTarjetaCobranzaPDF(response) {
             },
 
 
-
         ],
         // styles: {
         //     footer: {
@@ -969,6 +964,7 @@ function createTarjetaCobranzaPDF(response) {
     pdfMake.createPdf(docDefinition).print({}, win);
 
 }
+
 function addCommas(nStr) {
     nStr += '';
     x = nStr.split('.');
@@ -980,6 +976,7 @@ function addCommas(nStr) {
     }
     return x1 + x2;
 }
+
 var mensajes_validador = function (data) {
     var div_mensaje = $(".mensajes_validador");
 
@@ -1003,6 +1000,7 @@ function tooltipMobile(item) {
         });
     }
 }
+
 function getFormSearchReporteRepuestos(form_id, input_id, btn_id) {
     return '<form class="form-horizontal" id="' + form_id + '" style="margin-bottom:-3px">' +
         // '<div class="form-group">'+
@@ -1057,6 +1055,7 @@ function getFormSearchReporteRepuestos(form_id, input_id, btn_id) {
         '</div>' +
         '</form>';
 }
+
 function getFormSearchReporteOrdenesDiario(form_id, input_id, btn_id) {
     return '<form class="form-horizontal" id="' + form_id + '" style="margin-bottom:-3px">' +
         // '<div class="form-group">'+
@@ -1103,6 +1102,7 @@ function getFormSearchReporteOrdenesDiario(form_id, input_id, btn_id) {
         '</div>' +
         '</form>';
 }
+
 function getFormSearchReporteVenta(form_id, input_id, btn_id) {
     return '<form class="form-horizontal" id="' + form_id + '" style="margin-bottom:-3px">' +
         // '<div class="form-group">'+
@@ -1160,8 +1160,8 @@ function getFormSearchReporteVenta(form_id, input_id, btn_id) {
         '</div>' +
         '</div>' +
         '<div class="form-group">' +
-        
-        
+
+
         '<div class="col-md-2 col-md-offset-10">' +
         '<button  type="button"  id="btn_expPDF" class="btn-success  btn-sm">' +
         '<i class="fa fa-file-pdf-o">Exportar Pdf</i>' +
@@ -1173,9 +1173,9 @@ function getFormSearchReporteVenta(form_id, input_id, btn_id) {
 
 function getFormSearchReporteComisiones(form_id, input_id, btn_id) {
     return '<form class="form-horizontal" id="' + form_id + '" style="margin-bottom:-3px">' +
-       
+
         '<div class="form-group">' +
-  
+
         '<label class="col-sm-2 control-label">Fecha Inicio</label>' +
         '<div class="col-md-3">' +
         '<input type="date" class="form-control input-sm"  id="FechaInicioFiltro">' +
@@ -1199,9 +1199,9 @@ function getFormSearchReporteComisiones(form_id, input_id, btn_id) {
         '</button>' +
         '</div>' +
         '</div>' +
-   
+
         '<div class="form-group">' +
-        
+
         '<div class="col-md-2 col-md-offset-10">' +
         '<button  type="button"  id="btn_expExcel" class="btn-primary btn-sm">' +
         '<i class="fa fa-file-excel-o">Exportar Excel</i>' +
@@ -1215,6 +1215,7 @@ function getFormSearchReporteComisiones(form_id, input_id, btn_id) {
         '</div>' +
         '</form>';
 }
+
 function getFormSearchSolicitudCompra(form_id, input_id, btn_id) {
     return '<form class="form-horizontal" id="' + form_id + '" style="margin-bottom:-3px">' +
         // '<div class="form-group">'+
@@ -1245,6 +1246,7 @@ function getFormSearchSolicitudCompra(form_id, input_id, btn_id) {
         '</div>' +
         '</form>';
 }
+
 var limpiar_validaciones = function () {
     $(".mensajes_validador").html('');
 };
@@ -1411,8 +1413,7 @@ function validDecimals(evt, control, decimals) {
         if ((punto != -1) && (texto.length - (punto + 1)) >= decimals) {
             return false;
         }
-    }
-    else if (evt.keyCode == 46 && texto.length >= 1) {
+    } else if (evt.keyCode == 46 && texto.length >= 1) {
         if (punto != -1 && texto.indexOf('.', punto) != -1) {
             return false;
         }
@@ -1535,15 +1536,19 @@ var ajaxPost = function (url, param, before, callback, error) {
 function changeTheme(theme) {
     ajaxPost('admin/changeTheme', 'theme=' + theme);
 }
+
 function changeHeaderStyling(style) {
     ajaxPost('admin/changeHeaderStyling', 'style=' + style);
 }
+
 function changeContentStyling(style) {
     ajaxPost('admin/changeContentStyling', 'style=' + style);
 }
+
 function changeSidebarGradient(style) {
     ajaxPost('admin/changeSidebarGradient', 'style=' + style);
 }
+
 function changeSidebarStyling(style) {
     ajaxPost('admin/changeSidebarStyling', 'style=' + style);
 }
@@ -1573,12 +1578,14 @@ function getFormSearch(form_id, input_id, btn_id) {
         '</div>' +
         '</form>';
 }
+
 function getFormSearchcomproMov(form_id, input_id, btn_id) {
     return '<form class="form-inline" id="' + form_id + '" style="margin-bottom:-3px">' +
         '<input type="hidden" id="' + input_id + '" name="search" class="form-control" autocomplete="off" placeholder="Buscar..." />' +
         '<input type="hidden" id="' + btn_id + '" name="search" class="form-control" autocomplete="off" placeholder="Buscar..." />' +
         '</form>';
 }
+
 // function getFormSearchAsigApro(form_id, input_id, btn_id) {
 //     return '<form class="form-inline" id="' + form_id + '" style="margin-bottom:-3px">' +
 //         '<div class="input-group input-group-sm">' +
@@ -1599,7 +1606,6 @@ function getFormSearchAsigApro(form_id, input_id, btn_id) {
         '</div>' +
         '</form>';
 }
-
 
 
 function getFormSearchReporteCreditosAprobados(form_id, input_id, btn_id) {
@@ -1665,6 +1671,7 @@ function getFormSearchReporteCreditosAprobados(form_id, input_id, btn_id) {
 
         '</form>';
 }
+
 function getFormSearchAsignacion(form_id, input_id, btn_id) {
     return '<form class="form-horizontal" id="' + form_id + '" style="margin-bottom:-3px">' +
         '<div class="form-group">' +
@@ -1739,6 +1746,7 @@ function getFormSearchAsignacion(form_id, input_id, btn_id) {
         '</div>' +
         '</form>';
 }
+
 function getFormSearchCuentasxcobrar(form_id, input_id, btn_id) {
     return '<form class="form-horizontal" id="' + form_id + '" style="margin-bottom:-3px">' +
         '<div class="form-group">' +
@@ -1815,9 +1823,8 @@ function getFormSearchCuentasxcobrar(form_id, input_id, btn_id) {
         '<div class="col-md-5">' +
         '<select id="idConvenio"  style="margin-right:5px;width: 100%" name="idConvenio" class="form-control input-sm "><option value="">Convenio</option></select>' +
         '</div>' +
-       
 
-      
+
         '</div>' +
         '<div class="form-group">' +
         '<div class="col-md-5">' +
@@ -1826,6 +1833,7 @@ function getFormSearchCuentasxcobrar(form_id, input_id, btn_id) {
         '</div>' +
         '</form>';
 }
+
 function getFormSearchCierre(form_id, input_id, btn_id, val_busquedad, estado, idMovimiento) {
     var estado = 'b';
     return '<form class="form-inline" id="' + form_id + '" style="margin-bottom:-3px">' +
@@ -1845,7 +1853,7 @@ function getFormSearchCierre(form_id, input_id, btn_id, val_busquedad, estado, i
 
 function getFormSearchCierreSolicitud(form_id, input_id, btn_id, val_busquedad, estado, idMovimiento) {
     var estado = 'b';
-    
+
     return '<form class="form-inline" id="' + form_id + '" style="margin-bottom:-3px">' +
         '<div class="input-group input-group-sm">' +
         '<input type="hidden"  value="' + val_busquedad + '" name="perido_busquedad" id="perido_busquedad"/>' +
@@ -1860,6 +1868,7 @@ function getFormSearchCierreSolicitud(form_id, input_id, btn_id, val_busquedad, 
         '</div>' +
         '</form>';
 }
+
 function getFormSearch_MovimientoCaja(form_id, input_id, btn_id) {
     return '<form class="form-horizontal" id="' + form_id + '" style="margin-bottom:-3px">' +
         '<div class="form-group">' +
@@ -1881,6 +1890,7 @@ function getFormSearch_MovimientoCaja(form_id, input_id, btn_id) {
         '</div>' +
         '</form>';
 }
+
 function getFormSearch2(form_id, input_id, btn_id) {
     return '<form class="form-horizontal" id="' + form_id + '" style="margin-bottom:-3px">' +
         '<div class="form-group">' +
@@ -1911,6 +1921,7 @@ function getFormSearch2(form_id, input_id, btn_id) {
         '</div>' +
         '</form>';
 }
+
 function getFormSearch3(form_id, input_id, btn_id) {
     return '<form class="form-horizontal" id="' + form_id + '" style="margin-bottom:-3px">' +
         '<div class="form-group">' +
@@ -2081,21 +2092,22 @@ function activeURL() {
         }
     }, 300);
 }
+
 activeURL();
 
 function closeSession() {
     swal({
-        title: '',
-        text: '¿Está seguro que desea cerrar sesión?',
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: 'Si',
-        cancelButtonText: 'No',
-        closeOnConfirm: true,
-        showLoaderOnConfirm: false,
-        closeOnCancel: true
-    },
+            title: '',
+            text: '¿Está seguro que desea cerrar sesión?',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: 'Si',
+            cancelButtonText: 'No',
+            closeOnConfirm: true,
+            showLoaderOnConfirm: false,
+            closeOnCancel: true
+        },
         function () {
             window.location = base_url + '/logout';
             $('#show_loading').removeClass('ng-hide');
@@ -2159,10 +2171,10 @@ function create_pdf(response) {
                             }
                         ]
                     },
-                    { text: response.title, style: 'header' }
+                    {text: response.title, style: 'header'}
                 ]
             },
-            { text: 'Fecha: ' + moment().format('DD [de] MMMM [de] YYYY, h:mm A'), style: 'subheader' },
+            {text: 'Fecha: ' + moment().format('DD [de] MMMM [de] YYYY, h:mm A'), style: 'subheader'},
             {
                 columns: [
                     {
@@ -2215,6 +2227,7 @@ function create_pdf(response) {
     // } 
     pdfMake.createPdf(docDefinition).print({}, win);
 }
+
 function create_pdfVC(response) {
     var docDefinition = {
         // a string or { width: number, height: number }
@@ -2238,10 +2251,10 @@ function create_pdfVC(response) {
                             }
                         ]
                     },
-                    { text: response.title, style: 'header' }
+                    {text: response.title, style: 'header'}
                 ]
             },
-            { text: 'Fecha: ' + moment().format('DD [de] MMMM [de] YYYY, h:mm A'), style: 'subheader' },
+            {text: 'Fecha: ' + moment().format('DD [de] MMMM [de] YYYY, h:mm A'), style: 'subheader'},
             {
                 columns: [
                     {
@@ -2294,18 +2307,19 @@ function create_pdfVC(response) {
     // } 
     pdfMake.createPdf(docDefinition).print({}, win);
 }
+
 function crearTablaCCsoles_(data, dataBodyReportes, dataMoneda, cambio) {
     var subtituloSolesEfec = [
-        { fontSize: 8, text: "DOCUMENTO", fillColor: '#eeeeee' },
-        { fontSize: 8, text: "FEC DOC", fillColor: '#eeeeee' },
-        { fontSize: 8, text: "FEC VENC", fillColor: '#eeeeee' },
-        { fontSize: 8, text: "DIAS VENCIDOS", fillColor: '#eeeeee' },
-        { fontSize: 8, text: "FEC ULT. PAGO ", fillColor: '#eeeeee' },
-        { fontSize: 8, text: "MONEDA", fillColor: '#eeeeee' },
-        { fontSize: 8, text: "MONTO TOTAL", fillColor: '#eeeeee' },
-        { fontSize: 8, text: "MONTO PENDIENTE", fillColor: '#eeeeee' },
-        { fontSize: 8, text: "VENDEDOR", fillColor: '#eeeeee' },
-        { fontSize: 8, text: "COBRADOR", fillColor: '#eeeeee' },
+        {fontSize: 8, text: "DOCUMENTO", fillColor: '#eeeeee'},
+        {fontSize: 8, text: "FEC DOC", fillColor: '#eeeeee'},
+        {fontSize: 8, text: "FEC VENC", fillColor: '#eeeeee'},
+        {fontSize: 8, text: "DIAS VENCIDOS", fillColor: '#eeeeee'},
+        {fontSize: 8, text: "FEC ULT. PAGO ", fillColor: '#eeeeee'},
+        {fontSize: 8, text: "MONEDA", fillColor: '#eeeeee'},
+        {fontSize: 8, text: "MONTO TOTAL", fillColor: '#eeeeee'},
+        {fontSize: 8, text: "MONTO PENDIENTE", fillColor: '#eeeeee'},
+        {fontSize: 8, text: "VENDEDOR", fillColor: '#eeeeee'},
+        {fontSize: 8, text: "COBRADOR", fillColor: '#eeeeee'},
     ];
     dataBodyReportes.push(subtituloSolesEfec);
     var ind = 'C';
@@ -2329,12 +2343,17 @@ function crearTablaCCsoles_(data, dataBodyReportes, dataMoneda, cambio) {
         }
         if (ind == 'C') {
             var primerclien = [
-                { fontSize: 9, text: conc + '.' + ' Cliente', border: [true, true, false, false] },
-                { fontSize: 8, text: data[i].cliente, colSpan: 3, border: [false, true, false, false] },
+                {fontSize: 9, text: conc + '.' + ' Cliente', border: [true, true, false, false]},
+                {fontSize: 8, text: data[i].cliente, colSpan: 3, border: [false, true, false, false]},
                 {},
                 {},
-                { fontSize: 8, text: data[i].documento_cliente, border: [false, true, false, false] },
-                { fontSize: 8, text: data[i].direccion + ' ' + data[i].cDepartamento + ' ' + data[i].cProvincia + ' ' + data[i].cDistrito, border: [false, true, true, false], colSpan: 5 },
+                {fontSize: 8, text: data[i].documento_cliente, border: [false, true, false, false]},
+                {
+                    fontSize: 8,
+                    text: data[i].direccion + ' ' + data[i].cDepartamento + ' ' + data[i].cProvincia + ' ' + data[i].cDistrito,
+                    border: [false, true, true, false],
+                    colSpan: 5
+                },
                 {},
                 {},
                 {},
@@ -2344,16 +2363,16 @@ function crearTablaCCsoles_(data, dataBodyReportes, dataMoneda, cambio) {
             conc = conc + 1;
             dataBodyReportes.push(primerclien);
             var primerclienc = [
-                { fontSize: 8, text: data[i].documento_ven },
-                { fontSize: 8, text: moment(data[i].fecha_emision).format('DD/MM/YYYY') },
-                { fontSize: 8, text: moment(data[i].fecha_vencimiento).format('DD/MM/YYYY') },
-                { fontSize: 8, text: diasmora(data[i].fecha_vencimiento, data[i].monto_pendiente) },
-                { fontSize: 8, text: fecul },
-                { fontSize: 8, text: data[i].moneda },
-                { fontSize: 8, text: data[i].Simbolo + ' ' + redondeodecimale(data[i].monto_total).toFixed(2) },
-                { fontSize: 8, text: data[i].Simbolo + ' ' + redondeodecimale(data[i].monto_pendiente).toFixed(2) },
-                { fontSize: 8, text: data[i].vendedor },
-                { fontSize: 8, text: data[i].cobrador },
+                {fontSize: 8, text: data[i].documento_ven},
+                {fontSize: 8, text: moment(data[i].fecha_emision).format('DD/MM/YYYY')},
+                {fontSize: 8, text: moment(data[i].fecha_vencimiento).format('DD/MM/YYYY')},
+                {fontSize: 8, text: diasmora(data[i].fecha_vencimiento, data[i].monto_pendiente)},
+                {fontSize: 8, text: fecul},
+                {fontSize: 8, text: data[i].moneda},
+                {fontSize: 8, text: data[i].Simbolo + ' ' + redondeodecimale(data[i].monto_total).toFixed(2)},
+                {fontSize: 8, text: data[i].Simbolo + ' ' + redondeodecimale(data[i].monto_pendiente).toFixed(2)},
+                {fontSize: 8, text: data[i].vendedor},
+                {fontSize: 8, text: data[i].cobrador},
             ];
             dataBodyReportes.push(primerclienc);
             ind = 'B';
@@ -2362,16 +2381,16 @@ function crearTablaCCsoles_(data, dataBodyReportes, dataMoneda, cambio) {
             var ni = i + 1;
             contfi = contfi + 1;
             var demasclien = [
-                { fontSize: 8, text: data[i].documento_ven },
-                { fontSize: 8, text: moment(data[i].fecha_emision).format('DD/MM/YYYY') },
-                { fontSize: 8, text: moment(data[i].fecha_vencimiento).format('DD/MM/YYYY') },
-                { fontSize: 8, text: diasmora(data[i].fecha_vencimiento, data[i].monto_pendiente) },
-                { fontSize: 8, text: fecul },
-                { fontSize: 8, text: data[i].moneda },
-                { fontSize: 8, text: data[i].Simbolo + ' ' + redondeodecimale(data[i].monto_total).toFixed(2) },
-                { fontSize: 8, text: data[i].Simbolo + ' ' + redondeodecimale(data[i].monto_pendiente).toFixed(2) },
-                { fontSize: 8, text: data[i].vendedor },
-                { fontSize: 8, text: data[i].cobrador },
+                {fontSize: 8, text: data[i].documento_ven},
+                {fontSize: 8, text: moment(data[i].fecha_emision).format('DD/MM/YYYY')},
+                {fontSize: 8, text: moment(data[i].fecha_vencimiento).format('DD/MM/YYYY')},
+                {fontSize: 8, text: diasmora(data[i].fecha_vencimiento, data[i].monto_pendiente)},
+                {fontSize: 8, text: fecul},
+                {fontSize: 8, text: data[i].moneda},
+                {fontSize: 8, text: data[i].Simbolo + ' ' + redondeodecimale(data[i].monto_total).toFixed(2)},
+                {fontSize: 8, text: data[i].Simbolo + ' ' + redondeodecimale(data[i].monto_pendiente).toFixed(2)},
+                {fontSize: 8, text: data[i].vendedor},
+                {fontSize: 8, text: data[i].cobrador},
             ];
 
             dataBodyReportes.push(demasclien);
@@ -2393,28 +2412,72 @@ function crearTablaCCsoles_(data, dataBodyReportes, dataMoneda, cambio) {
                 if (data[i].idventa != data[tem].idventa || (ni) == data.length) {
                     ind = 'C';
                     var subtituloSolesEfec = [
-                        { fontSize: 8, text: "Total por Cobrar en Moneda Base", fillColor: '#eeeeee', colSpan: 5, alignment: 'center', border: [true, false, false, false] },
+                        {
+                            fontSize: 8,
+                            text: "Total por Cobrar en Moneda Base",
+                            fillColor: '#eeeeee',
+                            colSpan: 5,
+                            alignment: 'center',
+                            border: [true, false, false, false]
+                        },
                         {},
                         {},
                         {},
                         {},
-                        { fontSize: 8, text: "Soles:", fillColor: '#eeeeee', colSpan: 2, alignment: 'center', border: [false, false, false, false] },
+                        {
+                            fontSize: 8,
+                            text: "Soles:",
+                            fillColor: '#eeeeee',
+                            colSpan: 2,
+                            alignment: 'center',
+                            border: [false, false, false, false]
+                        },
                         {},
-                        { fontSize: 8, text: dataMoneda[0].Simbolo + " " + addCommas(redondeodecimale(consol).toFixed(2)), fillColor: '#eeeeee', border: [false, false, false, false] },
-                        { fontSize: 8, text: "Nro. Registros Total: " + contfi, fillColor: '#eeeeee', colSpan: 2, border: [false, false, true, false] },
+                        {
+                            fontSize: 8,
+                            text: dataMoneda[0].Simbolo + " " + addCommas(redondeodecimale(consol).toFixed(2)),
+                            fillColor: '#eeeeee',
+                            border: [false, false, false, false]
+                        },
+                        {
+                            fontSize: 8,
+                            text: "Nro. Registros Total: " + contfi,
+                            fillColor: '#eeeeee',
+                            colSpan: 2,
+                            border: [false, false, true, false]
+                        },
                         {},
                     ];
                     dataBodyReportes.push(subtituloSolesEfec);
                     var dola = [
-                        { fontSize: 8, text: "", fillColor: '#eeeeee', colSpan: 5, alignment: 'center', border: [true, false, false, true] },
+                        {
+                            fontSize: 8,
+                            text: "",
+                            fillColor: '#eeeeee',
+                            colSpan: 5,
+                            alignment: 'center',
+                            border: [true, false, false, true]
+                        },
                         {},
                         {},
                         {},
                         {},
-                        { fontSize: 8, text: "Dolares:", fillColor: '#eeeeee', colSpan: 2, alignment: 'center', border: [false, false, false, true] },
+                        {
+                            fontSize: 8,
+                            text: "Dolares:",
+                            fillColor: '#eeeeee',
+                            colSpan: 2,
+                            alignment: 'center',
+                            border: [false, false, false, true]
+                        },
                         {},
-                        { fontSize: 8, text: dataMoneda[1].Simbolo + " " + addCommas(redondeodecimale(condol).toFixed(2)), fillColor: '#eeeeee', border: [false, false, false, true] },
-                        { fontSize: 8, text: "", fillColor: '#eeeeee', colSpan: 2, border: [false, false, true, true] },
+                        {
+                            fontSize: 8,
+                            text: dataMoneda[1].Simbolo + " " + addCommas(redondeodecimale(condol).toFixed(2)),
+                            fillColor: '#eeeeee',
+                            border: [false, false, false, true]
+                        },
+                        {fontSize: 8, text: "", fillColor: '#eeeeee', colSpan: 2, border: [false, false, true, true]},
                         {},
                     ];
                     totalsole = totalsole + consol;
@@ -2506,28 +2569,67 @@ function crearTablaCCsoles_(data, dataBodyReportes, dataMoneda, cambio) {
     //   dataBodyReportes.push(totales);
 
     var fina = [
-        { fontSize: 8, text: "Total por Cobrar a T.C: " + cambio[0].Mensaje, fillColor: '#eeeeee', colSpan: 5, alignment: 'center', border: [true, false, false, false] },
+        {
+            fontSize: 8,
+            text: "Total por Cobrar a T.C: " + cambio[0].Mensaje,
+            fillColor: '#eeeeee',
+            colSpan: 5,
+            alignment: 'center',
+            border: [true, false, false, false]
+        },
         {},
         {},
         {},
         {},
-        { fontSize: 8, text: "", fillColor: '#eeeeee', colSpan: 2, alignment: 'center', border: [false, false, false, false] },
+        {
+            fontSize: 8,
+            text: "",
+            fillColor: '#eeeeee',
+            colSpan: 2,
+            alignment: 'center',
+            border: [false, false, false, false]
+        },
         {},
-        { fontSize: 8, text: dataMoneda[0].Simbolo + " " + addCommas(redondeodecimale(totalsole).toFixed(2)), fillColor: '#eeeeee', colSpan: 3, border: [false, false, true, false] },
+        {
+            fontSize: 8,
+            text: dataMoneda[0].Simbolo + " " + addCommas(redondeodecimale(totalsole).toFixed(2)),
+            fillColor: '#eeeeee',
+            colSpan: 3,
+            border: [false, false, true, false]
+        },
         {},
         {},
     ];
     dataBodyReportes.push(fina);
     var finb = [
-        { fontSize: 8, text: "", fillColor: '#eeeeee', colSpan: 5, alignment: 'center', border: [true, false, false, true] },
+        {
+            fontSize: 8,
+            text: "",
+            fillColor: '#eeeeee',
+            colSpan: 5,
+            alignment: 'center',
+            border: [true, false, false, true]
+        },
         {},
         {},
         {},
         {},
-        { fontSize: 8, text: "Dolares:", fillColor: '#eeeeee', colSpan: 2, alignment: 'center', border: [false, false, false, true] },
+        {
+            fontSize: 8,
+            text: "Dolares:",
+            fillColor: '#eeeeee',
+            colSpan: 2,
+            alignment: 'center',
+            border: [false, false, false, true]
+        },
         {},
-        { fontSize: 8, text: dataMoneda[1].Simbolo + " " + addCommas(redondeodecimale((totaldola) + (totalsole / Number(cambio[0].Mensaje))).toFixed(2)), fillColor: '#eeeeee', border: [false, false, false, true] },
-        { fontSize: 8, text: "", fillColor: '#eeeeee', colSpan: 2, border: [false, false, true, true] },
+        {
+            fontSize: 8,
+            text: dataMoneda[1].Simbolo + " " + addCommas(redondeodecimale((totaldola) + (totalsole / Number(cambio[0].Mensaje))).toFixed(2)),
+            fillColor: '#eeeeee',
+            border: [false, false, false, true]
+        },
+        {fontSize: 8, text: "", fillColor: '#eeeeee', colSpan: 2, border: [false, false, true, true]},
         {},
     ];
 
@@ -2538,17 +2640,17 @@ function crearTablaCCsoles_(data, dataBodyReportes, dataMoneda, cambio) {
 
 function crearTablaCCsoles(data, dataBodyReportes, dataMoneda, cambio) {
     var subtituloSolesEfec = [
-        { fontSize: 8, text: "DOCUMENTO", fillColor: '#eeeeee' },
-        { fontSize: 8, text: "SOLICITUD", fillColor: '#eeeeee' },
-        { fontSize: 8, text: "FEC DOC", fillColor: '#eeeeee' },
-        { fontSize: 8, text: "FEC VENC", fillColor: '#eeeeee' },
-        { fontSize: 8, text: "DIAS VENCIDOS", fillColor: '#eeeeee' },
-        { fontSize: 8, text: "FEC ULT. PAGO ", fillColor: '#eeeeee' },
-        { fontSize: 8, text: "MONEDA", fillColor: '#eeeeee' },
-        { fontSize: 8, text: "MONTO TOTAL", fillColor: '#eeeeee' },
-        { fontSize: 8, text: "MONTO PENDIENTE", fillColor: '#eeeeee' },
-        { fontSize: 8, text: "VENDEDOR", fillColor: '#eeeeee' },
-        { fontSize: 8, text: "COBRADOR", fillColor: '#eeeeee' },
+        {fontSize: 8, text: "DOCUMENTO", fillColor: '#eeeeee'},
+        {fontSize: 8, text: "SOLICITUD", fillColor: '#eeeeee'},
+        {fontSize: 8, text: "FEC DOC", fillColor: '#eeeeee'},
+        {fontSize: 8, text: "FEC VENC", fillColor: '#eeeeee'},
+        {fontSize: 8, text: "DIAS VENCIDOS", fillColor: '#eeeeee'},
+        {fontSize: 8, text: "FEC ULT. PAGO ", fillColor: '#eeeeee'},
+        {fontSize: 8, text: "MONEDA", fillColor: '#eeeeee'},
+        {fontSize: 8, text: "MONTO TOTAL", fillColor: '#eeeeee'},
+        {fontSize: 8, text: "MONTO PENDIENTE", fillColor: '#eeeeee'},
+        {fontSize: 8, text: "VENDEDOR", fillColor: '#eeeeee'},
+        {fontSize: 8, text: "COBRADOR", fillColor: '#eeeeee'},
     ];
     dataBodyReportes.push(subtituloSolesEfec);
     // var ind = 'C';
@@ -2566,63 +2668,112 @@ function crearTablaCCsoles(data, dataBodyReportes, dataMoneda, cambio) {
         if (data[i].fecultpago != null) {
             fecul = moment(data[i].fecultpago).format('DD/MM/YYYY');
         }
-       
 
-        if(!array.includes(data[i].cliente)) {
-            if(conc > 1) {
+
+        if (!array.includes(data[i].cliente)) {
+            if (conc > 1) {
                 var subtituloSolesEfec = [
-                    { fontSize: 8, text: "Total por Cobrar en Moneda Base", fillColor: '#eeeeee', colSpan: 6, alignment: 'center', border: [true, false, false, false] },
+                    {
+                        fontSize: 8,
+                        text: "Total por Cobrar en Moneda Base",
+                        fillColor: '#eeeeee',
+                        colSpan: 6,
+                        alignment: 'center',
+                        border: [true, false, false, false]
+                    },
                     {},
                     {},
                     {},
                     {},
                     {},
-                    { fontSize: 8, text: "Soles:", fillColor: '#eeeeee', colSpan: 2, alignment: 'center', border: [false, false, false, false] },
+                    {
+                        fontSize: 8,
+                        text: "Soles:",
+                        fillColor: '#eeeeee',
+                        colSpan: 2,
+                        alignment: 'center',
+                        border: [false, false, false, false]
+                    },
                     {},
-                    { fontSize: 8, text: dataMoneda[0].Simbolo + " " + addCommas(redondeodecimale(consol).toFixed(2)), fillColor: '#eeeeee', border: [false, false, false, false] },
-                    { fontSize: 8, text: "Nro. Registros Total: " + contfi, fillColor: '#eeeeee', colSpan: 2, border: [false, false, true, false] },
+                    {
+                        fontSize: 8,
+                        text: dataMoneda[0].Simbolo + " " + addCommas(redondeodecimale(consol).toFixed(2)),
+                        fillColor: '#eeeeee',
+                        border: [false, false, false, false]
+                    },
+                    {
+                        fontSize: 8,
+                        text: "Nro. Registros Total: " + contfi,
+                        fillColor: '#eeeeee',
+                        colSpan: 2,
+                        border: [false, false, true, false]
+                    },
                     {},
                 ];
                 dataBodyReportes.push(subtituloSolesEfec);
                 var dola = [
-                    { fontSize: 8, text: "", fillColor: '#eeeeee', colSpan: 6, alignment: 'center', border: [true, false, false, true] },
+                    {
+                        fontSize: 8,
+                        text: "",
+                        fillColor: '#eeeeee',
+                        colSpan: 6,
+                        alignment: 'center',
+                        border: [true, false, false, true]
+                    },
                     {},
                     {},
                     {},
                     {},
                     {},
-                    { fontSize: 8, text: "Dolares:", fillColor: '#eeeeee', colSpan: 2, alignment: 'center', border: [false, false, false, true] },
+                    {
+                        fontSize: 8,
+                        text: "Dolares:",
+                        fillColor: '#eeeeee',
+                        colSpan: 2,
+                        alignment: 'center',
+                        border: [false, false, false, true]
+                    },
                     {},
-                    { fontSize: 8, text: dataMoneda[1].Simbolo + " " + addCommas(redondeodecimale(condol).toFixed(2)), fillColor: '#eeeeee', border: [false, false, false, true] },
-                    { fontSize: 8, text: "", fillColor: '#eeeeee', colSpan: 2, border: [false, false, true, true] },
+                    {
+                        fontSize: 8,
+                        text: dataMoneda[1].Simbolo + " " + addCommas(redondeodecimale(condol).toFixed(2)),
+                        fillColor: '#eeeeee',
+                        border: [false, false, false, true]
+                    },
+                    {fontSize: 8, text: "", fillColor: '#eeeeee', colSpan: 2, border: [false, false, true, true]},
                     {},
                 ];
-               
-               
+
+
                 contfi = 0;
                 consol = 0;
                 condol = 0;
                 dataBodyReportes.push(dola);
-              
+
             }
 
-             // cliente
+            // cliente
 
             var primerclien = [
-                { fontSize: 9, text: conc + '.' + ' Cliente', border: [true, true, false, false] },
-                { fontSize: 8, text: data[i].cliente, colSpan: 4, border: [false, true, false, false] },
+                {fontSize: 9, text: conc + '.' + ' Cliente', border: [true, true, false, false]},
+                {fontSize: 8, text: data[i].cliente, colSpan: 4, border: [false, true, false, false]},
                 {},
                 {},
                 {},
-                { fontSize: 8, text: data[i].documento_cliente, border: [false, true, false, false] },
-                { fontSize: 8, text: data[i].direccion + ' ' + data[i].cDepartamento + ' ' + data[i].cProvincia + ' ' + data[i].cDistrito, border: [false, true, true, false], colSpan: 5 },
+                {fontSize: 8, text: data[i].documento_cliente, border: [false, true, false, false]},
+                {
+                    fontSize: 8,
+                    text: data[i].direccion + ' ' + data[i].cDepartamento + ' ' + data[i].cProvincia + ' ' + data[i].cDistrito,
+                    border: [false, true, true, false],
+                    colSpan: 5
+                },
                 {},
                 {},
                 {},
                 {},
             ];
 
-           
+
             dataBodyReportes.push(primerclien);
             conc = conc + 1;
             array = [];
@@ -2630,17 +2781,17 @@ function crearTablaCCsoles(data, dataBodyReportes, dataMoneda, cambio) {
 
         //detalle
         var demasclien = [
-            { fontSize: 8, text: data[i].documento_ven },
-            { fontSize: 8, text: data[i].cCodConsecutivo+"-"+data[i].nConsecutivo },
-            { fontSize: 8, text: moment(data[i].fecha_emision).format('DD/MM/YYYY') },
-            { fontSize: 8, text: moment(data[i].fecha_vencimiento).format('DD/MM/YYYY') },
-            { fontSize: 8, text: diasmora(data[i].fecha_vencimiento, data[i].monto_pendiente) },
-            { fontSize: 8, text: fecul },
-            { fontSize: 8, text: data[i].moneda },
-            { fontSize: 8, text: data[i].Simbolo + ' ' + redondeodecimale(data[i].monto_total).toFixed(2) },
-            { fontSize: 8, text: data[i].Simbolo + ' ' + redondeodecimale(data[i].monto_pendiente).toFixed(2) },
-            { fontSize: 8, text: data[i].vendedor },
-            { fontSize: 8, text: data[i].cobrador },
+            {fontSize: 8, text: data[i].documento_ven},
+            {fontSize: 8, text: data[i].cCodConsecutivo + "-" + data[i].nConsecutivo},
+            {fontSize: 8, text: moment(data[i].fecha_emision).format('DD/MM/YYYY')},
+            {fontSize: 8, text: moment(data[i].fecha_vencimiento).format('DD/MM/YYYY')},
+            {fontSize: 8, text: diasmora(data[i].fecha_vencimiento, data[i].monto_pendiente)},
+            {fontSize: 8, text: fecul},
+            {fontSize: 8, text: data[i].moneda},
+            {fontSize: 8, text: data[i].Simbolo + ' ' + redondeodecimale(data[i].monto_total).toFixed(2)},
+            {fontSize: 8, text: data[i].Simbolo + ' ' + redondeodecimale(data[i].monto_pendiente).toFixed(2)},
+            {fontSize: 8, text: data[i].vendedor},
+            {fontSize: 8, text: data[i].cobrador},
         ];
 
         if (data[i].idmoneda == '1') {
@@ -2656,70 +2807,153 @@ function crearTablaCCsoles(data, dataBodyReportes, dataMoneda, cambio) {
         array.push(data[i].cliente);
 
         // para el ultimo registro
-        if(data.length == contador) {
-            contfi ++;
+        if (data.length == contador) {
+            contfi++;
             var subtituloSolesEfec = [
-                { fontSize: 8, text: "Total por Cobrar en Moneda Base", fillColor: '#eeeeee', colSpan: 6, alignment: 'center', border: [true, false, false, false] },
+                {
+                    fontSize: 8,
+                    text: "Total por Cobrar en Moneda Base",
+                    fillColor: '#eeeeee',
+                    colSpan: 6,
+                    alignment: 'center',
+                    border: [true, false, false, false]
+                },
                 {},
                 {},
                 {},
                 {},
                 {},
-                { fontSize: 8, text: "Soles:", fillColor: '#eeeeee', colSpan: 2, alignment: 'center', border: [false, false, false, false] },
+                {
+                    fontSize: 8,
+                    text: "Soles:",
+                    fillColor: '#eeeeee',
+                    colSpan: 2,
+                    alignment: 'center',
+                    border: [false, false, false, false]
+                },
                 {},
-                { fontSize: 8, text: dataMoneda[0].Simbolo + " " + addCommas(redondeodecimale(consol).toFixed(2)), fillColor: '#eeeeee', border: [false, false, false, false] },
-                { fontSize: 8, text: "Nro. Registros Total: " + contfi, fillColor: '#eeeeee', colSpan: 2, border: [false, false, true, false] },
+                {
+                    fontSize: 8,
+                    text: dataMoneda[0].Simbolo + " " + addCommas(redondeodecimale(consol).toFixed(2)),
+                    fillColor: '#eeeeee',
+                    border: [false, false, false, false]
+                },
+                {
+                    fontSize: 8,
+                    text: "Nro. Registros Total: " + contfi,
+                    fillColor: '#eeeeee',
+                    colSpan: 2,
+                    border: [false, false, true, false]
+                },
                 {},
             ];
             dataBodyReportes.push(subtituloSolesEfec);
             var dola = [
-                { fontSize: 8, text: "", fillColor: '#eeeeee', colSpan: 6, alignment: 'center', border: [true, false, false, true] },
+                {
+                    fontSize: 8,
+                    text: "",
+                    fillColor: '#eeeeee',
+                    colSpan: 6,
+                    alignment: 'center',
+                    border: [true, false, false, true]
+                },
                 {},
                 {},
                 {},
                 {},
                 {},
-                { fontSize: 8, text: "Dolares:", fillColor: '#eeeeee', colSpan: 2, alignment: 'center', border: [false, false, false, true] },
+                {
+                    fontSize: 8,
+                    text: "Dolares:",
+                    fillColor: '#eeeeee',
+                    colSpan: 2,
+                    alignment: 'center',
+                    border: [false, false, false, true]
+                },
                 {},
-                { fontSize: 8, text: dataMoneda[1].Simbolo + " " + addCommas(redondeodecimale(condol).toFixed(2)), fillColor: '#eeeeee', border: [false, false, false, true] },
-                { fontSize: 8, text: "", fillColor: '#eeeeee', colSpan: 2, border: [false, false, true, true] },
+                {
+                    fontSize: 8,
+                    text: dataMoneda[1].Simbolo + " " + addCommas(redondeodecimale(condol).toFixed(2)),
+                    fillColor: '#eeeeee',
+                    border: [false, false, false, true]
+                },
+                {fontSize: 8, text: "", fillColor: '#eeeeee', colSpan: 2, border: [false, false, true, true]},
                 {},
             ];
             dataBodyReportes.push(dola);
         }
 
-        contfi ++;
-        contador ++;
+        contfi++;
+        contador++;
 
 
     }
-   
+
 
     var fina = [
-        { fontSize: 8, text: "Total por Cobrar a T.C: " + cambio[0].Mensaje, fillColor: '#eeeeee', colSpan: 6, alignment: 'center', border: [true, false, false, false] },
+        {
+            fontSize: 8,
+            text: "Total por Cobrar a T.C: " + cambio[0].Mensaje,
+            fillColor: '#eeeeee',
+            colSpan: 6,
+            alignment: 'center',
+            border: [true, false, false, false]
+        },
         {},
         {},
         {},
         {},
         {},
-        { fontSize: 8, text: "", fillColor: '#eeeeee', colSpan: 2, alignment: 'center', border: [false, false, false, false] },
+        {
+            fontSize: 8,
+            text: "",
+            fillColor: '#eeeeee',
+            colSpan: 2,
+            alignment: 'center',
+            border: [false, false, false, false]
+        },
         {},
-        { fontSize: 8, text: dataMoneda[0].Simbolo + " " + addCommas(redondeodecimale(totalsole).toFixed(2)), fillColor: '#eeeeee', colSpan: 3, border: [false, false, true, false] },
+        {
+            fontSize: 8,
+            text: dataMoneda[0].Simbolo + " " + addCommas(redondeodecimale(totalsole).toFixed(2)),
+            fillColor: '#eeeeee',
+            colSpan: 3,
+            border: [false, false, true, false]
+        },
         {},
         {},
     ];
     dataBodyReportes.push(fina);
     var finb = [
-        { fontSize: 8, text: "", fillColor: '#eeeeee', colSpan: 6, alignment: 'center', border: [true, false, false, true] },
+        {
+            fontSize: 8,
+            text: "",
+            fillColor: '#eeeeee',
+            colSpan: 6,
+            alignment: 'center',
+            border: [true, false, false, true]
+        },
         {},
         {},
         {},
         {},
         {},
-        { fontSize: 8, text: "Dolares:", fillColor: '#eeeeee', colSpan: 2, alignment: 'center', border: [false, false, false, true] },
+        {
+            fontSize: 8,
+            text: "Dolares:",
+            fillColor: '#eeeeee',
+            colSpan: 2,
+            alignment: 'center',
+            border: [false, false, false, true]
+        },
         {},
-        { fontSize: 8, text: dataMoneda[1].Simbolo + " " + addCommas(redondeodecimale((totaldola) + (totalsole / Number(cambio[0].Mensaje))).toFixed(2)), fillColor: '#eeeeee', border: [false, false, false, true] },
-        { fontSize: 8, text: "", fillColor: '#eeeeee', colSpan: 2, border: [false, false, true, true] },
+        {
+            fontSize: 8,
+            text: dataMoneda[1].Simbolo + " " + addCommas(redondeodecimale((totaldola) + (totalsole / Number(cambio[0].Mensaje))).toFixed(2)),
+            fillColor: '#eeeeee',
+            border: [false, false, false, true]
+        },
+        {fontSize: 8, text: "", fillColor: '#eeeeee', colSpan: 2, border: [false, false, true, true]},
         {},
     ];
 
@@ -2727,6 +2961,7 @@ function crearTablaCCsoles(data, dataBodyReportes, dataMoneda, cambio) {
 
     return dataBodyReportes;
 }
+
 function diasmora(fecha_vencimiento, saldo_cuota) {
     var fecha1 = moment(fecha_vencimiento).format('YYYY/MM/DD');
     var fecha1 = new Date(fecha1);
@@ -2748,12 +2983,15 @@ function diasmora(fecha_vencimiento, saldo_cuota) {
     var dim = 0;
     if (total > 0) {
         dim = total;
-    };
+    }
+    ;
     if (Number(saldo_cuota) <= 0) {
         dim = 0;
-    };
+    }
+    ;
     return dim;
 }
+
 function create_CCpdf(response) {
 
     // dats
@@ -2786,17 +3024,17 @@ function create_CCpdf(response) {
                             }
                         ]
                     },
-                    { text: "CUENTAS POR COBRAR POR CLIENTE", style: 'header' }
+                    {text: "CUENTAS POR COBRAR POR CLIENTE", style: 'header'}
                 ]
             },
-            { text: 'Fecha: ' + moment().format('DD [de] MMMM [de] YYYY, h:mm A'), style: 'subheader' },
+            {text: 'Fecha: ' + moment().format('DD [de] MMMM [de] YYYY, h:mm A'), style: 'subheader'},
             {
                 margin: [0, 0, 0, 0],
                 style: 'tableExample',
                 table: {
                     widths: [70, 50, 60, 60, 40, 60, 40, 60, 60, 120, 105],
                     body:
-                        datscc,
+                    datscc,
                 },
 
             },
@@ -2853,15 +3091,15 @@ function create_vouchers_pdf(response) {
     for (var i = 0; i < response.data_header.length; i++) {
         var data_header = response.data_header[i];
         var info = response.info[i];
-        (i === 0) ? pag = { text: response.title, style: 'header' } : pag = {
+        (i === 0) ? pag = {text: response.title, style: 'header'} : pag = {
             text: response.title,
             style: 'header',
             pageBreak: 'before'
         };
         //
         array_head.push([
-            { text: 'N° : ' + data_header[0][4], style: 'dataHeader' },
-            { text: 'Fecha: ' + moment().format('DD [de] MMMM [de] YYYY, h:mm A'), style: 'subheader' }
+            {text: 'N° : ' + data_header[0][4], style: 'dataHeader'},
+            {text: 'Fecha: ' + moment().format('DD [de] MMMM [de] YYYY, h:mm A'), style: 'subheader'}
         ])
 
         array_dataHead.push([
@@ -2878,22 +3116,22 @@ function create_vouchers_pdf(response) {
                     }
                 ]
             },
-            { text: 'Fecha: ' + moment().format('DD [de] MMMM [de] YYYY, h:mm A'), style: 'subheader' },
-            { text: 'N° : ' + data_header[0][4], style: 'dataHeader' },
+            {text: 'Fecha: ' + moment().format('DD [de] MMMM [de] YYYY, h:mm A'), style: 'subheader'},
+            {text: 'N° : ' + data_header[0][4], style: 'dataHeader'},
             {
                 style: 'dataHeaderAll',
                 table: {
                     headerRows: 1,
                     body: [
-                        [{ text: 'PROVEEDOR: ', style: 'dataHeader' },
-                        { text: data_header[0][0] },
-                        { text: 'ALMACÉN ORIGEN : ', style: 'dataHeader' },
-                        { text: data_header[0][2] }
+                        [{text: 'PROVEEDOR: ', style: 'dataHeader'},
+                            {text: data_header[0][0]},
+                            {text: 'ALMACÉN ORIGEN : ', style: 'dataHeader'},
+                            {text: data_header[0][2]}
                         ],
-                        [{ text: 'DOCUMENTO: ', style: 'dataHeader' },
-                        { text: data_header[0][1] },
-                        { text: 'ALMACÉN DESTINO : ', style: 'dataHeader' },
-                        { text: data_header[0][3] }
+                        [{text: 'DOCUMENTO: ', style: 'dataHeader'},
+                            {text: data_header[0][1]},
+                            {text: 'ALMACÉN DESTINO : ', style: 'dataHeader'},
+                            {text: data_header[0][3]}
                         ]
                     ]
                 },
@@ -3026,6 +3264,7 @@ function create_vouchers_pdf(response) {
     }
 
 }
+
 function create_pdf_ordenServicio(response) {
     var data = response.data;
     console.log(response.data);
@@ -3096,7 +3335,8 @@ function create_pdf_ordenServicio(response) {
         mcondicionPago = 429; //409
     } else {
         mcondicionPago = 509; //489
-    };
+    }
+    ;
 
     var tipoSer = '';
 
@@ -3136,54 +3376,70 @@ function create_pdf_ordenServicio(response) {
         var vto = b.idMantenimiento;
         if (vto == 1) {
             mantenimiento_X = 'X';
-        };
+        }
+        ;
         if (vto == 2) {
             cambioAciete_X = 'X';
-        };
+        }
+        ;
         if (vto == 3) {
             reparacioMotor_x = 'X';
-        };
+        }
+        ;
         if (vto == 4) {
             descar_x = 'X';
-        };
+        }
+        ;
         if (vto == 5) {
             embrague_x = 'X';
-        };
+        }
+        ;
         if (vto == 6) {
             transmi_x = 'X';
-        };
+        }
+        ;
         if (vto == 7) {
             sisArras_x = 'X';
-        };
+        }
+        ;
         if (vto == 8) {
             fren_x = 'X';
-        };
+        }
+        ;
         if (vto == 9) {
             bate_x = 'X';
-        };
+        }
+        ;
 
 
         if (vto == 10) {
             revisitE_x = 'X';
-        };
+        }
+        ;
         if (vto == 11) {
             revisitIN_x = 'X';
-        };
+        }
+        ;
         if (vto == 12) {
             suspencio_x = 'X';
-        };
+        }
+        ;
         if (vto == 13) {
             aroneu_x = 'X';
-        };
+        }
+        ;
         if (vto == 14) {
             sistEsca_x = 'X';
-        };
+        }
+        ;
         if (vto == 15) {
             sistDirecc_x = 'X';
-        };
+        }
+        ;
         if (vto == 25) {
             otro_x = 'X';
-        };
+        }
+        ;
 
     });
 
@@ -3194,25 +3450,25 @@ function create_pdf_ordenServicio(response) {
                 text: "" + response.con + '-' + response.nr + "",
                 fontSize: 12,
                 bold: true,
-                absolutePosition: { x: 528, y: 38 } // 
+                absolutePosition: {x: 528, y: 38} //
             },
             {
                 text: 'X',
                 fontSize: 12,
                 bold: true,
-                absolutePosition: { x: mcondicionPago, y: 75 }
+                absolutePosition: {x: mcondicionPago, y: 75}
             },
             {
                 // Fecha superior
                 text: fechRecep,
                 bold: true,
                 fontSize: 10,
-                absolutePosition: { x: 424, y: 91 } //364,82
+                absolutePosition: {x: 424, y: 91} //364,82
             },
             {
                 //Fecha superior
                 text: fechEntrega,
-                absolutePosition: { x: 424, y: 107 }, //364,93 
+                absolutePosition: {x: 424, y: 107}, //364,93
                 bold: true,
                 fontSize: 10,
             },
@@ -3233,7 +3489,7 @@ function create_pdf_ordenServicio(response) {
             {
                 //Hora superior
                 text: "" + horaEnt + "",
-                absolutePosition: { x: 500, y: 92 },
+                absolutePosition: {x: 500, y: 92},
                 bold: true,
                 fontSize: 10,
             },
@@ -3246,105 +3502,105 @@ function create_pdf_ordenServicio(response) {
             }, */
             {
                 text: razonsocial_cliente,
-                absolutePosition: { x: 117, y: 155 },
+                absolutePosition: {x: 117, y: 155},
                 bold: true,
                 fontSize: 10,
             },
             {
                 text: ruc,
-                absolutePosition: { x: 107, y: 179 },
+                absolutePosition: {x: 107, y: 179},
                 bold: true,
                 fontSize: 10,
             },
             {
                 text: direccion,
-                absolutePosition: { x: 107, y: 194 },
+                absolutePosition: {x: 107, y: 194},
                 bold: true,
                 fontSize: 10,
             },
             {
                 text: distrito,
-                absolutePosition: { x: 107, y: 217 },
+                absolutePosition: {x: 107, y: 217},
                 bold: true,
                 fontSize: 10,
             },
             {
                 text: razonsocial_cliente,
-                absolutePosition: { x: 100, y: 235 },
+                absolutePosition: {x: 100, y: 235},
                 bold: true,
                 fontSize: 10,
             },
             {
                 text: dni,
-                absolutePosition: { x: 100, y: 256 },
+                absolutePosition: {x: 100, y: 256},
                 bold: true,
                 fontSize: 10,
             },
             {
                 text: correo_electronico,
-                absolutePosition: { x: 175, y: 256 },
+                absolutePosition: {x: 175, y: 256},
                 bold: true,
                 fontSize: 10,
             },
             {
                 text: telefono,
-                absolutePosition: { x: 81, y: 278 },
+                absolutePosition: {x: 81, y: 278},
                 bold: true,
                 fontSize: 10,
             },
             {
                 text: celular,
-                absolutePosition: { x: 172, y: 278 },
+                absolutePosition: {x: 172, y: 278},
                 bold: true,
                 fontSize: 10,
             },
             {
                 //Tipo de servicio
                 text: valorSer,
-                absolutePosition: { x: 320, y: tipoSer },
+                absolutePosition: {x: 320, y: tipoSer},
                 bold: true,
                 fontSize: 14, //
             },
             {
                 // La otra columna
                 text: modelo,
-                absolutePosition: { x: 458, y: 155 },
+                absolutePosition: {x: 458, y: 155},
                 bold: true,
                 fontSize: 10,
             },
             {
                 text: cMotor,
-                absolutePosition: { x: 473, y: 179 },
+                absolutePosition: {x: 473, y: 179},
                 bold: true,
                 fontSize: 10,
             },
             {
                 text: cChasis,
-                absolutePosition: { x: 473, y: 199 },
+                absolutePosition: {x: 473, y: 199},
                 bold: true,
                 fontSize: 10,
             },
             {
                 text: iAnioFab,
-                absolutePosition: { x: 473, y: 217 },
+                absolutePosition: {x: 473, y: 217},
                 bold: true,
                 fontSize: 10,
             },
             {
                 text: cColor,
-                absolutePosition: { x: 443, y: 235 },
+                absolutePosition: {x: 443, y: 235},
                 bold: true,
                 fontSize: 10,
             },
             {
                 text: cPlacaVeh,
-                absolutePosition: { x: 443, y: 256 },
+                absolutePosition: {x: 443, y: 256},
                 bold: true,
                 fontSize: 10,
             },
             {
                 text: nKilometraje,
-                absolutePosition: { x: 473, y: 278 },
+                absolutePosition: {x: 473, y: 278},
                 bold: true,
                 fontSize: 10,
             },
@@ -3448,82 +3704,82 @@ function create_pdf_ordenServicio(response) {
             }, */
 
             //Se oculta por el formato
-           /* {
-                //Montos de la orden
-                text: mo_revision,
-                absolutePosition: { x: 512, y: 269 },
-                bold: true,
-                fontSize: 10,
-            },
-            {
-                text: mo_mecanica,
-                absolutePosition: { x: 512, y: 286 },
-                bold: true,
-                fontSize: 10,
-            },
-            {
-                text: terceros,
-                absolutePosition: { x: 512, y: 306 },
-                bold: true,
-                fontSize: 10,
-            },
-            {
-                text: otros_mo,
-                absolutePosition: { x: 512, y: 324 },
-                bold: true,
-                fontSize: 10,
-            },
-            {
-                text: sub_mo,
-                absolutePosition: { x: 512, y: 340 },
-                bold: true,
-                fontSize: 10,
-            },
-            {
-                text: respuestos,
-                absolutePosition: { x: 512, y: 355 },
-                bold: true,
-                fontSize: 10,
-            },
-            {
-                text: accesorios,
-                absolutePosition: { x: 512, y: 372 },
-                bold: true,
-                fontSize: 10,
-            },
-            {
-                //
-                text: lubricantes,
-                absolutePosition: { x: 512, y: 390 },
-                bold: true,
-                fontSize: 10,
-            },
-            {
-                //
-                text: otros_rep,
-                absolutePosition: { x: 512, y: 411 },
-                bold: true,
-                fontSize: 10,
-            },
-            {
-                text: sub_re,
-                absolutePosition: { x: 512, y: 428 },
-                bold: true,
-                fontSize: 10,
-            },
-            {
-                text: total,
-                absolutePosition: { x: 512, y: 445 },
-                bold: true,
-                fontSize: 10,
-            },*/
+            /* {
+                 //Montos de la orden
+                 text: mo_revision,
+                 absolutePosition: { x: 512, y: 269 },
+                 bold: true,
+                 fontSize: 10,
+             },
+             {
+                 text: mo_mecanica,
+                 absolutePosition: { x: 512, y: 286 },
+                 bold: true,
+                 fontSize: 10,
+             },
+             {
+                 text: terceros,
+                 absolutePosition: { x: 512, y: 306 },
+                 bold: true,
+                 fontSize: 10,
+             },
+             {
+                 text: otros_mo,
+                 absolutePosition: { x: 512, y: 324 },
+                 bold: true,
+                 fontSize: 10,
+             },
+             {
+                 text: sub_mo,
+                 absolutePosition: { x: 512, y: 340 },
+                 bold: true,
+                 fontSize: 10,
+             },
+             {
+                 text: respuestos,
+                 absolutePosition: { x: 512, y: 355 },
+                 bold: true,
+                 fontSize: 10,
+             },
+             {
+                 text: accesorios,
+                 absolutePosition: { x: 512, y: 372 },
+                 bold: true,
+                 fontSize: 10,
+             },
+             {
+                 //
+                 text: lubricantes,
+                 absolutePosition: { x: 512, y: 390 },
+                 bold: true,
+                 fontSize: 10,
+             },
+             {
+                 //
+                 text: otros_rep,
+                 absolutePosition: { x: 512, y: 411 },
+                 bold: true,
+                 fontSize: 10,
+             },
+             {
+                 text: sub_re,
+                 absolutePosition: { x: 512, y: 428 },
+                 bold: true,
+                 fontSize: 10,
+             },
+             {
+                 text: total,
+                 absolutePosition: { x: 512, y: 445 },
+                 bold: true,
+                 fontSize: 10,
+             },*/
             {
                 text: cObservaciones,
-                absolutePosition: { x: 100, y: 324 },
+                absolutePosition: {x: 100, y: 324},
                 bold: true,
                 fontSize: 10,
             },
-             //Se oculta por el formato
+            //Se oculta por el formato
             /*{
                 text: modelo,
                 absolutePosition: { x: 361, y: 580 },
@@ -3545,14 +3801,14 @@ function create_pdf_ordenServicio(response) {
             {
                 //Fecha inferiror
                 text: fechEntrega,
-                absolutePosition: { x: 490, y: 775 }, 
+                absolutePosition: {x: 490, y: 775},
                 bold: true,
                 fontSize: 10,
             },
             {
                 //Hora inferior
                 text: "" + horaEnt + "",
-                absolutePosition: { x: 520, y: 775 },
+                absolutePosition: {x: 520, y: 775},
                 bold: true,
                 fontSize: 10,
             },
@@ -3586,6 +3842,7 @@ function create_pdf_ordenServicio(response) {
     // }
 
 }
+
 function create_pdf_ordenServicioXpress(response) {
     var data = response.data;
     // console.log(response.data);
@@ -3659,7 +3916,8 @@ function create_pdf_ordenServicioXpress(response) {
         mcondicionPago = 455;
     } else {
         mcondicionPago = 500;
-    };
+    }
+    ;
     var tipoSer = '';
     if (data[0].id_tipo == '1') {
         tipoSer = 166;
@@ -3690,37 +3948,48 @@ function create_pdf_ordenServicioXpress(response) {
 
         if (vto == 2) {
             cambioAciete_X = 'X';
-        };
+        }
+        ;
         if (vto == 16) {
             cambioAcieteFiltro_X = 'X';
-        };
+        }
+        ;
         if (vto == 17) {
             cambioConjuntoTransmision_X = 'X';
-        };
+        }
+        ;
         if (vto == 24) {
             ajusteLubriCadena_X = 'X';
-        };
+        }
+        ;
         if (vto == 18) {
             reemplazoLamparas_X = 'X';
-        };
+        }
+        ;
         if (vto == 19) {
             revision_X = 'X';
-        };
+        }
+        ;
         if (vto == 20) {
             reemplazoCables_X = 'X';
-        };
+        }
+        ;
         if (vto == 21) {
             reemplazoPastilla_X = 'X';
-        };
+        }
+        ;
         if (vto == 22) {
             cambioNeumatico_X = 'X';
-        };
+        }
+        ;
         if (vto == 23) {
             hondaAcces_X = 'X';
-        };
+        }
+        ;
         if (vto == 25) {
             otro_x = 'X';
-        };
+        }
+        ;
 
     });
 
@@ -3741,7 +4010,7 @@ function create_pdf_ordenServicioXpress(response) {
 
                 fontSize: 12,
                 bold: true,
-                absolutePosition: { x: 460, y: 60 }
+                absolutePosition: {x: 460, y: 60}
             },
             // {
             //     text: 'X',
@@ -3759,13 +4028,13 @@ function create_pdf_ordenServicioXpress(response) {
 
             {
                 text: razonsocial_cliente,
-                absolutePosition: { x: 90, y: 215 },////////////esto 
+                absolutePosition: {x: 90, y: 215},////////////esto
                 bold: true,
                 fontSize: 10,
             },
             {
                 text: modelo + '/' + iAnioFab,
-                absolutePosition: { x: 374, y: 215 },///////esto
+                absolutePosition: {x: 374, y: 215},///////esto
                 bold: true,
                 fontSize: 10,
             },
@@ -3775,80 +4044,80 @@ function create_pdf_ordenServicioXpress(response) {
                 bold: true,
                 fontSize: 10,
                 // absolutePosition: { x:578 , y: 225 }///////esto
-                absolutePosition: { x: 500, y: 215 }///////esto
+                absolutePosition: {x: 500, y: 215}///////esto
             },
             {
                 text: cChasis,
-                absolutePosition: { x: 85, y: 240 },//////esto
+                absolutePosition: {x: 85, y: 240},//////esto
                 bold: true,
                 fontSize: 10,
             },
             {
                 text: cPlacaVeh,
-                absolutePosition: { x: 300, y: 240 },/////esto
+                absolutePosition: {x: 300, y: 240},/////esto
                 bold: true,
                 fontSize: 10,
             },
             {
                 text: Number(nKilometraje),
-                absolutePosition: { x: 436, y: 240 },/////esto
+                absolutePosition: {x: 436, y: 240},/////esto
                 bold: true,
                 fontSize: 10,
             },
             {
                 text: horaEnt,
                 // absolutePosition: { x:595 , y: 248 },////esto
-                absolutePosition: { x: 510, y: 240 },////esto
+                absolutePosition: {x: 510, y: 240},////esto
                 bold: true,
                 fontSize: 10,
             },
             {
                 text: clienteNuevo,
-                absolutePosition: { x: 61, y: 262 },////esto
+                absolutePosition: {x: 61, y: 262},////esto
                 bold: true,
                 fontSize: 10,
             },
             {
                 text: telefono,
-                absolutePosition: { x: 218, y: 262 },////esto
+                absolutePosition: {x: 218, y: 262},////esto
                 bold: true,
                 fontSize: 10,
             },
             {
                 text: celular,
-                absolutePosition: { x: 388, y: 262 },////esto
+                absolutePosition: {x: 388, y: 262},////esto
                 bold: true,
                 fontSize: 10,
             },
             {
                 text: horaEntre,
                 // absolutePosition: { x:571 , y: 272 },///esto
-                absolutePosition: { x: 471, y: 262 },///esto
+                absolutePosition: {x: 471, y: 262},///esto
                 bold: true,
                 fontSize: 10,
             },
             {
                 text: horaReal,
                 // absolutePosition: { x:629 , y: 272 },///esto
-                absolutePosition: { x: 525, y: 262 },///esto
+                absolutePosition: {x: 525, y: 262},///esto
                 bold: true,
                 fontSize: 10,
             },
             {
                 text: direccion,
-                absolutePosition: { x: 68, y: 288 },//esto
+                absolutePosition: {x: 68, y: 288},//esto
                 bold: true,
                 fontSize: 10,
             },
             {
                 text: distrito,
-                absolutePosition: { x: 374, y: 288 },//esto
+                absolutePosition: {x: 374, y: 288},//esto
                 bold: true,
                 fontSize: 10,
             },
             {
                 text: correo_electronico,
-                absolutePosition: { x: 68, y: 336 },//esto
+                absolutePosition: {x: 68, y: 336},//esto
                 bold: true,
                 fontSize: 10,
             },
@@ -3984,15 +4253,15 @@ function create_pdf_ordenServicioXpress(response) {
                 text: "ST-" + response.nr,
                 fontSize: 12,
                 bold: true,
-                absolutePosition: { x: 479, y: 166 }
+                absolutePosition: {x: 479, y: 166}
             },
             {
                 text: Number(total).toFixed(2),
                 fontSize: 12,
                 bold: true,
-                absolutePosition: { x: 479, y: 195 }
+                absolutePosition: {x: 479, y: 195}
             }
-            
+
         ],
         styles: {
             header: {
@@ -4022,6 +4291,7 @@ function create_pdf_ordenServicioXpress(response) {
     // }
 
 }
+
 function create_pdf_qualityControl(response) {
     var data = response.data;
     var detalle = response.detalle;
@@ -4069,128 +4339,155 @@ function create_pdf_qualityControl(response) {
         var vto = b.idrevision;
         if (vto == '1' && b.iRevisado == '1') {
             procedimientoG = 'X';
-        };
+        }
+        ;
         if (vto == '2' && b.iRevisado == '1') {
             cargaBat = 'X';
-        };
+        }
+        ;
         ////
         if (vto == '3' && b.iRevisado == '1') {
             lavadoVehi = 'X';
-        };
+        }
+        ;
         if (vto == '4' && b.iRevisado == '1') {
             tanqueComb = 'X';
-        };
+        }
+        ;
         if (vto == '5' && b.iRevisado == '1') {
             llaveComb = 'X';
-        };
+        }
+        ;
         if (vto == '6' && b.iRevisado == '1') {
             aceisMot = 'X';
-        };
+        }
+        ;
         if (vto == '14' && b.iRevisado == '1') {
             refrige = 'X';
-        };
+        }
+        ;
         //
         if (vto == '7' && b.iRevisado == '1') {
             palancaFre = 'X';
-        };
+        }
+        ;
         if (vto == '8' && b.iRevisado == '1') {
             frenoDelant = 'X';
-        };
+        }
+        ;
         if (vto == '9' && b.iRevisado == '1') {
             fluidoFreno = 'X';
-        };
+        }
+        ;
         if (vto == '10' && b.iRevisado == '1') {
             frenoTraser = 'X';
-        };
+        }
+        ;
         if (vto == '15' && b.iRevisado == '1') {
             embrage = 'X';
-        };
+        }
+        ;
         if (vto == '16' && b.iRevisado == '1') {
             acelerad = 'X';
-        };
+        }
+        ;
         if (vto == '17' && b.iRevisado == '1') {
             fluidosRevi = 'X';
-        };
+        }
+        ;
         if (vto == '18' && b.iRevisado == '1') {
             revisionLuce = 'X';
-        };
+        }
+        ;
 
         //////
 
         if (vto == '11' && b.iRevisado == '1') {
             estrangulador = 'X';
-        };
+        }
+        ;
         if (vto == '12' && b.iRevisado == '1') {
             valvulas = 'X';
-        };
+        }
+        ;
         if (vto == '13' && b.iRevisado == '1') {
             cadenaTransmisi = 'X';
-        };
+        }
+        ;
         if (vto == '19' && b.iRevisado == '1') {
             ralenti = 'X';
-        };
+        }
+        ;
         if (vto == '20' && b.iRevisado == '1') {
             neumatico = 'X';
-        };
+        }
+        ;
         if (vto == '21' && b.iRevisado == '1') {
             espejosRetro = 'X';
-        };
+        }
+        ;
         if (vto == '22' && b.iRevisado == '1') {
             tuerca = 'X';
-        };
+        }
+        ;
 
         if (vto == '23' && b.iRevisado == '1') {
             suspDelant = 'X';
-        };
+        }
+        ;
         if (vto == '24' && b.iRevisado == '1') {
             suspTrase = 'X';
-        };
+        }
+        ;
         if (vto == '25' && b.iRevisado == '1') {
             soportLat = 'X';
-        };
+        }
+        ;
         if (vto == '26' && b.iRevisado == '1') {
             rayosRued = 'X';
-        };
+        }
+        ;
         if (vto == '27' && b.iRevisado == '1') {
             lavadoVehiDes = 'X';
-        };
+        }
+        ;
         if (vto == '28' && b.iRevisado == '1') {
             otros = 'X';
-        };
-
-
+        }
+        ;
 
 
     });
     var otrosTex = '';
     if (cOtros != '') {
         otrosTex = 'X';
-    };
+    }
+    ;
     var docDefinition = {
         content: [
             {
                 text: modelo,
                 fontSize: 10,
                 bold: true,
-                absolutePosition: { x: 81, y: 115 }
+                absolutePosition: {x: 81, y: 115}
             },
             {
                 text: vin,
                 fontSize: 10,
                 bold: true,
-                absolutePosition: { x: 81, y: 126 }
+                absolutePosition: {x: 81, y: 126}
             },
             {
                 text: razonsocial_cliente,
                 fontSize: 10,
                 bold: true,
-                absolutePosition: { x: 292, y: 115 }
+                absolutePosition: {x: 292, y: 115}
             },
             {
                 text: motor,
                 fontSize: 10,
                 bold: true,
-                absolutePosition: { x: 292, y: 126 }
+                absolutePosition: {x: 292, y: 126}
             },
 
             //
@@ -4199,44 +4496,44 @@ function create_pdf_qualityControl(response) {
                 text: procedimientoG,
                 fontSize: 10,
                 bold: true,
-                absolutePosition: { x: 405, y: 139 }
+                absolutePosition: {x: 405, y: 139}
             },
             {
                 text: cargaBat,
                 fontSize: 10,
                 bold: true,
-                absolutePosition: { x: 405, y: 155 }
+                absolutePosition: {x: 405, y: 155}
             },
             //
             {
                 text: lavadoVehi,
                 fontSize: 10,
                 bold: true,
-                absolutePosition: { x: 423, y: 189 }
+                absolutePosition: {x: 423, y: 189}
             },
             {
                 text: tanqueComb,
                 fontSize: 10,
                 bold: true,
-                absolutePosition: { x: 423, y: 205 }
+                absolutePosition: {x: 423, y: 205}
             },
             {
                 text: llaveComb,
                 fontSize: 10,
                 bold: true,
-                absolutePosition: { x: 423, y: 221 }
+                absolutePosition: {x: 423, y: 221}
             },
             {
                 text: aceisMot,
                 fontSize: 10,
                 bold: true,
-                absolutePosition: { x: 423, y: 236 }
+                absolutePosition: {x: 423, y: 236}
             },
             {
                 text: refrige,
                 fontSize: 10,
                 bold: true,
-                absolutePosition: { x: 423, y: 252 }
+                absolutePosition: {x: 423, y: 252}
             },
 
 
@@ -4245,49 +4542,49 @@ function create_pdf_qualityControl(response) {
                 text: palancaFre,
                 fontSize: 10,
                 bold: true,
-                absolutePosition: { x: 423, y: 289 }
+                absolutePosition: {x: 423, y: 289}
             },
             {
                 text: frenoDelant,
                 fontSize: 10,
                 bold: true,
-                absolutePosition: { x: 423, y: 305 }
+                absolutePosition: {x: 423, y: 305}
             },
             {
                 text: fluidoFreno,
                 fontSize: 10,
                 bold: true,
-                absolutePosition: { x: 423, y: 321 }
+                absolutePosition: {x: 423, y: 321}
             },
             {
                 text: frenoTraser,
                 fontSize: 10,
                 bold: true,
-                absolutePosition: { x: 423, y: 336 }
+                absolutePosition: {x: 423, y: 336}
             },
             {
                 text: embrage,
                 fontSize: 10,
                 bold: true,
-                absolutePosition: { x: 423, y: 352 }
+                absolutePosition: {x: 423, y: 352}
             },
             {
                 text: acelerad,
                 fontSize: 10,
                 bold: true,
-                absolutePosition: { x: 423, y: 368 }
+                absolutePosition: {x: 423, y: 368}
             },
             {
                 text: fluidosRevi,
                 fontSize: 10,
                 bold: true,
-                absolutePosition: { x: 423, y: 384 }
+                absolutePosition: {x: 423, y: 384}
             },
             {
                 text: revisionLuce,
                 fontSize: 10,
                 bold: true,
-                absolutePosition: { x: 423, y: 400 }
+                absolutePosition: {x: 423, y: 400}
             },
 
             /////
@@ -4296,37 +4593,37 @@ function create_pdf_qualityControl(response) {
                 text: suspDelant,
                 fontSize: 10,
                 bold: true,
-                absolutePosition: { x: 423, y: 431 }
+                absolutePosition: {x: 423, y: 431}
             },
             {
                 text: suspTrase,
                 fontSize: 10,
                 bold: true,
-                absolutePosition: { x: 423, y: 447 }
+                absolutePosition: {x: 423, y: 447}
             },
             {
                 text: soportLat,
                 fontSize: 10,
                 bold: true,
-                absolutePosition: { x: 423, y: 463 }
+                absolutePosition: {x: 423, y: 463}
             },
             {
                 text: rayosRued,
                 fontSize: 10,
                 bold: true,
-                absolutePosition: { x: 423, y: 478 }
+                absolutePosition: {x: 423, y: 478}
             },
             {
                 text: lavadoVehiDes,
                 fontSize: 10,
                 bold: true,
-                absolutePosition: { x: 423, y: 494 }
+                absolutePosition: {x: 423, y: 494}
             },
             {
                 text: otros,
                 fontSize: 10,
                 bold: true,
-                absolutePosition: { x: 423, y: 510 }
+                absolutePosition: {x: 423, y: 510}
             },
             ///////
 
@@ -4334,55 +4631,55 @@ function create_pdf_qualityControl(response) {
                 text: estrangulador,
                 fontSize: 10,
                 bold: true,
-                absolutePosition: { x: 223, y: 431 }
+                absolutePosition: {x: 223, y: 431}
             },
             {
                 text: valvulas,
                 fontSize: 10,
                 bold: true,
-                absolutePosition: { x: 223, y: 447 }
+                absolutePosition: {x: 223, y: 447}
             },
             {
                 text: cadenaTransmisi,
                 fontSize: 10,
                 bold: true,
-                absolutePosition: { x: 223, y: 463 }
+                absolutePosition: {x: 223, y: 463}
             },
             {
                 text: ralenti,
                 fontSize: 10,
                 bold: true,
-                absolutePosition: { x: 223, y: 478 }
+                absolutePosition: {x: 223, y: 478}
             },
             {
                 text: neumatico,
                 fontSize: 10,
                 bold: true,
-                absolutePosition: { x: 223, y: 494 }
+                absolutePosition: {x: 223, y: 494}
             },
             {
                 text: espejosRetro,
                 fontSize: 10,
                 bold: true,
-                absolutePosition: { x: 223, y: 510 }
+                absolutePosition: {x: 223, y: 510}
             },
             {
                 text: tuerca,
                 fontSize: 10,
                 bold: true,
-                absolutePosition: { x: 223, y: 526 }
+                absolutePosition: {x: 223, y: 526}
             },
             {
                 text: cOtros,
                 fontSize: 10,
                 bold: true,
-                absolutePosition: { x: 249, y: 523 }
+                absolutePosition: {x: 249, y: 523}
             },
             {
                 text: otrosTex,
                 fontSize: 10,
                 bold: true,
-                absolutePosition: { x: 423, y: 526 }
+                absolutePosition: {x: 423, y: 526}
             },
         ],
         styles: {
@@ -4409,6 +4706,7 @@ function create_pdf_qualityControl(response) {
     // }
 
 }
+
 function create_pdf_movimientoCuadreCaja(response) {
     var dataDenomicacion = response.dataDenomicacion;
     var simboloMoneda = response.simboloMoneda;
@@ -4591,7 +4889,8 @@ function create_pdf_movimientoCuadreCaja(response) {
                 },
             ];
             tableSolesDenomicacionFD.push(dataTablad);
-        };
+        }
+        ;
 
     });
     var totaldeT2 = [
@@ -4883,44 +5182,44 @@ function create_pdf_movimientoCuadreCaja(response) {
                 text: "Caja: " + fec,
                 fontSize: 15,
                 bold: true,
-                absolutePosition: { x: 40, y: 20 }
+                absolutePosition: {x: 40, y: 20}
             },
             {
                 text: "Fecha de Impresión: " + fecAct,
                 fontSize: 15,
                 bold: true,
-                absolutePosition: { x: 460, y: 20 }
+                absolutePosition: {x: 460, y: 20}
             },
             {
                 style: 'tableExample',
                 table: {
                     body: [
                         [
-                            [{ text: 'SOLES', style: 'header', fontSize: 10 },
-                            {
-                                style: 'tableExample',
-                                table: {
-                                    widths: [250, 90],
-                                    body: dataSolesMovimientos,
-                                },
+                            [{text: 'SOLES', style: 'header', fontSize: 10},
+                                {
+                                    style: 'tableExample',
+                                    table: {
+                                        widths: [250, 90],
+                                        body: dataSolesMovimientos,
+                                    },
 
-                            },
+                                },
                             ],
-                            [{ text: 'DÓLARES', style: 'header', fontSize: 10, margin: [20, 0, 0, 0] },
-                            {
-                                margin: [20, 0, 0, 0],
-                                style: 'tableExample',
-                                table: {
-                                    widths: [250, 90],
-                                    body: dataDolMovimientos,
+                            [{text: 'DÓLARES', style: 'header', fontSize: 10, margin: [20, 0, 0, 0]},
+                                {
+                                    margin: [20, 0, 0, 0],
+                                    style: 'tableExample',
+                                    table: {
+                                        widths: [250, 90],
+                                        body: dataDolMovimientos,
+                                    }
                                 }
-                            }
                             ]
 
                         ],
                         [
                             [
-                                { text: 'DENOMINACIÓN', style: 'header', fontSize: 10 },
+                                {text: 'DENOMINACIÓN', style: 'header', fontSize: 10},
                                 {
                                     style: 'tableExample',
                                     table: {
@@ -4931,7 +5230,7 @@ function create_pdf_movimientoCuadreCaja(response) {
                                 },
                             ],
                             [
-                                { text: 'DENOMINACIÓN', style: 'header', fontSize: 10, margin: [20, 0, 0, 0] },
+                                {text: 'DENOMINACIÓN', style: 'header', fontSize: 10, margin: [20, 0, 0, 0]},
                                 {
                                     margin: [20, 0, 0, 0],
                                     style: 'tableExample',
@@ -4945,10 +5244,10 @@ function create_pdf_movimientoCuadreCaja(response) {
                         ],
                         [
                             [
-                                { text: 'Usuario: ' + usuario, style: 'header', fontSize: 12, margin: [0, 20, 0, 0] },
+                                {text: 'Usuario: ' + usuario, style: 'header', fontSize: 12, margin: [0, 20, 0, 0]},
                             ],
                             [
-                                { text: '', style: 'header', fontSize: 12, margin: [20, 0, 0, 0] },
+                                {text: '', style: 'header', fontSize: 12, margin: [20, 0, 0, 0]},
                             ]
                         ],
 
@@ -5023,21 +5322,22 @@ function create_pdf_movimientoCuadreCaja(response) {
     // }
 
 }
+
 function crearTablasoles(data, dataBodyReportes, idMoneda) {
     var subtituloSolesEfec = [
-        { fontSize: 7, text: "CÓDIGO", fillColor: '#eeeeee' },
-        { fontSize: 7, text: "FECHA", fillColor: '#eeeeee' },
-        { fontSize: 7, text: "DOCUMENTO VENTA", fillColor: '#eeeeee' },
-        { fontSize: 7, text: "CLIENTE", fillColor: '#eeeeee' },
-        { fontSize: 7, text: "VENDEDOR", fillColor: '#eeeeee' },
-        { fontSize: 7, text: "MONTO TOTAL", fillColor: '#eeeeee' },
-        { fontSize: 7, text: "ESTADO", fillColor: '#eeeeee' },
-        { fontSize: 7, text: "REPUESTO", fillColor: '#eeeeee' },
-        { fontSize: 7, text: "ACEITE", fillColor: '#eeeeee' },
-        { fontSize: 7, text: "SERVICIO", fillColor: '#eeeeee' },
-        { fontSize: 7, text: "SERVICIO TERCERO", fillColor: '#eeeeee' },
-        { fontSize: 7, text: "MOSTRADOR", fillColor: '#eeeeee' },
-        { fontSize: 7, text: "TALLER", fillColor: '#eeeeee' },
+        {fontSize: 7, text: "CÓDIGO", fillColor: '#eeeeee'},
+        {fontSize: 7, text: "FECHA", fillColor: '#eeeeee'},
+        {fontSize: 7, text: "DOCUMENTO VENTA", fillColor: '#eeeeee'},
+        {fontSize: 7, text: "CLIENTE", fillColor: '#eeeeee'},
+        {fontSize: 7, text: "VENDEDOR", fillColor: '#eeeeee'},
+        {fontSize: 7, text: "MONTO TOTAL", fillColor: '#eeeeee'},
+        {fontSize: 7, text: "ESTADO", fillColor: '#eeeeee'},
+        {fontSize: 7, text: "REPUESTO", fillColor: '#eeeeee'},
+        {fontSize: 7, text: "ACEITE", fillColor: '#eeeeee'},
+        {fontSize: 7, text: "SERVICIO", fillColor: '#eeeeee'},
+        {fontSize: 7, text: "SERVICIO TERCERO", fillColor: '#eeeeee'},
+        {fontSize: 7, text: "MOSTRADOR", fillColor: '#eeeeee'},
+        {fontSize: 7, text: "TALLER", fillColor: '#eeeeee'},
     ];
     dataBodyReportes.push(subtituloSolesEfec);
     var cr = 0;
@@ -5071,23 +5371,28 @@ function crearTablasoles(data, dataBodyReportes, idMoneda) {
                 mostrador = Number(index.REPUESTO) + Number(index.ACEITE);
             } else {
                 taller = Number(index.REPUESTO) + Number(index.ACEITE);
-            };
+            }
+            ;
             var vREPUESTO = index.REPUESTO;
             var vACEITE = index.ACEITE;
             var vSERVICIO = index.SERVICIO;
             var vTERCEROS = index.TERCEROS;
             if (!index.REPUESTO) {
                 vREPUESTO = 0;
-            };
+            }
+            ;
             if (!index.ACEITE) {
                 vACEITE = 0;
-            };
+            }
+            ;
             if (!index.SERVICIO) {
                 vSERVICIO = 0;
-            };
+            }
+            ;
             if (!index.TERCEROS) {
                 vTERCEROS = 0;
-            };
+            }
+            ;
             cr = cr + Number(vREPUESTO);
             ca = ca + Number(vACEITE);
             cs = cs + Number(vSERVICIO);
@@ -5096,41 +5401,42 @@ function crearTablasoles(data, dataBodyReportes, idMoneda) {
             cta = cta + Number(taller);
             sim = index.Simbolo;
             var subtituloSolesEfec = [
-                { fontSize: 8, text: index.cCodConsecutivo + '-' + index.nConsecutivo },
-                { fontSize: 8, text: moment(index.fecha).format('DD/MM/YYYY'), },
-                { fontSize: 8, text: index.documento_ven },
-                { fontSize: 8, text: index.razonsocial_cliente },
-                { fontSize: 8, text: index.vendedor },
-                { fontSize: 8, text: index.Simbolo + ' ' + addCommas(redondeodecimale(index.monto_total).toFixed(2)), },
-                { fontSize: 8, text: estado, },
-                { fontSize: 8, text: index.Simbolo + ' ' + addCommas(redondeodecimale(vREPUESTO).toFixed(2)), },
-                { fontSize: 8, text: index.Simbolo + ' ' + addCommas(redondeodecimale(vACEITE).toFixed(2)), },
-                { fontSize: 8, text: index.Simbolo + ' ' + addCommas(redondeodecimale(vSERVICIO).toFixed(2)) },
-                { fontSize: 8, text: index.Simbolo + ' ' + addCommas(redondeodecimale(vTERCEROS).toFixed(2)), },
-                { fontSize: 8, text: index.Simbolo + ' ' + addCommas(redondeodecimale(mostrador).toFixed(2)) },
-                { fontSize: 8, text: index.Simbolo + ' ' + addCommas(redondeodecimale(taller).toFixed(2)) },
+                {fontSize: 8, text: index.cCodConsecutivo + '-' + index.nConsecutivo},
+                {fontSize: 8, text: moment(index.fecha).format('DD/MM/YYYY'),},
+                {fontSize: 8, text: index.documento_ven},
+                {fontSize: 8, text: index.razonsocial_cliente},
+                {fontSize: 8, text: index.vendedor},
+                {fontSize: 8, text: index.Simbolo + ' ' + addCommas(redondeodecimale(index.monto_total).toFixed(2)),},
+                {fontSize: 8, text: estado,},
+                {fontSize: 8, text: index.Simbolo + ' ' + addCommas(redondeodecimale(vREPUESTO).toFixed(2)),},
+                {fontSize: 8, text: index.Simbolo + ' ' + addCommas(redondeodecimale(vACEITE).toFixed(2)),},
+                {fontSize: 8, text: index.Simbolo + ' ' + addCommas(redondeodecimale(vSERVICIO).toFixed(2))},
+                {fontSize: 8, text: index.Simbolo + ' ' + addCommas(redondeodecimale(vTERCEROS).toFixed(2)),},
+                {fontSize: 8, text: index.Simbolo + ' ' + addCommas(redondeodecimale(mostrador).toFixed(2))},
+                {fontSize: 8, text: index.Simbolo + ' ' + addCommas(redondeodecimale(taller).toFixed(2))},
             ];
             dataBodyReportes.push(subtituloSolesEfec);
         }
     });
     var totales = [
-        { fontSize: 7, text: "", border: [false, false, false, false], },
-        { fontSize: 7, text: "", border: [false, false, false, false], },
-        { fontSize: 7, text: " ", border: [false, false, false, false], },
-        { fontSize: 7, text: "", border: [false, false, false, false], },
-        { fontSize: 7, text: "", border: [false, false, false, false], },
-        { fontSize: 7, text: "", border: [false, false, false, false], },
-        { fontSize: 7, text: "", border: [false, false, false, false], },
-        { fontSize: 7, text: sim + '' + addCommas(redondeodecimale(cr).toFixed(2)), fillColor: '#eeeeee' },
-        { fontSize: 7, text: sim + '' + addCommas(redondeodecimale(ca).toFixed(2)), fillColor: '#eeeeee' },
-        { fontSize: 7, text: sim + '' + addCommas(redondeodecimale(cs).toFixed(2)), fillColor: '#eeeeee' },
-        { fontSize: 7, text: sim + '' + addCommas(redondeodecimale(ct).toFixed(2)), fillColor: '#eeeeee' },
-        { fontSize: 7, text: sim + '' + addCommas(redondeodecimale(cv).toFixed(2)), fillColor: '#eeeeee' },
-        { fontSize: 7, text: sim + '' + addCommas(redondeodecimale(cta).toFixed(2)), fillColor: '#eeeeee' },
+        {fontSize: 7, text: "", border: [false, false, false, false],},
+        {fontSize: 7, text: "", border: [false, false, false, false],},
+        {fontSize: 7, text: " ", border: [false, false, false, false],},
+        {fontSize: 7, text: "", border: [false, false, false, false],},
+        {fontSize: 7, text: "", border: [false, false, false, false],},
+        {fontSize: 7, text: "", border: [false, false, false, false],},
+        {fontSize: 7, text: "", border: [false, false, false, false],},
+        {fontSize: 7, text: sim + '' + addCommas(redondeodecimale(cr).toFixed(2)), fillColor: '#eeeeee'},
+        {fontSize: 7, text: sim + '' + addCommas(redondeodecimale(ca).toFixed(2)), fillColor: '#eeeeee'},
+        {fontSize: 7, text: sim + '' + addCommas(redondeodecimale(cs).toFixed(2)), fillColor: '#eeeeee'},
+        {fontSize: 7, text: sim + '' + addCommas(redondeodecimale(ct).toFixed(2)), fillColor: '#eeeeee'},
+        {fontSize: 7, text: sim + '' + addCommas(redondeodecimale(cv).toFixed(2)), fillColor: '#eeeeee'},
+        {fontSize: 7, text: sim + '' + addCommas(redondeodecimale(cta).toFixed(2)), fillColor: '#eeeeee'},
     ];
     dataBodyReportes.push(totales);
     return dataBodyReportes;
 }
+
 function createReporteRepuestoPDF(response) {
     var img = response.img;
     var simboloMoneda = response.simboloMoneda;
@@ -5139,8 +5445,6 @@ function createReporteRepuestoPDF(response) {
     var dataBodyReportesDol = [];
     console.log(simboloMoneda);
     console.log(data);
-
-
 
 
     var dats = crearTablasoles(data, dataBodyReportes, 1);
@@ -5170,29 +5474,29 @@ function createReporteRepuestoPDF(response) {
                             }
                         ]
                     },
-                    { text: "REPORTE DE REPUESTOS", style: 'header' }
+                    {text: "REPORTE DE REPUESTOS", style: 'header'}
                 ]
             },
-            { text: 'Fecha: ' + moment().format('DD [de] MMMM [de] YYYY, h:mm A'), style: 'subheader' },
-            { text: 'SOLES' },
+            {text: 'Fecha: ' + moment().format('DD [de] MMMM [de] YYYY, h:mm A'), style: 'subheader'},
+            {text: 'SOLES'},
             {
                 margin: [0, 0, 0, 0],
                 style: 'tableExample',
                 table: {
                     widths: [40, 40, 80, 80, 80, 40, 40, 40, 40, 40, 40, 40, 40],
                     body:
-                        dats,
+                    dats,
                 },
 
             },
-            { text: 'DÓLARES' },
+            {text: 'DÓLARES'},
             {
                 margin: [0, 0, 0, 0],
                 style: 'tableExample',
                 table: {
                     widths: [40, 40, 80, 80, 80, 40, 40, 40, 40, 40, 40, 40, 40],
                     body:
-                        datd,
+                    datd,
                 },
 
             },
@@ -5237,6 +5541,7 @@ function createReporteRepuestoPDF(response) {
     // }
     pdfMake.createPdf(docDefinition).print({}, win);
 }
+
 function createReporteMensualPDF(response) {
     var img = response.img;
     var simboloMoneda = response.simboloMoneda;
@@ -5594,31 +5899,23 @@ function createReporteMensualPDF(response) {
         mes = 'Febrero';
     } else if (mes == 3) {
         mes = 'Marzo';
-    }
-    else if (mes == 4) {
+    } else if (mes == 4) {
         mes = 'Abril';
-    }
-    else if (mes == 5) {
+    } else if (mes == 5) {
         mes = 'Mayo';
-    }
-    else if (mes == 6) {
+    } else if (mes == 6) {
         mes = 'Junio';
-    }
-    else if (mes == 7) {
+    } else if (mes == 7) {
         mes = 'Julio';
-    }
-    else if (mes == 8) {
+    } else if (mes == 8) {
         mes = 'Agosto';
-    }
-    else if (mes == 9) {
+    } else if (mes == 9) {
         mes = 'Septiembre';
     } else if (mes == 10) {
         mes = 'Octubre';
-    }
-    else if (mes == 11) {
+    } else if (mes == 11) {
         mes = 'Noviembre';
-    }
-    else if (mes == 12) {
+    } else if (mes == 12) {
         mes = 'Diciembre';
     }
     var Anio = response.Anio;
@@ -5652,7 +5949,7 @@ function createReporteMensualPDF(response) {
                             }
                         ]
                     },
-                    { text: "RESUMEN MENSUAL DE ACTIVIDADES", style: 'header' }
+                    {text: "RESUMEN MENSUAL DE ACTIVIDADES", style: 'header'}
                 ],
 
             },
@@ -5768,8 +6065,18 @@ function createReporteMensualPDF(response) {
                 table: {
                     widths: [550],
                     body: [
-                        [{ text: 'Reporte de Sercicio Técnico', fillColor: '#eeeeee', fontSize: 10, alignment: 'center' }],
-                        [{ text: 'Ingresos por Sercicio 2W Taller', fillColor: '#eeeeee', fontSize: 10, alignment: 'center' }],
+                        [{
+                            text: 'Reporte de Sercicio Técnico',
+                            fillColor: '#eeeeee',
+                            fontSize: 10,
+                            alignment: 'center'
+                        }],
+                        [{
+                            text: 'Ingresos por Sercicio 2W Taller',
+                            fillColor: '#eeeeee',
+                            fontSize: 10,
+                            alignment: 'center'
+                        }],
                     ]
                 },
 
@@ -5787,18 +6094,76 @@ function createReporteMensualPDF(response) {
                         table: {
                             widths: [120, 140],
                             body: [
-                                [{ border: [false, false, false, false], text: 'Tipo de Mantenimiento', bold: true, fontSize: 10, alignment: 'center' }, { border: [false, false, false, false], text: 'Cantidad de Servicios (Taller)', bold: true, fontSize: 10, alignment: 'center' }],
-                                [{ border: [false, false, false, false], text: "\n", fontSize: 10, alignment: 'center', }, { border: [false, false, false, false], text: '', fontSize: 10, alignment: 'center' }],
-                                [{ border: [false, false, false, false], text: 'Mantenimiento 1:', fontSize: 10, }, { text: m1, fontSize: 10, alignment: 'center' }],
-                                [{ border: [false, false, false, false], text: 'Mantenimiento 2', fontSize: 10, }, { text: m2, fontSize: 10, alignment: 'center' }],
-                                [{ border: [false, false, false, false], text: 'Mantenimiento Periódico:', fontSize: 10, }, { text: mp, fontSize: 10, alignment: 'center' }],
-                                [{ border: [false, false, false, false], text: 'Reparación (Mecánica):', fontSize: 10, }, { text: mm, fontSize: 10, alignment: 'center' }],
-                                [{ border: [false, false, false, false], text: 'Reparación (Colisión):', fontSize: 10, }, { text: mc, fontSize: 10, alignment: 'center' }],
-                                [{ border: [false, false, false, false], text: 'Servicio Rápido:', fontSize: 10, }, { text: mr, fontSize: 10, alignment: 'center' }],
-                                [{ border: [false, false, false, false], text: 'Reclamo de Garantía:', fontSize: 10, }, { text: mg, fontSize: 10, alignment: 'center' }],
-                                [{ border: [false, false, false, false], text: 'Orden de Servicio Interna:', fontSize: 10, }, { text: mi, fontSize: 10, alignment: 'center' }],
-                                [{ border: [false, false, false, false], text: 'Accesorios:', fontSize: 10, }, { text: ma, fontSize: 10, alignment: 'center' }],
-                                [{ border: [false, false, false, false], text: 'Total:', fontSize: 10, bold: true }, { text: tota, fontSize: 10, alignment: 'center', bold: true }],
+                                [{
+                                    border: [false, false, false, false],
+                                    text: 'Tipo de Mantenimiento',
+                                    bold: true,
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }, {
+                                    border: [false, false, false, false],
+                                    text: 'Cantidad de Servicios (Taller)',
+                                    bold: true,
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }],
+                                [{
+                                    border: [false, false, false, false],
+                                    text: "\n",
+                                    fontSize: 10,
+                                    alignment: 'center',
+                                }, {border: [false, false, false, false], text: '', fontSize: 10, alignment: 'center'}],
+                                [{
+                                    border: [false, false, false, false],
+                                    text: 'Mantenimiento 1:',
+                                    fontSize: 10,
+                                }, {text: m1, fontSize: 10, alignment: 'center'}],
+                                [{
+                                    border: [false, false, false, false],
+                                    text: 'Mantenimiento 2',
+                                    fontSize: 10,
+                                }, {text: m2, fontSize: 10, alignment: 'center'}],
+                                [{
+                                    border: [false, false, false, false],
+                                    text: 'Mantenimiento Periódico:',
+                                    fontSize: 10,
+                                }, {text: mp, fontSize: 10, alignment: 'center'}],
+                                [{
+                                    border: [false, false, false, false],
+                                    text: 'Reparación (Mecánica):',
+                                    fontSize: 10,
+                                }, {text: mm, fontSize: 10, alignment: 'center'}],
+                                [{
+                                    border: [false, false, false, false],
+                                    text: 'Reparación (Colisión):',
+                                    fontSize: 10,
+                                }, {text: mc, fontSize: 10, alignment: 'center'}],
+                                [{
+                                    border: [false, false, false, false],
+                                    text: 'Servicio Rápido:',
+                                    fontSize: 10,
+                                }, {text: mr, fontSize: 10, alignment: 'center'}],
+                                [{
+                                    border: [false, false, false, false],
+                                    text: 'Reclamo de Garantía:',
+                                    fontSize: 10,
+                                }, {text: mg, fontSize: 10, alignment: 'center'}],
+                                [{
+                                    border: [false, false, false, false],
+                                    text: 'Orden de Servicio Interna:',
+                                    fontSize: 10,
+                                }, {text: mi, fontSize: 10, alignment: 'center'}],
+                                [{border: [false, false, false, false], text: 'Accesorios:', fontSize: 10,}, {
+                                    text: ma,
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }],
+                                [{
+                                    border: [false, false, false, false],
+                                    text: 'Total:',
+                                    fontSize: 10,
+                                    bold: true
+                                }, {text: tota, fontSize: 10, alignment: 'center', bold: true}],
                             ]
                         },
 
@@ -5813,18 +6178,166 @@ function createReporteMensualPDF(response) {
                         table: {
                             widths: [83, 83, 83],
                             body: [
-                                [{ text: 'Facturación (' + simboloMoneda[0].Simbolo + ')', border: [false, false, false, false], bold: true, fontSize: 10, alignment: 'center', colSpan: 3 }, {}, {}],
-                                [{ border: [false, false, false, false], text: 'Mano de Obra', bold: true, fontSize: 10, alignment: 'center' }, { border: [false, false, false, false], text: 'Repuestos', bold: true, fontSize: 10, alignment: 'center' }, { border: [false, false, false, false], text: 'Lubricantes', bold: true, fontSize: 10, alignment: 'center' }],
-                                [{ text: addCommas(redondeodecimale(m1s).toFixed(2)), fontSize: 10, alignment: 'center' }, { text: addCommas(redondeodecimale(m1r).toFixed(2)), fontSize: 10, alignment: 'center' }, { text: addCommas(redondeodecimale(m1l).toFixed(2)), fontSize: 10, alignment: 'center' }],
-                                [{ text: addCommas(redondeodecimale(m2s).toFixed(2)), fontSize: 10, alignment: 'center' }, { text: addCommas(redondeodecimale(m2r).toFixed(2)), fontSize: 10, alignment: 'center' }, { text: addCommas(redondeodecimale(m2l).toFixed(2)), fontSize: 10, alignment: 'center' }],
-                                [{ text: addCommas(redondeodecimale(mps).toFixed(2)), fontSize: 10, alignment: 'center' }, { text: addCommas(redondeodecimale(mpr).toFixed(2)), fontSize: 10, alignment: 'center' }, { text: addCommas(redondeodecimale(mpl).toFixed(2)), fontSize: 10, alignment: 'center' }],
-                                [{ text: addCommas(redondeodecimale(mms).toFixed(2)), fontSize: 10, alignment: 'center' }, { text: addCommas(redondeodecimale(mmr).toFixed(2)), fontSize: 10, alignment: 'center' }, { text: addCommas(redondeodecimale(mml).toFixed(2)), fontSize: 10, alignment: 'center' }],
-                                [{ text: addCommas(redondeodecimale(mcs).toFixed(2)), fontSize: 10, alignment: 'center' }, { text: addCommas(redondeodecimale(mcr).toFixed(2)), fontSize: 10, alignment: 'center' }, { text: addCommas(redondeodecimale(mcl).toFixed(2)), fontSize: 10, alignment: 'center' }],
-                                [{ text: addCommas(redondeodecimale(mrs).toFixed(2)), fontSize: 10, alignment: 'center' }, { text: addCommas(redondeodecimale(mrr).toFixed(2)), fontSize: 10, alignment: 'center' }, { text: addCommas(redondeodecimale(mrl).toFixed(2)), fontSize: 10, alignment: 'center' }],
-                                [{ text: addCommas(redondeodecimale(mgs).toFixed(2)), fontSize: 10, alignment: 'center' }, { text: addCommas(redondeodecimale(mgr).toFixed(2)), fontSize: 10, alignment: 'center' }, { text: addCommas(redondeodecimale(mgl).toFixed(2)), fontSize: 10, alignment: 'center' }],
-                                [{ text: addCommas(redondeodecimale(mis).toFixed(2)), fontSize: 10, alignment: 'center' }, { text: addCommas(redondeodecimale(mir).toFixed(2)), fontSize: 10, alignment: 'center' }, { text: addCommas(redondeodecimale(mil).toFixed(2)), fontSize: 10, alignment: 'center' }],
-                                [{ text: addCommas(redondeodecimale(mas).toFixed(2)), fontSize: 10, alignment: 'center' }, { text: addCommas(redondeodecimale(mar).toFixed(2)), fontSize: 10, alignment: 'center' }, { text: addCommas(redondeodecimale(mal).toFixed(2)), fontSize: 10, alignment: 'center' }],
-                                [{ text: addCommas(redondeodecimale(totaMoa).toFixed(2)), fontSize: 10, alignment: 'center', bold: true }, { bold: true, text: addCommas(redondeodecimale(totaRea).toFixed(2)), fontSize: 10, alignment: 'center' }, { bold: true, text: addCommas(redondeodecimale(totaACa).toFixed(2)), fontSize: 10, alignment: 'center' }],
+                                [{
+                                    text: 'Facturación (' + simboloMoneda[0].Simbolo + ')',
+                                    border: [false, false, false, false],
+                                    bold: true,
+                                    fontSize: 10,
+                                    alignment: 'center',
+                                    colSpan: 3
+                                }, {}, {}],
+                                [{
+                                    border: [false, false, false, false],
+                                    text: 'Mano de Obra',
+                                    bold: true,
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }, {
+                                    border: [false, false, false, false],
+                                    text: 'Repuestos',
+                                    bold: true,
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }, {
+                                    border: [false, false, false, false],
+                                    text: 'Lubricantes',
+                                    bold: true,
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }],
+                                [{
+                                    text: addCommas(redondeodecimale(m1s).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }, {
+                                    text: addCommas(redondeodecimale(m1r).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }, {
+                                    text: addCommas(redondeodecimale(m1l).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }],
+                                [{
+                                    text: addCommas(redondeodecimale(m2s).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }, {
+                                    text: addCommas(redondeodecimale(m2r).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }, {
+                                    text: addCommas(redondeodecimale(m2l).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }],
+                                [{
+                                    text: addCommas(redondeodecimale(mps).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }, {
+                                    text: addCommas(redondeodecimale(mpr).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }, {
+                                    text: addCommas(redondeodecimale(mpl).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }],
+                                [{
+                                    text: addCommas(redondeodecimale(mms).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }, {
+                                    text: addCommas(redondeodecimale(mmr).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }, {
+                                    text: addCommas(redondeodecimale(mml).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }],
+                                [{
+                                    text: addCommas(redondeodecimale(mcs).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }, {
+                                    text: addCommas(redondeodecimale(mcr).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }, {
+                                    text: addCommas(redondeodecimale(mcl).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }],
+                                [{
+                                    text: addCommas(redondeodecimale(mrs).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }, {
+                                    text: addCommas(redondeodecimale(mrr).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }, {
+                                    text: addCommas(redondeodecimale(mrl).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }],
+                                [{
+                                    text: addCommas(redondeodecimale(mgs).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }, {
+                                    text: addCommas(redondeodecimale(mgr).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }, {
+                                    text: addCommas(redondeodecimale(mgl).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }],
+                                [{
+                                    text: addCommas(redondeodecimale(mis).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }, {
+                                    text: addCommas(redondeodecimale(mir).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }, {
+                                    text: addCommas(redondeodecimale(mil).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }],
+                                [{
+                                    text: addCommas(redondeodecimale(mas).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }, {
+                                    text: addCommas(redondeodecimale(mar).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }, {
+                                    text: addCommas(redondeodecimale(mal).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }],
+                                [{
+                                    text: addCommas(redondeodecimale(totaMoa).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center',
+                                    bold: true
+                                }, {
+                                    bold: true,
+                                    text: addCommas(redondeodecimale(totaRea).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }, {
+                                    bold: true,
+                                    text: addCommas(redondeodecimale(totaACa).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }],
                             ]
                         },
 
@@ -5843,7 +6356,12 @@ function createReporteMensualPDF(response) {
                 table: {
                     widths: [550],
                     body: [
-                        [{ text: 'Ingresos por Sercicio 3W Taller', fillColor: '#eeeeee', fontSize: 10, alignment: 'center' }],
+                        [{
+                            text: 'Ingresos por Sercicio 3W Taller',
+                            fillColor: '#eeeeee',
+                            fontSize: 10,
+                            alignment: 'center'
+                        }],
                     ]
                 },
 
@@ -5861,18 +6379,76 @@ function createReporteMensualPDF(response) {
                         table: {
                             widths: [120, 140],
                             body: [
-                                [{ border: [false, false, false, false], text: 'Tipo de Mantenimiento', bold: true, fontSize: 10, alignment: 'center' }, { border: [false, false, false, false], text: 'Cantidad de Servicios (Taller)', bold: true, fontSize: 10, alignment: 'center' }],
-                                [{ border: [false, false, false, false], text: "\n", fontSize: 10, alignment: 'center', }, { border: [false, false, false, false], text: '', fontSize: 10, alignment: 'center' }],
-                                [{ border: [false, false, false, false], text: 'Mantenimiento 1:', fontSize: 10, }, { text: m1b, fontSize: 10, alignment: 'center' }],
-                                [{ border: [false, false, false, false], text: 'Mantenimiento 2', fontSize: 10, }, { text: m2b, fontSize: 10, alignment: 'center' }],
-                                [{ border: [false, false, false, false], text: 'Mantenimiento Periódico:', fontSize: 10, }, { text: mpb, fontSize: 10, alignment: 'center' }],
-                                [{ border: [false, false, false, false], text: 'Reparación (Mecánica):', fontSize: 10, }, { text: mmb, fontSize: 10, alignment: 'center' }],
-                                [{ border: [false, false, false, false], text: 'Reparación (Colisión):', fontSize: 10, }, { text: mcb, fontSize: 10, alignment: 'center' }],
-                                [{ border: [false, false, false, false], text: 'Servicio Rápido:', fontSize: 10, }, { text: mrb, fontSize: 10, alignment: 'center' }],
-                                [{ border: [false, false, false, false], text: 'Reclamo de Garantía:', fontSize: 10, }, { text: mgb, fontSize: 10, alignment: 'center' }],
-                                [{ border: [false, false, false, false], text: 'Orden de Servicio Interna:', fontSize: 10, }, { text: mib, fontSize: 10, alignment: 'center' }],
-                                [{ border: [false, false, false, false], text: 'Accesorios:', fontSize: 10, }, { text: mab, fontSize: 10, alignment: 'center' }],
-                                [{ border: [false, false, false, false], text: 'Total:', fontSize: 10, bold: true }, { text: totb, fontSize: 10, alignment: 'center', bold: true }],
+                                [{
+                                    border: [false, false, false, false],
+                                    text: 'Tipo de Mantenimiento',
+                                    bold: true,
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }, {
+                                    border: [false, false, false, false],
+                                    text: 'Cantidad de Servicios (Taller)',
+                                    bold: true,
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }],
+                                [{
+                                    border: [false, false, false, false],
+                                    text: "\n",
+                                    fontSize: 10,
+                                    alignment: 'center',
+                                }, {border: [false, false, false, false], text: '', fontSize: 10, alignment: 'center'}],
+                                [{
+                                    border: [false, false, false, false],
+                                    text: 'Mantenimiento 1:',
+                                    fontSize: 10,
+                                }, {text: m1b, fontSize: 10, alignment: 'center'}],
+                                [{
+                                    border: [false, false, false, false],
+                                    text: 'Mantenimiento 2',
+                                    fontSize: 10,
+                                }, {text: m2b, fontSize: 10, alignment: 'center'}],
+                                [{
+                                    border: [false, false, false, false],
+                                    text: 'Mantenimiento Periódico:',
+                                    fontSize: 10,
+                                }, {text: mpb, fontSize: 10, alignment: 'center'}],
+                                [{
+                                    border: [false, false, false, false],
+                                    text: 'Reparación (Mecánica):',
+                                    fontSize: 10,
+                                }, {text: mmb, fontSize: 10, alignment: 'center'}],
+                                [{
+                                    border: [false, false, false, false],
+                                    text: 'Reparación (Colisión):',
+                                    fontSize: 10,
+                                }, {text: mcb, fontSize: 10, alignment: 'center'}],
+                                [{
+                                    border: [false, false, false, false],
+                                    text: 'Servicio Rápido:',
+                                    fontSize: 10,
+                                }, {text: mrb, fontSize: 10, alignment: 'center'}],
+                                [{
+                                    border: [false, false, false, false],
+                                    text: 'Reclamo de Garantía:',
+                                    fontSize: 10,
+                                }, {text: mgb, fontSize: 10, alignment: 'center'}],
+                                [{
+                                    border: [false, false, false, false],
+                                    text: 'Orden de Servicio Interna:',
+                                    fontSize: 10,
+                                }, {text: mib, fontSize: 10, alignment: 'center'}],
+                                [{border: [false, false, false, false], text: 'Accesorios:', fontSize: 10,}, {
+                                    text: mab,
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }],
+                                [{
+                                    border: [false, false, false, false],
+                                    text: 'Total:',
+                                    fontSize: 10,
+                                    bold: true
+                                }, {text: totb, fontSize: 10, alignment: 'center', bold: true}],
                             ]
                         },
 
@@ -5887,18 +6463,166 @@ function createReporteMensualPDF(response) {
                         table: {
                             widths: [83, 83, 83],
                             body: [
-                                [{ text: 'Facturación (' + simboloMoneda[0].Simbolo + ')', border: [false, false, false, false], bold: true, fontSize: 10, alignment: 'center', colSpan: 3 }, {}, {}],
-                                [{ border: [false, false, false, false], text: 'Mano de Obra', bold: true, fontSize: 10, alignment: 'center' }, { border: [false, false, false, false], text: 'Repuestos', bold: true, fontSize: 10, alignment: 'center' }, { border: [false, false, false, false], text: 'Lubricantes', bold: true, fontSize: 10, alignment: 'center' }],
-                                [{ text: addCommas(redondeodecimale(m1bs).toFixed(2)), fontSize: 10, alignment: 'center' }, { text: addCommas(redondeodecimale(m1br).toFixed(2)), fontSize: 10, alignment: 'center' }, { text: addCommas(redondeodecimale(m1bl).toFixed(2)), fontSize: 10, alignment: 'center' }],
-                                [{ text: addCommas(redondeodecimale(m2bs).toFixed(2)), fontSize: 10, alignment: 'center' }, { text: addCommas(redondeodecimale(m2br).toFixed(2)), fontSize: 10, alignment: 'center' }, { text: addCommas(redondeodecimale(m2bl).toFixed(2)), fontSize: 10, alignment: 'center' }],
-                                [{ text: addCommas(redondeodecimale(mpbs).toFixed(2)), fontSize: 10, alignment: 'center' }, { text: addCommas(redondeodecimale(mpbr).toFixed(2)), fontSize: 10, alignment: 'center' }, { text: addCommas(redondeodecimale(mpbl).toFixed(2)), fontSize: 10, alignment: 'center' }],
-                                [{ text: addCommas(redondeodecimale(mmbs).toFixed(2)), fontSize: 10, alignment: 'center' }, { text: addCommas(redondeodecimale(mmbr).toFixed(2)), fontSize: 10, alignment: 'center' }, { text: addCommas(redondeodecimale(mmbl).toFixed(2)), fontSize: 10, alignment: 'center' }],
-                                [{ text: addCommas(redondeodecimale(mcbs).toFixed(2)), fontSize: 10, alignment: 'center' }, { text: addCommas(redondeodecimale(mcbr).toFixed(2)), fontSize: 10, alignment: 'center' }, { text: addCommas(redondeodecimale(mcbl).toFixed(2)), fontSize: 10, alignment: 'center' }],
-                                [{ text: addCommas(redondeodecimale(mrbs).toFixed(2)), fontSize: 10, alignment: 'center' }, { text: addCommas(redondeodecimale(mrbr).toFixed(2)), fontSize: 10, alignment: 'center' }, { text: addCommas(redondeodecimale(mrbl).toFixed(2)), fontSize: 10, alignment: 'center' }],
-                                [{ text: addCommas(redondeodecimale(mgbs).toFixed(2)), fontSize: 10, alignment: 'center' }, { text: addCommas(redondeodecimale(mgbr).toFixed(2)), fontSize: 10, alignment: 'center' }, { text: addCommas(redondeodecimale(mgbl).toFixed(2)), fontSize: 10, alignment: 'center' }],
-                                [{ text: addCommas(redondeodecimale(mibs).toFixed(2)), fontSize: 10, alignment: 'center' }, { text: addCommas(redondeodecimale(mibr).toFixed(2)), fontSize: 10, alignment: 'center' }, { text: addCommas(redondeodecimale(mibl).toFixed(2)), fontSize: 10, alignment: 'center' }],
-                                [{ text: addCommas(redondeodecimale(mabs).toFixed(2)), fontSize: 10, alignment: 'center' }, { text: addCommas(redondeodecimale(mabr).toFixed(2)), fontSize: 10, alignment: 'center' }, { text: addCommas(redondeodecimale(mabl).toFixed(2)), fontSize: 10, alignment: 'center' }],
-                                [{ text: addCommas(redondeodecimale(totaMob).toFixed(2)), fontSize: 10, alignment: 'center', bold: true }, { bold: true, text: addCommas(redondeodecimale(totaReb).toFixed(2)), fontSize: 10, alignment: 'center' }, { bold: true, text: addCommas(redondeodecimale(totaACb).toFixed(2)), fontSize: 10, alignment: 'center' }],
+                                [{
+                                    text: 'Facturación (' + simboloMoneda[0].Simbolo + ')',
+                                    border: [false, false, false, false],
+                                    bold: true,
+                                    fontSize: 10,
+                                    alignment: 'center',
+                                    colSpan: 3
+                                }, {}, {}],
+                                [{
+                                    border: [false, false, false, false],
+                                    text: 'Mano de Obra',
+                                    bold: true,
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }, {
+                                    border: [false, false, false, false],
+                                    text: 'Repuestos',
+                                    bold: true,
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }, {
+                                    border: [false, false, false, false],
+                                    text: 'Lubricantes',
+                                    bold: true,
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }],
+                                [{
+                                    text: addCommas(redondeodecimale(m1bs).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }, {
+                                    text: addCommas(redondeodecimale(m1br).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }, {
+                                    text: addCommas(redondeodecimale(m1bl).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }],
+                                [{
+                                    text: addCommas(redondeodecimale(m2bs).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }, {
+                                    text: addCommas(redondeodecimale(m2br).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }, {
+                                    text: addCommas(redondeodecimale(m2bl).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }],
+                                [{
+                                    text: addCommas(redondeodecimale(mpbs).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }, {
+                                    text: addCommas(redondeodecimale(mpbr).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }, {
+                                    text: addCommas(redondeodecimale(mpbl).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }],
+                                [{
+                                    text: addCommas(redondeodecimale(mmbs).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }, {
+                                    text: addCommas(redondeodecimale(mmbr).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }, {
+                                    text: addCommas(redondeodecimale(mmbl).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }],
+                                [{
+                                    text: addCommas(redondeodecimale(mcbs).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }, {
+                                    text: addCommas(redondeodecimale(mcbr).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }, {
+                                    text: addCommas(redondeodecimale(mcbl).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }],
+                                [{
+                                    text: addCommas(redondeodecimale(mrbs).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }, {
+                                    text: addCommas(redondeodecimale(mrbr).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }, {
+                                    text: addCommas(redondeodecimale(mrbl).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }],
+                                [{
+                                    text: addCommas(redondeodecimale(mgbs).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }, {
+                                    text: addCommas(redondeodecimale(mgbr).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }, {
+                                    text: addCommas(redondeodecimale(mgbl).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }],
+                                [{
+                                    text: addCommas(redondeodecimale(mibs).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }, {
+                                    text: addCommas(redondeodecimale(mibr).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }, {
+                                    text: addCommas(redondeodecimale(mibl).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }],
+                                [{
+                                    text: addCommas(redondeodecimale(mabs).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }, {
+                                    text: addCommas(redondeodecimale(mabr).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }, {
+                                    text: addCommas(redondeodecimale(mabl).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }],
+                                [{
+                                    text: addCommas(redondeodecimale(totaMob).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center',
+                                    bold: true
+                                }, {
+                                    bold: true,
+                                    text: addCommas(redondeodecimale(totaReb).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }, {
+                                    bold: true,
+                                    text: addCommas(redondeodecimale(totaACb).toFixed(2)),
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }],
                             ]
                         },
 
@@ -5917,7 +6641,12 @@ function createReporteMensualPDF(response) {
                 table: {
                     widths: [550],
                     body: [
-                        [{ text: 'Ingresos por Venta de Repuestos y Lubricantes ', fillColor: '#eeeeee', fontSize: 10, alignment: 'center' }],
+                        [{
+                            text: 'Ingresos por Venta de Repuestos y Lubricantes ',
+                            fillColor: '#eeeeee',
+                            fontSize: 10,
+                            alignment: 'center'
+                        }],
                     ]
                 },
 
@@ -5934,14 +6663,39 @@ function createReporteMensualPDF(response) {
                     widths: [100, 100, 100],
                     body: [
 
-                        [{ border: [false, false, false, false], text: ' ', bold: true, fontSize: 10, alignment: 'center' }, { border: [false, false, false, false], text: 'Venta de Repuestos', bold: true, fontSize: 10, alignment: 'center' }, { border: [false, false, false, false], text: 'Venta de Lubricantes', bold: true, fontSize: 10, alignment: 'center' }],
-                        [{ text: 'Total', fontSize: 10, alignment: 'center' }, { text: addCommas(redondeodecimale(tofinR).toFixed(2)), fontSize: 10, alignment: 'center' }, { text: addCommas(redondeodecimale(tofinL).toFixed(2)), fontSize: 10, alignment: 'center' }],
+                        [{
+                            border: [false, false, false, false],
+                            text: ' ',
+                            bold: true,
+                            fontSize: 10,
+                            alignment: 'center'
+                        }, {
+                            border: [false, false, false, false],
+                            text: 'Venta de Repuestos',
+                            bold: true,
+                            fontSize: 10,
+                            alignment: 'center'
+                        }, {
+                            border: [false, false, false, false],
+                            text: 'Venta de Lubricantes',
+                            bold: true,
+                            fontSize: 10,
+                            alignment: 'center'
+                        }],
+                        [{
+                            text: 'Total',
+                            fontSize: 10,
+                            alignment: 'center'
+                        }, {
+                            text: addCommas(redondeodecimale(tofinR).toFixed(2)),
+                            fontSize: 10,
+                            alignment: 'center'
+                        }, {text: addCommas(redondeodecimale(tofinL).toFixed(2)), fontSize: 10, alignment: 'center'}],
 
                     ]
                 },
 
             },
-
 
 
         ],
@@ -5985,6 +6739,7 @@ function createReporteMensualPDF(response) {
     // }
     pdfMake.createPdf(docDefinition).print({}, win);
 }
+
 function createReporteGuiaRemisionPDF(response) {
     var img = response.img;
     var data = response.data;
@@ -6003,42 +6758,42 @@ function createReporteGuiaRemisionPDF(response) {
     // var simboloMoneda=response.simboloMoneda;
     // var data=response.data;
     var subtituloSolesEfec = [
-        { fontSize: 9, text: "CODIGO", fillColor: '#eeeeee', },
-        { fontSize: 9, text: "DESCRIPCIÓN", fillColor: '#eeeeee', },
-        { fontSize: 9, text: "CANTIDAD", fillColor: '#eeeeee', },
-        { fontSize: 9, text: "UNID. DE MEDIDA", fillColor: '#eeeeee', },
-        { fontSize: 9, text: "PESO TOTAL", fillColor: '#eeeeee', },
+        {fontSize: 9, text: "CODIGO", fillColor: '#eeeeee',},
+        {fontSize: 9, text: "DESCRIPCIÓN", fillColor: '#eeeeee',},
+        {fontSize: 9, text: "CANTIDAD", fillColor: '#eeeeee',},
+        {fontSize: 9, text: "UNID. DE MEDIDA", fillColor: '#eeeeee',},
+        {fontSize: 9, text: "PESO TOTAL", fillColor: '#eeeeee',},
     ];
     dataBodyArticulos.push(subtituloSolesEfec);
 
     data_articulo_noser.map(function (index) {
         cont = cont + Number(index.cantidad);
         var subtituloSolesEfec = [
-            { fontSize: 9, text: index.code_article, },
-            { fontSize: 9, text: index.producto, },
-            { fontSize: 9, text: Number(index.cantidad), },
-            { fontSize: 9, text: index.unidadMedida, },
-            { fontSize: 9, text: "" },
+            {fontSize: 9, text: index.code_article,},
+            {fontSize: 9, text: index.producto,},
+            {fontSize: 9, text: Number(index.cantidad),},
+            {fontSize: 9, text: index.unidadMedida,},
+            {fontSize: 9, text: ""},
         ];
         dataBodyArticulos.push(subtituloSolesEfec);
     });
     data_articulo_ser.map(function (index) {
         cont = cont + 1;
         var subtituloSolesEfec = [
-            { fontSize: 9, text: index.code_article, },
-            { fontSize: 9, text: index.producto, },
-            { fontSize: 9, text: Number(1), },
-            { fontSize: 9, text: index.unidadMedida, },
-            { fontSize: 9, text: "" },
+            {fontSize: 9, text: index.code_article,},
+            {fontSize: 9, text: index.producto,},
+            {fontSize: 9, text: Number(1),},
+            {fontSize: 9, text: index.unidadMedida,},
+            {fontSize: 9, text: ""},
         ];
         dataBodyArticulos.push(subtituloSolesEfec);
     });
     var totalfin = [
-        { fontSize: 9, text: "", fillColor: '#eeeeee', border: [true, true, false, true] },
-        { fontSize: 9, text: "Total:", fillColor: '#eeeeee', border: [false, true, false, true], },
-        { fontSize: 9, text: cont, fillColor: '#eeeeee', border: [false, true, false, true], },
-        { fontSize: 9, text: "", fillColor: '#eeeeee', border: [false, true, false, true], },
-        { fontSize: 9, text: "", fillColor: '#eeeeee', border: [false, true, true, true], },
+        {fontSize: 9, text: "", fillColor: '#eeeeee', border: [true, true, false, true]},
+        {fontSize: 9, text: "Total:", fillColor: '#eeeeee', border: [false, true, false, true],},
+        {fontSize: 9, text: cont, fillColor: '#eeeeee', border: [false, true, false, true],},
+        {fontSize: 9, text: "", fillColor: '#eeeeee', border: [false, true, false, true],},
+        {fontSize: 9, text: "", fillColor: '#eeeeee', border: [false, true, true, true],},
     ];
     dataBodyArticulos.push(totalfin);
 
@@ -6065,7 +6820,7 @@ function createReporteGuiaRemisionPDF(response) {
                             }
                         ]
                     },
-                    { text: data_compania[0].RazonSocial, style: 'headerTra' },
+                    {text: data_compania[0].RazonSocial, style: 'headerTra'},
                 ],
 
             },
@@ -6100,9 +6855,14 @@ function createReporteGuiaRemisionPDF(response) {
                         table: {
                             widths: [180],
                             body: [
-                                [{ text: 'RUC:' + data_compania[0].Ruc, bold: true, fontSize: 10, alignment: 'center' }],
-                                [{ text: 'GUIA RESMISION REMITENTE', bold: true, fontSize: 10, alignment: 'center' }],
-                                [{ text: data[0].cCodConsecutivo + '-' + data[0].nConsecutivo, bold: true, fontSize: 10, alignment: 'center' }]
+                                [{text: 'RUC:' + data_compania[0].Ruc, bold: true, fontSize: 10, alignment: 'center'}],
+                                [{text: 'GUIA RESMISION REMITENTE', bold: true, fontSize: 10, alignment: 'center'}],
+                                [{
+                                    text: data[0].cCodConsecutivo + '-' + data[0].nConsecutivo,
+                                    bold: true,
+                                    fontSize: 10,
+                                    alignment: 'center'
+                                }]
                             ]
                         },
 
@@ -6480,7 +7240,7 @@ function createReporteGuiaRemisionPDF(response) {
                 table: {
                     widths: [80, 201, 50, 90, 90],
                     body:
-                        dataBodyArticulos,
+                    dataBodyArticulos,
                 },
 
             },
@@ -6556,6 +7316,7 @@ function createReporteGuiaRemisionPDF(response) {
     // }
     pdfMake.createPdf(docDefinition).print({}, win);
 }
+
 function createReporteCreditosAprobadosPDF(response) {
     var img = response.img;
     var simboloMoneda = response.simboloMoneda;
@@ -6580,30 +7341,30 @@ function createReporteCreditosAprobadosPDF(response) {
     var finad = 0;
     var contc = 0;
     var subtituloSolesEfec = [
-        { fontSize: 8, text: "CÓDIGO", fillColor: '#eeeeee' },
-        { fontSize: 8, text: "FEC SOL", fillColor: '#eeeeee' },
-        { fontSize: 8, text: "TIPO SOL", fillColor: '#eeeeee' },
-        { fontSize: 8, text: "CONVENIO", fillColor: '#eeeeee' },
-        { fontSize: 8, text: "CLIENTE", fillColor: '#eeeeee' },
+        {fontSize: 8, text: "CÓDIGO", fillColor: '#eeeeee'},
+        {fontSize: 8, text: "FEC SOL", fillColor: '#eeeeee'},
+        {fontSize: 8, text: "TIPO SOL", fillColor: '#eeeeee'},
+        {fontSize: 8, text: "CONVENIO", fillColor: '#eeeeee'},
+        {fontSize: 8, text: "CLIENTE", fillColor: '#eeeeee'},
         // { fontSize: 8,text:"TIPCLI",fillColor: '#eeeeee'},
-        { fontSize: 8, text: "FEC DOC", fillColor: '#eeeeee' },
-        { fontSize: 8, text: "SERIE", fillColor: '#eeeeee' },
-        { fontSize: 8, text: "N°", fillColor: '#eeeeee' },
-        { fontSize: 8, text: "MON", fillColor: '#eeeeee' },
-        { fontSize: 8, text: "PRECIO LISTA", fillColor: '#eeeeee' },
-        { fontSize: 8, text: "INTERÉS", fillColor: '#eeeeee' },
-        { fontSize: 8, text: "CT", fillColor: '#eeeeee' },
-        { fontSize: 8, text: "INICIAL", fillColor: '#eeeeee' },
-        { fontSize: 8, text: "CUOTA", fillColor: '#eeeeee' },
-        { fontSize: 8, text: "T.FINAN", fillColor: '#eeeeee' },
-        { fontSize: 8, text: "CRÉDITO", fillColor: '#eeeeee' },
-        { fontSize: 8, text: "FINAN", fillColor: '#eeeeee' },
+        {fontSize: 8, text: "FEC DOC", fillColor: '#eeeeee'},
+        {fontSize: 8, text: "SERIE", fillColor: '#eeeeee'},
+        {fontSize: 8, text: "N°", fillColor: '#eeeeee'},
+        {fontSize: 8, text: "MON", fillColor: '#eeeeee'},
+        {fontSize: 8, text: "PRECIO LISTA", fillColor: '#eeeeee'},
+        {fontSize: 8, text: "INTERÉS", fillColor: '#eeeeee'},
+        {fontSize: 8, text: "CT", fillColor: '#eeeeee'},
+        {fontSize: 8, text: "INICIAL", fillColor: '#eeeeee'},
+        {fontSize: 8, text: "CUOTA", fillColor: '#eeeeee'},
+        {fontSize: 8, text: "T.FINAN", fillColor: '#eeeeee'},
+        {fontSize: 8, text: "CRÉDITO", fillColor: '#eeeeee'},
+        {fontSize: 8, text: "FINAN", fillColor: '#eeeeee'},
     ];
     dataBodyReportes.push(subtituloSolesEfec);
     var tipo_solicitud = "";
     data.map(function (index) {
-       
-        switch(index.tipo_solicitud) {
+
+        switch (index.tipo_solicitud) {
             case '1':
                 tipo_solicitud = "Contado";
                 break;
@@ -6620,7 +7381,7 @@ function createReporteCreditosAprobadosPDF(response) {
                 tipo_solicitud = "ninguno";
                 break;
         }
-        
+
         contc = contc + 1;
         if (index.IdMoneda == 1) {
             conpls = conpls + Number(index.precio_lista);
@@ -6638,51 +7399,63 @@ function createReporteCreditosAprobadosPDF(response) {
             finad = finad + Number(index.financiado);
         }
         var subtituloSolesEfec = [
-            { fontSize: 8, text: index.cCodConsecutivo + '-' + index.nConsecutivo },
-            { fontSize: 8, text: moment(index.fecha_solicitud).format('DD/MM/YYYY'), },
-            { fontSize: 8, text: tipo_solicitud },
-            { fontSize: 8, text: index.convenio },
-            { fontSize: 8, text: index.razonsocial_cliente },
+            {fontSize: 8, text: index.cCodConsecutivo + '-' + index.nConsecutivo},
+            {fontSize: 8, text: moment(index.fecha_solicitud).format('DD/MM/YYYY'),},
+            {fontSize: 8, text: tipo_solicitud},
+            {fontSize: 8, text: index.convenio},
+            {fontSize: 8, text: index.razonsocial_cliente},
             // { fontSize: 8,text:index.tipocliente,},
-            { fontSize: 8, text: moment(index.fecdoc).format('DD/MM/YYYY'), },
-            { fontSize: 8, text: index.serie_comprobante },
+            {fontSize: 8, text: moment(index.fecdoc).format('DD/MM/YYYY'),},
+            {fontSize: 8, text: index.serie_comprobante},
             // { fontSize: 8, text: '5000' },
-            { fontSize: 8, text: index.numero_comprobante },
-            { fontSize: 8, text: index.Simbolo },
-            { fontSize: 8, text: index.Simbolo + ' ' + redondeodecimale(index.precio_lista).toFixed(2), },
-            { fontSize: 8, text: index.Simbolo + ' ' + redondeodecimale(index.intereses).toFixed(2) },
-            { fontSize: 8, text: index.nro_cuotas },
-            { fontSize: 8, text: index.Simbolo + ' ' + redondeodecimale(index.inicial).toFixed(2), },
-            { fontSize: 8, text: index.Simbolo + ' ' + redondeodecimale(index.cuota).toFixed(2) },
-            { fontSize: 8, text: index.Simbolo + ' ' + redondeodecimale(index.total_financiado).toFixed(2), },
-            { fontSize: 8, text: index.Simbolo + ' ' + redondeodecimale(index.Credito).toFixed(2) },
-            { fontSize: 8, text: index.Simbolo + ' ' + redondeodecimale(index.financiado).toFixed(2) },
+            {fontSize: 8, text: index.numero_comprobante},
+            {fontSize: 8, text: index.Simbolo},
+            {fontSize: 8, text: index.Simbolo + ' ' + redondeodecimale(index.precio_lista).toFixed(2),},
+            {fontSize: 8, text: index.Simbolo + ' ' + redondeodecimale(index.intereses).toFixed(2)},
+            {fontSize: 8, text: index.nro_cuotas},
+            {fontSize: 8, text: index.Simbolo + ' ' + redondeodecimale(index.inicial).toFixed(2),},
+            {fontSize: 8, text: index.Simbolo + ' ' + redondeodecimale(index.cuota).toFixed(2)},
+            {fontSize: 8, text: index.Simbolo + ' ' + redondeodecimale(index.total_financiado).toFixed(2),},
+            {fontSize: 8, text: index.Simbolo + ' ' + redondeodecimale(index.Credito).toFixed(2)},
+            {fontSize: 8, text: index.Simbolo + ' ' + redondeodecimale(index.financiado).toFixed(2)},
         ];
         dataBodyReportes.push(subtituloSolesEfec);
     });
     var totalsole = [
-        { fontSize: 8, text: "TOTAL FINAL:", fillColor: '#eeeeee', colSpan: 2, border: [true, true, false, false] },
+        {fontSize: 8, text: "TOTAL FINAL:", fillColor: '#eeeeee', colSpan: 2, border: [true, true, false, false]},
         {},
-        { fontSize: 8, text: "CRÉDITOS: " + contc, fillColor: '#eeeeee', colSpan: 3, border: [false, true, false, false] },
+        {
+            fontSize: 8,
+            text: "CRÉDITOS: " + contc,
+            fillColor: '#eeeeee',
+            colSpan: 3,
+            border: [false, true, false, false]
+        },
         {},
         {},
-        { fontSize: 8, text: "CLIENTES: " + contc, fillColor: '#eeeeee', colSpan: 3, border: [false, true, false, false] },
+        {
+            fontSize: 8,
+            text: "CLIENTES: " + contc,
+            fillColor: '#eeeeee',
+            colSpan: 3,
+            border: [false, true, false, false]
+        },
         // { fontSize: 8,text:"TIPCLI",fillColor: '#eeeeee'},
         {},
         {},
-        { fontSize: 8, text: simboloMoneda[0].Simbolo, fillColor: '#eeeeee' },
-        { fontSize: 8, text: redondeodecimale(conpls).toFixed(2), fillColor: '#eeeeee' },
-        { fontSize: 8, text: redondeodecimale(conins).toFixed(2), fillColor: '#eeeeee' },
-        { fontSize: 8, text: "", fillColor: '#eeeeee' },
-        { fontSize: 8, text: redondeodecimale(coninis).toFixed(2), fillColor: '#eeeeee' },
-        { fontSize: 8, text: "", fillColor: '#eeeeee' },
-        { fontSize: 8, text: redondeodecimale(tfins).toFixed(2), fillColor: '#eeeeee' },
-        { fontSize: 8, text: redondeodecimale(creds).toFixed(2), fillColor: '#eeeeee' },
-        { fontSize: 8, text: redondeodecimale(finas).toFixed(2), fillColor: '#eeeeee' },
+        {fontSize: 8, text: simboloMoneda[0].Simbolo, fillColor: '#eeeeee'},
+        {fontSize: 8, text: redondeodecimale(conpls).toFixed(2), fillColor: '#eeeeee'},
+        {fontSize: 8, text: redondeodecimale(conins).toFixed(2), fillColor: '#eeeeee'},
+        {fontSize: 8, text: "", fillColor: '#eeeeee'},
+        {fontSize: 8, text: redondeodecimale(coninis).toFixed(2), fillColor: '#eeeeee'},
+        {fontSize: 8, text: "", fillColor: '#eeeeee'},
+        {fontSize: 8, text: redondeodecimale(tfins).toFixed(2), fillColor: '#eeeeee'},
+        {fontSize: 8, text: redondeodecimale(creds).toFixed(2), fillColor: '#eeeeee'},
+        {fontSize: 8, text: redondeodecimale(finas).toFixed(2), fillColor: '#eeeeee'},
     ];
     dataBodyReportes.push(totalsole);
     var totaldolar = [
-        { fontSize: 8, text: "", fillColor: '#eeeeee', colSpan: 8 },
+        {fontSize: 8, text: "", fillColor: '#eeeeee', colSpan: 8},
         {},
         {},
         {},
@@ -6691,30 +7464,30 @@ function createReporteCreditosAprobadosPDF(response) {
         {},
         {},
         {},
-        { fontSize: 8, text: simboloMoneda[1].Simbolo, fillColor: '#eeeeee' },
-        { fontSize: 8, text: redondeodecimale(conpld).toFixed(2), fillColor: '#eeeeee' },
-        { fontSize: 8, text: redondeodecimale(conind).toFixed(2), fillColor: '#eeeeee' },
-        { fontSize: 8, text: "", fillColor: '#eeeeee' },
-        { fontSize: 8, text: redondeodecimale(coninid).toFixed(2), fillColor: '#eeeeee' },
-        { fontSize: 8, text: "", fillColor: '#eeeeee' },
-        { fontSize: 8, text: redondeodecimale(tfind).toFixed(2), fillColor: '#eeeeee' },
-        { fontSize: 8, text: redondeodecimale(credd).toFixed(2), fillColor: '#eeeeee' },
-        { fontSize: 8, text: redondeodecimale(finad).toFixed(2), fillColor: '#eeeeee' },
+        {fontSize: 8, text: simboloMoneda[1].Simbolo, fillColor: '#eeeeee'},
+        {fontSize: 8, text: redondeodecimale(conpld).toFixed(2), fillColor: '#eeeeee'},
+        {fontSize: 8, text: redondeodecimale(conind).toFixed(2), fillColor: '#eeeeee'},
+        {fontSize: 8, text: "", fillColor: '#eeeeee'},
+        {fontSize: 8, text: redondeodecimale(coninid).toFixed(2), fillColor: '#eeeeee'},
+        {fontSize: 8, text: "", fillColor: '#eeeeee'},
+        {fontSize: 8, text: redondeodecimale(tfind).toFixed(2), fillColor: '#eeeeee'},
+        {fontSize: 8, text: redondeodecimale(credd).toFixed(2), fillColor: '#eeeeee'},
+        {fontSize: 8, text: redondeodecimale(finad).toFixed(2), fillColor: '#eeeeee'},
     ];
     dataBodyReportes.push(totaldolar);
 
     var totatotal = [
-        { fontSize: 10, text: "", border: [false, false, false, false] },
-        { fontSize: 10, text: "", border: [false, false, false, false] },
-        { fontSize: 10, text: "SOLES", bold: true, border: [false, false, false, false] },
-        { fontSize: 10, text: "DOLARES", bold: true, border: [false, false, false, false] },
+        {fontSize: 10, text: "", border: [false, false, false, false]},
+        {fontSize: 10, text: "", border: [false, false, false, false]},
+        {fontSize: 10, text: "SOLES", bold: true, border: [false, false, false, false]},
+        {fontSize: 10, text: "DOLARES", bold: true, border: [false, false, false, false]},
     ];
     dataBodyReportestotales.push(totatotal);
     var totatotal2 = [
-        { fontSize: 10, text: "CLIENTES NUEVOS" },
-        { fontSize: 10, text: contc },
-        { fontSize: 10, text: redondeodecimale(creds).toFixed(2), bold: true, },
-        { fontSize: 10, text: redondeodecimale(credd).toFixed(2), bold: true, },
+        {fontSize: 10, text: "CLIENTES NUEVOS"},
+        {fontSize: 10, text: contc},
+        {fontSize: 10, text: redondeodecimale(creds).toFixed(2), bold: true,},
+        {fontSize: 10, text: redondeodecimale(credd).toFixed(2), bold: true,},
     ];
     dataBodyReportestotales.push(totatotal2);
 
@@ -6741,10 +7514,10 @@ function createReporteCreditosAprobadosPDF(response) {
                             }
                         ]
                     },
-                    { text: "REPORTE DE CRÉDITOS APROBADOS", style: 'header' }
+                    {text: "REPORTE DE CRÉDITOS APROBADOS", style: 'header'}
                 ]
             },
-            { text: 'Fecha: ' + moment().format('DD [de] MMMM [de] YYYY, h:mm A'), style: 'subheader' },
+            {text: 'Fecha: ' + moment().format('DD [de] MMMM [de] YYYY, h:mm A'), style: 'subheader'},
             // {text: 'SOLES'},
             {
                 margin: [0, 0, 0, 0],
@@ -6752,18 +7525,18 @@ function createReporteCreditosAprobadosPDF(response) {
                 table: {
                     widths: [45, 40, 35, 30, 70, 40, 20, 20, 15, 40, 40, 15, 40, 40, 40, 40, 40],
                     body:
-                        dataBodyReportes,
+                    dataBodyReportes,
                 },
 
             },
-            { text: '', style: 'subheader', margin: [20, 20, 20, 20] },
+            {text: '', style: 'subheader', margin: [20, 20, 20, 20]},
             {
                 margin: [0, 0, 0, 0],
                 style: 'tableExample',
                 table: {
                     widths: [100, 40, 60, 60],
                     body:
-                        dataBodyReportestotales,
+                    dataBodyReportestotales,
                 },
 
             },
@@ -6818,6 +7591,7 @@ function createReporteCreditosAprobadosPDF(response) {
     // }
     pdfMake.createPdf(docDefinition).print({}, win);
 }
+
 function create_pdf_emisionComproCaja(response) {
     var dataDenomicacion = response.dataDenomicacion;
     var simboloMoneda = response.simboloMoneda;
@@ -6871,7 +7645,11 @@ function create_pdf_emisionComproCaja(response) {
             text = 'FECHA APERTURA';
             textA = 'APERTURA DE CAJA N°';
         }
-        var TotalACa = [{ text: 'TIPO DE PAGO', fillColor: '#eeeeee', fontSize: 8 }, { text: 'MONTO SOLES', fillColor: '#eeeeee', fontSize: 8 }, { text: 'MONTO DOLARES', fillColor: '#eeeeee', fontSize: 8 }];
+        var TotalACa = [{text: 'TIPO DE PAGO', fillColor: '#eeeeee', fontSize: 8}, {
+            text: 'MONTO SOLES',
+            fillColor: '#eeeeee',
+            fontSize: 8
+        }, {text: 'MONTO DOLARES', fillColor: '#eeeeee', fontSize: 8}];
         dataTotalA.push(TotalACa);
         var tot = 0;
         for (var i = 0; i < dataList.length; i++) {
@@ -6883,16 +7661,15 @@ function create_pdf_emisionComproCaja(response) {
                 crearCabecera_emision_comprobantes(dataList, i, dataBody);
 
                 var subtituloSolesEfec = [
-                    { fontSize: 8, text: "" },
-                    { fontSize: 8, text: "Cobranza", },
-                    { fontSize: 8, text: dataList[i].serie_comprobante, },
-                    { fontSize: 8, text: dataFechaEmisi, },
-                    { fontSize: 8, text: dataList[i].razonsocial_cliente, },
-                    { fontSize: 8, text: monto_pago, },
-                    { fontSize: 8, text: dataList[i].nro_recibo, },
+                    {fontSize: 8, text: ""},
+                    {fontSize: 8, text: "Cobranza",},
+                    {fontSize: 8, text: dataList[i].serie_comprobante,},
+                    {fontSize: 8, text: dataFechaEmisi,},
+                    {fontSize: 8, text: dataList[i].razonsocial_cliente,},
+                    {fontSize: 8, text: monto_pago,},
+                    {fontSize: 8, text: dataList[i].nro_recibo,},
                 ];
-            }
-            else {
+            } else {
 
                 if (dataList[i - 1].codigo_formapago != dataList[i].codigo_formapago) {
                     crearCabecera_emision_comprobantes(dataList, i, dataBody);
@@ -6902,13 +7679,13 @@ function create_pdf_emisionComproCaja(response) {
                 var monto_pago = Number(dataList[i].monto_pago).toFixed(2);
                 monto_pago = addCommas(monto_pago);
                 var subtituloSolesEfec = [
-                    { fontSize: 8, text: "" },
-                    { fontSize: 8, text: "Cobranza", },
-                    { fontSize: 8, text: dataList[i].serie_comprobante, },
-                    { fontSize: 8, text: dataFechaEmisi, },
-                    { fontSize: 8, text: dataList[i].razonsocial_cliente, },
-                    { fontSize: 8, text: monto_pago, },
-                    { fontSize: 8, text: dataList[i].numero_comprobante, },
+                    {fontSize: 8, text: ""},
+                    {fontSize: 8, text: "Cobranza",},
+                    {fontSize: 8, text: dataList[i].serie_comprobante,},
+                    {fontSize: 8, text: dataFechaEmisi,},
+                    {fontSize: 8, text: dataList[i].razonsocial_cliente,},
+                    {fontSize: 8, text: monto_pago,},
+                    {fontSize: 8, text: dataList[i].numero_comprobante,},
                 ];
             }
             var indf = Number(dataList.length) - 1;
@@ -6918,16 +7695,19 @@ function create_pdf_emisionComproCaja(response) {
                 tot = Number(tot).toFixed(2);
                 tot = addCommas(tot);
                 var totalfin = [
-                    { fontSize: 8, text: "" },
-                    { fontSize: 8, text: "", },
-                    { fontSize: 8, text: "", },
-                    { fontSize: 8, text: "", },
-                    { fontSize: 8, text: "Total Nuevos Soles", bold: true, },
-                    { fontSize: 8, text: tot, bold: true, },
-                    { fontSize: 8, text: "" },
+                    {fontSize: 8, text: ""},
+                    {fontSize: 8, text: "",},
+                    {fontSize: 8, text: "",},
+                    {fontSize: 8, text: "",},
+                    {fontSize: 8, text: "Total Nuevos Soles", bold: true,},
+                    {fontSize: 8, text: tot, bold: true,},
+                    {fontSize: 8, text: ""},
                 ];
 
-                var TotalAC = [{ text: dataList[i].descripcion_subtipo, fontSize: 8 }, { text: tot, fontSize: 8 }, { text: '.00', fontSize: 8 }];
+                var TotalAC = [{text: dataList[i].descripcion_subtipo, fontSize: 8}, {
+                    text: tot,
+                    fontSize: 8
+                }, {text: '.00', fontSize: 8}];
                 dataBody.push(totalfin);
                 dataTotalA.push(TotalAC);
                 tot = 0;
@@ -6935,16 +7715,19 @@ function create_pdf_emisionComproCaja(response) {
                 tot = Number(tot).toFixed(2);
                 tot = addCommas(tot);
                 var totalfin = [
-                    { fontSize: 8, text: "" },
-                    { fontSize: 8, text: "", },
-                    { fontSize: 8, text: "", },
-                    { fontSize: 8, text: "", },
-                    { fontSize: 8, text: "Total Nuevos Soles", bold: true, },
-                    { fontSize: 8, text: tot, bold: true, },
-                    { fontSize: 8, text: "" },
+                    {fontSize: 8, text: ""},
+                    {fontSize: 8, text: "",},
+                    {fontSize: 8, text: "",},
+                    {fontSize: 8, text: "",},
+                    {fontSize: 8, text: "Total Nuevos Soles", bold: true,},
+                    {fontSize: 8, text: tot, bold: true,},
+                    {fontSize: 8, text: ""},
                 ];
                 dataBody.push(totalfin);
-                var TotalAC = [{ text: dataList[i].descripcion_subtipo, fontSize: 8 }, { text: tot, fontSize: 8 }, { text: '.00', fontSize: 8 }];
+                var TotalAC = [{text: dataList[i].descripcion_subtipo, fontSize: 8}, {
+                    text: tot,
+                    fontSize: 8
+                }, {text: '.00', fontSize: 8}];
                 dataTotalA.push(TotalAC);
                 tot = 0;
             }
@@ -6954,15 +7737,26 @@ function create_pdf_emisionComproCaja(response) {
         console.log(totalfinsum);
         totalfinsum = Number(totalfinsum).toFixed(2);
         totalfinsum = addCommas(totalfinsum);
-        var TotalACf = [{ text: 'TOTAL RECAUDADO', fontSize: 8, bold: true }, { text: totalfinsum, fontSize: 8, bold: true }, { text: '.00', fontSize: 8, bold: true }];
+        var TotalACf = [{text: 'TOTAL RECAUDADO', fontSize: 8, bold: true}, {
+            text: totalfinsum,
+            fontSize: 8,
+            bold: true
+        }, {text: '.00', fontSize: 8, bold: true}];
         dataTotalA.push(TotalACf);
 
-        var Totalfc = [{ text: 'TOTAL FINAL', fillColor: '#eeeeee', fontSize: 8 }, { text: "SOLES", fillColor: '#eeeeee', fontSize: 8 }, { text: 'DOLARES', fillColor: '#eeeeee', fontSize: 8 }];
+        var Totalfc = [{text: 'TOTAL FINAL', fillColor: '#eeeeee', fontSize: 8}, {
+            text: "SOLES",
+            fillColor: '#eeeeee',
+            fontSize: 8
+        }, {text: 'DOLARES', fillColor: '#eeeeee', fontSize: 8}];
         dataTotalFF.push(Totalfc);
         var totalsFF = 0;
         for (var i = 0; i < dataListTipoPago.length; i++) {
             totalsFF = Number(dataListTipoPago[i].total) + totalsFF;
-            var Totalfcuer = [{ text: dataListTipoPago[i].condicionPago, fontSize: 8 }, { text: Number(dataListTipoPago[i].total).toFixed(2), fontSize: 8 }, { text: '0.00', fontSize: 8 }];
+            var Totalfcuer = [{
+                text: dataListTipoPago[i].condicionPago,
+                fontSize: 8
+            }, {text: Number(dataListTipoPago[i].total).toFixed(2), fontSize: 8}, {text: '0.00', fontSize: 8}];
             dataTotalFF.push(Totalfcuer);
         }
         var valcuota = '0.00';
@@ -6970,7 +7764,10 @@ function create_pdf_emisionComproCaja(response) {
             valcuota = Number(dataListCancelaCuotas[0].total).toFixed(2);
             totalsFF = Number(dataListCancelaCuotas[0].total) + totalsFF;
         }
-        var Totalcuota = [{ text: "CANCELACIÓN DE CUOTAS", fontSize: 8 }, { text: valcuota, fontSize: 8 }, { text: '0.00', fontSize: 8 }];
+        var Totalcuota = [{text: "CANCELACIÓN DE CUOTAS", fontSize: 8}, {text: valcuota, fontSize: 8}, {
+            text: '0.00',
+            fontSize: 8
+        }];
         dataTotalFF.push(Totalcuota);
 
         var valmora = '0.00';
@@ -6978,7 +7775,7 @@ function create_pdf_emisionComproCaja(response) {
             valmora = Number(dataListCancelaMora[0].total).toFixed(2);
             totalsFF = Number(dataListCancelaMora[0].total) + totalsFF;
         }
-        var Totalmora = [{ text: "MORA", fontSize: 8 }, { text: valmora, fontSize: 8 }, { text: '0.00', fontSize: 8 }];
+        var Totalmora = [{text: "MORA", fontSize: 8}, {text: valmora, fontSize: 8}, {text: '0.00', fontSize: 8}];
         dataTotalFF.push(Totalmora);
 
         var valanticipo = '0.00';
@@ -6986,7 +7783,10 @@ function create_pdf_emisionComproCaja(response) {
             valanticipo = Number(dataListAnticipo[0].total).toFixed(2);
             totalsFF = Number(dataListAnticipo[0].total) + totalsFF;
         }
-        var Totalanticipo = [{ text: "ANTICIPO", fontSize: 8 }, { text: valanticipo, fontSize: 8 }, { text: '0.00', fontSize: 8 }];
+        var Totalanticipo = [{text: "ANTICIPO", fontSize: 8}, {text: valanticipo, fontSize: 8}, {
+            text: '0.00',
+            fontSize: 8
+        }];
         dataTotalFF.push(Totalanticipo);
 
         var valaSepr = '0.00';
@@ -6994,7 +7794,10 @@ function create_pdf_emisionComproCaja(response) {
             valaSepr = Number(dataListSeparacion[0].total).toFixed(2);
             totalsFF = Number(dataListSeparacion[0].total) + totalsFF;
         }
-        var TotalSepara = [{ text: "SEPARACIÓN", fontSize: 8 }, { text: valaSepr, fontSize: 8 }, { text: '0.00', fontSize: 8 }];
+        var TotalSepara = [{text: "SEPARACIÓN", fontSize: 8}, {text: valaSepr, fontSize: 8}, {
+            text: '0.00',
+            fontSize: 8
+        }];
         dataTotalFF.push(TotalSepara);
 
         var valaDevolu = '0.00';
@@ -7002,19 +7805,21 @@ function create_pdf_emisionComproCaja(response) {
             valaDevolu = Number(dataListDevolucion[0].total).toFixed(2);
             totalsFF = Number(dataListDevolucion[0].total) + totalsFF;
         }
-        var TotalDevo = [{ text: "DEVOLUCIÓN", fontSize: 8 }, { text: valaDevolu, fontSize: 8 }, { text: '0.00', fontSize: 8 }];
+        var TotalDevo = [{text: "DEVOLUCIÓN", fontSize: 8}, {text: valaDevolu, fontSize: 8}, {
+            text: '0.00',
+            fontSize: 8
+        }];
         dataTotalFF.push(TotalDevo);
-
-
 
 
         totalsFF = Number(totalsFF).toFixed(2);
         totalsFF = addCommas(totalsFF);
-        var Totalfc = [{ text: 'TOTAL ', fontSize: 8, bold: true }, { text: totalsFF, fontSize: 8, bold: true }, { text: '0.00', fontSize: 8, bold: true }];
+        var Totalfc = [{text: 'TOTAL ', fontSize: 8, bold: true}, {
+            text: totalsFF,
+            fontSize: 8,
+            bold: true
+        }, {text: '0.00', fontSize: 8, bold: true}];
         dataTotalFF.push(Totalfc);
-
-
-
 
 
         var docDefinition = {
@@ -7127,7 +7932,19 @@ function create_pdf_emisionComproCaja(response) {
                         table: {
                             widths: [20, 100, 100, 190, 50, 50],
                             body: [
-                                [{ text: "TIPO", fontSize: 8, fillColor: '#eeeeee' }, { text: "CONCEPTO", fontSize: 8, fillColor: '#eeeeee' }, { text: "FACTURA/BOLETA", fontSize: 8, fillColor: '#eeeeee' }, { text: "CLIENTE", fontSize: 8, fillColor: '#eeeeee' }, { text: "IMPORTE", fontSize: 8, fillColor: '#eeeeee' }, { text: "N° RECIBO", fontSize: 8, fillColor: '#eeeeee' }]
+                                [{text: "TIPO", fontSize: 8, fillColor: '#eeeeee'}, {
+                                    text: "CONCEPTO",
+                                    fontSize: 8,
+                                    fillColor: '#eeeeee'
+                                }, {text: "FACTURA/BOLETA", fontSize: 8, fillColor: '#eeeeee'}, {
+                                    text: "CLIENTE",
+                                    fontSize: 8,
+                                    fillColor: '#eeeeee'
+                                }, {text: "IMPORTE", fontSize: 8, fillColor: '#eeeeee'}, {
+                                    text: "N° RECIBO",
+                                    fontSize: 8,
+                                    fillColor: '#eeeeee'
+                                }]
                                 // {  fontSize: 8, text:"CAJERO(A)"},
                                 // {  fontSize: 8, text:"CAJERO(A)"},
 
@@ -7150,11 +7967,11 @@ function create_pdf_emisionComproCaja(response) {
                     table: {
                         widths: [20, 100, 51, 40, 190, 50, 50],
                         body:
-                            dataBody,
+                        dataBody,
                     },
                     layout: 'noBorders',
                 },
-                { text: '', fontSize: 14, bold: true, pageBreak: 'before', margin: [0, 0, 0, 8] },
+                {text: '', fontSize: 14, bold: true, pageBreak: 'before', margin: [0, 0, 0, 8]},
                 {
                     margin: [100, 0, 0, 0],
                     style: 'tableExample',
@@ -7180,7 +7997,22 @@ function create_pdf_emisionComproCaja(response) {
                     table: {
                         widths: [200, 50, 200],
                         body: [
-                            [{ text: 'TESORERO ENCARGADO', border: [false, true, false, false], fontSize: 10, bold: true }, { text: '', border: [false, false, false, false], fontSize: 10, bold: true }, { text: 'CAJERO(A) DE TURNO', border: [false, true, false, false], fontSize: 10, bold: true }],
+                            [{
+                                text: 'TESORERO ENCARGADO',
+                                border: [false, true, false, false],
+                                fontSize: 10,
+                                bold: true
+                            }, {
+                                text: '',
+                                border: [false, false, false, false],
+                                fontSize: 10,
+                                bold: true
+                            }, {
+                                text: 'CAJERO(A) DE TURNO',
+                                border: [false, true, false, false],
+                                fontSize: 10,
+                                bold: true
+                            }],
                         ]
                     },
                     alignment: 'center'
@@ -7199,10 +8031,11 @@ function create_pdf_emisionComproCaja(response) {
     // }
 
 }
+
 function crearCabecera_emision_comprobantes(dataList, i, dataBody) {
     var tituloSolesEfec = [
-        { fontSize: 8, bold: true, text: dataList[i].codigo_formapago, },
-        { colSpan: 6, bold: true, fontSize: 8, text: dataList[i].descripcion_subtipo, },
+        {fontSize: 8, bold: true, text: dataList[i].codigo_formapago,},
+        {colSpan: 6, bold: true, fontSize: 8, text: dataList[i].descripcion_subtipo,},
         {},
         {},
         {},
@@ -7210,17 +8043,18 @@ function crearCabecera_emision_comprobantes(dataList, i, dataBody) {
         {},
     ];
     var subtituloSolesEfec = [
-        { fontSize: 8, text: "" },
-        { fontSize: 8, text: "EN NUEVOS SOLES", bold: true, },
-        { fontSize: 8, text: "", },
-        { fontSize: 8, text: "Ingreso", bold: true, },
-        { fontSize: 8, text: "", },
-        { fontSize: 8, text: "", },
-        { fontSize: 8, text: "", },
+        {fontSize: 8, text: ""},
+        {fontSize: 8, text: "EN NUEVOS SOLES", bold: true,},
+        {fontSize: 8, text: "",},
+        {fontSize: 8, text: "Ingreso", bold: true,},
+        {fontSize: 8, text: "",},
+        {fontSize: 8, text: "",},
+        {fontSize: 8, text: "",},
     ];
     dataBody.push(tituloSolesEfec);
     dataBody.push(subtituloSolesEfec);
 }
+
 function create_pdf_movimientoCaja(response) {
     var data = response.dataCaDet;
     var fec = response.feca;
@@ -7529,28 +8363,28 @@ function create_pdf_movimientoCaja(response) {
                 text: "Caja: " + fec,
                 fontSize: 15,
                 bold: true,
-                absolutePosition: { x: 40, y: 20 }
+                absolutePosition: {x: 40, y: 20}
             },
             {
                 text: "Fecha de Impresión: " + fecAct,
                 fontSize: 15,
                 bold: true,
-                absolutePosition: { x: 460, y: 20 }
+                absolutePosition: {x: 460, y: 20}
             },
-            { text: 'SOLES', style: 'header', fontSize: 13 },
+            {text: 'SOLES', style: 'header', fontSize: 13},
             {
-                absolutePosition: { x: 40, y: 60 },
+                absolutePosition: {x: 40, y: 60},
                 style: 'tableExample',
                 table: {
                     widths: [250, 90],
                     body:
-                        dataSolesEfec,
+                    dataSolesEfec,
 
                 }
 
             },
             {
-                absolutePosition: { x: 460, y: 60 },
+                absolutePosition: {x: 460, y: 60},
                 style: 'tableExample',
                 table: {
                     widths: [250, 90],
@@ -7560,12 +8394,12 @@ function create_pdf_movimientoCaja(response) {
             },
             {
                 text: '',
-                absolutePosition: { x: 300, y: 100 },
+                absolutePosition: {x: 300, y: 100},
                 pageBreak: 'after'
             },
-            { text: 'DOLARES', style: 'header', fontSize: 13 },
+            {text: 'DOLARES', style: 'header', fontSize: 13},
             {
-                absolutePosition: { x: 40, y: 60 },
+                absolutePosition: {x: 40, y: 60},
                 style: 'tableExample',
                 table: {
                     widths: [250, 90],
@@ -7592,7 +8426,7 @@ function create_pdf_movimientoCaja(response) {
 
             },
             {
-                absolutePosition: { x: 460, y: 60 },
+                absolutePosition: {x: 460, y: 60},
                 style: 'tableExample',
                 table: {
                     widths: [250, 90],
@@ -7625,6 +8459,7 @@ function create_pdf_movimientoCaja(response) {
     // }
 
 }
+
 function create_pdf_proforma(response) {
     var data = response.data;
     var repus = response.data_repuesto;
@@ -7663,31 +8498,31 @@ function create_pdf_proforma(response) {
             text: nConsecutivo,
             fontSize: 14,
             bold: true,
-            absolutePosition: { x: 479, y: 64 }
+            absolutePosition: {x: 479, y: 64}
         },
         {
             text: cPlacaVeh,
             fontSize: 10,
             bold: true,
-            absolutePosition: { x: 118, y: 144 }
+            absolutePosition: {x: 118, y: 144}
         },
         {
             text: razonsocial_cliente,
             fontSize: 10,
             bold: true,
-            absolutePosition: { x: 118, y: 163 }
+            absolutePosition: {x: 118, y: 163}
         },
         {
             text: celular,
             fontSize: 10,
             bold: true,
-            absolutePosition: { x: 118, y: 181 }
+            absolutePosition: {x: 118, y: 181}
         },
         {
             text: dFechaRegistro,
             fontSize: 10,
             bold: true,
-            absolutePosition: { x: 452, y: 181 }
+            absolutePosition: {x: 452, y: 181}
         },
     ]);
     var cont = 0;
@@ -7707,25 +8542,25 @@ function create_pdf_proforma(response) {
                     text: desc,
                     fontSize: 10,
                     bold: true,
-                    absolutePosition: { x: 66, y: alt }
+                    absolutePosition: {x: 66, y: alt}
                 },
                 {
                     text: cant,
                     fontSize: 10,
                     bold: true,
-                    absolutePosition: { x: 336, y: alt }
+                    absolutePosition: {x: 336, y: alt}
                 },
                 {
                     text: pre,
                     fontSize: 10,
                     bold: true,
-                    absolutePosition: { x: 417, y: alt }
+                    absolutePosition: {x: 417, y: alt}
                 },
                 {
                     text: tot,
                     fontSize: 10,
                     bold: true,
-                    absolutePosition: { x: 498, y: alt }
+                    absolutePosition: {x: 498, y: alt}
                 }
             ]);
         }
@@ -7736,7 +8571,7 @@ function create_pdf_proforma(response) {
             text: totalRep,
             fontSize: 10,
             bold: true,
-            absolutePosition: { x: 501, y: 452 }
+            absolutePosition: {x: 501, y: 452}
         }
     ]);
     var cont = 0;
@@ -7755,16 +8590,17 @@ function create_pdf_proforma(response) {
                     text: desc,
                     fontSize: 10,
                     bold: true,
-                    absolutePosition: { x: 66, y: altu }
+                    absolutePosition: {x: 66, y: altu}
                 },
                 {
                     text: tot,
                     fontSize: 10,
                     bold: true,
-                    absolutePosition: { x: 498, y: altu }
+                    absolutePosition: {x: 498, y: altu}
                 }
             ])
-        };
+        }
+        ;
     });
     totalRepMo = totalRepMo.toFixed(2);
     array_head.push([
@@ -7772,7 +8608,7 @@ function create_pdf_proforma(response) {
             text: totalRepMo,
             fontSize: 10,
             bold: true,
-            absolutePosition: { x: 498, y: 573 }
+            absolutePosition: {x: 498, y: 573}
         }
     ]);
     var totalcom = Number(totalRep) + Number(totalRepMo);
@@ -7782,13 +8618,13 @@ function create_pdf_proforma(response) {
             text: totalcom,
             fontSize: 10,
             bold: true,
-            absolutePosition: { x: 498, y: 594 }
+            absolutePosition: {x: 498, y: 594}
         },
         {
             text: nEstimadoHoras,
             fontSize: 10,
             bold: true,
-            absolutePosition: { x: 498, y: 607 }
+            absolutePosition: {x: 498, y: 607}
         }
     ]);
     var docDefinition = {
@@ -7819,6 +8655,7 @@ function create_pdf_proforma(response) {
     // }
 
 }
+
 function create_pdf_transfer(response) {
     var data_p = response.data;
     var mov_ar = response.movimiento_Ar;
@@ -7836,11 +8673,116 @@ function create_pdf_transfer(response) {
     var column5 = [];
     var column6 = [];
     var header = [];
-    column1.push({ image: response.img, rowSpan: 3, colSpan: 8, alignment: 'center', width: 120, height: 50 }, {}, {}, {}, {}, {}, {}, {}, { text: 'Movimiento de Transferencia', alignment: 'center', bold: true, colSpan: 39, height: 80 }, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {});
-    column2.push({}, {}, {}, {}, {}, {}, {}, {}, { text: ' \n N° Transferencia:', bold: true, alignment: 'center', fontSize: 10, border: [false, false, false, true], rowSpan: 2, colSpan: 7, height: 200 }, {}, {}, {}, {}, {}, {}, { text: ' \n' + data_p.idTransferencia, border: [false, false, true, true], fontSize: 10, rowSpan: 2, colSpan: 3, height: 200 }, {}, {}, { text: '\n Fecha Transacción: ', bold: true, fontSize: 10, border: [false, false, false, true], alignment: 'center', rowSpan: 2, colSpan: 10, height: 80 }, {}, {}, {}, {}, {}, {}, {}, {}, {}, { text: '\n' + data_p.fecha_proceso, fontSize: 10, border: [false, false, true, true], rowSpan: 2, colSpan: 5, height: 80 }, {}, {}, {}, {}, { text: '\n Fecha Impresión:', bold: true, fontSize: 10, border: [false, false, false, true], alignment: 'center', colSpan: 9, rowSpan: 2, height: 80 }, {}, {}, {}, {}, {}, {}, {}, {}, { text: '\n' + data_p.fecha_impresion, fontSize: 10, border: [false, false, true, true], colSpan: 5, rowSpan: 2, height: 80 }, {}, {}, {}, {});
+    column1.push({
+        image: response.img,
+        rowSpan: 3,
+        colSpan: 8,
+        alignment: 'center',
+        width: 120,
+        height: 50
+    }, {}, {}, {}, {}, {}, {}, {}, {
+        text: 'Movimiento de Transferencia',
+        alignment: 'center',
+        bold: true,
+        colSpan: 39,
+        height: 80
+    }, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {});
+    column2.push({}, {}, {}, {}, {}, {}, {}, {}, {
+        text: ' \n N° Transferencia:',
+        bold: true,
+        alignment: 'center',
+        fontSize: 10,
+        border: [false, false, false, true],
+        rowSpan: 2,
+        colSpan: 7,
+        height: 200
+    }, {}, {}, {}, {}, {}, {}, {
+        text: ' \n' + data_p.idTransferencia,
+        border: [false, false, true, true],
+        fontSize: 10,
+        rowSpan: 2,
+        colSpan: 3,
+        height: 200
+    }, {}, {}, {
+        text: '\n Fecha Transacción: ',
+        bold: true,
+        fontSize: 10,
+        border: [false, false, false, true],
+        alignment: 'center',
+        rowSpan: 2,
+        colSpan: 10,
+        height: 80
+    }, {}, {}, {}, {}, {}, {}, {}, {}, {}, {
+        text: '\n' + data_p.fecha_proceso,
+        fontSize: 10,
+        border: [false, false, true, true],
+        rowSpan: 2,
+        colSpan: 5,
+        height: 80
+    }, {}, {}, {}, {}, {
+        text: '\n Fecha Impresión:',
+        bold: true,
+        fontSize: 10,
+        border: [false, false, false, true],
+        alignment: 'center',
+        colSpan: 9,
+        rowSpan: 2,
+        height: 80
+    }, {}, {}, {}, {}, {}, {}, {}, {}, {
+        text: '\n' + data_p.fecha_impresion,
+        fontSize: 10,
+        border: [false, false, true, true],
+        colSpan: 5,
+        rowSpan: 2,
+        height: 80
+    }, {}, {}, {}, {});
     column3.push({}, {}, {}, {}, {}, {}, {}, {}, ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1');
-    column4.push({ text: ' ', border: [true, false, true, true], fontSize: 6, alignment: 'center', colSpan: 47, height: 100 }, ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1');
-    column5.push({ text: 'Item', bold: true, colSpan: 2, fontSize: 10, height: 100 }, {}, { text: 'Artículo', alignment: 'center', bold: true, colSpan: 16, fontSize: 10, height: 100 }, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, { text: 'Alm. Origen', bold: true, colSpan: 5, fontSize: 10, height: 100 }, {}, {}, {}, {}, { text: 'Loc. Origen', bold: true, colSpan: 5, fontSize: 10, height: 100 }, {}, {}, {}, {}, { text: 'Alm. Destino', bold: true, colSpan: 5, fontSize: 10, height: 100 }, {}, {}, {}, {}, { text: 'Loc. Destino', bold: true, colSpan: 5, fontSize: 10, height: 100 }, {}, {}, {}, {}, { text: 'Lote', bold: true, colSpan: 4, fontSize: 10, height: 100 }, {}, {}, {}, { text: 'Unidad', bold: true, colSpan: 2, fontSize: 10, height: 100 }, {}, { text: 'Cantidad', bold: true, colSpan: 3, fontSize: 10, height: 100 }, {}, {});
+    column4.push({
+        text: ' ',
+        border: [true, false, true, true],
+        fontSize: 6,
+        alignment: 'center',
+        colSpan: 47,
+        height: 100
+    }, ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1');
+    column5.push({text: 'Item', bold: true, colSpan: 2, fontSize: 10, height: 100}, {}, {
+        text: 'Artículo',
+        alignment: 'center',
+        bold: true,
+        colSpan: 16,
+        fontSize: 10,
+        height: 100
+    }, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {
+        text: 'Alm. Origen',
+        bold: true,
+        colSpan: 5,
+        fontSize: 10,
+        height: 100
+    }, {}, {}, {}, {}, {
+        text: 'Loc. Origen',
+        bold: true,
+        colSpan: 5,
+        fontSize: 10,
+        height: 100
+    }, {}, {}, {}, {}, {
+        text: 'Alm. Destino',
+        bold: true,
+        colSpan: 5,
+        fontSize: 10,
+        height: 100
+    }, {}, {}, {}, {}, {
+        text: 'Loc. Destino',
+        bold: true,
+        colSpan: 5,
+        fontSize: 10,
+        height: 100
+    }, {}, {}, {}, {}, {text: 'Lote', bold: true, colSpan: 4, fontSize: 10, height: 100}, {}, {}, {}, {
+        text: 'Unidad',
+        bold: true,
+        colSpan: 2,
+        fontSize: 10,
+        height: 100
+    }, {}, {text: 'Cantidad', bold: true, colSpan: 3, fontSize: 10, height: 100}, {}, {});
     header.push(column1);
     header.push(column2);
     header.push(column3);
@@ -7851,7 +8793,37 @@ function create_pdf_transfer(response) {
         var cantidad = Math.trunc(index.cantidad);
         var colunmx = []
         cont = cont + 1;
-        colunmx.push({ text: cont, colSpan: 2, fontSize: 10, height: 100 }, {}, { text: index.producto, colSpan: 16, fontSize: 10, height: 100 }, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, { text: index.almacenOrigen, colSpan: 5, fontSize: 10, height: 100 }, {}, {}, {}, {}, { text: index.localizacionOrigen, colSpan: 5, fontSize: 10, height: 100 }, {}, {}, {}, {}, { text: index.almacenDestino, colSpan: 5, fontSize: 10, height: 100 }, {}, {}, {}, {}, { text: index.localizacionDestino, colSpan: 5, fontSize: 10, height: 100 }, {}, {}, {}, {}, { text: index.lote, colSpan: 4, fontSize: 10, height: 100 }, {}, {}, {}, { text: index.unidad, colSpan: 2, fontSize: 10, height: 100 }, {}, { text: cantidad, colSpan: 3, fontSize: 10, height: 100 }, {}, {});
+        colunmx.push({text: cont, colSpan: 2, fontSize: 10, height: 100}, {}, {
+            text: index.producto,
+            colSpan: 16,
+            fontSize: 10,
+            height: 100
+        }, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {
+            text: index.almacenOrigen,
+            colSpan: 5,
+            fontSize: 10,
+            height: 100
+        }, {}, {}, {}, {}, {
+            text: index.localizacionOrigen,
+            colSpan: 5,
+            fontSize: 10,
+            height: 100
+        }, {}, {}, {}, {}, {
+            text: index.almacenDestino,
+            colSpan: 5,
+            fontSize: 10,
+            height: 100
+        }, {}, {}, {}, {}, {
+            text: index.localizacionDestino,
+            colSpan: 5,
+            fontSize: 10,
+            height: 100
+        }, {}, {}, {}, {}, {text: index.lote, colSpan: 4, fontSize: 10, height: 100}, {}, {}, {}, {
+            text: index.unidad,
+            colSpan: 2,
+            fontSize: 10,
+            height: 100
+        }, {}, {text: cantidad, colSpan: 3, fontSize: 10, height: 100}, {}, {});
         header.push(colunmx);
         var idenDet = 'I';
         mov_det.map(function (index2) {
@@ -7861,11 +8833,89 @@ function create_pdf_transfer(response) {
                 var columnz = [];
                 if (idenDet == 'I') {
                     var columny = [];
-                    columny.push({ text: '', colSpan: 2, fontSize: 10, height: 100 }, {}, { text: 'Serie', colSpan: 6, fontSize: 10, height: 100, bold: true }, {}, {}, {}, {}, {}, { text: 'Motor', colSpan: 5, fontSize: 10, height: 100, bold: true }, {}, {}, {}, {}, { text: 'Color', bold: true, colSpan: 5, fontSize: 10, height: 100 }, {}, {}, {}, {}, { text: 'Año de Fabricación', bold: true, colSpan: 5, fontSize: 10, height: 100 }, {}, {}, {}, {}, { text: 'Año Modelo', bold: true, colSpan: 5, fontSize: 10, height: 100 }, {}, {}, {}, {}, { text: '', colSpan: 18, fontSize: 10, height: 100, border: [false, false, false, false] }, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, { text: '', fontSize: 10, height: 100, border: [false, false, true, true] });
+                    columny.push({text: '', colSpan: 2, fontSize: 10, height: 100}, {}, {
+                        text: 'Serie',
+                        colSpan: 6,
+                        fontSize: 10,
+                        height: 100,
+                        bold: true
+                    }, {}, {}, {}, {}, {}, {
+                        text: 'Motor',
+                        colSpan: 5,
+                        fontSize: 10,
+                        height: 100,
+                        bold: true
+                    }, {}, {}, {}, {}, {
+                        text: 'Color',
+                        bold: true,
+                        colSpan: 5,
+                        fontSize: 10,
+                        height: 100
+                    }, {}, {}, {}, {}, {
+                        text: 'Año de Fabricación',
+                        bold: true,
+                        colSpan: 5,
+                        fontSize: 10,
+                        height: 100
+                    }, {}, {}, {}, {}, {
+                        text: 'Año Modelo',
+                        bold: true,
+                        colSpan: 5,
+                        fontSize: 10,
+                        height: 100
+                    }, {}, {}, {}, {}, {
+                        text: '',
+                        colSpan: 18,
+                        fontSize: 10,
+                        height: 100,
+                        border: [false, false, false, false]
+                    }, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {
+                        text: '',
+                        fontSize: 10,
+                        height: 100,
+                        border: [false, false, true, true]
+                    });
                     header.push(columny);
                     idenDet = 'A';
-                };
-                columnz.push({ text: '', colSpan: 2, fontSize: 10, height: 100 }, {}, { text: index2.nombreSerie, colSpan: 6, fontSize: 10, height: 100 }, {}, {}, {}, {}, {}, { text: index2.motor, colSpan: 5, fontSize: 10, height: 100 }, {}, {}, {}, {}, { text: index2.color, colSpan: 5, fontSize: 10, height: 100 }, {}, {}, {}, {}, { text: index2.anio_fabricacion, colSpan: 5, fontSize: 10, height: 100 }, {}, {}, {}, {}, { text: index2.anio_modelo, colSpan: 5, fontSize: 10, height: 100 }, {}, {}, {}, {}, { text: '', colSpan: 18, fontSize: 10, height: 100, border: [false, true, false, true] }, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, { text: '', fontSize: 10, height: 100, border: [false, false, true, true] });
+                }
+                ;
+                columnz.push({text: '', colSpan: 2, fontSize: 10, height: 100}, {}, {
+                    text: index2.nombreSerie,
+                    colSpan: 6,
+                    fontSize: 10,
+                    height: 100
+                }, {}, {}, {}, {}, {}, {
+                    text: index2.motor,
+                    colSpan: 5,
+                    fontSize: 10,
+                    height: 100
+                }, {}, {}, {}, {}, {
+                    text: index2.color,
+                    colSpan: 5,
+                    fontSize: 10,
+                    height: 100
+                }, {}, {}, {}, {}, {
+                    text: index2.anio_fabricacion,
+                    colSpan: 5,
+                    fontSize: 10,
+                    height: 100
+                }, {}, {}, {}, {}, {
+                    text: index2.anio_modelo,
+                    colSpan: 5,
+                    fontSize: 10,
+                    height: 100
+                }, {}, {}, {}, {}, {
+                    text: '',
+                    colSpan: 18,
+                    fontSize: 10,
+                    height: 100,
+                    border: [false, true, false, true]
+                }, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {
+                    text: '',
+                    fontSize: 10,
+                    height: 100,
+                    border: [false, false, true, true]
+                });
                 header.push(columnz);
 
             }
@@ -7876,11 +8926,53 @@ function create_pdf_transfer(response) {
     });
     for (var i = 0; i < 8; i++) {
         var colum_espacio_blanco = [];
-        colum_espacio_blanco.push({ text: ' ', border: [false, false, false, false], fontSize: 6, alignment: 'center', colSpan: 47, height: 100 }, ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1');
+        colum_espacio_blanco.push({
+            text: ' ',
+            border: [false, false, false, false],
+            fontSize: 6,
+            alignment: 'center',
+            colSpan: 47,
+            height: 100
+        }, ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1');
         header.push(colum_espacio_blanco);
     }
     var columnfooter = [];
-    columnfooter.push({ text: '', border: [false, false, false, false], colSpan: 2, fontSize: 10, height: 100 }, {}, { text: 'ALMACÉN', border: [false, true, false, false], alignment: 'center', colSpan: 6, fontSize: 10, height: 100, bold: true }, {}, {}, {}, {}, {}, { text: '', alignment: 'center', colSpan: 30, border: [false, false, false, false], fontSize: 10, height: 100, bold: true }, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, { text: 'RECIBÍ CONFORME', border: [false, true, false, false], colSpan: 6, fontSize: 10, height: 100 }, {}, {}, {}, {}, {}, { text: '', border: [false, false, false, false], colSpan: 3, fontSize: 10, height: 100, bold: true }, {}, {});
+    columnfooter.push({
+        text: '',
+        border: [false, false, false, false],
+        colSpan: 2,
+        fontSize: 10,
+        height: 100
+    }, {}, {
+        text: 'ALMACÉN',
+        border: [false, true, false, false],
+        alignment: 'center',
+        colSpan: 6,
+        fontSize: 10,
+        height: 100,
+        bold: true
+    }, {}, {}, {}, {}, {}, {
+        text: '',
+        alignment: 'center',
+        colSpan: 30,
+        border: [false, false, false, false],
+        fontSize: 10,
+        height: 100,
+        bold: true
+    }, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {
+        text: 'RECIBÍ CONFORME',
+        border: [false, true, false, false],
+        colSpan: 6,
+        fontSize: 10,
+        height: 100
+    }, {}, {}, {}, {}, {}, {
+        text: '',
+        border: [false, false, false, false],
+        colSpan: 3,
+        fontSize: 10,
+        height: 100,
+        bold: true
+    }, {}, {});
     header.push(columnfooter);
     // var lote='';
     //    var unidad='UND';
@@ -7928,6 +9020,7 @@ function create_pdf_transfer(response) {
     // }
 
 }
+
 function create_pdf_Querystock(response) {
     // console.log(response);
     var filtro_art = response.filtro_art;
@@ -7944,16 +9037,20 @@ function create_pdf_Querystock(response) {
 
     if (!filtro_art) {
         filtro_art = 'TODOS'
-    };
+    }
+    ;
     if (!filtro_idAlm) {
         filtro_idAlm = 'TODOS'
-    };
+    }
+    ;
     if (!filtro_idLoc) {
         filtro_idLoc = 'TODOS'
-    };
+    }
+    ;
     if (!filtro_cate) {
         filtro_cate = 'TODOS'
-    };
+    }
+    ;
 
 
     var dataFiltros = [];
@@ -8162,7 +9259,7 @@ function create_pdf_Querystock(response) {
     // console.log(data);
     // console.log("FF1");
     data.map(function (index) {
-        cont ++;
+        cont++;
         todol = Number(todol) + Number(index.Costo_Total);
         var tituloDolFormQueryData = [];
         var cu = Number(index.Costo_Promedio_Unitario).toFixed(2);
@@ -8544,9 +9641,14 @@ function create_pdf_Querystock(response) {
                 image: img,
                 width: 120,
                 height: 50,
-                absolutePosition: { x: 50, y: 15 }
+                absolutePosition: {x: 50, y: 15}
             },
-            { text: 'REPORTE DE STOCK A LA FECHA : ' + fechacA, style: 'subheader', alignment: 'center', margin: [0, 0, 0, 10] },
+            {
+                text: 'REPORTE DE STOCK A LA FECHA : ' + fechacA,
+                style: 'subheader',
+                alignment: 'center',
+                margin: [0, 0, 0, 10]
+            },
             {
                 fontSize: 8,
                 text: '\n',
@@ -8579,7 +9681,6 @@ function create_pdf_Querystock(response) {
             },
 
 
-
         ]
     };
 
@@ -8590,6 +9691,7 @@ function create_pdf_Querystock(response) {
 
 
 }
+
 function create_pdf_QuerystockCierre(response) {
     var data = response.data;
     var fechacA = response.fechacA;
@@ -8988,9 +10090,14 @@ function create_pdf_QuerystockCierre(response) {
                 image: img,
                 width: 120,
                 height: 50,
-                absolutePosition: { x: 50, y: 15 }
+                absolutePosition: {x: 50, y: 15}
             },
-            { text: 'REPORTE DE CIERRE DE INVENTARIO PERIODO: ' + periodo + '    ESTADO: ' + estado.toUpperCase(), style: 'subheader', alignment: 'center', margin: [0, 0, 0, 10] },
+            {
+                text: 'REPORTE DE CIERRE DE INVENTARIO PERIODO: ' + periodo + '    ESTADO: ' + estado.toUpperCase(),
+                style: 'subheader',
+                alignment: 'center',
+                margin: [0, 0, 0, 10]
+            },
 
             {
                 style: 'tableExample',
@@ -9003,7 +10110,6 @@ function create_pdf_QuerystockCierre(response) {
             },
 
 
-
         ]
     };
 
@@ -9014,6 +10120,7 @@ function create_pdf_QuerystockCierre(response) {
 
 
 }
+
 function create_pdf_Querymovimiento(response) {
     var filtro_art = response.filtro_art;
     var filtro_idAlm = response.filtro_idAlm;
@@ -9033,37 +10140,48 @@ function create_pdf_Querymovimiento(response) {
 
     if (!filtro_art) {
         filtro_art = 'TODOS'
-    };
+    }
+    ;
     if (!filtro_idAlm) {
         filtro_idAlm = 'TODOS'
-    };
+    }
+    ;
     if (!filtro_idLoc) {
         filtro_idLoc = 'TODOS'
-    };
+    }
+    ;
     if (!filtro_cate) {
         filtro_cate = 'TODOS'
-    };
+    }
+    ;
     if (!filtro_nat) {
         filtro_nat = 'TODOS'
-    };
+    }
+    ;
     if (!filtro_oper) {
         filtro_oper = 'TODOS'
-    };
+    }
+    ;
     if (!n_movimiento) {
         n_movimiento = 'TODOS'
-    };
+    }
+    ;
     if (!cod_lote) {
         cod_lote = 'TODOS'
-    };
+    }
+    ;
     if (!cod_serie) {
         cod_serie = 'TODOS'
-    };
+    }
+    ;
     if (!fecha_inicio) {
         fecha_inicio = 'TODOS'
-    };
+    }
+    ;
     if (!fecha_fin) {
         fecha_fin = 'TODOS'
-    };
+    }
+    ;
     var data = response.data;
 
     var dataFiltros = [];
@@ -9458,10 +10576,15 @@ function create_pdf_Querymovimiento(response) {
                 image: img,
                 width: 120,
                 height: 50,
-                absolutePosition: { x: 50, y: 15 }
+                absolutePosition: {x: 50, y: 15}
             },
 
-            { text: 'REPORTE DE MOVIMIENTO A LA FECHA : ' + fechacA, style: 'subheader', alignment: 'center', margin: [0, 0, 0, 10] },
+            {
+                text: 'REPORTE DE MOVIMIENTO A LA FECHA : ' + fechacA,
+                style: 'subheader',
+                alignment: 'center',
+                margin: [0, 0, 0, 10]
+            },
             {
                 style: 'tableExample',
                 table: {
@@ -9506,6 +10629,7 @@ function create_pdf_Querymovimiento(response) {
 
 
 }
+
 function create_pdf_movimientoEntrega(response, params) {
     var title_ = (!_.isUndefined(params) && !_.isUndefined(params.title)) ? params.title : '';
     var client_txt_ = (!_.isUndefined(params) && !_.isUndefined(params.client_txt)) ? params.client_txt : '';
@@ -9518,7 +10642,7 @@ function create_pdf_movimientoEntrega(response, params) {
     if (operacion[0].serie_comprobante != null) {
         codVen = operacion[0].serie_comprobante + '-' + operacion[0].numero_comprobante;
         codSol = operacion[0].cCodConsecutivo + '-' + operacion[0].nConsecutivo;
-    } else if(operacion[0].number_reception != null) {
+    } else if (operacion[0].number_reception != null) {
         codVen = operacion[0].cCodConsecutivo + '-' + operacion[0].nConsecutivo;
         codSol = operacion[0].number_reception;
     }
@@ -9534,7 +10658,8 @@ function create_pdf_movimientoEntrega(response, params) {
     console.log(data);
     for (var i = 0; i < tot.length; i++) {
         unto = unto + tot[i] + '\n';
-    };
+    }
+    ;
     console.log(data_p);
     var data = [];
     var array_head = [];
@@ -9549,9 +10674,88 @@ function create_pdf_movimientoEntrega(response, params) {
     var column6 = [];
     var header = [];
     title_ = (title_ !== '') ? title_ : operacion[0].tipoOperacion;
-    column1.push({ text: 'MOVIMIENTO DE ' + title_, alignment: 'center', bold: true, colSpan: 47, height: 70 }, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {});
-    column2.push({ text: ' N° Movimiento:', bold: true, alignment: 'center', fontSize: 9, border: [true, true, false, true], colSpan: 15 }, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, { text: data_p.idMovimiento, border: [false, false, true, true], fontSize: 9, colSpan: 3 }, {}, {}, { text: ' Fecha Transacción: ', bold: true, fontSize: 9, border: [false, false, false, true], alignment: 'center', colSpan: 10 }, {}, {}, {}, {}, {}, {}, {}, {}, {}, { text: data_p.fecha_proceso, fontSize: 9, border: [false, false, true, true], colSpan: 5 }, {}, {}, {}, {}, { text: ' Fecha Impresión:', bold: true, fontSize: 9, border: [false, false, false, true], alignment: 'center', colSpan: 9, height: 80 }, {}, {}, {}, {}, {}, {}, {}, {}, { text: data_p.fecha_impresion, fontSize: 9, border: [false, false, true, true], colSpan: 5 }, {}, {}, {}, {});
-    column5.push({ text: 'Item', bold: true, colSpan: 2, fontSize: 9, height: 100 }, {}, { text: 'Artículo', alignment: 'center', bold: true, colSpan: 16, fontSize: 10, height: 100 }, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, { text: 'Almacén', bold: true, colSpan: 7, fontSize: 9, height: 100 }, {}, {}, {}, {}, {}, {}, { text: 'Localización', bold: true, colSpan: 8, fontSize: 10, height: 100 }, {}, {}, {}, {}, {}, {}, {}, { text: 'Lote', bold: true, colSpan: 9, fontSize: 10, height: 100 }, {}, {}, {}, {}, {}, {}, {}, {}, { text: 'Unidad', bold: true, colSpan: 2, fontSize: 9, height: 100 }, {}, { text: 'Cantidad', bold: true, fontSize: 9, height: 100 }, { text: 'Cantidad Requerida', bold: true, fontSize: 9, height: 100 }, { text: 'Cantidad Pendiente', bold: true, fontSize: 9, height: 100 });
+    column1.push({
+        text: 'MOVIMIENTO DE ' + title_,
+        alignment: 'center',
+        bold: true,
+        colSpan: 47,
+        height: 70
+    }, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {});
+    column2.push({
+        text: ' N° Movimiento:',
+        bold: true,
+        alignment: 'center',
+        fontSize: 9,
+        border: [true, true, false, true],
+        colSpan: 15
+    }, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {
+        text: data_p.idMovimiento,
+        border: [false, false, true, true],
+        fontSize: 9,
+        colSpan: 3
+    }, {}, {}, {
+        text: ' Fecha Transacción: ',
+        bold: true,
+        fontSize: 9,
+        border: [false, false, false, true],
+        alignment: 'center',
+        colSpan: 10
+    }, {}, {}, {}, {}, {}, {}, {}, {}, {}, {
+        text: data_p.fecha_proceso,
+        fontSize: 9,
+        border: [false, false, true, true],
+        colSpan: 5
+    }, {}, {}, {}, {}, {
+        text: ' Fecha Impresión:',
+        bold: true,
+        fontSize: 9,
+        border: [false, false, false, true],
+        alignment: 'center',
+        colSpan: 9,
+        height: 80
+    }, {}, {}, {}, {}, {}, {}, {}, {}, {
+        text: data_p.fecha_impresion,
+        fontSize: 9,
+        border: [false, false, true, true],
+        colSpan: 5
+    }, {}, {}, {}, {});
+    column5.push({text: 'Item', bold: true, colSpan: 2, fontSize: 9, height: 100}, {}, {
+        text: 'Artículo',
+        alignment: 'center',
+        bold: true,
+        colSpan: 16,
+        fontSize: 10,
+        height: 100
+    }, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {
+        text: 'Almacén',
+        bold: true,
+        colSpan: 7,
+        fontSize: 9,
+        height: 100
+    }, {}, {}, {}, {}, {}, {}, {
+        text: 'Localización',
+        bold: true,
+        colSpan: 8,
+        fontSize: 10,
+        height: 100
+    }, {}, {}, {}, {}, {}, {}, {}, {
+        text: 'Lote',
+        bold: true,
+        colSpan: 9,
+        fontSize: 10,
+        height: 100
+    }, {}, {}, {}, {}, {}, {}, {}, {}, {
+        text: 'Unidad',
+        bold: true,
+        colSpan: 2,
+        fontSize: 9,
+        height: 100
+    }, {}, {text: 'Cantidad', bold: true, fontSize: 9, height: 100}, {
+        text: 'Cantidad Requerida',
+        bold: true,
+        fontSize: 9,
+        height: 100
+    }, {text: 'Cantidad Pendiente', bold: true, fontSize: 9, height: 100});
     header.push(column1);
     header.push(column2);
     header.push(column5);
@@ -9562,7 +10766,36 @@ function create_pdf_movimientoEntrega(response, params) {
         var cantidad_pendiente = Number(index.nCantidadPendienteEntregar);
         var colunmx = []
         cont = cont + 1;
-        colunmx.push({ text: cont, colSpan: 2, fontSize: 9, height: 100 }, {}, { text: index.producto, colSpan: 16, fontSize: 9, height: 100 }, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, { text: index.almacen, colSpan: 7, fontSize: 9, height: 100 }, {}, {}, {}, {}, {}, {}, { text: index.localizacion, colSpan: 8, fontSize: 9, height: 100 }, {}, {}, {}, {}, {}, {}, {}, { text: index.lote, colSpan: 9, fontSize: 9, height: 100 }, {}, {}, {}, {}, {}, {}, {}, {}, { text: index.unidad, colSpan: 2, fontSize: 9, height: 100 }, {}, { text: cantidad, fontSize: 9, height: 100 }, { text: cantidad_requerida, fontSize: 9, height: 100 }, { text: cantidad_pendiente, fontSize: 9, height: 100 });
+        colunmx.push({text: cont, colSpan: 2, fontSize: 9, height: 100}, {}, {
+            text: index.producto,
+            colSpan: 16,
+            fontSize: 9,
+            height: 100
+        }, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {
+            text: index.almacen,
+            colSpan: 7,
+            fontSize: 9,
+            height: 100
+        }, {}, {}, {}, {}, {}, {}, {
+            text: index.localizacion,
+            colSpan: 8,
+            fontSize: 9,
+            height: 100
+        }, {}, {}, {}, {}, {}, {}, {}, {
+            text: index.lote,
+            colSpan: 9,
+            fontSize: 9,
+            height: 100
+        }, {}, {}, {}, {}, {}, {}, {}, {}, {
+            text: index.unidad,
+            colSpan: 2,
+            fontSize: 9,
+            height: 100
+        }, {}, {text: cantidad, fontSize: 9, height: 100}, {
+            text: cantidad_requerida,
+            fontSize: 9,
+            height: 100
+        }, {text: cantidad_pendiente, fontSize: 9, height: 100});
         header.push(colunmx);
         var idenDet = 'I';
         mov_det.map(function (index2) {
@@ -9572,11 +10805,89 @@ function create_pdf_movimientoEntrega(response, params) {
                 var columnz = [];
                 if (idenDet == 'I') {
                     var columny = [];
-                    columny.push({ text: '', colSpan: 2, fontSize: 9, height: 100 }, {}, { text: 'Serie', colSpan: 6, fontSize: 9, height: 100, bold: true }, {}, {}, {}, {}, {}, { text: 'Motor', colSpan: 5, fontSize: 9, height: 100, bold: true }, {}, {}, {}, {}, { text: 'Color', bold: true, colSpan: 5, fontSize: 9, height: 100 }, {}, {}, {}, {}, { text: 'Año de Fabricación', bold: true, colSpan: 7, fontSize: 9, height: 100 }, {}, {}, {}, {}, {}, {}, { text: 'Año Modelo', bold: true, colSpan: 8, fontSize: 9, height: 100 }, {}, {}, {}, {}, {}, {}, {}, { text: '', colSpan: 13, fontSize: 9, height: 100, border: [false, false, false, false] }, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, { text: '', fontSize: 9, height: 100, border: [false, false, true, true] });
+                    columny.push({text: '', colSpan: 2, fontSize: 9, height: 100}, {}, {
+                        text: 'Serie',
+                        colSpan: 6,
+                        fontSize: 9,
+                        height: 100,
+                        bold: true
+                    }, {}, {}, {}, {}, {}, {
+                        text: 'Motor',
+                        colSpan: 5,
+                        fontSize: 9,
+                        height: 100,
+                        bold: true
+                    }, {}, {}, {}, {}, {
+                        text: 'Color',
+                        bold: true,
+                        colSpan: 5,
+                        fontSize: 9,
+                        height: 100
+                    }, {}, {}, {}, {}, {
+                        text: 'Año de Fabricación',
+                        bold: true,
+                        colSpan: 7,
+                        fontSize: 9,
+                        height: 100
+                    }, {}, {}, {}, {}, {}, {}, {
+                        text: 'Año Modelo',
+                        bold: true,
+                        colSpan: 8,
+                        fontSize: 9,
+                        height: 100
+                    }, {}, {}, {}, {}, {}, {}, {}, {
+                        text: '',
+                        colSpan: 13,
+                        fontSize: 9,
+                        height: 100,
+                        border: [false, false, false, false]
+                    }, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {
+                        text: '',
+                        fontSize: 9,
+                        height: 100,
+                        border: [false, false, true, true]
+                    });
                     header.push(columny);
                     idenDet = 'A';
-                };
-                columnz.push({ text: '', colSpan: 2, fontSize: 9, height: 100 }, {}, { text: index2.nombreSerie, colSpan: 6, fontSize: 9, height: 100 }, {}, {}, {}, {}, {}, { text: index2.motor, colSpan: 5, fontSize: 9, height: 100 }, {}, {}, {}, {}, { text: index2.color, colSpan: 5, fontSize: 9, height: 100 }, {}, {}, {}, {}, { text: index2.anio_fabricacion, colSpan: 7, fontSize: 10, height: 100 }, {}, {}, {}, {}, {}, {}, { text: index2.anio_modelo, colSpan: 8, fontSize: 9, height: 100 }, {}, {}, {}, {}, {}, {}, {}, { text: '', colSpan: 13, fontSize: 9, height: 100, border: [false, true, false, true] }, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, { text: '', fontSize: 9, height: 100, border: [false, false, true, true] });
+                }
+                ;
+                columnz.push({text: '', colSpan: 2, fontSize: 9, height: 100}, {}, {
+                    text: index2.nombreSerie,
+                    colSpan: 6,
+                    fontSize: 9,
+                    height: 100
+                }, {}, {}, {}, {}, {}, {
+                    text: index2.motor,
+                    colSpan: 5,
+                    fontSize: 9,
+                    height: 100
+                }, {}, {}, {}, {}, {
+                    text: index2.color,
+                    colSpan: 5,
+                    fontSize: 9,
+                    height: 100
+                }, {}, {}, {}, {}, {
+                    text: index2.anio_fabricacion,
+                    colSpan: 7,
+                    fontSize: 10,
+                    height: 100
+                }, {}, {}, {}, {}, {}, {}, {
+                    text: index2.anio_modelo,
+                    colSpan: 8,
+                    fontSize: 9,
+                    height: 100
+                }, {}, {}, {}, {}, {}, {}, {}, {
+                    text: '',
+                    colSpan: 13,
+                    fontSize: 9,
+                    height: 100,
+                    border: [false, true, false, true]
+                }, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {
+                    text: '',
+                    fontSize: 9,
+                    height: 100,
+                    border: [false, false, true, true]
+                });
                 header.push(columnz);
 
             }
@@ -9587,11 +10898,53 @@ function create_pdf_movimientoEntrega(response, params) {
     });
     for (var i = 0; i < 8; i++) {
         var colum_espacio_blanco = [];
-        colum_espacio_blanco.push({ text: ' ', border: [false, false, false, false], fontSize: 6, alignment: 'center', colSpan: 47, height: 100 }, ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1');
+        colum_espacio_blanco.push({
+            text: ' ',
+            border: [false, false, false, false],
+            fontSize: 6,
+            alignment: 'center',
+            colSpan: 47,
+            height: 100
+        }, ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1');
         header.push(colum_espacio_blanco);
     }
     var columnfooter = [];
-    columnfooter.push({ text: '', border: [false, false, false, false], colSpan: 2, fontSize: 9, height: 100 }, {}, { text: 'ALMACÉN', border: [false, true, false, false], alignment: 'center', colSpan: 6, fontSize: 9, height: 100, bold: true }, {}, {}, {}, {}, {}, { text: '', alignment: 'center', colSpan: 30, border: [false, false, false, false], fontSize: 9, height: 100, bold: true }, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, { text: 'RECIBÍ CONFORME', border: [false, true, false, false], colSpan: 6, fontSize: 9, height: 100 }, {}, {}, {}, {}, {}, { text: '', border: [false, false, false, false], colSpan: 3, fontSize: 9, height: 100, bold: true }, {}, {});
+    columnfooter.push({
+        text: '',
+        border: [false, false, false, false],
+        colSpan: 2,
+        fontSize: 9,
+        height: 100
+    }, {}, {
+        text: 'ALMACÉN',
+        border: [false, true, false, false],
+        alignment: 'center',
+        colSpan: 6,
+        fontSize: 9,
+        height: 100,
+        bold: true
+    }, {}, {}, {}, {}, {}, {
+        text: '',
+        alignment: 'center',
+        colSpan: 30,
+        border: [false, false, false, false],
+        fontSize: 9,
+        height: 100,
+        bold: true
+    }, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {
+        text: 'RECIBÍ CONFORME',
+        border: [false, true, false, false],
+        colSpan: 6,
+        fontSize: 9,
+        height: 100
+    }, {}, {}, {}, {}, {}, {
+        text: '',
+        border: [false, false, false, false],
+        colSpan: 3,
+        fontSize: 9,
+        height: 100,
+        bold: true
+    }, {}, {});
     header.push(columnfooter);
 
 
@@ -9616,7 +10969,7 @@ function create_pdf_movimientoEntrega(response, params) {
                         ],
                         alignment: 'center',
                     },
-                    { width: '60%', text: data_compania[0].RazonSocial, style: 'headerTra' },
+                    {width: '60%', text: data_compania[0].RazonSocial, style: 'headerTra'},
                 ],
             },
             {
@@ -9651,9 +11004,9 @@ function create_pdf_movimientoEntrega(response, params) {
                             widths: [180],
                             heights: 40,
                             body: [
-                                [{ text: 'RUC:' + data_compania[0].Ruc, bold: true, fontSize: 10, alignment: 'center' }],
-                                [{ text: codVen, bold: true, fontSize: 10, alignment: 'center' }],
-                                [{ text: codSol, bold: true, fontSize: 10, alignment: 'center' }]
+                                [{text: 'RUC:' + data_compania[0].Ruc, bold: true, fontSize: 10, alignment: 'center'}],
+                                [{text: codVen, bold: true, fontSize: 10, alignment: 'center'}],
+                                [{text: codSol, bold: true, fontSize: 10, alignment: 'center'}]
                             ]
                         },
 
@@ -9680,34 +11033,34 @@ function create_pdf_movimientoEntrega(response, params) {
                                 },
                             ]
                         },
-                        {
-                            border: [false, true, false, false],
-                            text: [
-                                {
-                                    fontSize: 9,
-                                    text: "N° DOCUMENTO: ",
-                                    bold: true,
-                                },
-                                {
-                                    fontSize: 9,
-                                    text: operacion[0].documento_cliente,
-                                },
-                            ]
-                        },
-                        {
-                            border: [false, true, false, false],
-                            text: [
-                                {
-                                    fontSize: 9,
-                                    text: (user_txt_ === '') ? "VENDEDOR: " : user_txt_,
-                                    bold: true,
-                                },
-                                {
-                                    fontSize: 9,
-                                    text: operacion[0].vendedor,
-                                },
-                            ]
-                        },
+                            {
+                                border: [false, true, false, false],
+                                text: [
+                                    {
+                                        fontSize: 9,
+                                        text: "N° DOCUMENTO: ",
+                                        bold: true,
+                                    },
+                                    {
+                                        fontSize: 9,
+                                        text: operacion[0].documento_cliente,
+                                    },
+                                ]
+                            },
+                            {
+                                border: [false, true, false, false],
+                                text: [
+                                    {
+                                        fontSize: 9,
+                                        text: (user_txt_ === '') ? "VENDEDOR: " : user_txt_,
+                                        bold: true,
+                                    },
+                                    {
+                                        fontSize: 9,
+                                        text: operacion[0].vendedor,
+                                    },
+                                ]
+                            },
                         ],
                         [{
                             border: [false, false, false, false],
@@ -9723,34 +11076,34 @@ function create_pdf_movimientoEntrega(response, params) {
                                 },
                             ]
                         },
-                        {
-                            border: [false, false, false, false],
-                            text: [
-                                {
-                                    fontSize: 9,
-                                    text: "TELF: ",
-                                    bold: true,
-                                },
-                                {
-                                    fontSize: 9,
-                                    text: operacion[0].celular_cliente,
-                                },
-                            ]
-                        },
-                        {
-                            border: [false, false, false, false],
-                            text: [
-                                {
-                                    fontSize: 9,
-                                    text: " ",
-                                    bold: true,
-                                },
-                                {
-                                    fontSize: 9,
-                                    text: "",
-                                },
-                            ]
-                        }
+                            {
+                                border: [false, false, false, false],
+                                text: [
+                                    {
+                                        fontSize: 9,
+                                        text: "TELF: ",
+                                        bold: true,
+                                    },
+                                    {
+                                        fontSize: 9,
+                                        text: operacion[0].celular_cliente,
+                                    },
+                                ]
+                            },
+                            {
+                                border: [false, false, false, false],
+                                text: [
+                                    {
+                                        fontSize: 9,
+                                        text: " ",
+                                        bold: true,
+                                    },
+                                    {
+                                        fontSize: 9,
+                                        text: "",
+                                    },
+                                ]
+                            }
                         ],
 
                     ]
@@ -9831,13 +11184,127 @@ function create_pdf_movimiento(response) {
     var file_comentario_movement = [];
     var title_comentario_movement = [];
     var header = [];
-    column1.push({ image: response.img, rowSpan: 3, colSpan: 8, alignment: 'center', width: 120, height: 50 }, {}, {}, {}, {}, {}, {}, {}, { text: 'MOVIMIENTO DE ' + operacion[0].descripcion, alignment: 'center', bold: true, colSpan: 39, height: 80 }, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {});
-    column2.push({}, {}, {}, {}, {}, {}, {}, {}, { text: ' \n N° Movimiento:', bold: true, alignment: 'center', fontSize: 10, border: [false, false, false, true], rowSpan: 2, colSpan: 7, height: 200 }, {}, {}, {}, {}, {}, {}, { text: ' \n' + data_p.idMovimiento, border: [false, false, true, true], fontSize: 10, rowSpan: 2, colSpan: 3, height: 200 }, {}, {}, { text: '\n Fecha Transacción: ', bold: true, fontSize: 10, border: [false, false, false, true], alignment: 'center', rowSpan: 2, colSpan: 10, height: 80 }, {}, {}, {}, {}, {}, {}, {}, {}, {}, { text: '\n' + data_p.fecha_proceso, fontSize: 10, border: [false, false, true, true], rowSpan: 2, colSpan: 5, height: 80 }, {}, {}, {}, {}, { text: '\n Fecha Impresión:', bold: true, fontSize: 10, border: [false, false, false, true], alignment: 'center', colSpan: 9, rowSpan: 2, height: 80 }, {}, {}, {}, {}, {}, {}, {}, {}, { text: '\n' + data_p.fecha_impresion, fontSize: 10, border: [false, false, true, true], colSpan: 5, rowSpan: 2, height: 80 }, {}, {}, {}, {});
+    column1.push({
+        image: response.img,
+        rowSpan: 3,
+        colSpan: 8,
+        alignment: 'center',
+        width: 120,
+        height: 50
+    }, {}, {}, {}, {}, {}, {}, {}, {
+        text: 'MOVIMIENTO DE ' + operacion[0].descripcion,
+        alignment: 'center',
+        bold: true,
+        colSpan: 39,
+        height: 80
+    }, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {});
+    column2.push({}, {}, {}, {}, {}, {}, {}, {}, {
+        text: ' \n N° Movimiento:',
+        bold: true,
+        alignment: 'center',
+        fontSize: 10,
+        border: [false, false, false, true],
+        rowSpan: 2,
+        colSpan: 7,
+        height: 200
+    }, {}, {}, {}, {}, {}, {}, {
+        text: ' \n' + data_p.idMovimiento,
+        border: [false, false, true, true],
+        fontSize: 10,
+        rowSpan: 2,
+        colSpan: 3,
+        height: 200
+    }, {}, {}, {
+        text: '\n Fecha Transacción: ',
+        bold: true,
+        fontSize: 10,
+        border: [false, false, false, true],
+        alignment: 'center',
+        rowSpan: 2,
+        colSpan: 10,
+        height: 80
+    }, {}, {}, {}, {}, {}, {}, {}, {}, {}, {
+        text: '\n' + data_p.fecha_proceso,
+        fontSize: 10,
+        border: [false, false, true, true],
+        rowSpan: 2,
+        colSpan: 5,
+        height: 80
+    }, {}, {}, {}, {}, {
+        text: '\n Fecha Impresión:',
+        bold: true,
+        fontSize: 10,
+        border: [false, false, false, true],
+        alignment: 'center',
+        colSpan: 9,
+        rowSpan: 2,
+        height: 80
+    }, {}, {}, {}, {}, {}, {}, {}, {}, {
+        text: '\n' + data_p.fecha_impresion,
+        fontSize: 10,
+        border: [false, false, true, true],
+        colSpan: 5,
+        rowSpan: 2,
+        height: 80
+    }, {}, {}, {}, {});
     column3.push({}, {}, {}, {}, {}, {}, {}, {}, ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1');
-    column4.push({ text: ' ', border: [true, false, true, true], fontSize: 6, alignment: 'center', colSpan: 47, height: 100 }, ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1');
-    column5.push({ text: 'Item', bold: true, colSpan: 2, fontSize: 10, height: 100 }, {}, { text: 'Artículo', alignment: 'center', bold: true, colSpan: 16, fontSize: 10, height: 100 }, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, { text: 'Almacén', bold: true, colSpan: 7, fontSize: 10, height: 100 }, {}, {}, {}, {}, {}, {}, { text: 'Localización', bold: true, colSpan: 8, fontSize: 10, height: 100 }, {}, {}, {}, {}, {}, {}, {}, { text: 'Lote', bold: true, colSpan: 9, fontSize: 10, height: 100 }, {}, {}, {}, {}, {}, {}, {}, {}, { text: 'Unidad', bold: true, colSpan: 2, fontSize: 10, height: 100 }, {}, { text: 'Cantidad', bold: true, colSpan: 3, fontSize: 10, height: 100 }, {}, {});
-    title_comentario_movement.push({ text: "Observaciones", bold: true, border: [true, false, true, true], fontSize: 10, alignment: 'center', colSpan: 47, height: 500 }, ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1');
-    file_comentario_movement.push({ text: data_p.observaciones, border: [true, false, true, true], fontSize: 10, alignment: 'center', colSpan: 47, height: 500 }, ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1');
+    column4.push({
+        text: ' ',
+        border: [true, false, true, true],
+        fontSize: 6,
+        alignment: 'center',
+        colSpan: 47,
+        height: 100
+    }, ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1');
+    column5.push({text: 'Item', bold: true, colSpan: 2, fontSize: 10, height: 100}, {}, {
+        text: 'Artículo',
+        alignment: 'center',
+        bold: true,
+        colSpan: 16,
+        fontSize: 10,
+        height: 100
+    }, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {
+        text: 'Almacén',
+        bold: true,
+        colSpan: 7,
+        fontSize: 10,
+        height: 100
+    }, {}, {}, {}, {}, {}, {}, {
+        text: 'Localización',
+        bold: true,
+        colSpan: 8,
+        fontSize: 10,
+        height: 100
+    }, {}, {}, {}, {}, {}, {}, {}, {
+        text: 'Lote',
+        bold: true,
+        colSpan: 9,
+        fontSize: 10,
+        height: 100
+    }, {}, {}, {}, {}, {}, {}, {}, {}, {
+        text: 'Unidad',
+        bold: true,
+        colSpan: 2,
+        fontSize: 10,
+        height: 100
+    }, {}, {text: 'Cantidad', bold: true, colSpan: 3, fontSize: 10, height: 100}, {}, {});
+    title_comentario_movement.push({
+        text: "Observaciones",
+        bold: true,
+        border: [true, false, true, true],
+        fontSize: 10,
+        alignment: 'center',
+        colSpan: 47,
+        height: 500
+    }, ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1');
+    file_comentario_movement.push({
+        text: data_p.observaciones,
+        border: [true, false, true, true],
+        fontSize: 10,
+        alignment: 'center',
+        colSpan: 47,
+        height: 500
+    }, ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1');
 
 
     header.push(column1);
@@ -9852,7 +11319,32 @@ function create_pdf_movimiento(response) {
         var cantidad = Math.trunc(index.cantidad);
         var colunmx = []
         cont = cont + 1;
-        colunmx.push({ text: cont, colSpan: 2, fontSize: 10, height: 100 }, {}, { text: index.producto, colSpan: 16, fontSize: 10, height: 100 }, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, { text: index.almacen, colSpan: 7, fontSize: 9, height: 100 }, {}, {}, {}, {}, {}, {}, { text: index.localizacion, colSpan: 8, fontSize: 10, height: 100 }, {}, {}, {}, {}, {}, {}, {}, { text: index.lote, colSpan: 9, fontSize: 10, height: 100 }, {}, {}, {}, {}, {}, {}, {}, {}, { text: index.unidad, colSpan: 2, fontSize: 10, height: 100 }, {}, { text: cantidad, colSpan: 3, fontSize: 9, height: 100 }, {}, {});
+        colunmx.push({text: cont, colSpan: 2, fontSize: 10, height: 100}, {}, {
+            text: index.producto,
+            colSpan: 16,
+            fontSize: 10,
+            height: 100
+        }, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {
+            text: index.almacen,
+            colSpan: 7,
+            fontSize: 9,
+            height: 100
+        }, {}, {}, {}, {}, {}, {}, {
+            text: index.localizacion,
+            colSpan: 8,
+            fontSize: 10,
+            height: 100
+        }, {}, {}, {}, {}, {}, {}, {}, {
+            text: index.lote,
+            colSpan: 9,
+            fontSize: 10,
+            height: 100
+        }, {}, {}, {}, {}, {}, {}, {}, {}, {
+            text: index.unidad,
+            colSpan: 2,
+            fontSize: 10,
+            height: 100
+        }, {}, {text: cantidad, colSpan: 3, fontSize: 9, height: 100}, {}, {});
         header.push(colunmx);
         var idenDet = 'I';
         mov_det.map(function (index2) {
@@ -9862,11 +11354,89 @@ function create_pdf_movimiento(response) {
                 var columnz = [];
                 if (idenDet == 'I') {
                     var columny = [];
-                    columny.push({ text: '', colSpan: 2, fontSize: 10, height: 100 }, {}, { text: 'Serie', colSpan: 6, fontSize: 10, height: 100, bold: true }, {}, {}, {}, {}, {}, { text: 'Motor', colSpan: 5, fontSize: 10, height: 100, bold: true }, {}, {}, {}, {}, { text: 'Color', bold: true, colSpan: 5, fontSize: 10, height: 100 }, {}, {}, {}, {}, { text: 'Año de Fabricación', bold: true, colSpan: 7, fontSize: 10, height: 100 }, {}, {}, {}, {}, {}, {}, { text: 'Año Modelo', bold: true, colSpan: 8, fontSize: 10, height: 100 }, {}, {}, {}, {}, {}, {}, {}, { text: '', colSpan: 13, fontSize: 10, height: 100, border: [false, false, false, false] }, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, { text: '', fontSize: 10, height: 100, border: [false, false, true, true] });
+                    columny.push({text: '', colSpan: 2, fontSize: 10, height: 100}, {}, {
+                        text: 'Serie',
+                        colSpan: 6,
+                        fontSize: 10,
+                        height: 100,
+                        bold: true
+                    }, {}, {}, {}, {}, {}, {
+                        text: 'Motor',
+                        colSpan: 5,
+                        fontSize: 10,
+                        height: 100,
+                        bold: true
+                    }, {}, {}, {}, {}, {
+                        text: 'Color',
+                        bold: true,
+                        colSpan: 5,
+                        fontSize: 10,
+                        height: 100
+                    }, {}, {}, {}, {}, {
+                        text: 'Año de Fabricación',
+                        bold: true,
+                        colSpan: 7,
+                        fontSize: 10,
+                        height: 100
+                    }, {}, {}, {}, {}, {}, {}, {
+                        text: 'Año Modelo',
+                        bold: true,
+                        colSpan: 8,
+                        fontSize: 10,
+                        height: 100
+                    }, {}, {}, {}, {}, {}, {}, {}, {
+                        text: '',
+                        colSpan: 13,
+                        fontSize: 10,
+                        height: 100,
+                        border: [false, false, false, false]
+                    }, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {
+                        text: '',
+                        fontSize: 10,
+                        height: 100,
+                        border: [false, false, true, true]
+                    });
                     header.push(columny);
                     idenDet = 'A';
-                };
-                columnz.push({ text: '', colSpan: 2, fontSize: 10, height: 100 }, {}, { text: index2.nombreSerie, colSpan: 6, fontSize: 10, height: 100 }, {}, {}, {}, {}, {}, { text: index2.motor, colSpan: 5, fontSize: 10, height: 100 }, {}, {}, {}, {}, { text: index2.color, colSpan: 5, fontSize: 10, height: 100 }, {}, {}, {}, {}, { text: index2.anio_fabricacion, colSpan: 7, fontSize: 10, height: 100 }, {}, {}, {}, {}, {}, {}, { text: index2.anio_modelo, colSpan: 8, fontSize: 10, height: 100 }, {}, {}, {}, {}, {}, {}, {}, { text: '', colSpan: 13, fontSize: 10, height: 100, border: [false, true, false, true] }, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, { text: '', fontSize: 10, height: 100, border: [false, false, true, true] });
+                }
+                ;
+                columnz.push({text: '', colSpan: 2, fontSize: 10, height: 100}, {}, {
+                    text: index2.nombreSerie,
+                    colSpan: 6,
+                    fontSize: 10,
+                    height: 100
+                }, {}, {}, {}, {}, {}, {
+                    text: index2.motor,
+                    colSpan: 5,
+                    fontSize: 10,
+                    height: 100
+                }, {}, {}, {}, {}, {
+                    text: index2.color,
+                    colSpan: 5,
+                    fontSize: 10,
+                    height: 100
+                }, {}, {}, {}, {}, {
+                    text: index2.anio_fabricacion,
+                    colSpan: 7,
+                    fontSize: 10,
+                    height: 100
+                }, {}, {}, {}, {}, {}, {}, {
+                    text: index2.anio_modelo,
+                    colSpan: 8,
+                    fontSize: 10,
+                    height: 100
+                }, {}, {}, {}, {}, {}, {}, {}, {
+                    text: '',
+                    colSpan: 13,
+                    fontSize: 10,
+                    height: 100,
+                    border: [false, true, false, true]
+                }, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {
+                    text: '',
+                    fontSize: 10,
+                    height: 100,
+                    border: [false, false, true, true]
+                });
                 header.push(columnz);
 
             }
@@ -9879,11 +11449,53 @@ function create_pdf_movimiento(response) {
     header.push(file_comentario_movement);
     for (var i = 0; i < 8; i++) {
         var colum_espacio_blanco = [];
-        colum_espacio_blanco.push({ text: ' ', border: [false, false, false, false], fontSize: 6, alignment: 'center', colSpan: 47, height: 100 }, ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1');
+        colum_espacio_blanco.push({
+            text: ' ',
+            border: [false, false, false, false],
+            fontSize: 6,
+            alignment: 'center',
+            colSpan: 47,
+            height: 100
+        }, ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1', ' 1');
         header.push(colum_espacio_blanco);
     }
     var columnfooter = [];
-    columnfooter.push({ text: '', border: [false, false, false, false], colSpan: 2, fontSize: 10, height: 100 }, {}, { text: 'ALMACÉN', border: [false, true, false, false], alignment: 'center', colSpan: 6, fontSize: 10, height: 100, bold: true }, {}, {}, {}, {}, {}, { text: '', alignment: 'center', colSpan: 30, border: [false, false, false, false], fontSize: 10, height: 100, bold: true }, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, { text: 'RECIBÍ CONFORME', border: [false, true, false, false], colSpan: 6, fontSize: 10, height: 100 }, {}, {}, {}, {}, {}, { text: '', border: [false, false, false, false], colSpan: 3, fontSize: 10, height: 100, bold: true }, {}, {});
+    columnfooter.push({
+        text: '',
+        border: [false, false, false, false],
+        colSpan: 2,
+        fontSize: 10,
+        height: 100
+    }, {}, {
+        text: 'ALMACÉN',
+        border: [false, true, false, false],
+        alignment: 'center',
+        colSpan: 6,
+        fontSize: 10,
+        height: 100,
+        bold: true
+    }, {}, {}, {}, {}, {}, {
+        text: '',
+        alignment: 'center',
+        colSpan: 30,
+        border: [false, false, false, false],
+        fontSize: 10,
+        height: 100,
+        bold: true
+    }, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {
+        text: 'RECIBÍ CONFORME',
+        border: [false, true, false, false],
+        colSpan: 6,
+        fontSize: 10,
+        height: 100
+    }, {}, {}, {}, {}, {}, {
+        text: '',
+        border: [false, false, false, false],
+        colSpan: 3,
+        fontSize: 10,
+        height: 100,
+        bold: true
+    }, {}, {});
     header.push(columnfooter);
 
 
@@ -9918,104 +11530,115 @@ function create_pdf_ordenCompra(response) {
     // Filas para la informacion de la orden de compra
     var partOrden = [
         [
-            { text: 'ORDEN DE COMPRA '  + orden.cCodConsecutivo + orden.nConsecutivo, bold: true, colSpan: ncolumns, alignment: 'center', fontSize: 9 },
+            {
+                text: 'ORDEN DE COMPRA ' + orden.cCodConsecutivo + orden.nConsecutivo,
+                bold: true,
+                colSpan: ncolumns,
+                alignment: 'center',
+                fontSize: 9
+            },
             {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}
         ],
 
         [
-            { text: 'Consecutivo: '    + orden.cCodConsecutivo + orden.nConsecutivo, bold: true, fontSize: 9, colSpan: 5 },
+            {text: 'Consecutivo: ' + orden.cCodConsecutivo + orden.nConsecutivo, bold: true, fontSize: 9, colSpan: 5},
             {}, {}, {}, {},
-            { text: 'Fecha Registro: ' + orden.dFecRegistro,                         bold: true, fontSize: 9, colSpan: 4 },
+            {text: 'Fecha Registro: ' + orden.dFecRegistro, bold: true, fontSize: 9, colSpan: 4},
             {}, {}, {},
-            { text: 'Estado: '         + orden.iEstado,                              bold: true, fontSize: 9, colSpan: 5 },
+            {text: 'Estado: ' + orden.iEstado, bold: true, fontSize: 9, colSpan: 5},
             {}, {}, {}, {},
         ],
 
         [
-            { text: 'Prioridad: '       + orden.prioridad,     bold: true, fontSize: 9, colSpan: 5 },
+            {text: 'Prioridad: ' + orden.prioridad, bold: true, fontSize: 9, colSpan: 5},
             {}, {}, {}, {},
-            { text: 'Fecha Requerida: ' + orden.dFecRequerida, bold: true, fontSize: 9, colSpan: 4 },
+            {text: 'Fecha Requerida: ' + orden.dFecRequerida, bold: true, fontSize: 9, colSpan: 4},
             {}, {}, {},
-            { text: 'Moneda: '          + orden.idMoneda,      bold: true, fontSize: 9, colSpan: 5 },
+            {text: 'Moneda: ' + orden.idMoneda, bold: true, fontSize: 9, colSpan: 5},
             {}, {}, {}, {}
         ],
 
         [
-            { text: 'Proveedor: '          + orden.idProveedor,      bold: true, fontSize: 9, colSpan: 5 },
+            {text: 'Proveedor: ' + orden.idProveedor, bold: true, fontSize: 9, colSpan: 5},
             {}, {}, {}, {},
-            { text: 'Condición de pago: '  + orden.idcondicion_pago, bold: true, fontSize: 9, colSpan: 4 },
+            {text: 'Condición de pago: ' + orden.idcondicion_pago, bold: true, fontSize: 9, colSpan: 4},
             {}, {}, {},
-            { text: 'Fecha de impresión: ' + orden.fecha_impresion,  bold: true, fontSize: 9, colSpan: 5 },
+            {text: 'Fecha de impresión: ' + orden.fecha_impresion, bold: true, fontSize: 9, colSpan: 5},
             {}, {}, {}, {}
         ],
 
         [
-            { text: 'Dirección de entrega: '  + orden.direccionEntrega, bold: true, colSpan: ncolumns, fontSize: 9 },
+            {text: 'Dirección de entrega: ' + orden.direccionEntrega, bold: true, colSpan: ncolumns, fontSize: 9},
             {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}
         ],
 
         [
-            { text: 'Comentarios ', bold: true, colSpan: ncolumns, alignment: 'center', fontSize: 9 },
+            {text: 'Comentarios ', bold: true, colSpan: ncolumns, alignment: 'center', fontSize: 9},
             {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}
         ],
 
         [
-            { text: orden.comentario, colSpan: ncolumns, fontSize: 9 },
+            {text: orden.comentario, colSpan: ncolumns, fontSize: 9},
             {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}
         ],
 
         [
-            { text: 'Comentarios aprobación ', bold: true, colSpan: ncolumns, alignment: 'center', fontSize: 9 },
+            {text: 'Comentarios aprobación ', bold: true, colSpan: ncolumns, alignment: 'center', fontSize: 9},
             {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}
         ],
 
         [
-            { text: orden.comentarioAprobacion, colSpan: ncolumns, fontSize: 9 },
+            {text: orden.comentarioAprobacion, colSpan: ncolumns, fontSize: 9},
             {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}
         ],
 
         [
-            { text: 'Impuesto: '  + orden.impuesto, bold: true, colSpan: ncolumns, fontSize: 9 },
+            {text: 'Impuesto: ' + orden.impuesto, bold: true, colSpan: ncolumns, fontSize: 9},
             {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}
         ]
     ];
 
     var headerDetail = [
         [
-            { text: 'Articulo',               bold: true, alignment: 'center', fontSize: 8 },
-            { text: 'Cantidad',               bold: true, alignment: 'center', fontSize: 8 },
-            { text: 'Cantidad Pendiente',     bold: true, alignment: 'center', fontSize: 8 },
-            { text: 'Cantidad Recibida',      bold: true, alignment: 'center', fontSize: 8 },
-            { text: 'Cantidad Devuelta',      bold: true, alignment: 'center', fontSize: 8 },
-            { text: 'Precio Unitario',        bold: true, alignment: 'center', fontSize: 8 },
-            { text: 'Precio Total',           bold: true, alignment: 'center', fontSize: 8 },
-            { text: 'Porcentaje Descuento',   bold: true, alignment: 'center', fontSize: 8 },
-            { text: 'Monto Descuento',        bold: true, alignment: 'center', fontSize: 8 },
-            { text: 'Valor Compra',           bold: true, alignment: 'center', fontSize: 8 },
-            { text: 'Valor Compra Descuento', bold: true, alignment: 'center', fontSize: 8 },
-            { text: 'Impuesto',               bold: true, alignment: 'center', fontSize: 8 },
-            { text: 'Sub Total',              bold: true, alignment: 'center', fontSize: 8 },
-            { text: 'Fecha',                  bold: true, alignment: 'center', fontSize: 8 },
+            {text: 'Articulo', bold: true, alignment: 'center', fontSize: 8},
+            {text: 'Cantidad', bold: true, alignment: 'center', fontSize: 8},
+            {text: 'Cantidad Pendiente', bold: true, alignment: 'center', fontSize: 8},
+            {text: 'Cantidad Recibida', bold: true, alignment: 'center', fontSize: 8},
+            {text: 'Cantidad Devuelta', bold: true, alignment: 'center', fontSize: 8},
+            {text: 'Precio Unitario', bold: true, alignment: 'center', fontSize: 8},
+            {text: 'Precio Total', bold: true, alignment: 'center', fontSize: 8},
+            {text: 'Porcentaje Descuento', bold: true, alignment: 'center', fontSize: 8},
+            {text: 'Monto Descuento', bold: true, alignment: 'center', fontSize: 8},
+            {text: 'Valor Compra', bold: true, alignment: 'center', fontSize: 8},
+            {text: 'Valor Compra Descuento', bold: true, alignment: 'center', fontSize: 8},
+            {text: 'Impuesto', bold: true, alignment: 'center', fontSize: 8},
+            {text: 'Sub Total', bold: true, alignment: 'center', fontSize: 8},
+            {text: 'Fecha', bold: true, alignment: 'center', fontSize: 8},
             //{ text: 'Estado',                 bold: true, alignment: 'center', fontSize: 8 }
         ],
     ];
 
     var bodyDetail = detalleOrden.map((product) => {
         return [
-            { text: product.productoDescripcion,                               bold: false, alignment: 'center', fontSize: 7 },
-            { text: Number(product.cantidad),                                  bold: false, alignment: 'center', fontSize: 7 },
-            { text: Number(product.cantidadPendiente),                         bold: false, alignment: 'center', fontSize: 7 },
-            { text: Number(product.cantidadRecibida),                          bold: false, alignment: 'center', fontSize: 7 },
-            { text: Number(product.cantidadDevuelta),                          bold: false, alignment: 'center', fontSize: 7 },
-            { text: Number(product.precioUnitario).toFixed(2),                 bold: false, alignment: 'center', fontSize: 7 },
-            { text: Number(product.precioTotal).toFixed(2),                    bold: false, alignment: 'center', fontSize: 7 },
-            { text: Number(product.nPorcDescuento).toFixed(2),                 bold: false, alignment: 'center', fontSize: 7 },
-            { text: Number(product.nDescuento).toFixed(2),                     bold: false, alignment: 'center', fontSize: 7 },
-            { text: Number(product.valorCompra).toFixed(2),                    bold: false, alignment: 'center', fontSize: 7 },
-            { text: Number(product.valorCompraDescuento).toFixed(2),           bold: false, alignment: 'center', fontSize: 7 },
-            { text: Number(product.nImpuesto).toFixed(2),                      bold: false, alignment: 'center', fontSize: 7 },
-            { text: Number(product.total).toFixed(2),                          bold: false, alignment: 'center', fontSize: 7 },
-            { text: (new Date(product.dFecRequerida)).toLocaleDateString(),    bold: false, alignment: 'center', fontSize: 7 }, // NOTE: Convertir desde el controlador?
+            {text: product.productoDescripcion, bold: false, alignment: 'center', fontSize: 7},
+            {text: Number(product.cantidad), bold: false, alignment: 'center', fontSize: 7},
+            {text: Number(product.cantidadPendiente), bold: false, alignment: 'center', fontSize: 7},
+            {text: Number(product.cantidadRecibida), bold: false, alignment: 'center', fontSize: 7},
+            {text: Number(product.cantidadDevuelta), bold: false, alignment: 'center', fontSize: 7},
+            {text: Number(product.precioUnitario).toFixed(2), bold: false, alignment: 'center', fontSize: 7},
+            {text: Number(product.precioTotal).toFixed(2), bold: false, alignment: 'center', fontSize: 7},
+            {text: Number(product.nPorcDescuento).toFixed(2), bold: false, alignment: 'center', fontSize: 7},
+            {text: Number(product.nDescuento).toFixed(2), bold: false, alignment: 'center', fontSize: 7},
+            {text: Number(product.valorCompra).toFixed(2), bold: false, alignment: 'center', fontSize: 7},
+            {text: Number(product.valorCompraDescuento).toFixed(2), bold: false, alignment: 'center', fontSize: 7},
+            {text: Number(product.nImpuesto).toFixed(2), bold: false, alignment: 'center', fontSize: 7},
+            {text: Number(product.total).toFixed(2), bold: false, alignment: 'center', fontSize: 7},
+            {
+                text: (new Date(product.dFecRequerida)).toLocaleDateString(),
+                bold: false,
+                alignment: 'center',
+                fontSize: 7
+            }, // NOTE: Convertir desde el controlador?
             //{ text: product.iEstado,                                           bold: false, alignment: 'center', fontSize: 7 }
         ];
     });
@@ -10048,7 +11671,7 @@ function create_receptionTransfer_pdf(response) {
     // data.push(['N°', 'PROVEEDOR', 'DOCUMENTO'])
     var data_header = response.data_header[0];
     var info = response.info[0];
-    pag = { text: response.title, style: 'header' };
+    pag = {text: response.title, style: 'header'};
     array_dataHead.push([
         pag,
         {
@@ -10063,17 +11686,17 @@ function create_receptionTransfer_pdf(response) {
                 }
             ]
         },
-        { text: 'Fecha: ' + moment().format('DD [de] MMMM [de] YYYY, h:mm A'), style: 'subheader' },
-        { text: 'USUARIO° : ' + data_header[0][1], style: 'dataHeader' },
+        {text: 'Fecha: ' + moment().format('DD [de] MMMM [de] YYYY, h:mm A'), style: 'subheader'},
+        {text: 'USUARIO° : ' + data_header[0][1], style: 'dataHeader'},
         {
             style: 'dataHeaderAll',
             table: {
                 headerRows: 1,
                 body: [
-                    [{ text: 'ALMACÉN ORIGEN: ', style: 'dataHeader' },
-                    { text: data_header[0][2] },
-                    { text: 'ALMACÉN DESTINO : ', style: 'dataHeader' },
-                    { text: data_header[0][3] }
+                    [{text: 'ALMACÉN ORIGEN: ', style: 'dataHeader'},
+                        {text: data_header[0][2]},
+                        {text: 'ALMACÉN DESTINO : ', style: 'dataHeader'},
+                        {text: data_header[0][3]}
                     ]
                 ]
             },
@@ -10153,11 +11776,7 @@ function create_receptionTransfer_pdf(response) {
     } else {
         pdfMake.createPdf(docDefinition).print({}, win);
     }
-
 }
-
-
-
 
 function getFormSearchComprobantes(form_id, input_id, btn_id) {
     return '<form class="form-inline" id="' + form_id + '" style="margin-bottom:-3px">' +
@@ -10198,7 +11817,47 @@ function getFormSearchComprobantes(form_id, input_id, btn_id) {
         '</div>' +
         '</div>' +
 
-        
+
+        '<div class="col-md-2" style="padding: 0;">' +
+        '<label class="control-label">Anulado</label>' +
+        '<select id="anulado"  style="width: 100%" name="anulado" class="form-control input-sm "><option value="">TODOS</option><option value="S">SI</option><option value="N">NO</option></select>' +
+        '</div>' +
+
+        '</div>' +
+
+        '</form>';
+}
+
+function getFormSearchComp(form_id, input_id, btn_id) {
+    return '<form class="form-inline" id="' + form_id + '" style="margin-bottom:-3px">' +
+        '<div class="form-group">' +
+
+        '<div class="col-md-2 " style="padding: 0;">' +
+        '<label class="control-label">Tipo Documento</label>' +
+        '<select id="id_tipo_doc"  style="width: 100%" name="id_tipo_doc" class="form-control input-sm "><option value="">TODOS</option><option value="03">BOLETAS</option><option value="01">FACTURAS</option><option value="07">NOTAS DE CRÉDITO</option><option value="08">NOTAS DE DÉBITO</option><option value="12">TICKET</option></select>' +
+        '</div>' +
+        '<div class="col-md-2 " style="">' +
+        '<label class="control-label">Cliente</label>' +
+        '<select id="idClienteFiltro"  style="margin-right:5px;width: 100%" name="idClienteFiltro" class="form-control input-sm "></select>' +
+        '</div>' +
+        '<div class="col-md-1 " style="padding: 0;">' +
+        '<label class="control-label">Estado</label>' +
+        '<select id="estado_cpe"  style="width: 100%" name="estado_cpe" class="form-control input-sm "><option value="">TODOS</option><option value="PENDIENTE">PENDIENTE</option><option value="EMITIDO">EMITIDO</option><option value="RECHAZADO">RECHAZADO</option><option value="BAJA EMITIDA">BAJA EMITIDA</option><option value="BAJA RECHAZADA">BAJA RECHAZADA</option></select>' +
+        '</div>' +
+        '<div class="col-md-3 " style="padding-right: 0px;"><br>' +
+        '<div class="input-group input-group-sm">' +
+        '<input type="text" id="' + input_id + '" name="search" class="form-control" autocomplete="off" placeholder="Buscar..." />' +
+        '<span class="input-group-btn">' +
+        '<button type="submit" id="' + btn_id + '" class="btn btn-danger-admin">' +
+        '<i class="fa fa-search"></i>' +
+        '</button>' +
+        '<button title="Limpiar Filtro" type="button" id="limpiar-filtro-comprobantes" class="btn btn-warning">' +
+        '<i class="fa fa-trash-o"></i>' +
+        '</button>' +
+        '</span>' +
+        '</div>' +
+        '</div>' +
+
         '<div class="col-md-2" style="padding: 0;">' +
         '<label class="control-label">Anulado</label>' +
         '<select id="anulado"  style="width: 100%" name="anulado" class="form-control input-sm "><option value="">TODOS</option><option value="S">SI</option><option value="N">NO</option></select>' +

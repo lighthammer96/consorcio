@@ -1,7 +1,9 @@
 <?php namespace App\Http\Recopro\ProformaView;
+
 use App\Http\Recopro\User\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
 /**
  * Created by PhpStorm.
  * User: Jair Vasquez
@@ -10,14 +12,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class ProformaView extends Model
 {
-  
+
     protected $table = 'ERP_view_proforma';
 
 
+    protected $fillable = ['cCodConsecutivo', 'nConsecutivo', 'cCodConsecutivoOS', 'nConsecutivoOS', 'dFechaRegistro',
+        'nTotalMO', 'nTotalDetalle', 'nSubTotal', 'nImpuesto', 'nTotal', 'iEstado', 'cIdUsuCre', 'cIdUsuMod',
+        'razonsocial_cliente'];
 
-    protected $fillable = ['cCodConsecutivo', 'nConsecutivo','cCodConsecutivoOS','nConsecutivoOS','dFechaRegistro','nTotalMO','nTotalDetalle','nSubTotal','nImpuesto','nTotal','iEstado','cIdUsuCre','cIdUsuMod', 'razonsocial_cliente'];
-    
-     public function user_c()
+    public function user_c()
     {
         return $this->belongsTo(User::class, 'cIdUsuCre');
     }

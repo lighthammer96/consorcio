@@ -6,7 +6,7 @@
  * Time: 6:59 PM
  */
 
-Route::post('solicitud/list', ['as' => 'solicitud.list', 'uses' => 'SolicitudController@all']);
+Route::post('solicitud/list', 'SolicitudController@all');
 Route::post('solicitud/list_ventas', ['as' => 'solicitud.list_ventas', 'uses' => 'SolicitudController@list_ventas']);
 Route::post('solicitud/list_creditos', ['as' => 'solicitud.list_creditos', 'uses' => 'SolicitudController@list_creditos']);
 Route::post('solicitud/create', ['as' => 'solicitud.create', 'uses' => 'SolicitudController@create']);
@@ -22,7 +22,7 @@ Route::post('solicitud/mostrar_aprobaciones', ['as' => 'solicitud.mostrar_aproba
 Route::post('solicitud/anular_solicitud', ['as' => 'solicitud.anular_solicitud', 'uses' => 'SolicitudController@anular_solicitud']);
 
 
-Route::get('solicitud/excel', ['as' => 'solicitud.excel', 'uses' => 'SolicitudController@excel']);
+Route::get('solicitud/excel', 'SolicitudController@excel');
 
 
 

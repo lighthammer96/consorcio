@@ -31,6 +31,15 @@
 </style>
 <div class="panel  panel-danger-admin">
     <div class="panel-heading">
+        <div class="pull-right date_range_div resize-pull">
+            <label class="checkbox-inline" style="padding-left:0">
+                <input type="checkbox" checked class="chk_date_range_ent" id="chk_date_range"/>
+            </label>
+            <div id="reqDates" class="">
+                <i class="fa fa-calendar"></i>&nbsp;
+                <span></span> <b class="caret"></b>
+            </div>
+        </div>
         Gestión de Entrega de Servicio
     </div>
     <div class="panel-body">
@@ -39,11 +48,9 @@
                 <div id="table_container_Register_Movement" class="table-responsive"></div>
             </div>
         </div>
-       
-        
-        <div ng-include src="'/templates/partials/crop.html'"></div>
     </div>
 </div>
+<div ng-include src="'/templates/partials/crop.html'"></div>
 <div class="modal" id="modalMovimieto" role="dialog">
             <div class="modal-dialog  modal-lg" style="width:90%;" role="document">
                 <div class="modal-content">

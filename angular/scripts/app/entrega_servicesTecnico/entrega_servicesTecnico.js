@@ -1,7 +1,3 @@
-/**
- * Created by JAIR on 4/5/2017.
- */
-
 (function () {
     'use strict';
     angular.module('sys.app.entrega_servicesTecnicos')
@@ -11,7 +7,30 @@
     Config.$inject = ['$stateProvider', '$urlRouterProvider'];
     Entrega_servicesTecnicoCtrl.$inject = ['$scope', '_', 'RESTService', 'AlertFactory'];
 
-    function Entrega_servicesTecnicoCtrl($scope, _, RESTService, AlertFactory) {
+    function Entrega_servicesTecnicoCtrl($scope, _, RESTService, AlertFactory)
+    {
+        moment.locale('es');
+        var start = moment().startOf('month');
+        var end = moment().endOf('month');
+
+        var chk_date_range = $('#chk_date_range');
+        chk_date_range.click(function () {
+            $('#LoadRecordsButtonRegister_Movement').click();
+        });
+        generateCheckBox('.chk_date_range_ent');
+
+        var reqDates = $('#reqDates');
+
+        var showDate = function (from, to) {
+            start = from;
+            end = to;
+            reqDates.find('span').html(from.format('MMM D, YYYY') + ' - ' + to.format('MMM D, YYYY'));
+            if (chk_date_range.prop('checked')) {
+                $('#LoadRecordsButtonRegister_Movement').click();
+            }
+        };
+        generateDateRangePicker(reqDates, start, end, showDate);
+        showDate(start, end);
 
         var proformas_completas;
         var codigo_actual; //variable para identificar en que fila voy a gregar lotes o series
@@ -2612,7 +2631,8 @@
         }
         getDataFormSerie();
 
-        var search = getFormSearch('frm-search-Register_Movement', 'search_b', 'LoadRecordsButtonRegister_Movement');
+        var search = getFormSearch('frm-search-Register_Movement', 'search_b',
+            'LoadRecordsButtonRegister_Movement');
 
         var table_container_Register_Movement = $("#table_container_Register_Movement");
 
@@ -2761,7 +2781,10 @@
 
         generateSearchForm('frm-search-Register_Movement', 'LoadRecordsButtonRegister_Movement', function () {
             table_container_Register_Movement.jtable('load', {
-                search: $('#search_b').val()
+                search: $('#search_b').val(),
+                check: (chk_date_range.prop('checked')),
+                from: start.format('YYYY-MM-DD'),
+                to: end.format('YYYY-MM-DD')
             });
         }, true);
 

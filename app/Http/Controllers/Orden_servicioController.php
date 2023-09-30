@@ -10,6 +10,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Recopro\Brand\BrandInterface;
 use App\Http\Recopro\Orden_servicio\Orden_servicioTrait;
+use App\Http\Recopro\Proforma\ProformaInterface;
+use App\Http\Recopro\Vehiculos_tercero\Vehiculos_terceroInterface;
 use Illuminate\Http\Request;
 use App\Http\Recopro\Orden_servicio\Orden_servicioInterface;
 use App\Http\Requests\Orden_servicioRequest;
@@ -64,12 +66,11 @@ class Orden_servicioController extends Controller
         ]);
     }
 
-    // public function all(Request $request, Orden_servicioInterface $repo)
     public function all(Request $request, View_OrdenServicioInterface $repo)
     {
-        $s = $request->input('search', '');
+        $filter = $request->all();
         $params = ['cCodConsecutivo', 'nConsecutivo', 'dFecRec', 'cPlacaVeh', 'cliente', 'iEstado'];
-        return parseList($repo->search($s), $request, 'cCodConsecutivo', $params);
+        return parseList($repo->search($filter), $request, 'cCodConsecutivo', $params);
     }
 
     public function deleteDetalleChangue($id, Orden_servicioInterface $repo, Request $request)
@@ -349,52 +350,77 @@ class Orden_servicioController extends Controller
         return parseSelect($repo->all(), 'id', 'razonsocial_cliente');
     }
 
-    public function data_form(Orden_servicioInterface $Repo, ModeloInterface $modeloRepo, BrandInterface $brandRepo)
+    public function data_form(Orden_servicioInterface $Repo, ModeloInterface $modeloRepo, BrandInterface $brandRepo,
+                              ProformaInterface $proRepo, CustomerInterface $cusRepo, Vehiculos_terceroInterface $vehRepo)
     {
-        $codigo = $Repo->getcodigo();
-        $codigo_proforma = $Repo->getcodigo_proforma();
-        $condicion_pago = $Repo->getcondicion_pago();
-        $tipo_servicio = $Repo->gettipo_servicio();
-        $tipo_document = $Repo->gettipo_document();
-        $tipo_document_venta = $Repo->gettipo_document_venta();
-        $revisiones = $Repo->getrevisiones();
-        $tecnico = $Repo->gettecnico();
-        $asesor = $Repo->getasesor();
-        $moneda = $Repo->getmoneda();
-        $servicios = $Repo->get_servicios();
-        $servicios_todos = $Repo->get_servicios_todos();
-        $tipoMantenimiento = $Repo->get_Tipomantenimientos();
-        $totales = $Repo->get_totales();
-        $usuario = auth()->id();
-        $descuentos = $Repo->get_descuentos($usuario);
-        $dataredondeo = $Repo->get_redondeo();
-        $decimales_redondeo = $Repo->get_decimales_redondeo();
-        $modelo = parseSelectOnly($modeloRepo->allActive(), 'idModelo', 'descripcion');
-        $marca = parseSelectOnly($brandRepo->all(), 'id', 'description');
-        // print_r($dataredondeo); exit;
-        return response()->json([
-            'status' => true,
-            'codigo' => $codigo,
-            'codigo_proforma' => $codigo_proforma,
-            'condicion_pago' => $condicion_pago,
-            'tipo_servicio' => $tipo_servicio,
-            'tipo_document' => $tipo_document,
-            'revisiones' => $revisiones,
-            'servicios_todos' => $servicios_todos,
-            'tecnico' => $tecnico,
-            'moneda' => $moneda,
-            'asesor' => $asesor,
-            'descuentos' => $descuentos,
-            'servicios' => $servicios,
-            'totales' => $totales,
-            'tipoMantenimiento' => $tipoMantenimiento,
-            'tipo_document_venta' => $tipo_document_venta,
-            'dataredondeo' => (isset($dataredondeo[0]->value)) ? $dataredondeo[0]->value : 0,
-            'usuario' => $usuario,
-            'modelo' => $modelo,
-            'marca' => $marca,
-            'decimales_redondeo' => (isset($decimales_redondeo[0]->value)) ? $decimales_redondeo[0]->value : 0,
-        ]);
+        try {
+            $codigo = $Repo->getcodigo();
+            $codigo_proforma = $Repo->getcodigo_proforma();
+            $condicion_pago = $Repo->getcondicion_pago();
+            $tipo_servicio = $Repo->gettipo_servicio();
+            $tipo_document = $Repo->gettipo_document();
+            $tipo_document_venta = $Repo->gettipo_document_venta();
+            $revisiones = $Repo->getrevisiones();
+            $tecnico = $Repo->gettecnico();
+            $asesor = $Repo->getasesor();
+            $moneda = $Repo->getmoneda();
+            $servicios = $Repo->get_servicios();
+            $servicios_todos = $Repo->get_servicios_todos();
+            $tipoMantenimiento = $Repo->get_Tipomantenimientos();
+            $totales = $Repo->get_totales();
+            $usuario = auth()->id();
+            $descuentos = $Repo->get_descuentos($usuario);
+            $dataredondeo = $Repo->get_redondeo();
+            $decimales_redondeo = $Repo->get_decimales_redondeo();
+            $modelo = parseSelectOnly($modeloRepo->allActive(), 'idModelo', 'descripcion');
+            $marca = parseSelectOnly($brandRepo->all(), 'id', 'description');
+            // print_r($dataredondeo); exit;
+
+            $data_servicioGeneral = $proRepo->getDataGeneralServicio();
+            $igv = $proRepo->get_igv();
+
+            $tipo_doc = $cusRepo->gte_tipo_doc();
+            $tipo_clie = $cusRepo->tipo_clie();
+
+            $tipo_vehi = $vehRepo->get_TipoVehi_or();
+
+            return response()->json([
+                'status' => true,
+                'codigo' => $codigo,
+                'codigo_proforma' => $codigo_proforma,
+                'condicion_pago' => $condicion_pago,
+                'tipo_servicio' => $tipo_servicio,
+                'tipo_document' => $tipo_document,
+                'revisiones' => $revisiones,
+                'servicios_todos' => $servicios_todos,
+                'tecnico' => $tecnico,
+                'moneda' => $moneda,
+                'asesor' => $asesor,
+                'descuentos' => $descuentos,
+                'servicios' => $servicios,
+                'totales' => $totales,
+                'tipoMantenimiento' => $tipoMantenimiento,
+                'tipo_document_venta' => $tipo_document_venta,
+                'dataredondeo' => (isset($dataredondeo[0]->value)) ? $dataredondeo[0]->value : 0,
+                'usuario' => $usuario,
+                'modelo' => $modelo,
+                'marca' => $marca,
+                'decimales_redondeo' => (isset($decimales_redondeo[0]->value)) ? $decimales_redondeo[0]->value : 0,
+
+                'igv'=>$igv,
+                'data_servicioGeneral'=>$data_servicioGeneral,
+
+                'tipoc_doc' => $tipo_doc,
+                'tipo_clie' => $tipo_clie,
+
+                'tipo_ve' => $tipo_vehi,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
     }
 
     public function destroy($id, Orden_servicioInterface $repo, Request $request)

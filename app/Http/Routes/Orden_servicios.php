@@ -6,7 +6,7 @@
  * Time: 6:59 PM
  */
 
-Route::post('orden_servicios/list', ['as' => 'orden_servicios.list', 'uses' => 'Orden_servicioController@all']);
+Route::post('orden_servicios/list', 'Orden_servicioController@all');
 
 Route::post('orden_servicios/list_vehiculos', ['as' => 'orden_servicios.list_vehiculos', 'uses' => 'Orden_servicioController@list_vehiculos']);
 
@@ -14,10 +14,10 @@ Route::post('orden_servicios/create', ['as' => 'orden_servicios.create', 'uses' 
 
 Route::post('orden_servicios/update', ['as' => 'orden_servicios.update', 'uses' => 'Orden_servicioController@update']);
 Route::get('orden_servicios/excel', ['as' => 'orden_servicios.excel', 'uses' => 'Orden_servicioController@excel']);
-Route::get('orden_servicios/data_form', ['as' => 'orden_servicios.data_form', 'uses' => 'Orden_servicioController@data_form']);
+Route::get('orden_servicios/data_form', 'Orden_servicioController@data_form');
 Route::get('orden_servicios/get_cliente/{id}', ['as' => 'orden_servicios.get_cliente', 'uses' => 'CustomerController@get_cliente_documento']);
 
-Route::get('orden_servicios/get_Placa/{id}', ['as' => 'orden_servicios.get_Placa', 'uses' => 'Vehiculos_terceroController@get_Placa_documento']);
+Route::get('orden_servicios/get_Placa/{id}', 'Vehiculos_terceroController@get_Placa_documento');
 
 Route::get('orden_servicios/get_vehiculo/{id}', ['as' => 'orden_servicios.get_vehiculo', 'uses' => 'Vehiculos_terceroController@get_vehiculo']);
 
@@ -51,13 +51,9 @@ Route::get('orden_servicios/TraerProvinciasOrde/{id}', ['as' => 'orden_servicios
 
 Route::get('orden_servicios/TraerDistritosOrde/{id}', ['as' => 'orden_servicios.TraerDistritosOrde', 'uses' => 'UbigeoController@TraerDistritos']);
 
-Route::get('orden_servicios/data_formOrden', ['as' => 'orden_servicios.data_formOrden', 'uses' => 'ProformaController@data_form']);
-
 Route::put('orden_servicios/createVehiOrden/{id}', ['as' => 'orden_servicios.createVehiOrden', 'uses' => 'Vehiculos_terceroController@createUpdate']);
 
 Route::put('orden_servicios/createClienteOrden/{id}', ['as' => 'orden_servicios.createClienteOrden', 'uses' => 'CustomerController@createUpdate']);
-
-Route::get('orden_servicios/data_formCliOrden', ['as' => 'orden_servicios.data_formCliOrden', 'uses' => 'CustomerController@data_form']);
 
 Route::get('orden_servicios/get_cliente_persona/{id}', ['as' => 'orden_servicios.get_cliente_persona', 'uses' => 'Orden_servicioController@get_cliente_persona']);
 

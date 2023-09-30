@@ -24,17 +24,27 @@ class View_OrdenServicioRepository implements View_OrdenServicioInterface
     {
         return $this->model->get();
     }
-     public function search($s)
+     public function search($filter)
     {
-        return $this->model->where(function($q) use ($s){
-            // $q->where('id', 'LIKE', '%'.$s.'%');
-            $q->orWhere('cCodConsecutivo', 'LIKE', '%'.$s.'%');
-            $q->orWhere('nConsecutivo', 'LIKE', '%'.$s.'%');
-            $q->orWhere('dFecRec', 'LIKE', '%'.$s.'%');
-            $q->orWhere('cliente', 'LIKE', '%'.$s.'%');
-            $q->orWhere('iEstado', 'LIKE', '%'.$s.'%');
-            $q->orWhere('cPlacaVeh', 'LIKE', '%'.$s.'%');
-        })->orderBy("nConsecutivo", "DESC");
+        $s = (isset($filter['search'])) ? $filter['search'] : '';
+
+        return $this->model
+            ->where(function($q) use ($s){
+                // $q->where('id', 'LIKE', '%'.$s.'%');
+                $q->orWhere('cCodConsecutivo', 'LIKE', '%'.$s.'%');
+                $q->orWhere('nConsecutivo', 'LIKE', '%'.$s.'%');
+                $q->orWhere('dFecRec', 'LIKE', '%'.$s.'%');
+                $q->orWhere('cliente', 'LIKE', '%'.$s.'%');
+                $q->orWhere('iEstado', 'LIKE', '%'.$s.'%');
+                $q->orWhere('cPlacaVeh', 'LIKE', '%'.$s.'%');
+            })->where(function ($q) use ($filter) {
+                if (isset($filter['check']) && $filter['check'] == 'true') {
+                    $from = $filter['from'] . ' 00:00:00';
+                    $to = $filter['to'] . ' 23:59:59';
+                    $q->whereBetween('dFecRec', [$from, $to]);
+                }
+            })
+            ->orderBy("nConsecutivo", "DESC");
 
     }
        public function searchDocumentos($s)
