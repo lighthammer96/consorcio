@@ -1,7 +1,3 @@
-/**
- * Created by JAIR on 4/5/2017.
- */
-
 (function () {
     'use strict';
     angular.module('sys.app.cuentasxcobrars')
@@ -9,9 +5,22 @@
         .controller('CuentasxcobrarCtrl', CuentasxcobrarCtrl);
 
     Config.$inject = ['$stateProvider', '$urlRouterProvider'];
-    CuentasxcobrarCtrl.$inject = ['$scope', '_', 'RESTService', 'AlertFactory', 'Helpers'];
+    CuentasxcobrarCtrl.$inject = ['$scope', '_', 'RESTService', 'AlertFactory'];
 
-    function CuentasxcobrarCtrl($scope, _, RESTService, AlertFactory, Helpers) {
+    function CuentasxcobrarCtrl($scope, _, RESTService, AlertFactory)
+    {
+        var modalClient = $('div#modalClient');
+        modalClient.on('show.bs.modal', function (e) {
+            $('#LoadRecordsButtonCli').click();
+        });
+        modalClient.on('hidden.bs.modal', function (e) {
+            $('#search_cli').val('');
+            $('#LoadRecordsButtonCli').click();
+        });
+
+        var c_client_id = '';
+        var c_client = $('input#c_client');
+
         var modalCobradores = $("#modalCobradores");
         var idCobrador = $("#idCobrador");
         var banderaEmpi = 'xxxxxxxx';
@@ -388,7 +397,7 @@
                 filtro_tienda: $('#filtro_tienda').val(),
                 idInicio: $('#idInicio').val(),
                 idFin: $('#idFin').val(),
-                idClienteFiltro: $('#idClienteFiltro').val(),
+                idClienteFiltro: c_client_id,
                 idCobradorFiltro: $('#idCobradorFiltro').val(),
                 FechaInicioFiltro: $('#FechaInicioFiltro').val(),
                 FechaFinFiltro: $('#FechaFinFiltro').val(),
@@ -411,7 +420,7 @@
                 filtro_tienda: $('#filtro_tienda').val(),
                 idInicio: $('#idInicio').val(),
                 idFin: $('#idFin').val(),
-                idClienteFiltro: $('#idClienteFiltro').val(),
+                idClienteFiltro: c_client_id,
                 idCobradorFiltro: $('#idCobradorFiltro').val(),
                 FechaInicioFiltro: $('#FechaInicioFiltro').val(),
                 FechaFinFiltro: $('#FechaFinFiltro').val(),
@@ -439,7 +448,7 @@
             //     filtro_tienda: $('#filtro_tienda').val(),
             //     idInicio: $('#idInicio').val(),
             //     idFin: $('#idFin').val(),
-            //     idClienteFiltro: $('#idClienteFiltro').val(),
+            //     idClienteFiltro: c_client_id,
             //     idCobradorFiltro: $('#idCobradorFiltro').val(),
             //     FechaInicioFiltro: $('#FechaInicioFiltro').val(),
             //     FechaFinFiltro: $('#FechaFinFiltro').val(),
@@ -455,7 +464,11 @@
             //             $scope.openDoc('projects/excel', data_excel);
             // $scope.openDoc('cuentasxcobrars/excelCuentasxCobrar', data_excel);
 
-            var data_excel = $('#filtro_tienda').val()+"|"+$('#idInicio').val()+"|"+$('#idFin').val()+"|"+ $('#idClienteFiltro').val()+"|"+$('#idCobradorFiltro').val()+"|"+$('#FechaInicioFiltro').val()+"|"+$('#FechaFinFiltro').val()+"|"+$('#idTipoSolicitud').val()+"|"+$("#idConvenio").val()+"|"+$("#Departamento").val()+"|"+$("#provincia").val()+"|"+$("#distrito").val()+"|"+$("#distrito option:selected").text()+"|"+$('#idsector').val()+"|"+$("#search_cuentas_cobrar").val();
+            var data_excel = $('#filtro_tienda').val()+"|"+$('#idInicio').val()+"|"+$('#idFin').val()+"|"+ c_client_id+
+                "|"+$('#idCobradorFiltro').val()+"|"+$('#FechaInicioFiltro').val()+"|"+$('#FechaFinFiltro').val()+"|"+
+                $('#idTipoSolicitud').val()+"|"+$("#idConvenio").val()+"|"+$("#Departamento").val()+"|"+
+                $("#provincia").val()+"|"+$("#distrito").val()+"|"+$("#distrito option:selected").text()+"|"+
+                $('#idsector').val()+"|"+$("#search_cuentas_cobrar").val();
 
             window.open('cuentasxcobrars/excelCuentasxCobrar/'+ data_excel);
 
@@ -477,8 +490,7 @@
             RESTService.all('cuentasxcobrars/data_form', '', function (response) {
                 if (!_.isUndefined(response.status) && response.status) {
                     var cobradores = response.cobrador;
-                    var cobradores = response.cobrador;
-                    var clientes = response.cliente;
+                    // var clientes = response.cliente;
                     var tiendas = response.tienda;
                     idCobrador.append('<option value="" selected>Seleccionar</option>');
                     cobradores.map(function (index) {
@@ -488,15 +500,14 @@
                     cobradores.map(function (index) {
                         $("#idCobradorFiltro").append('<option value="' + index.id + '">' + index.descripcion + '</option>');
                     });
-                    $("#idClienteFiltro").append('<option value="" selected>Clientes</option>');
-                    clientes.map(function (index) {
-                        $("#idClienteFiltro").append('<option value="' + index.id + '">' + index.razonsocial_cliente + '</option>');
-                    });
+                    // $("#idClienteFiltro").append('<option value="" selected>Clientes</option>');
+                    // clientes.map(function (index) {
+                    //     $("#idClienteFiltro").append('<option value="' + index.id + '">' + index.razonsocial_cliente + '</option>');
+                    // });
                     $("#filtro_tienda").append('<option value="" selected>Tiendas</option>');
                     tiendas.map(function (index) {
                         $("#filtro_tienda").append('<option value="' + index.idTienda + '">' + index.descripcion + '</option>');
                     });
-
                 }
             }, function () {
                 getDataForm();
@@ -644,7 +655,7 @@
 
         });
         $("#idCobradorFiltro").select2();
-        $("#idClienteFiltro").select2();
+        // $("#idClienteFiltro").select2();
 
         function getConvenio() {
             var id = 0;
@@ -680,6 +691,90 @@
             }
 
         });
+
+        var search_cli = getFormSearch('frm-search-cli', 'search_cli', 'LoadRecordsButtonCli');
+
+        var table_container_client = $("#table_container_client");
+
+        table_container_client.jtable({
+            title: "Lista de Clientes",
+            paging: true,
+            actions: {
+                listAction: base_url + '/cuentasxcobrars/listClient'
+            },
+            toolbar: {
+                items: [{
+                    cssClass: 'buscador',
+                    text: search_cli
+                }]
+            },
+            fields: {
+                id: {
+                    key: true,
+                    create: false,
+                    edit: false,
+                    list: false
+                },
+                documento: {
+                    title: 'Documento',
+                },
+                razonsocial_cliente: {
+                    title: 'Razon Social',
+                },
+                contacto: {
+                    title: 'Contacto',
+                },
+                direccion: {
+                    title: 'Dirección',
+                },
+                correo_electronico: {
+                    title: 'Correo',
+                },
+                celular: {
+                    title: 'Celular',
+                },
+                edit: {
+                    width: '1%',
+                    sorting: false,
+                    edit: false,
+                    create: false,
+                    listClass: 'text-center',
+                    display: function (data) {
+                        return '<a href="javascript:void(0)" class="sel-cli" data-id="' + data.record.id
+                            + '" title="Seleccionar"><i class="fa fa-check-circle fa-1-5x"></i></a>';
+                    }
+                }
+            },
+            recordsLoaded: function (event, data) {
+                table_container_client.find('a.sel-cli').click(function (e) {
+                    var id = $(this).attr('data-id');
+                    var info = _.find(data.records, function (item) {
+                        return parseInt(item.id) === parseInt(id);
+                    });
+                    if (info) {
+                        c_client_id = info.id;
+                        c_client.val(info.razonsocial_cliente);
+                    }
+                    modalClient.modal('hide');
+                    e.preventDefault();
+                });
+            }
+        });
+
+        generateSearchForm('frm-search-cli', 'LoadRecordsButtonCli', function () {
+            table_container_client.jtable('load', {
+                search: $('#search_cli').val()
+            });
+        }, false);
+
+        $scope.openClient = function () {
+            modalClient.modal('show');
+        };
+
+        $scope.cleanClient = function () {
+            c_client_id = '';
+            c_client.val('');
+        };
     }
 
     function Config($stateProvider, $urlRouterProvider) {

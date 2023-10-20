@@ -102,7 +102,8 @@ class CajaDiariaController extends Controller
     }
 
 
-    public function createUpdate($id, CajaDiariaInterface $repo, CajaDiariaDetalleInterface $repoDet,CajaDiariaDenominacionesInterface $repoDeno , request $request, VentasInterface $ventas_repo)
+    public function createUpdate($id, CajaDiariaInterface $repo, CajaDiariaDetalleInterface $repoDet,CajaDiariaDenominacionesInterface $repoDeno ,
+                                 request $request, VentasInterface $ventas_repo)
     {
         DB::beginTransaction();
         try {

@@ -33,7 +33,7 @@ class VentasRepository implements VentasInterface
                 $q->orWhere('fecha_emision', 'LIKE', '%' . $s . '%');
                 $q->orWhere('numero_documento', 'LIKE', '%' . $s . '%');
             })
-            ->where(function($q) use ($filter) {
+            ->where(function ($q) use ($filter) {
                 if (isset($filter['check']) && $filter['check'] == 'true') {
                     $from = $filter['from'] . ' 00:00:00';
                     $to = $filter['to'] . ' 23:59:59';
@@ -75,71 +75,43 @@ class VentasRepository implements VentasInterface
     }
 
 
-    public function search_documentos($s)
+    public function search_documentos($filter)
     {
-        $model = $this->model;
-        if (!empty($_REQUEST["FechaInicioFiltro"]) && !empty($_REQUEST["FechaFinFiltro"])) {
-            $model = $model->whereBetween('fecha_emision_server', [$_REQUEST["FechaInicioFiltro"], $_REQUEST["FechaFinFiltro"]]);
-
-        }
-
-        if (!empty($_REQUEST["idClienteFiltro"])) {
-            $model = $model->where("idcliente", $_REQUEST["idClienteFiltro"]);
-        }
-
-        if (!empty($_REQUEST["id_tipo_doc"])) {
-            $model = $model->where("IdTipoDocumento", $_REQUEST["id_tipo_doc"]);
-        }
-
-        if (!empty($_REQUEST["estado_cpe"])) {
-            $model = $model->where("estado_cpe", $_REQUEST["estado_cpe"]);
-        }
-
-        if (!empty($_REQUEST["anulado"])) {
-            $model = $model->where("anulado", $_REQUEST["anulado"]);
-        }
-
-        return $model->whereIn('IdTipoDocumento', ['01', '03', '07', '08', '12'])->where(function ($q) use ($s) {
-            // $q->where('serie_comprobante', 'LIKE', '%' . $s . '%');
-            // $q->orWhere('numero_comprobante', 'LIKE', '%' . $s . '%');
-            $q->where('comprobante', 'LIKE', '%' . $s . '%');
-
-            $q->orWhere('fecha_emision', 'LIKE', '%' . $s . '%');
-            $q->orWhere('numero_documento', 'LIKE', '%' . $s . '%');
-            $q->orWhere('cliente', 'LIKE', '%' . $s . '%');
-        })->orderBy('fecha_emision', 'DESC');
-    }
-
-
-    public function search_documentos_excel($filter)
-    {
-        // print_r($_REQUEST);
-        $model = $this->model;
         $s = (isset($filter['search'])) ? $filter['search'] : '';
-        if (!empty($filter["FechaInicioFiltro"]) && !empty($filter["FechaFinFiltro"])) {
-            $model = $model->whereBetween('fecha_emision_server', [$filter["FechaInicioFiltro"], $filter["FechaFinFiltro"]]);
-
-        }
-
-        if (!empty($filter["idClienteFiltro"])) {
-            $model = $model->where("idcliente", $filter["idClienteFiltro"]);
-        }
-
-        if (!empty($filter["id_tipo_doc"])) {
-            $model = $model->where("IdTipoDocumento", $filter["id_tipo_doc"]);
-        }
-
-        if (!empty($filter["estado_cpe"])) {
-            $model = $model->where("estado_cpe", $filter["estado_cpe"]);
-        }
-
-        return $model->whereIn('IdTipoDocumento', ['01', '03', '07', '08'])->where(function ($q) use ($s) {
-            $q->where('serie_comprobante', 'LIKE', '%' . $s . '%');
-            $q->orWhere('numero_comprobante', 'LIKE', '%' . $s . '%');
-            $q->orWhere('fecha_emision', 'LIKE', '%' . $s . '%');
-            $q->orWhere('numero_documento', 'LIKE', '%' . $s . '%');
-            $q->orWhere('cliente', 'LIKE', '%' . $s . '%');
-        })->orderBy('fecha_emision', 'DESC');
+        return $this->model
+            ->whereIn('IdTipoDocumento', ['01', '03', '07', '08', '12'])
+            ->where(function ($q) use ($s) {
+                $q->where('serie_comprobante', 'LIKE', '%' . $s . '%');
+                $q->orWhere('numero_comprobante', 'LIKE', '%' . $s . '%');
+                $q->orWhere('comprobante', 'LIKE', '%' . $s . '%');
+                $q->orWhere('fecha_emision', 'LIKE', '%' . $s . '%');
+                $q->orWhere('numero_documento', 'LIKE', '%' . $s . '%');
+                $q->orWhere('cliente', 'LIKE', '%' . $s . '%');
+            })
+            ->where(function ($q) use ($filter) {
+                if (isset($filter['check']) && $filter['check'] == 'true') {
+                    $from = $filter['from'] . ' 00:00:00';
+                    $to = $filter['to'] . ' 23:59:59';
+                    $q->whereBetween('fecha_emision_server', [$from, $to]);
+                }
+                $client_id = (isset($filter['idClienteFiltro'])) ? $filter['idClienteFiltro'] : '';
+                if ($client_id != '') {
+                    $q->where('idcliente', $client_id);
+                }
+                $type_doc_id = (isset($filter['id_tipo_doc'])) ? $filter['id_tipo_doc'] : '';
+                if ($type_doc_id != '') {
+                    $q->where('IdTipoDocumento', $type_doc_id);
+                }
+                $state_cpe = (isset($filter['estado_cpe'])) ? $filter['estado_cpe'] : '';
+                if ($state_cpe != '') {
+                    $q->where('estado_cpe', $state_cpe);
+                }
+                $null = (isset($filter['anulado'])) ? $filter['anulado'] : '';
+                if ($null != '') {
+                    $q->where('anulado', $null);
+                }
+            })
+            ->orderBy('fecha_emision', 'DESC');
     }
 
     public function search_comprobantes_pendientes($s)
@@ -152,7 +124,6 @@ class VentasRepository implements VentasInterface
             $q->orWhere('numero_documento', 'LIKE', '%' . $s . '%');
         })->orderBy('fecha_emision', 'DESC');
     }
-
 
     public function all()
     {

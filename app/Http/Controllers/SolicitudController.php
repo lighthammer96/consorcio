@@ -23,10 +23,10 @@ use App\Http\Recopro\Warehouse\WarehouseInterface;
 use App\Http\Requests\SolicitudRequest;
 use App\Models\BaseModel;
 use DateTime;
+use DB;
 use Exception;
 use PDF;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class SolicitudController extends Controller
 {
@@ -105,14 +105,13 @@ class SolicitudController extends Controller
 
             // solo en estado regisstrado actualizara el saldo
 
-            if($data["estado"] == "1" || $data["estado"] == "") {
+            if ($data["estado"] == "1" || $data["estado"] == "") {
                 //SALDOS
                 $data["saldo"] = $data["t_monto_total"];
             }
 
 
-            if($data["nConsecutivo"] == "") {
-
+            if ($data["nConsecutivo"] == "") {
 
 
                 $data["facturado"] = 0;
@@ -127,7 +126,7 @@ class SolicitudController extends Controller
                 // exit;
 
                 $result = $this->base_model->insertar($this->preparar_datos("dbo.ERP_Solicitud", $data));
-                if($data["tipo_solicitud"] != "1") {
+                if ($data["tipo_solicitud"] != "1") {
 
                     $this->base_model->insertar($this->preparar_datos("dbo.ERP_SolicitudCredito", $data));
                 }
@@ -135,9 +134,9 @@ class SolicitudController extends Controller
             } else {
 
                 $result = $this->base_model->modificar($this->preparar_datos("dbo.ERP_Solicitud", $data));
-                if($data["tipo_solicitud"] != "1") {
+                if ($data["tipo_solicitud"] != "1") {
                     $credito = $repo->get_solicitud_credito($data["cCodConsecutivo"], $data["nConsecutivo"]);
-                    if(count($credito) > 0) {
+                    if (count($credito) > 0) {
 
                         $this->base_model->modificar($this->preparar_datos("dbo.ERP_SolicitudCredito", $data));
                     } else {
@@ -148,22 +147,19 @@ class SolicitudController extends Controller
             }
 
 
-
-
-
             $data_articulo = array();
             $data_detalle = array();
 
-            if(count($data["idarticulo"]) > 0) {
+            if (count($data["idarticulo"]) > 0) {
 
 
                 $data_articulo = $data;
-                for ($i=0; $i < count($data["idarticulo"]); $i++) {
-                    if($i == 0) {
+                for ($i = 0; $i < count($data["idarticulo"]); $i++) {
+                    if ($i == 0) {
 
                         $data_articulo["id"][$i] = $repo->get_consecutivo_detalle("ERP_SolicitudArticulo", "id");
                     } else {
-                        $data_articulo["id"][$i] = $data_articulo["id"][$i-1] + 1;
+                        $data_articulo["id"][$i] = $data_articulo["id"][$i - 1] + 1;
                     }
 
                     $data_articulo["nCantidadEntregada"][$i] = 0;
@@ -172,24 +168,22 @@ class SolicitudController extends Controller
                     $data_articulo["nCantidadPendienteDevolver"][$i] = 0;
 
 
-
-                    if(isset($data["series_id"][$i]) && !empty($data["series_id"][$i])) {
+                    if (isset($data["series_id"][$i]) && !empty($data["series_id"][$i])) {
 
                         $idSeries = explode(",", $data["series_id"][$i]);
                         $idarticulos = explode(",", $data["articulos_id"][$i]);
 
-                        if(count($idSeries) >  0) {
-
+                        if (count($idSeries) > 0) {
 
 
                             $data_detalle = $data;
 
-                            for ($s=0; $s < count($idSeries); $s++) {
-                                if($s == 0) {
+                            for ($s = 0; $s < count($idSeries); $s++) {
+                                if ($s == 0) {
 
                                     $data_detalle["id"][$s] = $repo->get_consecutivo_detalle("ERP_SolicitudDetalle", "id");
                                 } else {
-                                    $data_detalle["id"][$s] = $data_detalle["id"][$s-1] + 1;
+                                    $data_detalle["id"][$s] = $data_detalle["id"][$s - 1] + 1;
                                 }
                                 $data_detalle["idSerie"][$s] = $idSeries[$s];
                                 $data_detalle["idarticulo"][$s] = $idarticulos[$s];
@@ -203,19 +197,19 @@ class SolicitudController extends Controller
 
                     }
                 }
-                if(count($data_detalle) > 0) {
-                    DB::table("ERP_SolicitudDetalle")->where("cCodConsecutivo", $data["cCodConsecutivo"])->where("nConsecutivo",  $data["nConsecutivo"])->delete();
+                if (count($data_detalle) > 0) {
+                    DB::table("ERP_SolicitudDetalle")->where("cCodConsecutivo", $data["cCodConsecutivo"])->where("nConsecutivo", $data["nConsecutivo"])->delete();
 
                 }
 
-                if(count($data_articulo) > 0) {
-                    DB::table("ERP_SolicitudArticulo")->where("cCodConsecutivo", $data["cCodConsecutivo"])->where("nConsecutivo",  $data["nConsecutivo"])->delete();
+                if (count($data_articulo) > 0) {
+                    DB::table("ERP_SolicitudArticulo")->where("cCodConsecutivo", $data["cCodConsecutivo"])->where("nConsecutivo", $data["nConsecutivo"])->delete();
 
 
                     $this->base_model->insertar($this->preparar_datos("dbo.ERP_SolicitudArticulo", $data_articulo));
                 }
 
-                if(count($data_detalle) > 0) {
+                if (count($data_detalle) > 0) {
 
 
                     $this->base_model->insertar($this->preparar_datos("dbo.ERP_SolicitudDetalle", $data_detalle));
@@ -238,6 +232,7 @@ class SolicitudController extends Controller
 
 
     }
+
     public function update(SolicitudInterface $repo, SolicitudRequest $request)
     {
         $data = $request->all();
@@ -266,7 +261,7 @@ class SolicitudController extends Controller
         return generateExcel($this->generateDataExcel($repo->all()), 'LISTA DE Solicitud', 'Solicitud');
     }
 
-    public function data_form (SolicitudInterface $Repo, Orden_servicioInterface $repo_orden, WarehouseInterface $WareRepo, VentasRepository $ventas_repositorio)
+    public function data_form(SolicitudInterface $Repo, Orden_servicioInterface $repo_orden, WarehouseInterface $WareRepo, VentasRepository $ventas_repositorio)
     {
 
         $codigo = $Repo->getcodigo();
@@ -274,8 +269,8 @@ class SolicitudController extends Controller
         $condicion_pago = $repo_orden->getcondicion_pago();
         // $tipo_servicio = $repo_orden->gettipo_servicio();
         $tipo_document = $repo_orden->gettipo_document();
-        $tipo_document_venta=$repo_orden->gettipo_document_venta();
-        $formas_pago=$Repo->get_formas_pago();
+        $tipo_document_venta = $repo_orden->gettipo_document_venta();
+        $formas_pago = $Repo->get_formas_pago();
         // $revisiones = $repo_orden->getrevisiones();
         // $tecnico = $repo_orden->gettecnico();
         // $asesor = $repo_orden->getasesor();
@@ -283,15 +278,15 @@ class SolicitudController extends Controller
         // $servicios = $repo_orden->get_servicios();
         // $tipoMantenimiento = $repo_orden->get_Tipomantenimientos();
         // $totales = $repo_orden->get_totales();
-        $usuario=auth()->id();
-        $descuentos=$repo_orden->get_descuentos($usuario);
+        $usuario = auth()->id();
+        $descuentos = $repo_orden->get_descuentos($usuario);
         $almacen_usuario = $WareRepo->getAlmacen_usuario($usuario);
         $lotes = $Repo->obtener_lotes($usuario);
         $convenios = $Repo->obtener_convenios($usuario);
         $vendedores = $Repo->obtener_vendedores($usuario);
         $personas = $Repo->obtener_personas($usuario);
-        $parametro_igv =  $Repo->get_parametro_igv();
-        $parametro_dia_vencimiento =  $Repo->get_parametro_dia_vencimiento();
+        $parametro_igv = $Repo->get_parametro_igv();
+        $parametro_dia_vencimiento = $Repo->get_parametro_dia_vencimiento();
         $dataredondeo = $repo_orden->get_redondeo();
         $decimales_redondeo = $repo_orden->get_decimales_redondeo();
 
@@ -304,33 +299,34 @@ class SolicitudController extends Controller
             // 'codigo_proforma'=>$codigo_proforma,
             'condicion_pago' => $condicion_pago,
             // 'tipo_servicio' => $tipo_servicio,
-            'tipo_document'=> $tipo_document,
+            'tipo_document' => $tipo_document,
             // 'revisiones'=>$revisiones,
             // 'tecnico'=>$tecnico,
-            'moneda'=>$moneda,
+            'moneda' => $moneda,
             // 'asesor'=>$asesor,
-            'descuentos'=>$descuentos,
-            'formas_pago'=>$formas_pago,
+            'descuentos' => $descuentos,
+            'formas_pago' => $formas_pago,
             // 'servicios'=>$servicios,
             // 'totales'=>$totales,
             // 'tipoMantenimiento'=>$tipoMantenimiento,
-            'tipo_document_venta'=>$tipo_document_venta,
-            'usuario'=>$usuario,
-            'almacen_usuario'=>$almacen_usuario,
-            'lotes'=>$lotes,
-            'convenios'=>$convenios,
-            'vendedores'=>$vendedores,
-            'personas'=>$personas,
-            'parametro_igv'=>$parametro_igv,
-            'parametro_dia_vencimiento'=>$parametro_dia_vencimiento,
+            'tipo_document_venta' => $tipo_document_venta,
+            'usuario' => $usuario,
+            'almacen_usuario' => $almacen_usuario,
+            'lotes' => $lotes,
+            'convenios' => $convenios,
+            'vendedores' => $vendedores,
+            'personas' => $personas,
+            'parametro_igv' => $parametro_igv,
+            'parametro_dia_vencimiento' => $parametro_dia_vencimiento,
             // 'separaciones'=>$separaciones,
 
-            'dataredondeo'=>(isset($dataredondeo[0]->value)) ? $dataredondeo[0]->value : 0,
-            'decimales_redondeo'=>(isset($decimales_redondeo[0]->value)) ? $decimales_redondeo[0]->value : 0,
+            'dataredondeo' => (isset($dataredondeo[0]->value)) ? $dataredondeo[0]->value : 0,
+            'decimales_redondeo' => (isset($decimales_redondeo[0]->value)) ? $decimales_redondeo[0]->value : 0,
         ]);
     }
 
-    public function factor_credito(SolicitudInterface $Repo, Request $request) {
+    public function factor_credito(SolicitudInterface $Repo, Request $request)
+    {
         $param_nro_cuotas = $Repo->get_parametro_cuotas();
         $nro_cuotas = $request->input("nro_cuotas");
 
@@ -342,7 +338,8 @@ class SolicitudController extends Controller
 
     }
 
-    public function enviar_solicitud(SolicitudInterface $Repo, Request $request) {
+    public function enviar_solicitud(SolicitudInterface $Repo, Request $request)
+    {
         $data = $request->all();
         $res = array("status" => "i");
         $data_update = array();
@@ -353,18 +350,18 @@ class SolicitudController extends Controller
             DB::beginTransaction();
 
             $solicitud_articulo = $Repo->get_solicitud_articulo($data["cCodConsecutivo"], $data["nConsecutivo"]);
-            if(count($solicitud_articulo) <= 0) {
+            if (count($solicitud_articulo) <= 0) {
                 throw new Exception("La solicitud no tiene un detalle de articulos!");
             }
 
-            if($data["tipo_solicitud"] == "1") {
+            if ($data["tipo_solicitud"] == "1") {
 
-                for ($ii=0; $ii < count($solicitud_articulo); $ii++) {
-                    if($solicitud_articulo[$ii]->serie == 1) {
+                for ($ii = 0; $ii < count($solicitud_articulo); $ii++) {
+                    if ($solicitud_articulo[$ii]->serie == 1) {
                         $r = $Repo->get_solicitud_detalle_series($solicitud_articulo[$ii]->cCodConsecutivo, $solicitud_articulo[$ii]->nConsecutivo, $solicitud_articulo[$ii]->id);
 
-                        if(count($r) <= 0 ) {
-                            throw new Exception("Por Favor ingrese la serie del producto: ". $solicitud_articulo[$ii]->producto." en el detalle de la solicitud!");
+                        if (count($r) <= 0) {
+                            throw new Exception("Por Favor ingrese la serie del producto: " . $solicitud_articulo[$ii]->producto . " en el detalle de la solicitud!");
                         }
                     }
                 }
@@ -376,7 +373,7 @@ class SolicitudController extends Controller
                 // }
             }
 
-            if($data["tipo_solicitud"] == "1" || $data["cuota_inicial"] > 0) {
+            if ($data["tipo_solicitud"] == "1" || $data["cuota_inicial"] > 0) {
                 $data_update["estado"] = "2"; // vigente
 
 
@@ -384,15 +381,14 @@ class SolicitudController extends Controller
                 $data_update["estado"] = "3"; // por aprobar
 
 
-
                 $result = $Repo->envio_aprobar_solicitud($data_update);
 
-                if(isset($result[0]->msg) && $result[0]->msg != "OK") {
+                if (isset($result[0]->msg) && $result[0]->msg != "OK") {
                     $res["msg"] = $result[0]->msg;
                 }
             }
 
-            if(!empty($res["msg"])) {
+            if (!empty($res["msg"])) {
                 $res["status"] = "ei";
             }
 
@@ -414,7 +410,8 @@ class SolicitudController extends Controller
 
     }
 
-    public function find(SolicitudInterface $Repo, Request $request, Orden_servicioInterface $repo_orden, VentasInterface $ventas_repo) {
+    public function find(SolicitudInterface $Repo, Request $request, Orden_servicioInterface $repo_orden, VentasInterface $ventas_repo)
+    {
         $data = $request->all();
         $arr = explode("_", $data["id"]);
         $cCodConsecutivo = $arr[0];
@@ -426,7 +423,7 @@ class SolicitudController extends Controller
         $response["solicitud_detalle"] = $Repo->get_solicitud_detalle($cCodConsecutivo, $nConsecutivo);
         $response["solicitud_credito"] = $Repo->get_solicitud_credito($cCodConsecutivo, $nConsecutivo);
         $response["solicitud_cronograma"] = $Repo->get_solicitud_cronograma($cCodConsecutivo, $nConsecutivo);
-        $response["descuentos"] =$repo_orden->get_descuentos_all();
+        $response["descuentos"] = $repo_orden->get_descuentos_all();
         $response["separaciones"] = $ventas_repo->get_ventas_separacion($response["solicitud"][0]->idcliente);
 
         // $newString = mb_convert_encoding($response, "UTF-8", "auto");
@@ -435,14 +432,16 @@ class SolicitudController extends Controller
     }
 
 
-    public function mostrar_aprobaciones(SolicitudInterface $Repo, Request $request) {
+    public function mostrar_aprobaciones(SolicitudInterface $Repo, Request $request)
+    {
         $data = $request->all();
 
         $response = $Repo->mostrar_aprobaciones($data["cCodConsecutivo"], $data["nConsecutivo"]);
         return response()->json($response);
     }
 
-    public function imprimir_solicitud($id, SolicitudInterface $Repo, CajaDiariaDetalleInterface $repo_caja, CustomerInterface $cliente_repositorio, PersonaInterface $persona_repositorio) {
+    public function imprimir_solicitud($id, SolicitudInterface $Repo, CajaDiariaDetalleInterface $repo_caja, CustomerInterface $cliente_repositorio, PersonaInterface $persona_repositorio)
+    {
 
         $array = explode("|", $id);
         $cCodConsecutivo = $array[0];
@@ -472,14 +471,14 @@ class SolicitudController extends Controller
 
         $nombre_pdf = "";
         $titulo = "";
-        if($solicitud[0]->tipo_solicitud == 1) {
+        if ($solicitud[0]->tipo_solicitud == 1) {
             $nombre_pdf = "contado.pdf";
             $titulo = "Contado";
 
-        } elseif($solicitud[0]->tipo_solicitud == 2) {
+        } elseif ($solicitud[0]->tipo_solicitud == 2) {
             $nombre_pdf = "credito_directo.pdf";
             $titulo = "Crédito Directo";
-        } elseif($solicitud[0]->tipo_solicitud == 3) {
+        } elseif ($solicitud[0]->tipo_solicitud == 3) {
             $nombre_pdf = "credito_financiero.pdf";
 
             $titulo = "Crédito Financiero";
@@ -490,7 +489,7 @@ class SolicitudController extends Controller
         // print_r($datos);
         // exit;
 
-        if($solicitud[0]->tipo_solicitud != 2) {
+        if ($solicitud[0]->tipo_solicitud != 2) {
 
             $pdf = PDF::loadView("solicitud.contado_financiado", $datos);
         } else {
@@ -498,12 +497,12 @@ class SolicitudController extends Controller
         }
 
 
-
         return $pdf->stream($nombre_pdf); // ver
         // return $pdf->stream("credito_directo.pdf"); // ver
     }
 
-    public function imprimir_clausula_solicitud($id, SolicitudInterface $Repo, CajaDiariaDetalleInterface $repo_caja, CustomerInterface $cliente_repositorio, PersonaInterface $persona_repositorio) {
+    public function imprimir_clausula_solicitud($id, SolicitudInterface $Repo, CajaDiariaDetalleInterface $repo_caja, CustomerInterface $cliente_repositorio, PersonaInterface $persona_repositorio)
+    {
 
         $array = explode("|", $id);
         $cCodConsecutivo = $array[0];
@@ -531,7 +530,8 @@ class SolicitudController extends Controller
         return $pdf->stream("clausula_solicitud.pdf"); // ver
     }
 
-    public function eliminar_solicitud(Request $request, SolicitudInterface $solicitud_repositorio) {
+    public function eliminar_solicitud(Request $request, SolicitudInterface $solicitud_repositorio)
+    {
         $data = $request->all();
 
         try {
@@ -556,7 +556,8 @@ class SolicitudController extends Controller
         }
     }
 
-    public function anular_solicitud(Request $request, SolicitudInterface $solicitud_repositorio) {
+    public function anular_solicitud(Request $request, SolicitudInterface $solicitud_repositorio)
+    {
         $data = $request->all();
 
         try {
@@ -567,7 +568,7 @@ class SolicitudController extends Controller
             // update ERP_Proforma set cFacturado = 'N', iEstado = 2 where cCodConsecutivoOs = cCodConsecutivoO_origen and nConsecutivoOS = cCodConsecutivoO_origen and iEstado not in (0,1,6)
 
             $solicitud = $solicitud_repositorio->get_solicitud($data["cCodConsecutivo"], $data["nConsecutivo"]);
-            if($solicitud[0]->origen == "O") {
+            if ($solicitud[0]->origen == "O") {
                 $sql_update = "
                 UPDATE ERP_OrdenServicio set cFacturado = 'N', iEstado = 0 where cCodConsecutivo = '{$solicitud[0]->cCodConsecutivoO}' and nConsecutivo = {$solicitud[0]->nConsecutivoO} and iEstado not in (0,1,4);
                 UPDATE ERP_Proforma set cFacturado = 'N', iEstado = 2 where cCodConsecutivoOS = '{$solicitud[0]->cCodConsecutivoO}' and nConsecutivoOS = {$solicitud[0]->nConsecutivoO} and iEstado not in (0,1,6);
@@ -608,96 +609,117 @@ class SolicitudController extends Controller
     }
 
     public function get_cliente_persona($id, Orden_servicioInterface $repo, Request $request)
-    {   try {
-        $val=$repo->get_clientePersona($id);
-        return response()->json([
-            'status' => true,
-            'data'=>$val,
-        ]);
+    {
+        try {
+            $val = $repo->get_clientePersona($id);
+            return response()->json([
+                'status' => true,
+                'data' => $val,
+            ]);
 
-    }catch (\Exception $e) {
-        DB::rollBack();
-        return response()->json([
-            'status' => false,
-            'message' => $e->getMessage()
-        ]);
-    }
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
     }
 
     public function get_precios_list($id, Orden_servicioInterface $repo, Request $request)
-    {   try {
-        $valtodo=explode("_", $id);
-        $idProducto=$valtodo[0];
-        $idTipoCli=$valtodo[1];
-        $idMoneda=$valtodo[2];
-        $cambio = 0;
-        $val=$repo->get_precios_list($idProducto, $idTipoCli,$idMoneda);
-        // var_dump($val);
-        $newPrecio='';
-        if(empty($val) && $idMoneda=='1'){
-            $para=$repo->get_parametroPrecio();
+    {
+        try {
+            $valtodo = explode("_", $id);
+            $idProducto = $valtodo[0];
+            $idTipoCli = $valtodo[1];
+            $idMoneda = $valtodo[2];
+            $cambio = 0;
+            $val = $repo->get_precios_list($idProducto, $idTipoCli, $idMoneda);
+            // var_dump($val);
+            $newPrecio = '';
+            if (empty($val) && $idMoneda == '1') {
+                $para = $repo->get_parametroPrecio();
 
-            $parametro_moneda = (isset($para[0]->value)) ? $para[0]->value : 0;
+                $parametro_moneda = (isset($para[0]->value)) ? $para[0]->value : 0;
 
-            $val=$repo->get_precios_list($idProducto, $idTipoCli,$parametro_moneda);
-            if(!empty($val)){
-                $fecha_actual=date("Y-m-d");
-                $cambio=$repo->cambio_tipo($parametro_moneda,$fecha_actual);
+                $val = $repo->get_precios_list($idProducto, $idTipoCli, $parametro_moneda);
+                if (!empty($val)) {
+                    $fecha_actual = date("Y-m-d");
+                    $cambio = $repo->cambio_tipo($parametro_moneda, $fecha_actual);
 
-                $newPrecio=floatval($val[0]->nPrecio)*floatval($cambio[0]->Mensaje);
+                    $newPrecio = floatval($val[0]->nPrecio) * floatval($cambio[0]->Mensaje);
+                }
+            } else {
+                $newPrecio = $val[0]->nPrecio;
             }
-        } else {
-            $newPrecio = $val[0]->nPrecio;
+            // throw new \Exception('Ya existe un almacen con este código interno. Por favor ingrese otro código.');
+            //     DB::commit();
+            return response()->json([
+                'status' => true,
+                'data' => $val,
+                'newPrecio' => $newPrecio,
+                'cambio' => $cambio,
+            ]);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
         }
-        // throw new \Exception('Ya existe un almacen con este código interno. Por favor ingrese otro código.');
-        //     DB::commit();
-        return response()->json([
-            'status' => true,
-            'data'=>$val,
-            'newPrecio'=>$newPrecio,
-            'cambio'=>$cambio,
-        ]);
-
-    }catch (\Exception $e) {
-        DB::rollBack();
-        return response()->json([
-            'status' => false,
-            'message' => $e->getMessage()
-        ]);
-    }
     }
 
-    public function validar_parametro_categoria() {
+    public function validar_parametro_categoria()
+    {
         $sql = "SELECT * FROM ERP_Parametros WHERE id=18";
         $result = DB::select($sql);
         echo json_encode($result);
     }
 
-    public function validar_serie(Request $request, SolicitudInterface $repo) {
+    public function validar_serie(Request $request, SolicitudInterface $repo)
+    {
         $data = $request->all();
         $result = $repo->validar_serie($data["idserie"]);
         return response()->json($result);
     }
 
-    public function copiar_solicitud(Request $request, SolicitudInterface $repo) {
-        $data = $request->all();
+    public function copiar_solicitud($id, Request $request, SolicitudInterface $repo)
+    {
+        ini_set('max_execution_time', 6000);
+        DB::beginTransaction();
+        try {
+            $number = $request->input('number', 1);
+            $codCon = $request->input('cCodConsecutivo', '');
+            $numCon = $request->input('nConsecutivo', '');
 
-        for ($i=0; $i < $data["numero_solicitudes"]; $i++) {
-            $result = $repo->copiar_solicitud($data["cCodConsecutivo"], $data["nConsecutivo"]);
+            for ($i = 0; $i < $number; $i++) {
+                $repo->copiar_solicitud($codCon, $numCon);
+            }
+            DB::commit();
+            return response()->json([
+                'status' => true
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
         }
-        return response()->json($result);
     }
 
 
-    public function guardar_separaciones(Request $request) {
+    public function guardar_separaciones(Request $request)
+    {
         $data = $request->all();
         // print_r($data); exit;
-        if(count($data["idseparacion"]) > 0) {
+        if (count($data["idseparacion"]) > 0) {
             $sql_delete = "DELETE FROM dbo.ERP_SolicitudSeparacion WHERE cCodConsecutivo='{$data["cCodConsecutivo"]}' AND nConsecutivo='{$data["nConsecutivo"]}'";
             DB::statement($sql_delete);
         }
 
-        for ($i=0; $i < count($data["idseparacion"]); $i++) {
+        for ($i = 0; $i < count($data["idseparacion"]); $i++) {
             $datos = array();
             $datos["idventa"] = $data["idseparacion"][$i];
             $datos["cCodConsecutivo"] = $data["cCodConsecutivo"];
@@ -714,14 +736,16 @@ class SolicitudController extends Controller
         return response()->json($result);
     }
 
-    public function obtener_separaciones(Request $request, SolicitudInterface $repo) {
+    public function obtener_separaciones(Request $request, SolicitudInterface $repo)
+    {
         $data = $request->all();
         $result = $repo->obtener_separaciones($data["cCodConsecutivo"], $data["nConsecutivo"]);
         return response()->json($result);
 
     }
 
-    public function obtener_series(Request $request, SolicitudInterface $repo) {
+    public function obtener_series(Request $request, SolicitudInterface $repo)
+    {
         $data = $request->all();
         $result = $repo->obtener_series($data["id_solicitud_articulo"]);
         return response()->json($result);

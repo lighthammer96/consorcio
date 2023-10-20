@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Entity extends Model
 {
-    use SoftDeletes;
+//    use SoftDeletes;
 
     protected $table = 'Entidad';
 
@@ -24,8 +24,9 @@ class Entity extends Model
 
     protected $fillable = ['IdEntidad', 'NombreEntidad', 'DireccionLegal', 'ApellidoPaterno', 'ApellidoMaterno',
         'Nombres', 'IdTipoPersona', 'IdTipoDocumentoIdentidad', 'Documento', 'RazonSocial', 'Tipo', 'is_client',
-        'contact', 'contact_phone', 'is_provider',
-        'user_created', 'user_updated', 'user_deleted', 'deleted_at'];
+//        'contact', 'contact_phone', 'is_provider',
+        'contact_phone', 'is_provider',
+        'user_created', 'user_updated', 'user_deleted'];
 
     protected $hidden = ['created_at', 'updated_at', 'deleted_at', 'user_created', 'user_updated', 'user_deleted'];
 

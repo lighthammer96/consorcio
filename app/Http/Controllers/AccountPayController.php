@@ -77,8 +77,10 @@ class AccountPayController extends Controller
             }
             $amount = $affection + $unaffected + $exonerated + $igv;
 
+            $param = $parRepo->find(31);
+            $is_verify_ = ($param) ? $param->value : 'N';
             $dt_ = $dtRepo->find($data['document_type_id']);
-            if (in_array($dt_->EquivalenciaSunat, ['01', '03'])) {
+            if (in_array($dt_->EquivalenciaSunat, ['01', '03']) && $is_verify_ == 'S') {
                 $ent_ = $entRepo->find($data['provider_id']);
                 $ruc = trim($ent_->Documento);
                 $dt = trim($dt_->EquivalenciaSunat);

@@ -8,10 +8,12 @@
 
 namespace App\Http\Recopro\ReporteVentaCliente;
 
-
 interface ReporteVentaClienteInterface
 {
     public function all();
+
+    public function search($filter);
+
     public function create(array $attributes);
 
 }

@@ -103,6 +103,7 @@
             </th>
         </tr>
         <tr>
+            <th style="border: 1px solid #000000;">Código Vale</th>
             <th style="border: 1px solid #000000;">Fecha</th>
             <th style="border: 1px solid #000000;">Glosa</th>
             <th style="border: 1px solid #000000;">Responsable</th>
@@ -111,6 +112,7 @@
         </tr>
         @foreach($data['detail2'] as $det)
             <tr>
+                <td style="border: 1px solid #000000;text-align: center">{{ $det['code'] }}</td>
                 <td style="border: 1px solid #000000;text-align: center">{{ $det['date'] }}</td>
                 <td style="border: 1px solid #000000;">{{ $det['gloss'] }}</td>
                 <td style="border: 1px solid #000000;">{{ $det['responsible'] }}</td>

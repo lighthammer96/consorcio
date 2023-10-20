@@ -1015,24 +1015,24 @@ function getFormSearchReporteRepuestos(form_id, input_id, btn_id) {
         //     '</div>'+           
         // '</div>'+
         '<div class="form-group">' +
-        '<div class="col-md-2  ">' +
+        '<div class="col-md-2">' +
         '<select id="filtro_tienda"  style="margin-right:5px;width: 100%" name="filtro_tienda" class="form-control input-sm " placeholder="Oficina"></select>' +
         '</div>' +
-        '<label class="col-sm-2 control-label">Fecha Inicio</label>' +
-        '<div class="col-md-3">' +
-        '<input type="date" class="form-control input-sm"  id="FechaInicioFiltro">' +
-        '</div>' +
-        '<label class="col-sm-2 control-label">Fecha Fin</label>' +
-        '<div class="col-md-3">' +
-        '<input type="date" class="form-control input-sm"  id="FechaFinFiltro">' +
-        '</div>' +
+        // '<label class="col-sm-2 control-label">Fecha Inicio</label>' +
+        // '<div class="col-md-3">' +
+        // '<input type="date" class="form-control input-sm"  id="FechaInicioFiltro">' +
+        // '</div>' +
+        // '<label class="col-sm-2 control-label">Fecha Fin</label>' +
+        // '<div class="col-md-3">' +
+        // '<input type="date" class="form-control input-sm"  id="FechaFinFiltro">' +
+        // '</div>' +
 
-        '</div>' +
-        '<div class="form-group">' +
-        '<div class="col-md-6 ">' +
+        // '</div>' +
+        // '<div class="form-group">' +
+        '<div class="col-md-5">' +
         '<select id="idClienteFiltro"  style="margin-right:5px;width: 100%" name="idClienteFiltro" class="form-control input-sm "></select>' +
         '</div>' +
-        '<div class="col-md-6">' +
+        '<div class="col-md-5">' +
         '<select id="idVendedorFiltro"  style="margin-right:5px;width: 100%" name="idVendedorFiltro" class="form-control input-sm "></select>' +
         '</div>' +
         '</div>' +
@@ -1117,24 +1117,13 @@ function getFormSearchReporteVenta(form_id, input_id, btn_id) {
         //     '</div>'+           
         // '</div>'+
         '<div class="form-group">' +
-        '<div class="col-md-2  ">' +
+        '<div class="col-md-2">' +
         '<select id="filtro_tienda"  style="margin-right:5px;width: 100%" name="filtro_tienda" class="form-control input-sm " placeholder="Oficina"></select>' +
         '</div>' +
-        '<label class="col-sm-2 control-label">Fecha Inicio</label>' +
-        '<div class="col-md-3">' +
-        '<input type="date" class="form-control input-sm"  id="FechaInicioFiltro">' +
-        '</div>' +
-        '<label class="col-sm-2 control-label">Fecha Fin</label>' +
-        '<div class="col-md-3">' +
-        '<input type="date" class="form-control input-sm"  id="FechaFinFiltro">' +
-        '</div>' +
-
-        '</div>' +
-        '<div class="form-group">' +
-        '<div class="col-md-6 ">' +
+        '<div class="col-md-5">' +
         '<select id="idClienteFiltro"  style="margin-right:5px;width: 100%" name="idClienteFiltro" class="form-control input-sm "></select>' +
         '</div>' +
-        '<div class="col-md-6">' +
+        '<div class="col-md-5">' +
         '<select id="idVendedorFiltro"  style="margin-right:5px;width: 100%" name="idVendedorFiltro" class="form-control input-sm "></select>' +
         '</div>' +
         '</div>' +
@@ -1625,25 +1614,23 @@ function getFormSearchReporteCreditosAprobados(form_id, input_id, btn_id) {
         '<div class="col-md-2  ">' +
         '<select id="filtro_tienda"  style="margin-right:5px;width: 100%" name="filtro_tienda" class="form-control input-sm " placeholder="Oficina"></select>' +
         '</div>' +
-        '<label class="col-sm-2 control-label">Fecha Inicio</label>' +
-        '<div class="col-md-3">' +
-        '<input type="date" class="form-control input-sm"  id="FechaInicioFiltro">' +
-        '</div>' +
-        '<label class="col-sm-2 control-label">Fecha Fin</label>' +
-        '<div class="col-md-3">' +
-        '<input type="date" class="form-control input-sm"  id="FechaFinFiltro">' +
-        '</div>' +
+        // '<label class="col-sm-2 control-label">Fecha Inicio</label>' +
+        // '<div class="col-md-3">' +
+        // '<input type="date" class="form-control input-sm"  id="FechaInicioFiltro">' +
+        // '</div>' +
+        // '<label class="col-sm-2 control-label">Fecha Fin</label>' +
+        // '<div class="col-md-3">' +
+        // '<input type="date" class="form-control input-sm"  id="FechaFinFiltro">' +
+        // '</div>' +
 
-        '</div>' +
-        '<div class="form-group">' +
-        '<div class="col-md-6 ">' +
-        '<select id="idClienteFiltro"  style="margin-right:5px;width: 100%" name="idClienteFiltro" class="form-control input-sm "></select>' +
-        '</div>' +
-        '<div class="col-md-6">' +
+        // '</div>' +
+        // '<div class="form-group">' +
+        // '<div class="col-md-6 ">' +
+        // '<select id="idClienteFiltro"  style="margin-right:5px;width: 100%" name="idClienteFiltro" class="form-control input-sm "></select>' +
+        // '</div>' +
+        '<div class="col-md-4">' +
         '<select id="idVendedorFiltro"  style="margin-right:5px;width: 100%" name="idVendedorFiltro" class="form-control input-sm "></select>' +
         '</div>' +
-        '</div>' +
-        '<div class="form-group">' +
         '<div class="col-md-3 ">' +
         '<select id="idTipoSolicitud"  style="margin-right:5px;width: 100%" name="idTipoSolicitud" class="form-control input-sm "><option value="">Tipo Solicitud</option><option value="1">CONTADO</option><option value="2">CRÉDITO DIRECTO</option><option value="3">CRÉDITO FINANCIERO</option><option value="4">CRÉDITO</option></select>' +
         '</div>' +
@@ -1788,49 +1775,62 @@ function getFormSearchCuentasxcobrar(form_id, input_id, btn_id) {
         '</div>' +
         '<div class="form-group">' +
 
-        '<div class="col-md-5">' +
-        '<select id="idClienteFiltro"  style="margin-right:5px;width: 100%" name="idClienteFiltro" class="form-control input-sm "></select>' +
-        '</div>' +
+        // '<div class="col-md-5">' +
+        // '<select id="idClienteFiltro"  style="margin-right:5px;width: 100%" name="idClienteFiltro" class="form-control input-sm "></select>' +
+        // '</div>' +
 
         '<div class="col-md-5">' +
         '<select id="idCobradorFiltro"  style="margin-right:5px;width: 100%" name="idCobradorFiltro" class="form-control input-sm "></select>' +
         '</div>' +
-        '</div>' +
-        '<div class="form-group">' +
 
         '<div class="col-md-5">' +
         '<select id="Departamento"  style="margin-right:5px;width: 100%" name="idClienteFiltro" class="form-control input-sm "><option value="">Departemento</option></select>' +
         '</div>' +
 
+        '</div>' +
+        '<div class="form-group">' +
         '<div class="col-md-5">' +
         '<select id="provincia"   style="margin-right:5px;width: 100%" name="idCobradorFiltro" class="form-control input-sm "><option value="">Provincia</option></select>' +
         '</div>' +
-        '</div>' +
-        '<div class="form-group">' +
 
         '<div class="col-md-5">' +
         '<select  id="distrito"  style="margin-right:5px;width: 100%" name="idClienteFiltro" class="form-control input-sm "><option value="">Distrito</option></select>' +
         '</div>' +
 
+        '</div>' +
+        '<div class="form-group">' +
         '<div class="col-md-5">' +
         '<select id="idsector"  style="margin-right:5px;width: 100%" name="idCobradorFiltro" class="form-control input-sm "><option value="">Sector</option></select>' +
         '</div>' +
-        '</div>' +
-        '<div class="form-group">' +
         '<div class="col-md-5 ">' +
         '<select id="idTipoSolicitud"  style="margin-right:5px;width: 100%" name="idTipoSolicitud" class="form-control input-sm "><option value="">Tipo Solicitud</option><option value="1">CONTADO</option><option value="2">CRÉDITO DIRECTO</option><option value="3">CRÉDITO FINANCIERO</option><option value="4">CRÉDITO</option></select>' +
         '</div>' +
+        '</div>' +
+
+        '<div class="form-group">' +
         '<div class="col-md-5">' +
         '<select id="idConvenio"  style="margin-right:5px;width: 100%" name="idConvenio" class="form-control input-sm "><option value="">Convenio</option></select>' +
         '</div>' +
-
-
-        '</div>' +
-        '<div class="form-group">' +
         '<div class="col-md-5">' +
         '<input type="text" id="search_cuentas_cobrar" name="search_cuentas_cobrar" class="form-control input-sm" autocomplete="off" placeholder="Buscar..." />' +
         '</div>' +
         '</div>' +
+
+        // '<div class="form-group">' +
+        // '<div class="col-md-5">' +
+        // '<div class="input-group">' +
+        // '<input type="text" class="form-control input-sm" id="c_client" placeholder="Seleccione Cliente" readonly />' +
+        // '<div class="input-group-btn">' +
+        // '<button class="btn btn-danger btn-sm" type="button" ng-click="openClient()" title="Buscar">' +
+        // '<span class="fa fa-search"></span>' +
+        // '</button>' +
+        // '<button class="btn btn-warning btn-sm" type="button" ng-click="cleanClient()" title="Limpiar">' +
+        // '<span class="fa fa-eraser"></span>' +
+        // '</button>' +
+        // '</div>' +
+        // '</div>' +
+        // '</div>' +
+
         '</form>';
 }
 
@@ -1925,22 +1925,23 @@ function getFormSearch2(form_id, input_id, btn_id) {
 function getFormSearch3(form_id, input_id, btn_id) {
     return '<form class="form-horizontal" id="' + form_id + '" style="margin-bottom:-3px">' +
         '<div class="form-group">' +
-        '<div class="col-md-3"><input  type="date" class="form-control input-sm" id="fecha_inicio" placeholder="Fecha Inicio"></div>' +
-        '<div class="col-md-3"><input type="date" class="form-control input-sm"  id="fecha_fin" placeholder="Fecha Fin"></div>' +
+        // '<div class="col-md-3"><input  type="date" class="form-control input-sm" id="fecha_inicio" placeholder="Fecha Inicio"></div>' +
+        // '<div class="col-md-3"><input type="date" class="form-control input-sm"  id="fecha_fin" placeholder="Fecha Fin"></div>' +
         '<div class="col-md-4"><select id="filtro_art"  style="margin-right:5px" name="filtro_art" class="form-control input-sm "></select></div>' +
         '<div class="col-md-2"><select id="filtro_oper"  style="margin-right:5px" name="filtro_art" class="form-control input-sm "></select></div>' +
 
 
-        '</div>' +
-        '<div class="form-group">' +
         '<div class="col-md-2"><select id="filtro_nat"  style="margin-right:5px" name="filtro_art" class="form-control input-sm "></select></div>' +
         '<div class="col-md-2"><select id="filtro_cate" style="margin-right:5px"  name="filtro_cate" class="form-control input-sm"></select></div>' +
         '<div class="col-md-2"><select style="margin-right:5px;width: 100%" id="filtro_idAlm" name="filtro_idAlm" class="form-control input-sm"></select></div>' +
+
+        '</div>' +
+        '<div class="form-group">' +
         '<div class="col-md-2"><select style="margin-right:5px" id="filtro_idLoc"  name="filtro_idLoc"  class="form-control input-sm"></select></div>' +
         '<div class="col-md-2"><input type="text" class="form-control input-sm" id="n_movimiento" placeholder="N° Movimiento" width="100px"></div>' +
         '<div class="col-md-2"><input type="text" class="form-control input-sm" id="cod_lote" placeholder="Cod Lote" width="100px"></div>' +
-        '</div>' +
-        '<div class="form-group">' +
+        // '</div>' +
+        // '<div class="form-group">' +
         '<div class="col-md-2" ><input type="text" class="form-control input-sm" id="cod_serie" placeholder="Cod Serie" width="100px"></div>' +
         '<div class="col-md-2">' +
         '<input value="a" type="hidden" id="' + input_id + '" name="search" class="form-control" autocomplete="off" placeholder="Buscar..." />' +
@@ -11840,10 +11841,16 @@ function getFormSearchComp(form_id, input_id, btn_id) {
         '<label class="control-label">Cliente</label>' +
         '<select id="idClienteFiltro"  style="margin-right:5px;width: 100%" name="idClienteFiltro" class="form-control input-sm "></select>' +
         '</div>' +
-        '<div class="col-md-1 " style="padding: 0;">' +
+        '<div class="col-md-2" style="padding: 0;">' +
         '<label class="control-label">Estado</label>' +
         '<select id="estado_cpe"  style="width: 100%" name="estado_cpe" class="form-control input-sm "><option value="">TODOS</option><option value="PENDIENTE">PENDIENTE</option><option value="EMITIDO">EMITIDO</option><option value="RECHAZADO">RECHAZADO</option><option value="BAJA EMITIDA">BAJA EMITIDA</option><option value="BAJA RECHAZADA">BAJA RECHAZADA</option></select>' +
         '</div>' +
+
+        '<div class="col-md-1" style="padding: 0;">' +
+        '<label class="control-label">Anulado</label>' +
+        '<select id="anulado"  style="width: 100%" name="anulado" class="form-control input-sm "><option value="">TODOS</option><option value="S">SI</option><option value="N">NO</option></select>' +
+        '</div>' +
+
         '<div class="col-md-3 " style="padding-right: 0px;"><br>' +
         '<div class="input-group input-group-sm">' +
         '<input type="text" id="' + input_id + '" name="search" class="form-control" autocomplete="off" placeholder="Buscar..." />' +
@@ -11856,11 +11863,6 @@ function getFormSearchComp(form_id, input_id, btn_id) {
         '</button>' +
         '</span>' +
         '</div>' +
-        '</div>' +
-
-        '<div class="col-md-2" style="padding: 0;">' +
-        '<label class="control-label">Anulado</label>' +
-        '<select id="anulado"  style="width: 100%" name="anulado" class="form-control input-sm "><option value="">TODOS</option><option value="S">SI</option><option value="N">NO</option></select>' +
         '</div>' +
 
         '</div>' +

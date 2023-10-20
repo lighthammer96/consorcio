@@ -177,12 +177,6 @@
                     cssClass: 'buscador',
                     text: search
                 }, {
-                    //     cssClass: 'btn-primary',
-                    //     text: '<i class="fa fa-file-excel-o"></i> Exportar a Excel',
-                    //     click: function () {
-                    //         $scope.openDoc('recepcionOrdenCompras/excel', {});
-                    //     }
-                    // }, {
                     cssClass: 'btn-danger-admin',
                     text: '<i class="fa fa-plus"></i> Conformidad',
                     click: function () {

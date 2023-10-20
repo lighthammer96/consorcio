@@ -24,19 +24,35 @@ class EntityController extends Controller
 
     public function all(Request $request, EntityInterface $repo)
     {
-        $s = $request->input('search', '');
-        $params = ['IdEntidad as id', 'NombreEntidad as nombre_entidad', 'DireccionLegal as direccion_legal',
-            'ApellidoPaterno as apellido_paterno', 'ApellidoMaterno as apellido_materno', 'Nombres', 'RazonSocial',
-            'IdTipoPersona as tipo_persona', 'IdTipoDocumentoIdentidad as tipo_documento_identidad', 'Documento',
-            'is_client', 'is_provider', 'contact', 'contact_phone'];
-        return parseList($repo->search($s), $request, 'IdEntidad', $params);
+        try {
+            $s = $request->input('search', '');
+            $params = ['IdEntidad as id', 'NombreEntidad as nombre_entidad', 'DireccionLegal as direccion_legal',
+                'ApellidoPaterno as apellido_paterno', 'ApellidoMaterno as apellido_materno', 'Nombres', 'RazonSocial',
+                'IdTipoPersona as tipo_persona', 'IdTipoDocumentoIdentidad as tipo_documento_identidad', 'Documento',
+                'is_client', 'is_provider', 'contact_phone'];
+//                'is_client', 'is_provider', 'contact', 'contact_phone'];
+            return parseList($repo->search($s), $request, 'IdEntidad', $params);
+        } catch (\Exception $e) {
+            return response()->json([
+                'Result' => 'ERROR',
+                'Message' => [$e->getMessage()]
+            ]);
+        }
     }
 
     public function providers(Request $request, EntityInterface $repo)
     {
-        $s = $request->input('search', '');
-        $params = ['IdEntidad as id', 'NombreEntidad', 'DireccionLegal', 'Documento', 'contact', 'contact_phone'];
-        return parseList($repo->providers($s), $request, 'IdEntidad', $params);
+        try {
+            $s = $request->input('search', '');
+//            $params = ['IdEntidad as id', 'NombreEntidad', 'DireccionLegal', 'Documento', 'contact', 'contact_phone'];
+            $params = ['IdEntidad as id', 'NombreEntidad', 'DireccionLegal', 'Documento'];
+            return parseList($repo->providers($s), $request, 'IdEntidad', $params);
+        } catch (\Exception $e) {
+            return response()->json([
+                'Result' => 'ERROR',
+                'Message' => [$e->getMessage()]
+            ]);
+        }
     }
 
     public function clients(Request $request, EntityInterface $repo)

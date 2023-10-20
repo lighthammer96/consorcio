@@ -42,15 +42,23 @@ class MovimientoCajaController extends Controller
         $this->base_model = new BaseModel();
 //        $this->middleware('json');
     }
-    public function data_formIncio (CajaDiariaDetalleInterface $moventRepo)
+    public function data_formIncio (CajaDiariaDetalleInterface $cddRepo)
     {
-        $cuenta_bancarias = $moventRepo->getcuentas_bancarias();
-        $bancos = $moventRepo->getbancos();
-        return response()->json([
-            'status' => true,
-            'cuenta_bancarias' => $cuenta_bancarias,
-            'bancos'=>$bancos,
-        ]);
+        try {
+            $cuenta_bancarias = $cddRepo->getcuentas_bancarias();
+            $bancos = $cddRepo->getbancos();
+
+            return response()->json([
+                'status' => true,
+                'cuenta_bancarias' => $cuenta_bancarias,
+                'bancos'=>$bancos,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
     }
 
     public function guardar_detalle_forma_pago($data, $data_venta, $repo, $caja_diaria_repositorio, $idMonedaAdd, $totales_actualizados, $consecutivo_caja_diaria_detalle) {
@@ -1099,7 +1107,9 @@ class MovimientoCajaController extends Controller
         // print_r($r);
     }
 
-    public function guardar_comprobante(CajaDiariaDetalleInterface $repo, Request $request, SolicitudInterface $solicitud_repositorio, ConsecutivosComprobantesInterface $repoCC, CajaDiariaInterface $caja_diaria_repositorio, VentasInterface $ventas_repo, CompaniaInterface $compania_repo,CustomerInterface $repo_cliente) {
+    public function guardar_comprobante(CajaDiariaDetalleInterface $repo, Request $request, SolicitudInterface $solicitud_repositorio,
+                                        ConsecutivosComprobantesInterface $repoCC, CajaDiariaInterface $caja_diaria_repositorio,
+                                        VentasInterface $ventas_repo, CompaniaInterface $compania_repo,CustomerInterface $repo_cliente) {
 
 
         // ini_Set("display_errors", 1);
@@ -2110,7 +2120,9 @@ class MovimientoCajaController extends Controller
 
     }
 
-    public function guardar_pago_documentos_pendientes(CajaDiariaDetalleInterface $repo, Request $request, SolicitudInterface $solicitud_repositorio, ConsecutivosComprobantesInterface $repoCC, CajaDiariaInterface $caja_diaria_repositorio, VentasInterface $ventas_repo) {
+    public function guardar_pago_documentos_pendientes(CajaDiariaDetalleInterface $repo, Request $request,
+                                                       SolicitudInterface $solicitud_repositorio,
+                                                       ConsecutivosComprobantesInterface $repoCC, CajaDiariaInterface $caja_diaria_repositorio, VentasInterface $ventas_repo) {
 
         $data = $request->all();
 

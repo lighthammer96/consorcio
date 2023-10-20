@@ -11,7 +11,10 @@ namespace App\Http\Recopro\Query_movements;
 
 interface Query_movementsInterface
 {
+    public function search($filter);
+
     public function all();
+
     public function create(array $attributes);
 
 }

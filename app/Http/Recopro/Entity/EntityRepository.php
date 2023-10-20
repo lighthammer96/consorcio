@@ -41,13 +41,15 @@ class EntityRepository implements EntityInterface
 
     public function providers($s)
     {
-        return $this->model->where(function($q) use ($s) {
-            $q->where('NombreEntidad', 'LIKE', '%'.$s.'%');
-            $q->orWhere('DireccionLegal', 'LIKE', '%'.$s.'%');
-            $q->orWhere('Documento', 'LIKE', '%'.$s.'%');
-            $q->orWhere('contact', 'LIKE', '%'.$s.'%');
-            $q->orWhere('contact_phone', 'LIKE', '%'.$s.'%');
-        })->where('is_provider', 1);
+        return $this->model
+            ->where(function($q) use ($s) {
+                $q->where('NombreEntidad', 'LIKE', '%'.$s.'%');
+                $q->orWhere('DireccionLegal', 'LIKE', '%'.$s.'%');
+                $q->orWhere('Documento', 'LIKE', '%'.$s.'%');
+//                $q->orWhere('contact', 'LIKE', '%'.$s.'%');
+//                $q->orWhere('contact_phone', 'LIKE', '%'.$s.'%');
+            });
+//        })->where('is_provider', 1);
     }
 
     public function clients($s)

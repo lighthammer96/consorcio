@@ -20,6 +20,18 @@
         var distrito = $('#distrito');
         var id_tipocli = $("#id_tipocli");
         var tipodoc = $("#tipodoc");
+        tipodoc.change(function(e) {
+            p_name.val('');
+            p_lastname.val('');
+            p_lastname2.val('');
+            var type_doc_ = $(this).val();
+            if(type_doc_ !== '06') {
+                $('div.p_natural_person').removeClass('hide');
+            } else {
+                $('div.p_natural_person').addClass('hide');
+            }
+            e.preventDefault();
+        });
         var razonsocial = $("#razonsocial");
         var documento = $("#documento");
         var contacto = $("#contacto");
@@ -29,9 +41,6 @@
         var telefono = $("#telefono");
         var cliente_id = $("#cliente_id");
         var cEstadoCivil = $("#cEstadoCivil");
-        var nombresP;
-        var apellidopP;
-        var apellidomP;
         var impuesto = $("#impuesto");
         var congelado = $("#congelado");
         var activo = $("#activo");
@@ -39,6 +48,27 @@
         var idMoneda = $("#idMoneda");
         var nro_cuenta = $("#nro_cuenta");
         var descripcion_banco = $("#descripcion_banco");
+
+        var p_lastname = $('input#p_lastname');
+        p_lastname.keyup(function () {
+            setRSProvider();
+        });
+        var p_lastname2 = $('input#p_lastname2');
+        p_lastname2.keyup(function () {
+            setRSProvider();
+        });
+        var p_name = $('input#p_name');
+        p_name.keyup(function () {
+            setRSProvider();
+        });
+
+        function setRSProvider() {
+            var name_ = p_name.val().toString().trim();
+            var ln_ = p_lastname.val().toString().trim();
+            var ln2_ = p_lastname2.val().toString().trim();
+            razonsocial.val(ln_ + ' ' + ln2_ + ' ' + name_);
+        }
+
         var modalDetalle = $("#modalDetalle");
         $scope.chkState = function () {
             var txt_state2 = (w_state.prop('checked')) ? 'Activo' : 'Inactivo';
@@ -86,13 +116,11 @@
         var table_container_Proveedor = $("#table_container_Proveedor");
 
         function newCliente() {
-            titleModalClientes.html('Nuevo Proveedor');
-            nombresP = null;
-            apellidopP = null;
-            apellidomP = null;
-            modaClientes.modal('show');
+            tipodoc.val('01').trigger('change');
             var bandera = 'xxxxx';
             $("#w_contable_detalle").empty();
+            modaClientes.modal('show');
+            titleModalClientes.html('Nuevo Proveedor');
             getDepartamento(bandera);
         }
 
@@ -104,24 +132,16 @@
                 RESTService.get('proveedors/get_cliente_personaCus', documentoEnvio, function (response) {
                     if (!_.isUndefined(response.status) && response.status) {
                         var dataPersona = response.data;
-                        if (dataPersona.length == 0) {
-                            console.log("no hay en persona");
+                        if (dataPersona.length === 0) {
                             getDatosCliente();
                         } else {
-                            console.log(dataPersona);
-                            console.log("si hay ");
                             tipodoc.val(dataPersona[0].cTipodocumento).trigger('change');
                             var nclie = dataPersona[0].cRazonsocial;
-                            console.log(nclie);
-
-                            console.log("entro cliente");
-                            if (nclie.length == 0 || nclie == '') {
-                                console.log("entro if ");
+                            if (nclie.length === 0 || nclie === '') {
                                 razonsocial.val(dataPersona[0].cNombrePersona);
                             } else {
                                 razonsocial.val(dataPersona[0].cRazonsocial);
                             }
-
                             documento.val(dataPersona[0].cNumerodocumento);
                             // contacto.val(dataPersona[0].contacto);
                             direccion.val(dataPersona[0].cDireccion);
@@ -133,9 +153,10 @@
                             getDepartamento(dataPersona[0].cDepartamento);
                             getProvincia(dataPersona[0].cProvincia, dataPersona[0].cDepartamento);
                             getDistrito(dataPersona[0].cCodUbigeo, dataPersona[0].cProvincia);
+                            p_name.val(dataPersona[0].cNombres);
+                            p_lastname.val(dataPersona[0].cApepat);
+                            p_lastname2.val(dataPersona[0].cApemat);
                         }
-
-
                     } else {
                         AlertFactory.textType({
                             title: '',
@@ -157,13 +178,12 @@
                 if (this.readyState == 4 && this.status == 200) {
                     // La respuesta, aunque sea JSON, viene en formato texto, por lo que tendremos que hace run parse
                     var data = JSON.parse(this.responseText);
-                    console.log(data);
                     if (data.nombres != null) {
                         var razon = data.nombres + ' ' + data.apellidoPaterno + ' ' + data.apellidoMaterno;
                         razonsocial.val(razon);
-                        nombresP = data.nombres;
-                        apellidopP = data.apellidoPaterno;
-                        apellidomP = data.apellidoMaterno;
+                        p_name.val(data.nombres);
+                        p_lastname.val(data.apellidoPaterno);
+                        p_lastname2.val(data.apellidoMaterno);
                     } else if (data.razonSocial != null) {
                         var razon = data.razonSocial;
                         var direc = data.direccion;
@@ -238,6 +258,9 @@
 
                     tipodoc.val(data_p[0].tipodoc).trigger('change');
                     razonsocial.val(data_p[0].razonsocial);
+                    p_name.val(data_p[0].cNombres);
+                    p_lastname.val(data_p[0].cApepat);
+                    p_lastname2.val(data_p[0].cApemat);
                     documento.val(data_p[0].documento);
                     contacto.val(data_p[0].contacto);
                     direccion.val(data_p[0].direccion);
@@ -254,19 +277,13 @@
                     congelado.prop('checked', chk_stateb).iCheck('update');
                     var chk_statec = (data_p[0].activo == 'S');
                     activo.prop('checked', chk_statec).iCheck('update');
-                    nombresP = data_p[0].cNombres;
-                    apellidopP = data_p[0].cApepat;
-                    apellidomP = data_p[0].cApemat;
                     getDepartamento(data_p[0].cDepartamento);
                     getProvincia(data_p[0].cProvincia, data_p[0].cDepartamento);
                     getDistrito(data_p[0].cCodUbigeo, data_p[0].cProvincia);
-                    console.log(dataDetalle);
-                    console.log("esto es el detalle");
                     dataDetalle.map(function (index) {
                         addToDeta(index.idProveedorCuentaBanco, index.idProveedorCuentaBanco, index.idBanco, index.bancos_descripcion, index.idMoneda, index.moneda_descripcion, index.prb_descripcion, index.Nrocuenta)
                     });
                     modaClientes.modal('show');
-                    console.log(data_p);
                 } else {
                     AlertFactory.textType({
                         title: '',
@@ -460,6 +477,11 @@
             bval = bval && tipodoc.required();
             bval = bval && id_tipocli.required();
             bval = bval && id_tipoDoc_Venta.required();
+            if (tipodoc.val() === '01') {
+                bval = bval && p_lastname.required();
+                bval = bval && p_lastname2.required();
+                bval = bval && p_name.required();
+            }
             bval = bval && razonsocial.required();
             bval = bval && documento.required();
             bval = bval && celular.required();
@@ -473,7 +495,6 @@
                 });
                 bval = false;
             }
-            ;
             if (tipodoc.val() == '06' && documento.val().length != 11) {
                 AlertFactory.textType({
                     title: '',
@@ -482,11 +503,10 @@
                 });
                 bval = false;
             }
-            ;
             if (id_tipoDoc_Venta.val() == '01' && tipodoc.val() == '01') {
                 AlertFactory.textType({
                     title: '',
-                    message: ' Tipo de documento del cliente debe ser R.U.C para el tipo documento venta factura',
+                    message: ' Tipo de documento del proveedor debe ser R.U.C para el tipo documento venta factura',
                     type: 'info'
                 });
                 bval = false;
@@ -535,9 +555,9 @@
                     'id_tipoProveedor': id_tipocli.val(),
                     'IdTipoDocumento': id_tipoDoc_Venta.val(),
                     'cEstadoCivil': cEstadoCivil.val(),
-                    'nombresP': nombresP,
-                    'apellidopP': apellidopP,
-                    'apellidomP': apellidomP,
+                    'nombresP': p_name.val(),
+                    'apellidopP': p_lastname.val(),
+                    'apellidomP': p_lastname2.val(),
                     'impuesto': ((impuesto.prop('checked')) ? 'S' : 'N'),
                     'congelado': ((congelado.prop('checked')) ? 'S' : 'N'),
                     'activo': ((activo.prop('checked')) ? 'S' : 'N'),
@@ -627,8 +647,8 @@
                 deleteAction: base_url + '/proveedors/delete',
             },
             messages: {
-                addNewRecord: 'Nuevo Cliente',
-                editRecord: 'Editar Cliente',
+                addNewRecord: 'Nuevo Proveedor',
+                editRecord: 'Editar Proveedor',
             },
             toolbar: {
                 items: [{

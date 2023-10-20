@@ -543,6 +543,7 @@
         {
             var tr_ = $('<tr data-id="' + row.id + '" data-tot="' + row.total_sol + '"></tr>');
             tr_.append('<td>' + row.document_number + '</td>');
+            tr_.append('<td class="text-center">' + row.date_emission + '</td>');
             tr_.append('<td>' + row.provider_name + '</td>');
             tr_.append('<td>' + row.gloss + '</td>');
             tr_.append('<td class="text-center">' + row.account + '</td>');

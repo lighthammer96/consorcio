@@ -13,7 +13,7 @@ Route::post('customers/update', ['as' => 'customers.update', 'uses' => 'Customer
 Route::get('customers/excel', ['as' => 'customers.excel', 'uses' => 'CustomerController@excel']);
 Route::get('customers/data_form', ['as' => 'customers.data_form', 'uses' => 'CustomerController@data_form']);
 
-Route::put('customers/createCliente/{id}', ['as' => 'customers.createCliente', 'uses' => 'CustomerController@createUpdate']);
+Route::put('customers/createCliente/{id}', 'CustomerController@createUpdate');
 
 Route::post('customers/getTipoDocumento', 'CustomerController@getTipoDocumento');
 Route::post('customers/getTipoPersona', 'CustomerController@getTipoPersona');

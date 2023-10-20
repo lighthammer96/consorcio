@@ -14,32 +14,21 @@ trait ReporteCreditosAprobadoTrait
 {
     public function generateDataExcel($info)
     {
-        $columns[] = ['SOLICITUD','FECHA SOL','TIPO SOL', 'CONVENIO','CLIENTE','TIPO CLIENTE', 'FECHA DOC', 'SERIE','NUMERO','MONEDA','PRECIO LISTA','INTERES','N° CUOTAS','INICIAL','CUOTA','TOTAL FINANCIADO','CRÉDITO','FINANCIADO'];
-        $tipo_solicitud = "";
+        $columns[] = ['SOLICITUD', 'FECHA SOL', 'TIPO SOL', 'CONVENIO', 'CLIENTE', 'TIPO CLIENTE', 'FECHA DOC', 'SERIE',
+            'NUMERO', 'MONEDA', 'PRECIO LISTA', 'INTERES', 'N° CUOTAS', 'INICIAL', 'CUOTA', 'TOTAL FINANCIADO', 'CRÉDITO',
+            'FINANCIADO'];
+
         foreach ($info as $i) {
-            switch($i->tipo_solicitud) {
-                case 1:
-                    $tipo_solicitud = "Contado";
-                    break;
-                case 2:
-                    $tipo_solicitud = "Crédito Directo";
-                    break;
-                case 3:
-                    $tipo_solicitud = "Crédito Financiero";
-                    break;
-                case 4:
-                    $tipo_solicitud = "Crédito";
-                    break;
-                default:
-                    $tipo_solicitud = "ninguno";
-                    break;
-            }
+            $type_sol = $i->tipo_solicitud;
+            $type_sol_ = ($type_sol == 1) ? 'Contado' : 'Ninguno';
+            $type_sol_ = ($type_sol == 2) ? 'Crédito Directo' : $type_sol_;
+            $type_sol_ = ($type_sol == 3) ? 'Crédito Financiero' : $type_sol_;
+            $type_sol_ = ($type_sol == 4) ? 'Crédito' : $type_sol_;
             $columns[] = [
-                ['left', $i->cCodConsecutivo.'-'.$i->nConsecutivo],
+                ['left', $i->cCodConsecutivo . '-' . $i->nConsecutivo],
                 ['center', (Carbon::parse($i->fecha_solicitud)->format('d-m-Y'))],
-                ['left', $tipo_solicitud],
+                ['left', $type_sol_],
                 ['left', $i->convenio],
-               
                 // ['left', $i->idvendedor],
                 // ['left', $i->idcliente],
                 ['left', $i->razonsocial_cliente],
@@ -56,7 +45,6 @@ trait ReporteCreditosAprobadoTrait
                 ['left', $i->total_financiado],
                 ['left', $i->Credito],
                 ['left', $i->financiado],
-               
             ];
         }
 

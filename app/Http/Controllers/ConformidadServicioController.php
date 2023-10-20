@@ -217,7 +217,6 @@ class ConformidadServicioController extends Controller
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
-            dd($e);
             return response()->json([
                 'status' => false,
                 'message' => $e->getMessage()

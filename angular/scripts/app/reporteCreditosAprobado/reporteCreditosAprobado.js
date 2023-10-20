@@ -1,7 +1,3 @@
-/**
- * Created by JAIR on 4/5/2017.
- */
-
 (function () {
     'use strict';
     angular.module('sys.app.reporteCreditosAprobados')
@@ -9,16 +5,51 @@
         .controller('ReporteCreditosAprobadoCtrl', ReporteCreditosAprobadoCtrl);
 
     Config.$inject = ['$stateProvider', '$urlRouterProvider'];
-    ReporteCreditosAprobadoCtrl.$inject = ['$scope', '_', 'RESTService', 'AlertFactory', 'Helpers'];
+    ReporteCreditosAprobadoCtrl.$inject = ['$scope', '_', 'RESTService', 'AlertFactory'];
 
-    function ReporteCreditosAprobadoCtrl($scope, _, RESTService, AlertFactory, Helpers) {
+    function ReporteCreditosAprobadoCtrl($scope, _, RESTService, AlertFactory) {
+        moment.locale('es');
+        var start = moment().startOf('month');
+        var end = moment().endOf('month');
+
+        var chk_date_range = $('#chk_date_range');
+        chk_date_range.click(function () {
+            $('#LoadRecordsButtonRCA').click();
+        });
+        generateCheckBox('.chk_date_range_r');
+
+        var reqDates = $('#reqDates');
+
+        var showDate = function (from, to) {
+            start = from;
+            end = to;
+            reqDates.find('span').html(from.format('MMM D, YYYY') + ' - ' + to.format('MMM D, YYYY'));
+            if (chk_date_range.prop('checked')) {
+                $('#LoadRecordsButtonRCA').click();
+            }
+        };
+        generateDateRangePicker(reqDates, start, end, showDate);
+        showDate(start, end);
+
+        var modalClient = $('div#modalClient');
+        modalClient.on('show.bs.modal', function (e) {
+            $('#LoadRecordsButtonCli').click();
+        });
+        modalClient.on('hidden.bs.modal', function (e) {
+            $('#search_cli').val('');
+            $('#LoadRecordsButtonCli').click();
+        });
+
+        var r_client_id = '';
+        var r_client = $('input#r_client');
 
         $scope.chkState = function () {
             var txt_state2 = (w_state.prop('checked')) ? 'Activo' : 'Inactivo';
             state_state.html(txt_state2);
         };
 
-        var search = getFormSearchReporteCreditosAprobados('frm-search-ReporteCreditosAprobado', 'search_b', 'LoadRecordsButtonReporteCreditosAprobado');
+        var search = getFormSearchReporteCreditosAprobados('frm-search-ReporteCreditosAprobado',
+            'search_b', 'LoadRecordsButtonRCA');
 
         var table_container_ReporteCreditosAprobado = $("#table_container_ReporteCreditosAprobado");
 
@@ -28,9 +59,6 @@
             sorting: true,
             actions: {
                 listAction: base_url + '/reporteCreditosAprobados/list',
-                // createAction: base_url + '/reporteCreditosAprobados/create',
-                // updateAction: base_url + '/reporteCreditosAprobados/update',
-                // deleteAction: base_url + '/reporteCreditosAprobados/delete',
             },
             messages: {
                 addNewRecord: 'Nueva Categoría',
@@ -67,12 +95,10 @@
 
                 nConsecutivo: {
                     title: 'N°',
-
-
                 },
                 tipo_solicitud: {
                     title: 'tipo_solicitud',
-                    options: { '1': 'CONTADO', '2': 'CRÉDITO DIRECTO', '3': 'CRÉDITO FINANCIERO', '4': 'CRÉDITO' },
+                    options: {'1': 'CONTADO', '2': 'CRÉDITO DIRECTO', '3': 'CRÉDITO FINANCIERO', '4': 'CRÉDITO'},
                 },
                 convenio: {
                     title: 'convenio',
@@ -111,21 +137,23 @@
                         var newsal = redondeodecimale(saldo).toFixed(2);
                         return (addCommas(newsal));
                     }
-
                 },
                 vendedor: {
-                    title: 'Vndedor',
-
-
+                    title: 'Vendedor',
                 },
                 estado: {
                     title: 'Estado',
-                    options: { '1': 'Registrado', '2': 'Vigente', '3': 'Por Aprobar', '4': 'Aprobado', '5': 'Rechazado', '6': 'Facturado', '7': 'Despachado' },
+                    options: {
+                        '1': 'Registrado',
+                        '2': 'Vigente',
+                        '3': 'Por Aprobar',
+                        '4': 'Aprobado',
+                        '5': 'Rechazado',
+                        '6': 'Facturado',
+                        '7': 'Despachado'
+                    },
                 },
-
             },
-
-
             formCreated: function (event, data) {
                 data.form.find('input[name="Categoria"]').attr('onkeypress', 'return soloLetras(event)');
                 $('#Edit-estado').parent().addClass('i-checks');
@@ -141,7 +169,8 @@
                     } else {
                         $("#Edit-estado").val("A");
                         $(".i-checks span").text("Activo");
-                    };
+                    }
+                    ;
                 });
             },
             formSubmitting: function (event, data) {
@@ -159,49 +188,44 @@
 
         //             e.preventDefault();
         // });
-        generateSearchForm('frm-search-ReporteCreditosAprobado', 'LoadRecordsButtonReporteCreditosAprobado', function () {
+        generateSearchForm('frm-search-ReporteCreditosAprobado', 'LoadRecordsButtonRCA', function () {
             table_container_ReporteCreditosAprobado.jtable('load', {
                 search: $('#search_b').val(),
                 filtro_tienda: $('#filtro_tienda').val(),
-                idClienteFiltro: $('#idClienteFiltro').val(),
+                idClienteFiltro: r_client_id,
                 idVendedorFiltro: $('#idVendedorFiltro').val(),
-                FechaInicioFiltro: $('#FechaInicioFiltro').val(),
-                FechaFinFiltro: $('#FechaFinFiltro').val(),
                 idTipoSolicitud: $('#idTipoSolicitud').val(),
                 idConvenio: $("#idConvenio").val(),
-
+                check: (chk_date_range.prop('checked')),
+                from: start.format('YYYY-MM-DD'),
+                to: end.format('YYYY-MM-DD')
             });
         }, true);
 
         $("#btn_expExcel").click(function (e) {
-            var data_excel = {
+            $scope.openDoc('reporteCreditosAprobados/excel', {
                 filtro_tienda: $('#filtro_tienda').val(),
-                idClienteFiltro: $('#idClienteFiltro').val(),
+                idClienteFiltro: r_client_id,
                 idVendedorFiltro: $('#idVendedorFiltro').val(),
-                FechaInicioFiltro: $('#FechaInicioFiltro').val(),
-                FechaFinFiltro: $('#FechaFinFiltro').val(),
                 idTipoSolicitud: $('#idTipoSolicitud').val(),
                 idConvenio: $("#idConvenio").val(),
-                search: '',
-            };
-            //             $scope.openDoc('projects/excel', data_excel);
-            $scope.openDoc('reporteCreditosAprobados/excel', data_excel);
+                check: (chk_date_range.prop('checked')),
+                from: start.format('YYYY-MM-DD'),
+                to: end.format('YYYY-MM-DD')
+            });
         });
         $("#btn_expPDF").click(function (e) {
-            var data_excel = {
+            $scope.loadReporteCreditosAprobadoPDF('reporteCreditosAprobados/pdf', {
                 filtro_tienda: $('#filtro_tienda').val(),
-                idClienteFiltro: $('#idClienteFiltro').val(),
+                idClienteFiltro: r_client_id,
                 idVendedorFiltro: $('#idVendedorFiltro').val(),
-                FechaInicioFiltro: $('#FechaInicioFiltro').val(),
-                FechaFinFiltro: $('#FechaFinFiltro').val(),
                 idcategoria: $("#idcategoria").val(),
-
                 idTipoSolicitud: $('#idTipoSolicitud').val(),
                 idConvenio: $("#idConvenio").val(),
-                search: '',
-            };
-            //             $scope.openDoc('projects/excel', data_excel);
-            $scope.loadReporteCreditosAprobadoPDF('reporteCreditosAprobados/pdf', data_excel);
+                check: (chk_date_range.prop('checked')),
+                from: start.format('YYYY-MM-DD'),
+                to: end.format('YYYY-MM-DD')
+            });
         });
 
 
@@ -211,12 +235,12 @@
 
         $(".jtable-toolbar").removeClass('col-md-8');
         $(".jtable-toolbar").addClass('col-md-10');
+
         function getDataForm() {
             RESTService.all('reporteCreditosAprobados/data_form', '', function (response) {
                 if (!_.isUndefined(response.status) && response.status) {
-                    var cobradores = response.cobrador;
-                    var cobradores = response.cobrador;
-                    var clientes = response.cliente;
+                    // var cobradores = response.cobrador;
+                    // var clientes = response.cliente;
                     var tiendas = response.tienda;
                     var vendedores = response.vendedores;
                     var categorias = response.categorias;
@@ -233,10 +257,6 @@
                         $("#idcategoria").append('<option value="' + index.idCategoria + '">' + index.descripcion + '</option>');
                     });
 
-                    $("#idClienteFiltro").append('<option value="" selected>Clientes</option>');
-                    clientes.map(function (index) {
-                        $("#idClienteFiltro").append('<option value="' + index.id + '">' + index.razonsocial_cliente + '</option>');
-                    });
                     $("#filtro_tienda").append('<option value="" selected>Tiendas</option>');
                     tiendas.map(function (index) {
                         $("#filtro_tienda").append('<option value="' + index.idTienda + '">' + index.descripcion + '</option>');
@@ -247,9 +267,9 @@
                 getDataForm();
             });
         }
+
         getDataForm();
         $("#idVendedorFiltro").select2();
-        $("#idClienteFiltro").select2();
 
 
         function getConvenio() {
@@ -273,6 +293,7 @@
 
             });
         }
+
         $("#idTipoSolicitud").val();
         $("#idConvenio").val();
 
@@ -286,6 +307,90 @@
             }
 
         });
+
+        var search_cli = getFormSearch('frm-search-cli', 'search_cli', 'LoadRecordsButtonCli');
+
+        var table_container_client = $("#table_container_client");
+
+        table_container_client.jtable({
+            title: "Lista de Clientes",
+            paging: true,
+            actions: {
+                listAction: base_url + '/reporteCreditosAprobados/listClient'
+            },
+            toolbar: {
+                items: [{
+                    cssClass: 'buscador',
+                    text: search_cli
+                }]
+            },
+            fields: {
+                id: {
+                    key: true,
+                    create: false,
+                    edit: false,
+                    list: false
+                },
+                documento: {
+                    title: 'Documento',
+                },
+                razonsocial_cliente: {
+                    title: 'Razon Social',
+                },
+                contacto: {
+                    title: 'Contacto',
+                },
+                direccion: {
+                    title: 'Dirección',
+                },
+                correo_electronico: {
+                    title: 'Correo',
+                },
+                celular: {
+                    title: 'Celular',
+                },
+                edit: {
+                    width: '1%',
+                    sorting: false,
+                    edit: false,
+                    create: false,
+                    listClass: 'text-center',
+                    display: function (data) {
+                        return '<a href="javascript:void(0)" class="sel-cli" data-id="' + data.record.id
+                            + '" title="Seleccionar"><i class="fa fa-check-circle fa-1-5x"></i></a>';
+                    }
+                }
+            },
+            recordsLoaded: function (event, data) {
+                table_container_client.find('a.sel-cli').click(function (e) {
+                    var id = $(this).attr('data-id');
+                    var info = _.find(data.records, function (item) {
+                        return parseInt(item.id) === parseInt(id);
+                    });
+                    if (info) {
+                        r_client_id = info.id;
+                        r_client.val(info.razonsocial_cliente);
+                    }
+                    modalClient.modal('hide');
+                    e.preventDefault();
+                });
+            }
+        });
+
+        generateSearchForm('frm-search-cli', 'LoadRecordsButtonCli', function () {
+            table_container_client.jtable('load', {
+                search: $('#search_cli').val()
+            });
+        }, false);
+
+        $scope.openClient = function () {
+            modalClient.modal('show');
+        };
+
+        $scope.cleanClient = function () {
+            r_client_id = '';
+            r_client.val('');
+        };
 
     }
 
@@ -301,4 +406,4 @@
         $urlRouterProvider.otherwise('/');
     }
 })
-    ();
+();

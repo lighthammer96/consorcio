@@ -28,17 +28,18 @@ class ReporteRepuestoController extends Controller
     public function all(Request $request, ReporteRepuestoInterface $repo)
     {
         ini_set('max_execution_time', '3000');
-        set_time_limit(3000);
-        $s = $request->input('search', '');
-        $filtro_tienda = $request->input('filtro_tienda', '');
-
-        $idClienteFiltro = $request->input('idClienteFiltro', '');
-        $idVendedorFiltro = $request->input('idVendedorFiltro', '');
-        $FechaInicioFiltro = $request->input('FechaInicioFiltro', '');
-        $FechaFinFiltro = $request->input('FechaFinFiltro', '');
-
-        $params = ['origen', 'idventa_ca', 'monto_total', 'estado', 'documento_ven', 'cCodConsecutivo', 'nConsecutivo', 'serie_comprobante', 'numero_comprobante', 'razonsocial_cliente', 'vendedor', 'REPUESTO', 'ACEITE', 'SERVICIO', 'TERCEROS', 'fecha'];
-        return parseList($repo->search($s, $filtro_tienda, $idClienteFiltro, $idVendedorFiltro, $FechaInicioFiltro, $FechaFinFiltro), $request, 'idtienda', $params);
+        try {
+            $filter = $request->all();
+            $params = ['origen', 'idventa_ca', 'monto_total', 'estado', 'documento_ven', 'cCodConsecutivo',
+                'nConsecutivo', 'serie_comprobante', 'numero_comprobante', 'razonsocial_cliente', 'vendedor', 'REPUESTO',
+                'ACEITE', 'SERVICIO', 'TERCEROS', 'fecha'];
+            return parseList($repo->search($filter), $request, 'idtienda', $params);
+        } catch (\Exception $e) {
+            return response()->json([
+                'Result' => 'ERROR',
+                'Message' => [$e->getMessage()]
+            ]);
+        }
     }
 
     public function create(ReporteRepuestoInterface $repo, ReporteRepuestoRequest $request)
@@ -92,31 +93,17 @@ class ReporteRepuestoController extends Controller
     {
         ini_set('max_execution_time', '3000');
         set_time_limit(3000);
-
-        $s = $request->input('search', '');
-        $filtro_tienda = $request->input('filtro_tienda', '');
-        $idClienteFiltro = $request->input('idClienteFiltro', '');
-        $idVendedorFiltro = $request->input('idVendedorFiltro', '');
-        $FechaInicioFiltro = $request->input('FechaInicioFiltro', '');
-        $FechaFinFiltro = $request->input('FechaFinFiltro', '');
-
-        return generateExcel($this->generateDataExcel($repo->allFiltro($s, $filtro_tienda, $idClienteFiltro, $idVendedorFiltro, $FechaInicioFiltro, $FechaFinFiltro)), 'LISTA DE REPORTE DE REPUESTOS', 'Repuestos');
+        $filter = $request->all();
+        $data = $repo->search($filter)->orderBy('fecha', 'ASC')->orderBy('nConsecutivo', 'ASC')->get();
+        return generateExcel($this->generateDataExcel($data), 'LISTA DE REPORTE DE REPUESTOS', 'Repuestos');
     }
     public function pdf(ReporteRepuestoInterface $repo, Request $request, Query_movementsInterface $repom, Solicitud_AsignacionInterface $repcom)
     {
         ini_set('max_execution_time', '3000');
         set_time_limit(3000);
 
-        $s = $request->input('search', '');
-        $filtro_tienda = $request->input('filtro_tienda', '');
-        $idClienteFiltro = $request->input('idClienteFiltro', '');
-        $idVendedorFiltro = $request->input('idVendedorFiltro', '');
-        $FechaInicioFiltro = $request->input('FechaInicioFiltro', '');
-        $FechaFinFiltro = $request->input('FechaFinFiltro', '');
-
-
-        $data = $repo->allFiltro($s, $filtro_tienda, $idClienteFiltro, $idVendedorFiltro, $FechaInicioFiltro, $FechaFinFiltro);
-
+        $filter = $request->all();
+        $data = $repo->search($filter)->orderBy('fecha', 'ASC')->orderBy('nConsecutivo', 'ASC')->get();
 
         $simboloMoneda = $repom->getSimboloMoneda();
         $data_compania = $repcom->get_compania();

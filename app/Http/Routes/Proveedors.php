@@ -13,7 +13,7 @@ Route::post('proveedors/update', ['as' => 'proveedors.update', 'uses' => 'Provee
 Route::get('proveedors/excel', ['as' => 'proveedors.excel', 'uses' => 'ProveedorController@excel']);
 Route::get('proveedors/data_form', ['as' => 'proveedors.data_form', 'uses' => 'ProveedorController@data_form']);
 
-Route::put('proveedors/createCliente/{id}', ['as' => 'proveedors.createCliente', 'uses' => 'ProveedorController@createUpdate']);
+Route::put('proveedors/createCliente/{id}', 'ProveedorController@createUpdate');
 
 
 Route::get('proveedors/deleteDetalleBanco/{id}', ['as' => 'proveedors.deleteDetalleBanco', 'uses' => 'ProveedorController@deleteDetalleBanco']);

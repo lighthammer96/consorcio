@@ -229,6 +229,8 @@ class PettyCashExpenseController extends Controller
                 $provider_ = ($ap->provider) ? $ap->provider->NombreEntidad : '';
                 $documents[] = [
                     'id' => $ap->id,
+                    'date_emission_' => Carbon::parse($ap->emission_date)->toDateString(),
+                    'date_emission' => Carbon::parse($ap->emission_date)->format('d/m/Y'),
                     'document_number' => $ap->document_number,
                     'provider_name' => $provider_,
                     'gloss' => (is_null($ap->gloss)) ? '' : $ap->gloss,
@@ -240,6 +242,7 @@ class PettyCashExpenseController extends Controller
                     'account' => (is_null($ap->IdCuenta)) ? '' : $ap->IdCuenta
                 ];
             }
+            $documents = array_orderBy($documents, 'date_emission_', SORT_ASC);
             $data->documents_ = $documents;
 
             $documents_close = [];
@@ -266,6 +269,7 @@ class PettyCashExpenseController extends Controller
                     'amount' => (float)$gv->amount,
                 ];
             }
+            $vouchers = array_orderBy($vouchers, 'code', SORT_ASC);
             $data->vouchers_ = $vouchers;
 
             unset($data->petty_cash, $data->documents, $data->vouchers, $data->pceCloses,
@@ -295,6 +299,8 @@ class PettyCashExpenseController extends Controller
                 $provider_ = ($ap->provider) ? $ap->provider->NombreEntidad : '';
                 $documents[] = [
                     'id' => $ap->id,
+                    'date_emission_' => Carbon::parse($ap->emission_date)->toDateString(),
+                    'date_emission' => Carbon::parse($ap->emission_date)->format('d/m/Y'),
                     'document_number' => $ap->document_number,
                     'provider_name' => $provider_,
                     'gloss' => (is_null($ap->gloss)) ? '' : $ap->gloss,
@@ -306,6 +312,7 @@ class PettyCashExpenseController extends Controller
                     'account' => (is_null($ap->IdCuenta)) ? '' : $ap->IdCuenta
                 ];
             }
+            $documents = array_orderBy($documents, 'date_emission_', SORT_ASC);
             $documents_close = [];
             foreach ($data->pceCloses as $pceC) {
                 $documents_close[] = [
@@ -328,6 +335,7 @@ class PettyCashExpenseController extends Controller
                     'amount' => (float)$gv->amount,
                 ];
             }
+            $vouchers = array_orderBy($vouchers, 'code', SORT_ASC);
             return response()->json([
                 'status' => true,
                 'data' => [
@@ -381,6 +389,7 @@ class PettyCashExpenseController extends Controller
             foreach ($pce->documents as $ap) {
                 $provider_ = ($ap->provider) ? $ap->provider->NombreEntidad : '';
                 $detail1[] = [
+                    'date_' => Carbon::parse($ap->register_date)->toDateString(),
                     'date' => Carbon::parse($ap->register_date)->format('d/m/Y'),
                     'provider' => $provider_,
                     'document_type' => $ap->documentType->Descripcion,
@@ -389,6 +398,7 @@ class PettyCashExpenseController extends Controller
                     'total' => ($ap->currency_id == 1) ? $ap->amount : round($ap->amount * $ap->type_change),
                 ];
             }
+            $detail1 = array_orderBy($detail1, 'date_', SORT_ASC);
             $total_v_si = 0; $total_v_no = 0; $detail2 = [];
             foreach ($pce->vouchers as $gv) {
                 if ($gv->is_consumed == 1) {
@@ -397,6 +407,7 @@ class PettyCashExpenseController extends Controller
                     $total_v_no += (float)$gv->amount;
                 }
                 $detail2[] = [
+                    'code' => $gv->code,
                     'date' => Carbon::parse($gv->date)->format('d/m/Y'),
                     'gloss' => (is_null($gv->gloss)) ? '' : $gv->gloss,
                     'responsible' => $gv->responsible,
@@ -404,6 +415,7 @@ class PettyCashExpenseController extends Controller
                     'total' => (float)$gv->amount,
                 ];
             }
+            $detail2 = array_orderBy($detail2, 'code', SORT_ASC);
             $total_doc_close = 0; $detail_close = [];
             foreach ($pce->pceCloses as $pceC) {
                 $detail_close[] = [

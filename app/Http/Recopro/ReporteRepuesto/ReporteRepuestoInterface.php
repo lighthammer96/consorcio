@@ -8,10 +8,12 @@
 
 namespace App\Http\Recopro\ReporteRepuesto;
 
-
 interface ReporteRepuestoInterface
 {
+    public function search($filter);
+
     public function all();
+
     public function create(array $attributes);
 
 }

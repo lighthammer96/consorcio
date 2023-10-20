@@ -8,15 +8,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Recopro\Cobrador\CobradorInterface;
 use App\Http\Recopro\ReporteCreditosAprobado\ReporteCreditosAprobadoTrait;
 use Illuminate\Http\Request;
 use App\Http\Recopro\ReporteCreditosAprobado\ReporteCreditosAprobadoInterface;
 use App\Http\Recopro\Solicitud_Asignacion\Solicitud_AsignacionInterface;
 use App\Http\Recopro\Query_movements\Query_movementsInterface;
 use App\Http\Requests\ReporteCreditosAprobadoRequest;
-class ReporteCreditosAprobadoController extends Controller 
+
+class ReporteCreditosAprobadoController extends Controller
 {
-     use ReporteCreditosAprobadoTrait;
+    use ReporteCreditosAprobadoTrait;
 
     public function __construct()
     {
@@ -24,25 +26,47 @@ class ReporteCreditosAprobadoController extends Controller
     }
 
     public function all(Request $request, ReporteCreditosAprobadoInterface $repo)
-    {   
-        $s = $request->input('search', '');
-        $filtro_tienda = $request->input('filtro_tienda', '');
+    {
+        try {
+            $filter = $request->all();
+            $params = ['idtienda', 'documento_ven', 'vendedor', 'financiado', 'Credito', 'total_financiado', 'cuota',
+                'inicial', 'precio_lista', 'intereses', 'nro_cuotas', 'IdMoneda', 'moneda', 'Simbolo', 'cCodConsecutivo',
+                'nConsecutivo', 'fecha_solicitud', 'idvendedor', 'idcliente', 'razonsocial_cliente', 'idTipoCliente',
+                'tipocliente', 'fecdoc', 'serie_comprobante', 'numero_comprobante', 'estado', 'tipo_solicitud', 'convenio'];
+            return parseList($repo->search($filter), $request, 'idtienda', $params);
 
-        $idClienteFiltro = $request->input('idClienteFiltro', '');
-        $idVendedorFiltro = $request->input('idVendedorFiltro', '');
-        $FechaInicioFiltro = $request->input('FechaInicioFiltro', '');
-        $FechaFinFiltro = $request->input('FechaFinFiltro', '');
-
-        $idTipoSolicitud = $request->input('idTipoSolicitud', '');
-        $idConvenio = $request->input('idConvenio', '');
-      
-        $params =['idtienda','documento_ven','vendedor','financiado', 'Credito','total_financiado','cuota','inicial','precio_lista','intereses','nro_cuotas','IdMoneda','moneda','Simbolo','cCodConsecutivo','nConsecutivo','fecha_solicitud','idvendedor','idcliente','razonsocial_cliente','idTipoCliente','tipocliente','fecdoc','serie_comprobante','numero_comprobante','estado','tipo_solicitud','convenio'];
-        return parseList($repo->search($s,$filtro_tienda,$idClienteFiltro,$idVendedorFiltro,$FechaInicioFiltro,$FechaFinFiltro,$idTipoSolicitud,$idConvenio), $request, 'idtienda', $params);
+        } catch (\Exception $e) {
+            return response()->json([
+                'Result' => 'ERROR',
+                'Message' => [$e->getMessage()]
+            ]);
+        }
     }
 
-     public function traerConvenios($id, ReporteCreditosAprobadoInterface $repo)
+    public function data_form(CobradorInterface $repo)
     {
-       try {
+        try {
+            $tienda = $repo->getTienda();
+            $vendedores = $repo->getVendedor();
+            $categorias = $repo->getCategorias();
+
+            return response()->json([
+                'status' => true,
+                'tienda' => $tienda,
+                'vendedores' => $vendedores,
+                'categorias' => $categorias,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
+
+    public function traerConvenios($id, ReporteCreditosAprobadoInterface $repo)
+    {
+        try {
             $data = $repo->TraerConvenios($id);
 
             return response()->json([
@@ -61,15 +85,15 @@ class ReporteCreditosAprobadoController extends Controller
     public function create(ReporteCreditosAprobadoInterface $repo, ReporteCreditosAprobadoRequest $request)
     {
         $data = $request->all();
-        $table="ERP_Categoria";
-        $id='idCategoria';
-        $data['idCategoria'] = $repo->get_consecutivo($table,$id);
+        $table = "ERP_Categoria";
+        $id = 'idCategoria';
+        $data['idCategoria'] = $repo->get_consecutivo($table, $id);
         $data['descripcion'] = strtoupper($data['Categoria']);
-        $estado='A';
-        if(!isset($data['estado'])){
-            $estado='I';
+        $estado = 'A';
+        if (!isset($data['estado'])) {
+            $estado = 'I';
         };
-        $data['estado'] =  $estado;
+        $data['estado'] = $estado;
         $repo->create($data);
 
         return response()->json([
@@ -83,11 +107,11 @@ class ReporteCreditosAprobadoController extends Controller
         $data = $request->all();
         $id = $data['idCategoria'];
         $data['descripcion'] = strtoupper($data['Categoria']);
-        $estado='A';
-        if(!isset($data['estado'])){
-            $estado='I';
+        $estado = 'A';
+        if (!isset($data['estado'])) {
+            $estado = 'I';
         };
-        $data['estado'] =  $estado;
+        $data['estado'] = $estado;
         $repo->update($id, $data);
 
         return response()->json(['Result' => 'OK']);
@@ -105,52 +129,35 @@ class ReporteCreditosAprobadoController extends Controller
     // //     return parseSelect($repo->all(), 'id', 'description');
     // // }
 
-    public function excel(ReporteCreditosAprobadoInterface $repo,Request $request)
+    public function excel(ReporteCreditosAprobadoInterface $repo, Request $request)
     {
-         $s = $request->input('search', '');
-        $filtro_tienda = $request->input('filtro_tienda', '');
-        $idClienteFiltro = $request->input('idClienteFiltro', '');
-        $idVendedorFiltro = $request->input('idVendedorFiltro', '');
-        $FechaInicioFiltro = $request->input('FechaInicioFiltro', '');
-        $FechaFinFiltro = $request->input('FechaFinFiltro', '');
-
-        $idTipoSolicitud = $request->input('idTipoSolicitud', '');
-        $idConvenio = $request->input('idConvenio', '');
-
-        return generateExcel($this->generateDataExcel($repo->allFiltro($s,$filtro_tienda,$idClienteFiltro,$idVendedorFiltro,$FechaInicioFiltro,$FechaFinFiltro,$idTipoSolicitud,$idConvenio)), 'LISTA DE CRÉDITOS APROBADOS', 'Créditos');
+        $filter = $request->all();
+        return generateExcel($this->generateDataExcel($repo->search($filter)->get()), 'LISTA DE CRÉDITOS APROBADOS', 'Créditos');
     }
-    public function pdf(ReporteCreditosAprobadoInterface $repo,Request $request,Query_movementsInterface $repom,Solicitud_AsignacionInterface $repcom)
+
+    public function pdf(ReporteCreditosAprobadoInterface $repo, Request $request, Query_movementsInterface $repom, Solicitud_AsignacionInterface $repcom)
     {
-            $s = $request->input('search', '');
-            $filtro_tienda = $request->input('filtro_tienda', '');
-            $idClienteFiltro = $request->input('idClienteFiltro', '');
-            $idVendedorFiltro = $request->input('idVendedorFiltro', '');
-            $FechaInicioFiltro = $request->input('FechaInicioFiltro', '');
-            $FechaFinFiltro = $request->input('FechaFinFiltro', '');
+        $filter = $request->all();
+        $data = $repo->search($filter)->get();
 
-            $idTipoSolicitud = $request->input('idTipoSolicitud', '');
-            $idConvenio = $request->input('idConvenio', '');
-          
-            $data =$repo->allFiltro($s,$filtro_tienda,$idClienteFiltro,$idVendedorFiltro,$FechaInicioFiltro,$FechaFinFiltro,$idTipoSolicitud,$idConvenio);
+        $data_compania = $repcom->get_compania();
 
-            $data_compania=$repcom->get_compania(); 
+        $path = public_path('/' . $data_compania[0]->ruta_logo);
+        if (!file_exists($path)) {
+            $path = public_path('/img/a1.jpg');
+        }
+        $simboloMoneda = $repom->getSimboloMonedaTotal();
+        $path = public_path('/' . $data_compania[0]->ruta_logo);
+        $type_image = pathinfo($path, PATHINFO_EXTENSION);
+        $image = file_get_contents($path);
+        $image = 'data:image/' . $type_image . ';base64,' . base64_encode($image);
+        return response()->json([
+            'status' => true,
+            'img' => $image,
+            'simboloMoneda' => $simboloMoneda,
+            'data' => $data,
 
-            $path = public_path('/'.$data_compania[0]->ruta_logo);
-            if(!file_exists($path)){
-                $path = public_path('/img/a1.jpg');
-            }
-            $simboloMoneda = $repom->getSimboloMonedaTotal();
-            $path = public_path('/'.$data_compania[0]->ruta_logo);
-            $type_image = pathinfo($path, PATHINFO_EXTENSION);
-            $image = file_get_contents($path);
-            $image = 'data:image/' . $type_image . ';base64,' . base64_encode($image);
-            return response()->json([
-                'status' => true,
-                 'img'=>$image,
-                 'simboloMoneda'=>$simboloMoneda,
-                 'data'=>$data,
-               
-            ]);
+        ]);
 
 
     }
@@ -210,7 +217,7 @@ class ReporteCreditosAprobadoController extends Controller
     //             'fechacA'=>$fechacA,
     //             'simboloMoneda'=>$simboloMoneda,
     //              'img'=>$image,
-               
+
     //         ]);
     // }
 }

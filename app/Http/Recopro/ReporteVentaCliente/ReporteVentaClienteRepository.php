@@ -7,121 +7,103 @@
  */
 
 namespace App\Http\Recopro\ReporteVentaCliente;
+
 use Illuminate\Support\Facades\DB;
 
 class ReporteVentaClienteRepository implements ReporteVentaClienteInterface
 {
     protected $model;
- private static $_ACTIVE = 'A';
+    private static $_ACTIVE = 'A';
+
     public function __construct(ReporteVentaCliente $model)
     {
-        $this->model = $model; 
-       
+        $this->model = $model;
     }
 
     public function all()
-    { 
-        return $this->model->get(); 
-    }
-    public function allFiltro($s,$filtro_tienda,$idClienteFiltro,$idVendedorFiltro,$FechaInicioFiltro,$FechaFinFiltro,$idcategoria,$idTipoSolicitud,$idConvenio)
     {
-        $dato=$this->model;
-       if(!empty($FechaInicioFiltro) and !empty($FechaFinFiltro) ){
-             $dato=$dato->whereDate('Fecha','>=',$FechaInicioFiltro);
-             $dato=$dato->whereDate('Fecha','<=',$FechaFinFiltro);
-        }  
-            if(!empty($filtro_tienda)){
-             $dato=$dato->Where('idtienda',$filtro_tienda);
-        }
-             if($idVendedorFiltro !='' ){
-            $dato=$dato->where('idvendedor',$idVendedorFiltro);
-        }
-            if($idClienteFiltro !='' ){
-            $dato=$dato->where('idCliente',$idClienteFiltro);
-        }
-         if(!empty($idcategoria)){
-             $dato=$dato->Where('idCategoria',$idcategoria);
-        }
-             if($idTipoSolicitud !='' ){
-            $dato=$dato->where('tipo_solicitud',$idTipoSolicitud);
-        }
-            if($idConvenio !='' ){
-            $dato=$dato->where('idconvenio',$idConvenio);
-        }
-
-        // echo $dato->Sql(); exit;
-        return $dato->get();
+        return $this->model->get();
     }
-     public function search($s,$filtro_tienda,$idClienteFiltro,$idVendedorFiltro,$FechaInicioFiltro,$FechaFinFiltro,$idcategoria,$idTipoSolicitud,$idConvenio)
+
+    public function search($filter)
     {
-        $result = $this->model->where(function($q) use ($s,$filtro_tienda,$idClienteFiltro,$idVendedorFiltro,$FechaInicioFiltro,$FechaFinFiltro,$idcategoria,$idTipoSolicitud,$idConvenio){
-            if(!empty($FechaInicioFiltro) and !empty($FechaFinFiltro) ){
-                 $q->whereDate('Fecha','>=',$FechaInicioFiltro);
-                 $q->whereDate('Fecha','<=',$FechaFinFiltro);
-            }  
-            if(!empty($filtro_tienda)){
-              $q->Where('idtienda',$filtro_tienda);
-            }
-             if($idVendedorFiltro !='' ){
-                  $q->where('idvendedor',$idVendedorFiltro);
-            }
-            if($idClienteFiltro !='' ){
-                  $q->where('idCliente',$idClienteFiltro);
-            }
-             if(!empty($idcategoria)){
-             $q->Where('idCategoria',$idcategoria);
-
-          
-
-        }
-           if($idTipoSolicitud !='' ){
-                  $q->where('tipo_solicitud',$idTipoSolicitud);
-            }
-            if($idConvenio !='' ){
-                  $q->where('idconvenio',$idConvenio);
-            }
-        })->where(function ($query) {
-            $query->whereNull('anulado')->orWhere('anulado','!=','S');
-        });
-
-       
-        return $result;
-
+        return $this->model
+            ->where(function ($q) use ($filter) {
+                if (isset($filter['check']) && $filter['check'] == 'true') {
+                    $from = $filter['from'] . ' 00:00:00';
+                    $to = $filter['to'] . ' 23:59:59';
+                    $q->whereBetween('Fecha', [$from, $to]);
+                }
+                $filtro_tienda = (isset($filter['filtro_tienda'])) ? $filter['filtro_tienda'] : '';
+                if ($filtro_tienda != '') {
+                    $q->Where('idtienda', $filtro_tienda);
+                }
+                $idClienteFiltro = (isset($filter['idClienteFiltro'])) ? $filter['idClienteFiltro'] : '';
+                if ($idClienteFiltro != '') {
+                    $q->Where('idCliente', $idClienteFiltro);
+                }
+                $idVendedorFiltro = (isset($filter['idVendedorFiltro'])) ? $filter['idVendedorFiltro'] : '';
+                if ($idVendedorFiltro != '') {
+                    $q->Where('idvendedor', $idVendedorFiltro);
+                }
+                $idcategoria = (isset($filter['idcategoria'])) ? $filter['idcategoria'] : '';
+                if ($idcategoria != '') {
+                    $q->Where('idCategoria', $idcategoria);
+                }
+                $idTipoSolicitud = (isset($filter['idTipoSolicitud'])) ? $filter['idTipoSolicitud'] : '';
+                if ($idTipoSolicitud != '') {
+                    $q->Where('tipo_solicitud', $idTipoSolicitud);
+                }
+                $idConvenio = (isset($filter['idConvenio'])) ? $filter['idConvenio'] : '';
+                if ($idConvenio != '') {
+                    $q->Where('idconvenio', $idConvenio);
+                }
+            })
+            ->where(function ($q) {
+                $q->whereNull('anulado');
+                $q->orWhere('anulado', '!=', 'S');
+            });
     }
+
     public function allActive()
     {
-       return $this->model->where('estado', self::$_ACTIVE)->get();
+        return $this->model->where('estado', self::$_ACTIVE)->get();
     }
-     public function create(array $attributes)
+
+    public function create(array $attributes)
     {
         $attributes['user_created'] = auth()->id();
         $attributes['user_updated'] = auth()->id();
         return $this->model->create($attributes);
     }
-    public function get_consecutivo($table,$id)
-    {     $mostrar=DB::select("select top 1 * from $table order by CONVERT(INT, $id) DESC");
-         $actu=0;
-         if(!$mostrar){
-            $actu=0;
-         }else{
-            $actu=intval($mostrar[0]->$id);
-         };
-        $new=$actu+1;
-        return $new; 
+
+    public function get_consecutivo($table, $id)
+    {
+        $mostrar = DB::select("select top 1 * from $table order by CONVERT(INT, $id) DESC");
+        $actu = 0;
+        if (!$mostrar) {
+            $actu = 0;
+        } else {
+            $actu = intval($mostrar[0]->$id);
+        };
+        $new = $actu + 1;
+        return $new;
     }
+
     public function update($id, array $attributes)
     {
         $attributes['user_updated'] = auth()->id();
         $model = $this->model->findOrFail($id);
         $model->update($attributes);
     }
+
     public function destroy($id)
     {
         $attributes = [];
         $model = $this->model->findOrFail($id);
         $model->update($attributes);
         $model->delete();
-     
+
     }
 
 }

@@ -39,10 +39,14 @@ class VentasController extends Controller
 
     public function all(Request $request, VentasInterface $repo)
     {
-        $s      = $request->input('search', '');
-        $params = ['idventa','cliente','anulado','serie_comprobante', 'numero_comprobante', 'fecha_emision', 'tipo_documento', 'numero_documento', 'moneda', 't_monto_total', 'pagado', 'saldo', 'cCodConsecutivo_solicitud', 'nConsecutivo_solicitud', 'tipo_solicitud', "estado", 'IdTipoDocumento', 'anticipo', 'idventa_referencia', 'tipo_comprobante', 'estado_cpe', 'fecha_emision_server', 'dias_vencidos','comprobante', 'formapago'];
+        $filter = $request->all();
+        $params = ['idventa','cliente','anulado','serie_comprobante', 'numero_comprobante', 'fecha_emision',
+            'tipo_documento', 'numero_documento', 'moneda', 't_monto_total', 'pagado', 'saldo',
+            'cCodConsecutivo_solicitud', 'nConsecutivo_solicitud', 'tipo_solicitud', "estado", 'IdTipoDocumento',
+            'anticipo', 'idventa_referencia', 'tipo_comprobante', 'estado_cpe', 'fecha_emision_server', 'dias_vencidos',
+            'comprobante', 'formapago'];
         // print_r($repo->search($s)); exit;
-        return parseList($repo->search_documentos($s), $request, 'idventa', $params);
+        return parseList($repo->search_documentos($filter), $request, 'idventa', $params);
     }
 
     public function create(VentasInterface $repo, VentasRequest $request)
@@ -87,7 +91,7 @@ class VentasController extends Controller
     public function excel(VentasInterface $repo, Request $request)
     {
         $filter = $request->all();
-        $data = $repo->search_documentos_excel($filter)->get();
+        $data = $repo->search_documentos($filter)->get();
         return generateExcel($this->generateDataExcel($data ), 'LISTA DE DOCUMENTOS EMITIDOS', 'Ventas');
     }
 

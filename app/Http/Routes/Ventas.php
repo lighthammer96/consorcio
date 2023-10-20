@@ -6,11 +6,11 @@
  * Time: 6:59 PM
  */ 
 
-Route::post('ventas/list', ['as' => 'ventas.list', 'uses' => 'VentasController@all']);
+Route::post('ventas/list', 'VentasController@all');
 Route::post('ventas/create', ['as' => 'ventas.create', 'uses' => 'VentasController@create']);
 Route::post('ventas/delete', ['as' => 'ventas.delete', 'uses' => 'VentasController@destroy']);
 Route::post('ventas/update', ['as' => 'ventas.update', 'uses' => 'VentasController@update']);
-Route::get('ventas/excel', ['as' => 'ventas.excel', 'uses' => 'VentasController@excel']);
+Route::get('ventas/excel', 'VentasController@excel');
 
 Route::post('ventas/find', ['as' => 'ventas.find', 'uses' => 'VentasController@find']);
 Route::post('ventas/find_documento', ['as' => 'ventas.find_documento', 'uses' => 'VentasController@find_documento']);

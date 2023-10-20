@@ -1,7 +1,3 @@
-/**
- * Created by JAIR on 4/5/2017.
- */
-
 (function () {
     'use strict';
     angular.module('sys.app.query_movements')
@@ -9,10 +5,32 @@
         .controller('Query_MovementCtrl', Query_MovementCtrl);
 
     Config.$inject = ['$stateProvider', '$urlRouterProvider'];
-    Query_MovementCtrl.$inject = ['$scope', '_', 'RESTService', 'AlertFactory', 'Notify'];
+    Query_MovementCtrl.$inject = ['$scope', '_', 'RESTService'];
 
-    function Query_MovementCtrl($scope, _, RESTService, AlertFactory, Notify) {
+    function Query_MovementCtrl($scope, _, RESTService)
+    {
+        moment.locale('es');
+        var start = moment().subtract(6, 'days');
+        var end = moment();
 
+        var chk_date_range = $('#chk_date_range');
+        chk_date_range.click(function () {
+            $('#LoadRecordsButtonQM').click();
+        });
+        generateCheckBox('.chk_date_range_qm');
+
+        var reqDates = $('#reqDates');
+
+        var showDate = function (from, to) {
+            start = from;
+            end = to;
+            reqDates.find('span').html(from.format('MMM D, YYYY') + ' - ' + to.format('MMM D, YYYY'));
+            if (chk_date_range.prop('checked')) {
+                $('#LoadRecordsButtonQM').click();
+            }
+        };
+        generateDateRangePicker(reqDates, start, end, showDate);
+        showDate(start, end);
 
         var titlemodalQueryMovement = $("#titlemodalQueryMovement");
         var modalQueryMovement = $("#modalQueryMovement");
@@ -34,7 +52,8 @@
         var filtro_nat = '<select id="filtro_nat" class="form-control input-sm""><option value="">Naturaleza</option></select>';
         var filtro_oper = '<select id="filtro_oper" class="form-control input-sm""><option value="">Tipo Operación</option></select>';
 
-        var search = getFormSearch3('frm-search-Query_Movement', 'search_b', 'LoadRecordsButtonQuery_Movement');
+        var search = getFormSearch3('frm-search-Query_Movement', 'search_b', 
+            'LoadRecordsButtonQM');
 
         var table_container_Query_Movement = $("#table_container_Query_Movement");
         var states = '<select id="project_states" class="search_input"></select>';
@@ -45,9 +64,6 @@
             sorting: true,
             actions: {
                 listAction: base_url + '/query_movements/list',
-                // createAction: base_url + '/query_stocks/create',
-                // updateAction: base_url + '/query_stocks/update',
-                // deleteAction: base_url + '/query_stocks/delete',
             },
             messages: {
                 addNewRecord: 'Nueva Categoría',
@@ -205,11 +221,6 @@
             filtro_oper = $('#filtro_oper');
             filtro_cate = $('#filtro_cate');
             filtro_art = $('#filtro_art');
-            var hoy = new Date();
-            var actu = hoy.getFullYear() + "-" + (hoy.getMonth() + 1) + "-" + hoy.getDate();
-            $("#fecha_inicio").val(actu);
-            $("#fecha_fin").val(actu);
-            // Notify.warning('Debe ingresar el cliente que realizará el pago');
             RESTService.all('query_movements/getDataFiltro', '', function (response) {
                 if (!_.isUndefined(response.status) && response.status) {
 
@@ -257,9 +268,9 @@
                 n_movimiento: $('#n_movimiento').val(),
                 cod_lote: $('#cod_lote').val(),
                 cod_serie: $('#cod_serie').val(),
-                fecha_inicio: $('#fecha_inicio').val(),
-                fecha_fin: $('#fecha_fin').val(),
-                search: '',
+                check: (chk_date_range.prop('checked')),
+                from: start.format('YYYY-MM-DD'),
+                to: end.format('YYYY-MM-DD')
             };
             //             $scope.openDoc('projects/excel', data_excel);
             $scope.openDoc('query_movements/excel', data_excel);
@@ -275,15 +286,16 @@
                 n_movimiento: $('#n_movimiento').val(),
                 cod_lote: $('#cod_lote').val(),
                 cod_serie: $('#cod_serie').val(),
-                fecha_inicio: $('#fecha_inicio').val(),
-                fecha_fin: $('#fecha_fin').val(),
                 search: '',
+                check: (chk_date_range.prop('checked')),
+                from: start.format('YYYY-MM-DD'),
+                to: end.format('YYYY-MM-DD')
             };
             $scope.loadQueryMovimientoPDF('query_movements/pdf', data_pdf);
             //             $scope.openDoc('projects/excel', data_pdf);
             // $scope.openDoc('query_movements/pdf',data_pdf);
         });
-        generateSearchForm('frm-search-Query_Movement', 'LoadRecordsButtonQuery_Movement', function () {
+        generateSearchForm('frm-search-Query_Movement', 'LoadRecordsButtonQM', function () {
             table_container_Query_Movement.jtable('load', {
                 search: $('#search_b').val(),
                 filtro_idAlm: $('#filtro_idAlm').val(),
@@ -295,8 +307,9 @@
                 n_movimiento: $('#n_movimiento').val(),
                 cod_lote: $('#cod_lote').val(),
                 cod_serie: $('#cod_serie').val(),
-                fecha_inicio: $('#fecha_inicio').val(),
-                fecha_fin: $('#fecha_fin').val(),
+                check: (chk_date_range.prop('checked')),
+                from: start.format('YYYY-MM-DD'),
+                to: end.format('YYYY-MM-DD')
             });
         }, true);
 

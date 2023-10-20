@@ -23,7 +23,7 @@ Route::post('solicitud/anular_solicitud', ['as' => 'solicitud.anular_solicitud',
 
 
 Route::get('solicitud/excel', 'SolicitudController@excel');
-
+Route::put('solicitud/copiar_solicitud/{id}', 'SolicitudController@copiar_solicitud');
 
 
 Route::get('solicitud/traerSectorOrd/{id}', ['as' => 'solicitud.traerSectorOrd', 'uses' => 'UbigeoController@traerSectorli']);
@@ -67,7 +67,6 @@ Route::post('solicitud/validar_parametro_categoria', ['as' => 'solicitud.validar
 
 Route::post('solicitud/validar_serie', ['as' => 'solicitud.validar_serie', 'uses' => 'SolicitudController@validar_serie']);
 
-Route::post('solicitud/copiar_solicitud', ['as' => 'solicitud.copiar_solicitud', 'uses' => 'SolicitudController@copiar_solicitud']);
 
 Route::post('solicitud/guardar_separaciones', ['as' => 'solicitud.guardar_separaciones', 'uses' => 'SolicitudController@guardar_separaciones']);
 Route::post('solicitud/obtener_separaciones', ['as' => 'solicitud.obtener_separaciones', 'uses' => 'SolicitudController@obtener_separaciones']);

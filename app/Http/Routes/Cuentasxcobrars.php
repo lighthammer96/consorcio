@@ -8,6 +8,8 @@
 
 Route::post('cuentasxcobrars/list', ['as' => 'cuentasxcobrars.list', 'uses' => 'AsignacioncobradorController@all']);
 
+Route::post('cuentasxcobrars/listClient', 'CustomerController@all');
+
 Route::post('cuentasxcobrars/listcuentas', ['as' => 'cuentasxcobrars.listcuentas', 'uses' => 'AsignacioncobradorController@allCuentasxcobrar']);
 
 Route::post('cuentasxcobrars/create', ['as' => 'cuentasxcobrars.create', 'uses' => 'AsignacioncobradorController@create']);
@@ -17,11 +19,11 @@ Route::get('cuentasxcobrars/excel', ['as' => 'cuentasxcobrars.excel', 'uses' => 
 
 // Route::get('cuentasxcobrars/excelCuentasxCobrar', ['as' => 'cuentasxcobrars.excelCuentasxCobrar', 'uses' => 'AsignacioncobradorController@excelCuentasxCobrar']);
 
-Route::get('cuentasxcobrars/excelCuentasxCobrar/{id}', ['as' => 'cuentasxcobrars.excelCuentasxCobrar', 'uses' => 'AsignacioncobradorController@excelCuentasxCobrar']);
+Route::get('cuentasxcobrars/excelCuentasxCobrar/{id}', 'AsignacioncobradorController@excelCuentasxCobrar');
 
 Route::post('cuentasxcobrars/listCronogramaCuentasxCobrar', ['as' => 'cuentasxcobrars.listCronogramaCuentasxCobrar', 'uses' => 'AsignacioncobradorController@listCronogramaCuentasxCobrar']);
 
-Route::get('cuentasxcobrars/data_form', ['as' => 'cuentasxcobrars.data_form', 'uses' => 'AsignacioncobradorController@data_form']);
+Route::get('cuentasxcobrars/data_form', 'CuentasCobrarController@data_form');
 Route::put('cuentasxcobrars/saveCobrador/{id}', ['as' => 'cuentasxcobrars.saveCobrador', 'uses' => 'AsignacioncobradorController@createUpdate']);
 
 Route::get('cuentasxcobrars/tarjetaCobranza', ['as' => 'cuentasxcobrars.tarjetaCobranza', 'uses' => 'AsignacioncobradorController@tarjetaCobranza']);

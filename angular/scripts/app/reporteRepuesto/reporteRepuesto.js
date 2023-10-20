@@ -1,7 +1,3 @@
-/**
- * Created by JAIR on 4/5/2017.
- */
-
 (function () {
     'use strict';
     angular.module('sys.app.reporteRepuestos')
@@ -9,16 +5,39 @@
         .controller('ReporteRepuestoCtrl', ReporteRepuestoCtrl);
 
     Config.$inject = ['$stateProvider', '$urlRouterProvider'];
-    ReporteRepuestoCtrl.$inject = ['$scope', '_', 'RESTService', 'AlertFactory', 'Helpers'];
+    ReporteRepuestoCtrl.$inject = ['$scope', '_', 'RESTService'];
 
-    function ReporteRepuestoCtrl($scope, _, RESTService, AlertFactory, Helpers) {
+    function ReporteRepuestoCtrl($scope, _, RESTService)
+    {
+        moment.locale('es');
+        var start = moment().startOf('month');
+        var end = moment().endOf('month');
+
+        var chk_date_range = $('#chk_date_range');
+        chk_date_range.click(function () {
+            $('#LoadRecordsButtonRR').click();
+        });
+        generateCheckBox('.chk_date_range_r');
+
+        var reqDates = $('#reqDates');
+
+        var showDate = function (from, to) {
+            start = from;
+            end = to;
+            reqDates.find('span').html(from.format('MMM D, YYYY') + ' - ' + to.format('MMM D, YYYY'));
+            if (chk_date_range.prop('checked')) {
+                $('#LoadRecordsButtonRR').click();
+            }
+        };
+        generateDateRangePicker(reqDates, start, end, showDate);
+        showDate(start, end);
 
         $scope.chkState = function () {
             var txt_state2 = (w_state.prop('checked')) ? 'Activo' : 'Inactivo';
             state_state.html(txt_state2);
         };
 
-        var search = getFormSearchReporteRepuestos('frm-search-ReporteRepuesto', 'search_b', 'LoadRecordsButtonReporteRepuesto');
+        var search = getFormSearchReporteRepuestos('frm-search-rr', 'search_rr', 'LoadRecordsButtonRR');
 
         var table_container_ReporteRepuesto = $("#table_container_ReporteRepuesto");
 
@@ -27,10 +46,7 @@
             paging: true,
             sorting: true,
             actions: {
-                listAction: base_url + '/reporteRepuestos/list',
-                // createAction: base_url + '/reporteRepuestos/create',
-                // updateAction: base_url + '/reporteRepuestos/update',
-                // deleteAction: base_url + '/reporteRepuestos/delete',
+                listAction: base_url + '/reporteRepuestos/list'
             },
             messages: {
                 addNewRecord: 'Nueva Categoría',
@@ -111,7 +127,15 @@
                 },
                 estado: {
                     title: 'Estado',
-                    options: { '1': 'Registrado', '2': 'Vigente', '3': 'Por Aprobar', '4': 'Aprobado', '5': 'Rechazado', '6': 'Facturado', '7': 'Despachado' },
+                    options: {
+                        '1': 'Registrado',
+                        '2': 'Vigente',
+                        '3': 'Por Aprobar',
+                        '4': 'Aprobado',
+                        '5': 'Rechazado',
+                        '6': 'Facturado',
+                        '7': 'Despachado'
+                    },
                 },
 
             },
@@ -132,7 +156,8 @@
                     } else {
                         $("#Edit-estado").val("A");
                         $(".i-checks span").text("Activo");
-                    };
+                    }
+                    ;
                 });
             },
             formSubmitting: function (event, data) {
@@ -150,44 +175,38 @@
 
         //             e.preventDefault();
         // });
-        generateSearchForm('frm-search-ReporteRepuesto', 'LoadRecordsButtonReporteRepuesto', function () {
+        generateSearchForm('frm-search-rr', 'LoadRecordsButtonRR', function () {
             table_container_ReporteRepuesto.jtable('load', {
-                search: $('#search_b').val(),
+                search: $('#search_rr').val(),
                 filtro_tienda: $('#filtro_tienda').val(),
                 idClienteFiltro: $('#idClienteFiltro').val(),
                 idVendedorFiltro: $('#idVendedorFiltro').val(),
-                FechaInicioFiltro: $('#FechaInicioFiltro').val(),
-                FechaFinFiltro: $('#FechaFinFiltro').val(),
-
+                check: (chk_date_range.prop('checked')),
+                from: start.format('YYYY-MM-DD'),
+                to: end.format('YYYY-MM-DD')
             });
         }, true);
 
         $("#btn_expExcel").click(function (e) {
-            var data_excel = {
+            $scope.openDoc('reporteRepuestos/excel', {
                 filtro_tienda: $('#filtro_tienda').val(),
                 idClienteFiltro: $('#idClienteFiltro').val(),
                 idVendedorFiltro: $('#idVendedorFiltro').val(),
-                FechaInicioFiltro: $('#FechaInicioFiltro').val(),
-                FechaFinFiltro: $('#FechaFinFiltro').val(),
-                search: '',
-            };
-            //             $scope.openDoc('projects/excel', data_excel);
-            $scope.openDoc('reporteRepuestos/excel', data_excel);
+                check: (chk_date_range.prop('checked')),
+                from: start.format('YYYY-MM-DD'),
+                to: end.format('YYYY-MM-DD')
+            });
         });
         $("#btn_expPDF").click(function (e) {
-            var data_excel = {
+            $scope.loadReporteRepuestoPDF('reporteRepuestos/pdf', {
                 filtro_tienda: $('#filtro_tienda').val(),
                 idClienteFiltro: $('#idClienteFiltro').val(),
                 idVendedorFiltro: $('#idVendedorFiltro').val(),
-                FechaInicioFiltro: $('#FechaInicioFiltro').val(),
-                FechaFinFiltro: $('#FechaFinFiltro').val(),
-                idcategoria: $("#idcategoria").val(),
-                search: '',
-            };
-            //             $scope.openDoc('projects/excel', data_excel);
-            $scope.loadReporteRepuestoPDF('reporteRepuestos/pdf', data_excel);
+                check: (chk_date_range.prop('checked')),
+                from: start.format('YYYY-MM-DD'),
+                to: end.format('YYYY-MM-DD')
+            });
         });
-
 
         $(".jtable-title-text").removeClass('col-md-4');
         $(".jtable-title-text").addClass('col-md-2');
@@ -195,6 +214,7 @@
 
         $(".jtable-toolbar").removeClass('col-md-8');
         $(".jtable-toolbar").addClass('col-md-10');
+
         function getDataForm() {
             RESTService.all('reporteRepuestos/data_form', '', function (response) {
                 if (!_.isUndefined(response.status) && response.status) {
@@ -231,6 +251,7 @@
                 getDataForm();
             });
         }
+
         getDataForm();
         $("#idVendedorFiltro").select2();
         $("#idClienteFiltro").select2();

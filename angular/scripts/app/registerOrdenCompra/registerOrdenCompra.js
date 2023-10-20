@@ -171,6 +171,18 @@
         var oc_btn_send_approval = $("button#oc_btn_send_approval");
 
         var p_type_doc = $('select#p_type_doc');
+        p_type_doc.change(function(e) {
+            p_name.val('');
+            p_lastname.val('');
+            p_lastname2.val('');
+            var type_doc_ = $(this).val();
+            if(type_doc_ !== '06') {
+                $('div.p_natural_person').removeClass('hide');
+            } else {
+                $('div.p_natural_person').addClass('hide');
+            }
+            e.preventDefault();
+        });
         var p_document = $('input#p_document');
         p_document.keypress(function (e) {
             var code_ = (e.keyCode ? e.keyCode : e.which);
@@ -181,6 +193,18 @@
         var p_type_prov = $('select#p_type_prov');
         var p_type_doc_sale = $('select#p_type_doc_sale');
         var p_rs = $('input#p_rs');
+        var p_lastname = $('input#p_lastname');
+        p_lastname.keyup(function () {
+            setRSProvider();
+        });
+        var p_lastname2 = $('input#p_lastname2');
+        p_lastname2.keyup(function () {
+            setRSProvider();
+        });
+        var p_name = $('input#p_name');
+        p_name.keyup(function () {
+            setRSProvider();
+        });
         var p_address = $('input#p_address');
         var p_contact = $('input#p_contact');
         var p_email = $('input#p_email');
@@ -202,6 +226,13 @@
         generateCheckBox('input#p_con');
         var p_act = $('input#p_act');
         generateCheckBox('input#p_act');
+
+        function setRSProvider() {
+            var name_ = p_name.val().toString().trim();
+            var ln_ = p_lastname.val().toString().trim();
+            var ln2_ = p_lastname2.val().toString().trim();
+            razonsocial.val(ln_ + ' ' + ln2_ + ' ' + name_);
+        }
 
         function cleanOC() {
             cleanRequired();
@@ -1240,6 +1271,10 @@
                         p_department.val(data_.cDepartamento);
                         getProvince(data_.cProvincia, data_.cDepartamento);
                         getDistrict(data_.cCodUbigeo, data_.cProvincia);
+
+                        p_name.val(data_.cNombres);
+                        p_lastname.val(data_.cApepat);
+                        p_lastname2.val(data_.cApemat);
                     }
                 } else {
                     $scope.showAlert('', response.message, 'warning');
@@ -1253,6 +1288,9 @@
                     var data = JSON.parse(this.responseText);
                     if (!_.isNull(data.nombres)) {
                         p_rs.val(data.nombres + ' ' + data.apellidoPaterno + ' ' + data.apellidoMaterno);
+                        p_name.val(data.nombres);
+                        p_lastname.val(data.apellidoPaterno);
+                        p_lastname2.val(data.apellidoMaterno);
                     } else if (!_.isNull(data.razonSocial)) {
                         p_rs.val(data.razonSocial);
                         p_address.val(data.direccion);
@@ -1343,6 +1381,11 @@
                     'factura', 'warning');
                 return;
             }
+            if (p_type_doc.val() === '01') {
+                b_val = b_val && p_lastname.required();
+                b_val = b_val && p_lastname2.required();
+                b_val = b_val && p_name.required();
+            }
             b_val = b_val && p_rs.required();
             b_val = b_val && p_cellphone.required();
             b_val = b_val && p_district.required();
@@ -1363,9 +1406,9 @@
                     'impuesto': (p_imp.prop('checked')) ? 'S' : 'N',
                     'congelado': (p_con.prop('checked')) ? 'S' : 'N',
                     'activo': (p_act.prop('checked')) ? 'S' : 'N',
-                    'nombresP': '',
-                    'apellidopP': '',
-                    'apellidomP': '',
+                    'nombresP': p_name.val(),
+                    'apellidopP': p_lastname.val(),
+                    'apellidomP': p_lastname2.val(),
                     'idarray': '',
                     'idBanco_array': '',
                     'idBancoDescripcion_array': '',

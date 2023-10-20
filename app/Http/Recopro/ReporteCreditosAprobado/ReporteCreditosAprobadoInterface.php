@@ -12,6 +12,8 @@ namespace App\Http\Recopro\ReporteCreditosAprobado;
 interface ReporteCreditosAprobadoInterface
 {
     public function all();
-    public function create(array $attributes);
 
+    public function search($filter);
+
+    public function create(array $attributes);
 }

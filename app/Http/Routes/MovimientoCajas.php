@@ -38,7 +38,7 @@ Route::get('movimientoCajas/getDenominacionesView/{id}', ['as' => 'movimientoCaj
  
 Route::get('movimientoCajas/data_form_caja_diaria', ['as' => 'movimientoCajas.data_form_caja_diaria', 'uses' => 'CajaDiariaController@data_form']);
 
-Route::get('movimientoCajas/data_formIncio', ['as' => 'movimientoCajas.data_formIncio', 'uses' => 'MovimientoCajaController@data_formIncio']);
+Route::get('movimientoCajas/data_formIncio', 'MovimientoCajaController@data_formIncio');
 
 Route::put('movimientoCajas/saveCajasDiarias/{id}', ['as' => 'movimientoCajas.saveCajasDiarias', 'uses' => 'CajaDiariaController@createUpdate']);
 

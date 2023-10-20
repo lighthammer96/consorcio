@@ -1,8 +1,3 @@
-
-/**
- * Created by JAIR on 4/5/2017.
- */
-
 (function () {
     'use strict';
     angular.module('sys.app.ventas')
@@ -12,10 +7,33 @@
     Config.$inject = ['$stateProvider', '$urlRouterProvider'];
     VentasCtrl.$inject = ['$scope', 'AlertFactory', 'RESTService'];
 
-    function VentasCtrl($scope, AlertFactory, RESTService) {
+    function VentasCtrl($scope, AlertFactory, RESTService)
+    {
+        moment.locale('es');
+        var start = moment().subtract(6, 'days');
+        var end = moment();
 
-        // var search = getFormSearch('frm-search-ventas', 'search_b_ventas', 'LoadRecordsButtonVentas');
-        var search = getFormSearchComprobantes('frm-search-ventas', 'search_b_ventas', 'LoadRecordsButtonVentas');
+        var chk_date_range = $('#chk_date_range');
+        chk_date_range.click(function () {
+            $('#LoadRecordsButtonV').click();
+        });
+        generateCheckBox('.chk_date_range_ven');
+
+        var reqDates = $('#reqDates');
+
+        var showDate = function (from, to) {
+            start = from;
+            end = to;
+            reqDates.find('span').html(from.format('MMM D, YYYY') + ' - ' + to.format('MMM D, YYYY'));
+            if (chk_date_range.prop('checked')) {
+                $('#LoadRecordsButtonV').click();
+            }
+        };
+        generateDateRangePicker(reqDates, start, end, showDate);
+        showDate(start, end);
+
+        // var search = getFormSearch('frm-search-ventas', 'search_b_ventas', 'LoadRecordsButtonV');
+        var search = getFormSearchComp('frm-search-ventas', 'search_b_ventas', 'LoadRecordsButtonV');
 
         var table_container_ventas = $("#table_container_ventas");
 
@@ -39,19 +57,18 @@
                     text: search
                 }, {
                     cssClass: 'btn-primary',
-                    text: '<i class="fa fa-file-excel-o"></i> Exportar a Excel',
+                    text: '<i class="fa fa-file-excel-o"></i> Exportar',
                     click: function () {
                         var data_excel = {
                             search: $('#search_b_comprobantes').val(),
-                            FechaInicioFiltro: $('#FechaInicioFiltro').val(),
-                            FechaFinFiltro: $('#FechaFinFiltro').val(),
+                            check: (chk_date_range.prop('checked')),
+                            from: start.format('YYYY-MM-DD'),
+                            to: end.format('YYYY-MM-DD'),
                             idClienteFiltro: $('#idClienteFiltro').val(),
                             id_tipo_doc: $('#id_tipo_doc').val(),
                             estado_cpe: $('#estado_cpe').val(),
                         };
-
                         $scope.openDoc('ventas/excel', data_excel);
-
                     }
                 }]
             },
@@ -68,133 +85,95 @@
                     create: false,
                     edit: false,
                     list: false,
-
                 },
                 nConsecutivo_solicitud: {
                     title: 'nConsecutivo',
                     create: false,
                     edit: false,
                     list: false,
-
                 },
                 tipo_solicitud: {
                     title: 'tipo_solicitud',
                     create: false,
                     edit: false,
                     list: false,
-
                 },
                 estado: {
                     title: 'estado',
                     create: false,
                     edit: false,
                     list: false,
-
                 },
                 IdTipoDocumento: {
                     title: 'IdTipoDocumento',
                     create: false,
                     edit: false,
                     list: false,
-
                 },
                 anticipo: {
                     title: 'anticipo',
                     create: false,
                     edit: false,
                     list: false,
-
                 },
                 idventa_referencia: {
                     title: 'idventa_referencia',
                     create: false,
                     edit: false,
                     list: false,
-
                 },
                 tipo_comprobante: {
                     title: 'tipo_comprobante',
                     create: false,
                     edit: false,
                     list: false,
-
                 },
-                // serie_comprobante: {
-                //     title: 'Serie',
-
-                // },
-                // numero_comprobante: {
-                //     title: 'Número',
-
-
-                // },
                 comprobante: {
                     title: 'Comprobante',
-
                 },
                 fecha_emision: {
                     title: 'Fecha',
                     display: function (data) {
                         return moment(data.record.fecha_emision).format('DD/MM/YYYY');
                     }
-
                 },
                 tipo_documento: {
                     title: 'Tipo Doc.',
-
-
                 },
                 numero_documento: {
                     title: 'N° Documento',
-
-
                 },
                 cliente: {
                     title: 'Cliente',
-
-
                 },
                 moneda: {
                     title: 'Moneda',
-
-
                 },
                 t_monto_total: {
                     title: 'Monto',
-
-
                 },
                 pagado: {
                     title: 'Pagado',
-
-
                 },
                 saldo: {
                     title: 'Saldo',
-
-
                 },
                 anulado: {
                     title: 'Anulado',
-                    values: { 'S': 'SI', 'N': 'NO', 'null': 'NO' },
+                    values: {'S': 'SI', 'N': 'NO', 'null': 'NO'},
                     type: 'checkbox',
                 },
                 estado_cpe: {
                     title: 'Estado',
-
-
                 },
                 dias_vencidos: {
                     title: 'dias_vencidos',
                     create: false,
                     edit: false,
                     list: false,
-
                 },
                 formapago: {
                     title: 'Forma de Pago',
-
-
                 },
                 edit: {
                     width: '1%',
@@ -205,7 +184,6 @@
                     display: function (data) {
                         return '<a href="javascript:void(0)" class="emitir-nota"  data-anulado="' + data.record.anulado + '" data-estado="' + data.record.estado + '"  data-tipo_solicitud="' + data.record.tipo_solicitud + '"  data-tipo_comprobante="' + data.record.tipo_comprobante + '"  data-idtipodocumento="' + data.record.IdTipoDocumento + '"  data-anticipo="' + data.record.anticipo + '" data-id="' + data.record.cCodConsecutivo_solicitud + '|' + data.record.nConsecutivo_solicitud + '|' + data.record.idventa + '" data-idventa="' + data.record.idventa + '" data-saldo="' + data.record.saldo + '" data-cCodConsecutivo="' + data.record.cCodConsecutivo_solicitud + '" data-nConsecutivo="' + data.record.nConsecutivo_solicitud + '"  data-idventa_referencia="' + data.record.idventa_referencia + '" title="Emitir Nota"><i class="fa fa-file-text fa-1-5x"></i></a>';
                     }
-
                 },
                 anular: {
                     width: '1%',
@@ -216,9 +194,7 @@
                     display: function (data) {
                         return '<a href="javascript:void(0)" class="anular-nota" data-dias_vencidos="' + data.record.dias_vencidos + '" data-idventa="' + data.record.idventa + '"  data-anulado="' + data.record.anulado + '"   title="Anular"><i class="fa fa-times fa-1-5x fa-red"></i></a>';
                     }
-
-                }
-                ,
+                },
                 reimprimir: {
                     width: '1%',
                     sorting: false,
@@ -228,20 +204,16 @@
                     display: function (data) {
                         return '<a href="javascript:void(0)" class="reimprimir-comprobante" data-anulado="' + data.record.anulado + '" data-estado="' + data.record.estado + '"  data-tipo_solicitud="' + data.record.tipo_solicitud + '" data-idtipodocumento="' + data.record.IdTipoDocumento + '"  data-anticipo="' + data.record.anticipo + '" data-id="' + data.record.cCodConsecutivo_solicitud + '|' + data.record.nConsecutivo_solicitud + '|' + data.record.idventa + '"   title="Reimprimir Comprobante"><i class="fa fa-print fa-1-5x"></i></a>';
                     }
-
                 }
-
             },
-
             recordsLoaded: function (event, data) {
-
                 $("#table_container_ventas").find(".jtable-title-text").removeClass("col-md-4").addClass("col-md-2");
                 $("#table_container_ventas").find(".jtable-toolbar").removeClass("col-md-8").addClass("col-md-10");
                 $('.anular-nota').click(function (e) {
                     var code = $(this).attr('data-idventa');
                     var anulado = $(this).attr('data-anulado');
                     var dias_vencidos = $(this).attr('data-dias_vencidos');
-                    if(anulado == "S") {
+                    if (anulado == "S") {
                         AlertFactory.textType({
                             title: '',
                             message: "Este comprobante ya ha sido anulado!",
@@ -249,7 +221,7 @@
                         });
                         return false
                     }
-                    if(dias_vencidos > 3) {
+                    if (dias_vencidos > 3) {
                         AlertFactory.textType({
                             title: '',
                             message: "Ya pasaron los 3 dias, ya no puede anular!",
@@ -270,7 +242,7 @@
                                     message: 'El documento se anuló correctamente',
                                     type: 'success'
                                 });
-                                LoadRecordsButtonVentas.click();
+                                $('#LoadRecordsButtonV').click();
                             } else {
                                 var msg_ = (_.isUndefined(response.message)) ?
                                     'No se pudo eliminar. Intente nuevamente.' : response.message;
@@ -295,7 +267,7 @@
                     // alert(idventa_referencia);
                     var anulado = $(this).attr('data-anulado');
 
-                    if(anulado == "S") {
+                    if (anulado == "S") {
                         AlertFactory.textType({
                             title: '',
                             message: "Este comprobante se encuentra anulado!",
@@ -322,9 +294,9 @@
                             // console.log();
                             if (data.length > 0) {
 
-                                $.post("ventas/validar_nota", { idventa: idventa },
+                                $.post("ventas/validar_nota", {idventa: idventa},
                                     function (data, textStatus, jqXHR) {
-                                        if(data.length > 0) {
+                                        if (data.length > 0) {
                                             AlertFactory.textType({
                                                 title: '',
                                                 message: 'Ya se emitio una nota de crédito!',
@@ -338,9 +310,6 @@
                                     },
                                     "json"
                                 );
-
-
-
 
 
                             } else {
@@ -362,12 +331,12 @@
                     var tipo_solicitud = $(this).attr('data-tipo_solicitud');
                     var idtipodocumento = $(this).attr('data-idtipodocumento');
                     var estado = $(this).attr('data-estado');
-                    $.post("ventas/validar_ticket_pago_cuota", { id: id },
+                    $.post("ventas/validar_ticket_pago_cuota", {id: id},
                         function (data, textStatus, jqXHR) {
                             // console.log(data);
-                            if(data.length <= 0) {
+                            if (data.length <= 0) {
                                 if (idtipodocumento == "12") {
-                                    if(tipo_solicitud != "null") {
+                                    if (tipo_solicitud != "null") {
 
                                         window.open("ventas/imprimir_ticket/" + id);
                                     } else {
@@ -401,11 +370,12 @@
             }
         });
 
-        generateSearchForm('frm-search-ventas', 'LoadRecordsButtonVentas', function () {
+        generateSearchForm('frm-search-ventas', 'LoadRecordsButtonV', function () {
             table_container_ventas.jtable('load', {
                 search: $('#search_b_ventas').val(),
-                FechaInicioFiltro: $('#FechaInicioFiltro').val(),
-                FechaFinFiltro: $('#FechaFinFiltro').val(),
+                check: (chk_date_range.prop('checked')),
+                from: start.format('YYYY-MM-DD'),
+                to: end.format('YYYY-MM-DD'),
                 idClienteFiltro: $('#idClienteFiltro').val(),
                 id_tipo_doc: $('#id_tipo_doc').val(),
                 estado_cpe: $('#estado_cpe').val(),
@@ -465,7 +435,7 @@
 
         function find_documento(id) {
             $("#formulario-ventas").trigger("reset");
-            $.post("ventas/find_documento", { idventa: id },
+            $.post("ventas/find_documento", {idventa: id},
                 function (data, textStatus, jqXHR) {
 
                     if (data.documento.length > 0) {
@@ -494,7 +464,7 @@
                     }
 
 
-                    $.post("ventas/obtener_consecutivo_comprobante", { tipo_documento: '07' },
+                    $.post("ventas/obtener_consecutivo_comprobante", {tipo_documento: '07'},
                         function (data, textStatus, jqXHR) {
                             select_comprobante(data);
                         },
@@ -506,8 +476,6 @@
                 },
                 "json"
             );
-
-
 
 
         }
@@ -542,7 +510,7 @@
                             // console.log(id);
                             window.open("ventas/imprimir_comprobante/" + id);
 
-                            LoadRecordsButtonVentas.click();
+                            $('#LoadRecordsButtonV').click();
 
                             // nota de credito por un anticipo
                             var msg = "";
@@ -561,11 +529,6 @@
                             });
 
 
-
-
-
-
-
                         } else {
                             AlertFactory.textType({
                                 title: '',
@@ -580,8 +543,6 @@
             }
         }
     }
-
-
 
 
     function Config($stateProvider, $urlRouterProvider) {
