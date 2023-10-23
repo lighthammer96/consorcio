@@ -31,10 +31,10 @@ class ReporteRepuestoRepository implements ReporteRepuestoInterface
         return $this->model
             ->where(function ($q) use ($filter) {
                 if (isset($filter['check']) && $filter['check'] == 'true') {
-                    $from = $filter['from'] . ' 00:00:00';
-                    $to = $filter['to'] . ' 23:59:59';
-                    $q->whereDate('fecha', '>=', $from);
-                    $q->whereDate('fecha', '<=', $to);
+//                    $from = $filter['from'] . ' 00:00:00';
+//                    $to = $filter['to'] . ' 23:59:59';
+                    $q->whereDate('fecha', '>=', $filter['from']);
+                    $q->whereDate('fecha', '<=', $filter['to']);
 //                    $q->whereBetween('fecha', [$from, $to]);
                 }
                 $filtro_tienda = (isset($filter['filtro_tienda'])) ? $filter['filtro_tienda'] : '';
